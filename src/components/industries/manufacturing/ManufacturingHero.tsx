@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
-import { Factory, TrendingUp } from 'lucide-react';
+import { Factory } from 'lucide-react';
+import manufacturingImage from '../../../assets/images/manufacturing_forecasting_supplychain_readysignal.png';
 
 const ManufacturingHero = () => {
   return (
@@ -43,21 +44,13 @@ const ManufacturingHero = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="relative"
           >
-            <div className="bg-gradient-to-br from-rs-cyan to-blue-600 rounded-2xl p-12 shadow-2xl">
-              <div className="space-y-4">
-                {[...Array(5)].map((_, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, width: 0 }}
-                    animate={{ opacity: 1, width: '100%' }}
-                    transition={{ duration: 0.6, delay: i * 0.1 }}
-                    className="flex items-center space-x-4"
-                  >
-                    <Factory className="w-8 h-8 text-white opacity-60" />
-                    <div className="flex-1 h-12 bg-white bg-opacity-20 backdrop-blur-sm rounded-lg"></div>
-                  </motion.div>
-                ))}
-              </div>
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+              <img
+                src={manufacturingImage}
+                alt="Modern manufacturing facility with automated systems"
+                className="w-full h-auto object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-rs-dark via-transparent to-transparent opacity-40"></div>
             </div>
           </motion.div>
         </div>
