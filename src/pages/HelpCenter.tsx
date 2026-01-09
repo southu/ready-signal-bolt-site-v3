@@ -1,7 +1,11 @@
-import { Link } from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
+import SearchResults from '../components/help/SearchResults';
+import SearchAutocomplete from '../components/help/SearchAutocomplete';
+import { searchArticles, getSearchSuggestions, trackClickedResult, SearchResult, SearchSuggestion } from '../services/searchService';
 import {
   BookOpen, Code, Terminal, PlayCircle, Settings, Database,
   TrendingUp, Calendar, Download, Layers, ChevronRight, Search
@@ -47,6 +51,86 @@ const CategoryCard = ({
 );
 
 export default function HelpCenter() {
+  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+  const [suggestions, setSuggestions] = useState<SearchSuggestion[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const searchTimeoutRef = useRef<NodeJS.Timeout>();
+  const suggestionsTimeoutRef = useRef<NodeJS.Timeout>();
+  const searchContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (searchContainerRef.current && !searchContainerRef.current.contains(event.target as Node)) {
+        setShowSuggestions(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  useEffect(() => {
+    if (searchTimeoutRef.current) {
+      clearTimeout(searchTimeoutRef.current);
+    }
+
+    if (!searchQuery.trim()) {
+      setSearchResults([]);
+      setSuggestions([]);
+      return;
+    }
+
+    if (searchQuery.length >= 2) {
+      suggestionsTimeoutRef.current = setTimeout(async () => {
+        const results = await getSearchSuggestions(searchQuery);
+        setSuggestions(results);
+        setShowSuggestions(true);
+      }, 200);
+    }
+
+    searchTimeoutRef.current = setTimeout(async () => {
+      setLoading(true);
+      const results = await searchArticles(searchQuery);
+      setSearchResults(results);
+      setLoading(false);
+    }, 500);
+
+    return () => {
+      if (searchTimeoutRef.current) clearTimeout(searchTimeoutRef.current);
+      if (suggestionsTimeoutRef.current) clearTimeout(suggestionsTimeoutRef.current);
+    };
+  }, [searchQuery]);
+
+  const handleSearch = async () => {
+    if (!searchQuery.trim()) return;
+
+    setShowSuggestions(false);
+    setLoading(true);
+    const results = await searchArticles(searchQuery);
+    setSearchResults(results);
+    setLoading(false);
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
+  const handleSuggestionSelect = (url: string, title: string) => {
+    setSearchQuery(title);
+    setShowSuggestions(false);
+    trackClickedResult(searchQuery, url);
+    navigate(url);
+  };
+
+  const handleResultClick = (url: string) => {
+    trackClickedResult(searchQuery, url);
+  };
+
   const categories = [
     {
       title: 'Getting Started',
@@ -142,21 +226,40 @@ export default function HelpCenter() {
             </p>
           </div>
 
-          <div className="bg-white rounded-2xl border-2 border-gray-200 p-6 mb-12">
+          <div className="bg-white rounded-2xl border-2 border-gray-200 p-6 mb-12" ref={searchContainerRef}>
             <div className="flex items-center gap-4">
               <div className="flex-1 relative">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <input
                   type="text"
                   placeholder="Search documentation..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onKeyPress={handleKeyPress}
+                  onFocus={() => suggestions.length > 0 && setShowSuggestions(true)}
                   className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
                 />
+                <SearchAutocomplete
+                  suggestions={suggestions}
+                  onSelect={handleSuggestionSelect}
+                  visible={showSuggestions}
+                />
               </div>
-              <button className="bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-xl font-semibold transition-colors">
+              <button
+                onClick={handleSearch}
+                className="bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-xl font-semibold transition-colors"
+              >
                 Search
               </button>
             </div>
           </div>
+
+          <SearchResults
+            results={searchResults}
+            query={searchQuery}
+            loading={loading}
+            onResultClick={handleResultClick}
+          />
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {categories.map((category, i) => (
