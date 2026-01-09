@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { Zap, Award, ArrowRight } from 'lucide-react';
 
 const TwoPathsSection = () => {
@@ -63,14 +64,16 @@ const TwoPathsSection = () => {
               </div>
             </div>
 
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="w-full bg-rs-cyan text-white hover:bg-blue-700 transition-all font-semibold px-6 py-3 rounded-lg flex items-center justify-center space-x-2"
-            >
-              <span>Explore the Engine</span>
-              <ArrowRight className="w-5 h-5" />
-            </motion.button>
+            <Link to="/platform">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="w-full bg-rs-cyan text-white hover:bg-blue-700 transition-all font-semibold px-6 py-3 rounded-lg flex items-center justify-center space-x-2"
+              >
+                <span>Explore the Engine</span>
+                <ArrowRight className="w-5 h-5" />
+              </motion.button>
+            </Link>
           </motion.div>
 
           <motion.div
@@ -115,14 +118,16 @@ const TwoPathsSection = () => {
               </div>
             </div>
 
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="w-full bg-rs-yellow text-rs-dark hover:bg-yellow-400 transition-all font-semibold px-6 py-3 rounded-lg flex items-center justify-center space-x-2"
-            >
-              <span>Explore Managed Solutions</span>
-              <ArrowRight className="w-5 h-5" />
-            </motion.button>
+            <Link to="/solutions">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="w-full bg-rs-yellow text-rs-dark hover:bg-yellow-400 transition-all font-semibold px-6 py-3 rounded-lg flex items-center justify-center space-x-2"
+              >
+                <span>Explore Managed Solutions</span>
+                <ArrowRight className="w-5 h-5" />
+              </motion.button>
+            </Link>
           </motion.div>
         </div>
       </div>
