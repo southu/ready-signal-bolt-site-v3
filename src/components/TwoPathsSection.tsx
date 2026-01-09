@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Award, ArrowRight } from 'lucide-react';
-import InteractiveForecastChart from './InteractiveForecastChart';
+import { Zap, Award, ArrowRight } from 'lucide-react';
 
 const TwoPathsSection = () => {
   return (
@@ -28,8 +27,53 @@ const TwoPathsSection = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
+            className="bg-white rounded-xl p-10 space-y-6 border-2 border-rs-cyan border-opacity-20"
           >
-            <InteractiveForecastChart />
+            <div className="flex items-center space-x-3">
+              <div className="w-12 h-12 rounded-lg bg-rs-cyan bg-opacity-10 flex items-center justify-center">
+                <Zap className="w-6 h-6 text-rs-cyan" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-rs-dark">
+                  The Signal Discovery Engine
+                </h3>
+                <p className="text-sm text-rs-dark opacity-60">Self-Service</p>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <h4 className="font-semibold text-rs-dark mb-2">For</h4>
+                <p className="text-rs-dark opacity-75">
+                  Data Scientists, Analysts, Developers.
+                </p>
+              </div>
+
+              <div>
+                <h4 className="font-semibold text-rs-dark mb-2">The Value</h4>
+                <p className="text-rs-dark opacity-75">
+                  Speed.
+                </p>
+              </div>
+
+              <div>
+                <h4 className="font-semibold text-rs-dark mb-2">The Promise</h4>
+                <p className="text-rs-dark opacity-75">
+                  Connect your target variable and let our engine mathematically test 40,000 signals to find the features that matter. Pipe them directly into Python, R, or Databricks.
+                </p>
+              </div>
+            </div>
+
+            <Link to="/platform">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="w-full bg-rs-cyan text-white hover:bg-blue-700 transition-all font-semibold px-6 py-3 rounded-lg flex items-center justify-center space-x-2"
+              >
+                <span>Explore the Engine</span>
+                <ArrowRight className="w-5 h-5" />
+              </motion.button>
+            </Link>
           </motion.div>
 
           <motion.div
