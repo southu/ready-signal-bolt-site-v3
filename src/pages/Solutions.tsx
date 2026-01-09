@@ -4,6 +4,7 @@ import SEO from '../components/SEO';
 import SolutionsHero from '../components/solutions/SolutionsHero';
 import BlackBoxLiability from '../components/solutions/BlackBoxLiability';
 import ManagedForecasting from '../components/solutions/ManagedForecasting';
+import MarketOutlook from '../components/solutions/MarketOutlook';
 import PrivateEquity from '../components/solutions/PrivateEquity';
 import CustomerTestimonial from '../components/solutions/CustomerTestimonial';
 import EngagementRoadmap from '../components/solutions/EngagementRoadmap';
@@ -24,6 +25,7 @@ function Solutions() {
         <SolutionsHero />
         <BlackBoxLiability />
         <ManagedForecasting />
+        <MarketOutlook />
         <PrivateEquity />
         <CustomerTestimonial />
         <EngagementRoadmap />
