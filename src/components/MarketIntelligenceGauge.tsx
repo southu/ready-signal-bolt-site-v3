@@ -12,7 +12,7 @@ const MarketIntelligenceGauge = () => {
   const [hoveredIndicator, setHoveredIndicator] = useState<string | null>(null);
 
   const indicators: Indicator[] = [
-    { name: 'Inflation', value: 1, impact: 'positive' },
+    { name: 'Inflation', value: -1, impact: 'positive' },
     { name: 'Labor Market', value: -1, impact: 'negative' },
     { name: 'Housing', value: 1, impact: 'positive' },
   ];
