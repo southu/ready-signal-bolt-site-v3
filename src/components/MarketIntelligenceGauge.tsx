@@ -112,7 +112,7 @@ const MarketIntelligenceGauge = () => {
             initial={{ rotate: -90 }}
             animate={{ rotate: sentimentAngle }}
             transition={{ duration: 2, delay: 0.5, type: "spring", stiffness: 50 }}
-            style={{ transformOrigin: '100px 100px' }}
+            transform="rotate(angle 100 100)"
           >
             <line
               x1="100"
