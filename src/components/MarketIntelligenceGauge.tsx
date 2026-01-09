@@ -12,17 +12,14 @@ const MarketIntelligenceGauge = () => {
   const [hoveredIndicator, setHoveredIndicator] = useState<string | null>(null);
 
   const indicators: Indicator[] = [
-    { name: 'Inflation', value: -1, impact: 'negative' },
+    { name: 'Inflation', value: 1, impact: 'positive' },
     { name: 'Labor Market', value: -1, impact: 'negative' },
     { name: 'Housing', value: 1, impact: 'positive' },
   ];
 
   const netSentiment = indicators.reduce((acc, ind) => acc + ind.value, 0);
-  const sentimentAngle = (netSentiment / indicators.length) * 90;
-  const sentimentLabel =
-    sentimentAngle < -30 ? 'Headwinds' :
-    sentimentAngle > 30 ? 'Tailwinds' :
-    'Neutral';
+  const sentimentAngle = (netSentiment / indicators.length) * 45;
+  const sentimentLabel = 'Slight Tailwinds';
 
   const getIndicatorColor = (impact: string) => {
     switch (impact) {
@@ -190,7 +187,7 @@ const MarketIntelligenceGauge = () => {
                 animate={{ opacity: 1, y: 0 }}
                 className="absolute -top-12 left-1/2 -translate-x-1/2 bg-rs-dark text-white text-xs px-3 py-2 rounded-lg whitespace-nowrap z-10"
               >
-                {indicator.impact === 'positive' ? 'Positive signal' : 'Negative pressure'}
+                {indicator.impact === 'positive' ? 'Favorable trend' : 'Negative pressure'}
                 <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-rs-dark" />
               </motion.div>
             )}

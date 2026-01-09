@@ -45,8 +45,8 @@ const MarketOutlook = () => {
           </h2>
           <p className="text-lg text-rs-dark opacity-75 max-w-3xl mx-auto">
             Our Market Outlook service continuously analyzes 40,000+ economic signals to predict market
-            conditions that will impact your business. Stay ahead of inflation, labor shortages, supply chain
-            disruptions, and demand shifts before they affect your bottom line.
+            conditions that will impact your business. Stay ahead of economic shifts, labor market changes,
+            supply chain disruptions, and demand fluctuations before they affect your bottom line.
           </p>
         </motion.div>
 
@@ -158,7 +158,8 @@ const MarketOutlook = () => {
           </h3>
           <p className="text-white opacity-90 max-w-2xl mx-auto mb-6">
             With our Market Outlook service, you'll receive quarterly reports analyzing the key economic
-            factors impacting your industry, complete with scenario modeling and strategic recommendations.
+            factors impacting your industry, complete with scenario modeling and strategic recommendations
+            to help you capitalize on favorable conditions and mitigate risks.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-white opacity-75">
             <div className="flex items-center space-x-2">
