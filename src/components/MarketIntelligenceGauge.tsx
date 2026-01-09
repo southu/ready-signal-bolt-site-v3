@@ -110,14 +110,14 @@ const MarketIntelligenceGauge = () => {
           {/* Needle Line - Rotates around center */}
           <g transform="translate(100, 100)">
             <motion.g
-              animate={{ rotate: sentimentAngle - 90 }}
+              animate={{ rotate: 25 }}
               transition={{ duration: 2, delay: 0.5, type: "spring", stiffness: 50 }}
             >
               <line
                 x1="0"
                 y1="0"
                 x2="0"
-                y2="-60"
+                y2="-55"
                 stroke="#0A2540"
                 strokeWidth="3"
                 strokeLinecap="round"
@@ -125,11 +125,9 @@ const MarketIntelligenceGauge = () => {
             </motion.g>
           </g>
 
-          {/* Needle Base Circle - Fixed at center */}
-          <circle cx="100" cy="100" r="6" fill="#0A2540" />
-          
-          {/* Center Circle - Fixed at center */}
-          <circle cx="100" cy="100" r="4" fill="white" />
+          {/* Needle Base Circle - Solid filled at center */}
+          <circle cx="100" cy="100" r="8" fill="white" stroke="#E5E7EB" strokeWidth="1" />
+          <circle cx="100" cy="100" r="5" fill="#0A2540" />
         </svg>
 
         {/* Labels */}
