@@ -14,7 +14,7 @@ const MarketIntelligenceGauge = () => {
   const indicators: Indicator[] = [
     { name: 'Inflation', value: -1, impact: 'positive' },
     { name: 'Labor Market', value: -1, impact: 'negative' },
-    { name: 'Housing', value: 1, impact: 'positive' },
+    { name: 'Housing', value: 5, impact: 'positive' },
   ];
 
   const netSentiment = indicators.reduce((acc, ind) => acc + ind.value, 0);
