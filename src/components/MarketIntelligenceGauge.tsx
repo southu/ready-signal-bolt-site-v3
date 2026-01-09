@@ -68,63 +68,62 @@ const MarketIntelligenceGauge = () => {
       {/* Gauge */}
       <div className="relative w-64 h-36 mx-auto mb-8">
         <svg
-          viewBox="0 0 200 110"
+          viewBox="0 0 200 120"
           className="w-full h-full"
         >
-          {/* Background Arc - Headwinds (Red) - Left side */}
+          {/* Headwinds (Red) - Left third */}
           <path
-            d="M 20 95 A 80 80 0 0 1 60 28"
+            d="M 25 100 A 75 75 0 0 1 50 43"
             fill="none"
             stroke="#FCA5A5"
-            strokeWidth="18"
+            strokeWidth="12"
             strokeLinecap="round"
           />
 
-          {/* Background Arc - Neutral (Gray) - Center */}
+          {/* Neutral (Gray) - Middle third */}
           <path
-            d="M 65 22 A 80 80 0 0 1 135 22"
+            d="M 58 30 A 75 75 0 0 1 142 30"
             fill="none"
             stroke="#D1D5DB"
-            strokeWidth="18"
+            strokeWidth="12"
             strokeLinecap="round"
           />
 
-          {/* Background Arc - Tailwinds (Green) - Right side */}
+          {/* Tailwinds (Green) - Right third */}
           <path
-            d="M 140 28 A 80 80 0 0 1 180 95"
+            d="M 150 43 A 75 75 0 0 1 175 100"
             fill="none"
             stroke="#86EFAC"
-            strokeWidth="18"
+            strokeWidth="12"
             strokeLinecap="round"
           />
 
           {/* Needle - pointing slightly right into tailwinds */}
           <motion.line
             x1="100"
-            y1="95"
-            x2="130"
-            y2="40"
+            y1="100"
+            x2="128"
+            y2="50"
             stroke="#0A2540"
-            strokeWidth="3"
+            strokeWidth="2.5"
             strokeLinecap="round"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.5 }}
           />
 
-          {/* Needle Base Circle - Solid filled at center */}
-          <circle cx="100" cy="95" r="8" fill="white" stroke="#E5E7EB" strokeWidth="1" />
-          <circle cx="100" cy="95" r="5" fill="#0A2540" />
+          {/* Needle Base Circle */}
+          <circle cx="100" cy="100" r="6" fill="#0A2540" />
         </svg>
 
         {/* Labels */}
-        <div className="absolute bottom-0 left-2 text-xs text-red-500 font-medium">
+        <div className="absolute bottom-0 left-0 text-xs text-red-400 font-medium">
           Headwinds
         </div>
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 text-xs text-gray-500 font-medium">
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 text-xs text-gray-400 font-medium">
           Neutral
         </div>
-        <div className="absolute bottom-0 right-2 text-xs text-green-500 font-medium">
+        <div className="absolute bottom-0 right-0 text-xs text-green-500 font-medium">
           Tailwinds
         </div>
       </div>
