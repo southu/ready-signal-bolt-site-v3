@@ -66,78 +66,65 @@ const MarketIntelligenceGauge = () => {
       </div>
 
       {/* Gauge */}
-      <div className="relative w-64 h-40 mx-auto mb-8">
+      <div className="relative w-64 h-36 mx-auto mb-8">
         <svg
-          viewBox="0 0 200 120"
+          viewBox="0 0 200 110"
           className="w-full h-full"
         >
-          {/* Background Arc - Headwinds (Red) */}
-          <motion.path
-            d="M 30 100 A 70 70 0 0 1 85 30"
+          {/* Background Arc - Headwinds (Red) - Left side */}
+          <path
+            d="M 20 95 A 80 80 0 0 1 60 28"
             fill="none"
             stroke="#FCA5A5"
-            strokeWidth="16"
+            strokeWidth="18"
             strokeLinecap="round"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: 1 }}
-            transition={{ duration: 1, ease: "easeOut" }}
           />
 
-          {/* Background Arc - Neutral (Gray) */}
-          <motion.path
-            d="M 85 30 A 70 70 0 0 1 115 30"
+          {/* Background Arc - Neutral (Gray) - Center */}
+          <path
+            d="M 65 22 A 80 80 0 0 1 135 22"
             fill="none"
             stroke="#D1D5DB"
-            strokeWidth="16"
+            strokeWidth="18"
             strokeLinecap="round"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: 1 }}
-            transition={{ duration: 1, delay: 0.1, ease: "easeOut" }}
           />
 
-          {/* Background Arc - Tailwinds (Green) */}
-          <motion.path
-            d="M 115 30 A 70 70 0 0 1 170 100"
+          {/* Background Arc - Tailwinds (Green) - Right side */}
+          <path
+            d="M 140 28 A 80 80 0 0 1 180 95"
             fill="none"
             stroke="#86EFAC"
-            strokeWidth="16"
+            strokeWidth="18"
             strokeLinecap="round"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: 1 }}
-            transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
           />
 
-          {/* Needle Line - Rotates around center */}
-          <g transform="translate(100, 100)">
-            <motion.g
-              animate={{ rotate: 25 }}
-              transition={{ duration: 2, delay: 0.5, type: "spring", stiffness: 50 }}
-            >
-              <line
-                x1="0"
-                y1="0"
-                x2="0"
-                y2="-55"
-                stroke="#0A2540"
-                strokeWidth="3"
-                strokeLinecap="round"
-              />
-            </motion.g>
-          </g>
+          {/* Needle - pointing slightly right into tailwinds */}
+          <motion.line
+            x1="100"
+            y1="95"
+            x2="130"
+            y2="40"
+            stroke="#0A2540"
+            strokeWidth="3"
+            strokeLinecap="round"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.5 }}
+          />
 
           {/* Needle Base Circle - Solid filled at center */}
-          <circle cx="100" cy="100" r="8" fill="white" stroke="#E5E7EB" strokeWidth="1" />
-          <circle cx="100" cy="100" r="5" fill="#0A2540" />
+          <circle cx="100" cy="95" r="8" fill="white" stroke="#E5E7EB" strokeWidth="1" />
+          <circle cx="100" cy="95" r="5" fill="#0A2540" />
         </svg>
 
         {/* Labels */}
-        <div className="absolute bottom-0 left-0 text-xs text-red-600 font-medium">
+        <div className="absolute bottom-0 left-2 text-xs text-red-500 font-medium">
           Headwinds
         </div>
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 text-xs text-gray-600 font-medium">
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 text-xs text-gray-500 font-medium">
           Neutral
         </div>
-        <div className="absolute bottom-0 right-0 text-xs text-green-600 font-medium">
+        <div className="absolute bottom-0 right-2 text-xs text-green-500 font-medium">
           Tailwinds
         </div>
       </div>
