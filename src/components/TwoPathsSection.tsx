@@ -64,7 +64,7 @@ const TwoPathsSection = () => {
               </div>
             </div>
 
-            <Link to="/platform">
+            <Link to="/platform" className="mt-6 block">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -118,7 +118,7 @@ const TwoPathsSection = () => {
               </div>
             </div>
 
-            <Link to="/solutions">
+            <Link to="/solutions" className="mt-6 block">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
