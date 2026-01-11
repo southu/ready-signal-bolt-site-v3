@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Grains Explained</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <article>
+        <h1>Data Grains Explained</h1>
+        <p>This article is a discussion about source and output data granularity in Ready Signal. It goes over what data grains are and how they work.</p>
+<ul class="wp-block-list">
+<li><strong>There two types of grains that determine at what granularity data is outputted in the system:</strong>
+<ul class="wp-block-list">
+<li>Time Grain: Day, Week, Month, Quarter Year</li>
+<li>Geographic Grain: Zip, City, County, State, Country</li>
+</ul>
+</li>
+<li><strong>Source grain vs transformed output grain.</strong>
+<ul class="wp-block-list">
+<li>Source Grain is the granularity that the source data was created in.</li>
+<li>Output grain is the grain you want your Signal output in.</li>
+<li>The output grain is often not the same as the source grain.  </li>
+<li>You have a few transformation options when moving from Source to Output grain:
+<ul class="wp-block-list">
+<li>Keep Data Source Granularity (Default)</li>
+<li>Or Divide Evenly Based on Time (Time Grain) / Distribute Based on Population (Geo Grain)</li>
+</ul>
+</li>
+<li>Your <strong>Desired Output Grain</strong> is set at the Signal Level
+<ul class="wp-block-list">
+<li>This impacts the # of rows in your output and applies to all features</li>
+<li>You can set the desired Time &amp; Geo grains  when creating or editing a Signal</li>
+</ul>
+</li>
+<li>The <strong>Output Transformation settings</strong> are set at a Feature Level
+<ul class="wp-block-list">
+<li>You can have one feature where you Keep Data Source Granularity and another where you distribute based on population.</li>
+<li>You can edit this value from the Manage Signal Details Page &gt; Edit Treatments  Link</li>
+</ul>
+</li>
+<li>Read below for more detail on how these “Grain transformation” options work. </li>
+</ul>
+</li>
+</ul>
+<li><strong>There two types of grains that determine at what granularity data is outputted in the system:</strong>
+<ul class="wp-block-list">
+<li>Time Grain: Day, Week, Month, Quarter Year</li>
+<li>Geographic Grain: Zip, City, County, State, Country</li>
+</ul>
+</li>
+<ul class="wp-block-list">
+<li>Time Grain: Day, Week, Month, Quarter Year</li>
+<li>Geographic Grain: Zip, City, County, State, Country</li>
+</ul>
+<li>Time Grain: Day, Week, Month, Quarter Year</li>
+<li>Geographic Grain: Zip, City, County, State, Country</li>
+<li><strong>Source grain vs transformed output grain.</strong>
+<ul class="wp-block-list">
+<li>Source Grain is the granularity that the source data was created in.</li>
+<li>Output grain is the grain you want your Signal output in.</li>
+<li>The output grain is often not the same as the source grain.  </li>
+<li>You have a few transformation options when moving from Source to Output grain:
+<ul class="wp-block-list">
+<li>Keep Data Source Granularity (Default)</li>
+<li>Or Divide Evenly Based on Time (Time Grain) / Distribute Based on Population (Geo Grain)</li>
+</ul>
+</li>
+<li>Your <strong>Desired Output Grain</strong> is set at the Signal Level
+<ul class="wp-block-list">
+<li>This impacts the # of rows in your output and applies to all features</li>
+<li>You can set the desired Time &amp; Geo grains  when creating or editing a Signal</li>
+</ul>
+</li>
+<li>The <strong>Output Transformation settings</strong> are set at a Feature Level
+<ul class="wp-block-list">
+<li>You can have one feature where you Keep Data Source Granularity and another where you distribute based on population.</li>
+<li>You can edit this value from the Manage Signal Details Page &gt; Edit Treatments  Link</li>
+</ul>
+</li>
+<li>Read below for more detail on how these “Grain transformation” options work. </li>
+</ul>
+</li>
+<ul class="wp-block-list">
+<li>Source Grain is the granularity that the source data was created in.</li>
+<li>Output grain is the grain you want your Signal output in.</li>
+<li>The output grain is often not the same as the source grain.  </li>
+<li>You have a few transformation options when moving from Source to Output grain:
+<ul class="wp-block-list">
+<li>Keep Data Source Granularity (Default)</li>
+<li>Or Divide Evenly Based on Time (Time Grain) / Distribute Based on Population (Geo Grain)</li>
+</ul>
+</li>
+<li>Your <strong>Desired Output Grain</strong> is set at the Signal Level
+<ul class="wp-block-list">
+<li>This impacts the # of rows in your output and applies to all features</li>
+<li>You can set the desired Time &amp; Geo grains  when creating or editing a Signal</li>
+</ul>
+</li>
+<li>The <strong>Output Transformation settings</strong> are set at a Feature Level
+<ul class="wp-block-list">
+<li>You can have one feature where you Keep Data Source Granularity and another where you distribute based on population.</li>
+<li>You can edit this value from the Manage Signal Details Page &gt; Edit Treatments  Link</li>
+</ul>
+</li>
+<li>Read below for more detail on how these “Grain transformation” options work. </li>
+</ul>
+<li>Source Grain is the granularity that the source data was created in.</li>
+<li>Output grain is the grain you want your Signal output in.</li>
+<li>The output grain is often not the same as the source grain.  </li>
+<li>You have a few transformation options when moving from Source to Output grain:
+<ul class="wp-block-list">
+<li>Keep Data Source Granularity (Default)</li>
+<li>Or Divide Evenly Based on Time (Time Grain) / Distribute Based on Population (Geo Grain)</li>
+</ul>
+</li>
+<ul class="wp-block-list">
+<li>Keep Data Source Granularity (Default)</li>
+<li>Or Divide Evenly Based on Time (Time Grain) / Distribute Based on Population (Geo Grain)</li>
+</ul>
+<li>Keep Data Source Granularity (Default)</li>
+<li>Or Divide Evenly Based on Time (Time Grain) / Distribute Based on Population (Geo Grain)</li>
+<li>Your <strong>Desired Output Grain</strong> is set at the Signal Level
+<ul class="wp-block-list">
+<li>This impacts the # of rows in your output and applies to all features</li>
+<li>You can set the desired Time &amp; Geo grains  when creating or editing a Signal</li>
+</ul>
+</li>
+<ul class="wp-block-list">
+<li>This impacts the # of rows in your output and applies to all features</li>
+<li>You can set the desired Time &amp; Geo grains  when creating or editing a Signal</li>
+</ul>
+<li>This impacts the # of rows in your output and applies to all features</li>
+<li>You can set the desired Time &amp; Geo grains  when creating or editing a Signal</li>
+<li>The <strong>Output Transformation settings</strong> are set at a Feature Level
+<ul class="wp-block-list">
+<li>You can have one feature where you Keep Data Source Granularity and another where you distribute based on population.</li>
+<li>You can edit this value from the Manage Signal Details Page &gt; Edit Treatments  Link</li>
+</ul>
+</li>
+<ul class="wp-block-list">
+<li>You can have one feature where you Keep Data Source Granularity and another where you distribute based on population.</li>
+<li>You can edit this value from the Manage Signal Details Page &gt; Edit Treatments  Link</li>
+</ul>
+<li>You can have one feature where you Keep Data Source Granularity and another where you distribute based on population.</li>
+<li>You can edit this value from the Manage Signal Details Page &gt; Edit Treatments  Link</li>
+<li>Read below for more detail on how these “Grain transformation” options work. </li>
+<img alt="" decoding="async" src="images/Edit-Grain-Settings-1.png"/>
+<ul class="wp-block-list">
+<li><strong>For Time Grain Treatments:</strong>
+<ul class="wp-block-list">
+<li>Keep Data Source Granularity (Default):
+<ul class="wp-block-list">
+<li>When the time source grain is different that the Time output grain, we repeat the same value by default.
+<ul class="wp-block-list">
+<li>Examples
+<ul class="wp-block-list">
+<li>Source grain is “monthly”, wtih a value of 10K, but the desired output grain is daily. We would show 10K for each day.</li>
+<li>Source gain is “yearly”, value 8%, but output is weekly, we would show 8% for each week.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>“Divide evenly based on time” (Optional):
+<ul class="wp-block-list">
+<li>This treatment allows you to spread a value evenly over a period of time. RS will do the simple algebra to spread it evenly.</li>
+<li>If the value is a % you cannot divide it evenly, so even if you select divide evenly we will duplicate the number.
+<ul class="wp-block-list">
+<li>Example:
+<ul class="wp-block-list">
+<li>Unemployment rate of 9%,  has a monthly source grain. We will show as 9% at a daily grain regardless of time grain treatment.</li>
+</ul>
+</li>
+<li>If a value is a whole number, a total, then it can be divided evenly based over time.
+<ul class="wp-block-list">
+<li>Example:
+<ul class="wp-block-list">
+<li>New Home Sales where 30K in March.</li>
+<li>Output = Daily Grain: Value for each day would be 1K (30K/30Days)</li>
+<li>Output = Weekly Grain: Value for each week would be 7K</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<li><strong>For Time Grain Treatments:</strong>
+<ul class="wp-block-list">
+<li>Keep Data Source Granularity (Default):
+<ul class="wp-block-list">
+<li>When the time source grain is different that the Time output grain, we repeat the same value by default.
+<ul class="wp-block-list">
+<li>Examples
+<ul class="wp-block-list">
+<li>Source grain is “monthly”, wtih a value of 10K, but the desired output grain is daily. We would show 10K for each day.</li>
+<li>Source gain is “yearly”, value 8%, but output is weekly, we would show 8% for each week.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>“Divide evenly based on time” (Optional):
+<ul class="wp-block-list">
+<li>This treatment allows you to spread a value evenly over a period of time. RS will do the simple algebra to spread it evenly.</li>
+<li>If the value is a % you cannot divide it evenly, so even if you select divide evenly we will duplicate the number.
+<ul class="wp-block-list">
+<li>Example:
+<ul class="wp-block-list">
+<li>Unemployment rate of 9%,  has a monthly source grain. We will show as 9% at a daily grain regardless of time grain treatment.</li>
+</ul>
+</li>
+<li>If a value is a whole number, a total, then it can be divided evenly based over time.
+<ul class="wp-block-list">
+<li>Example:
+<ul class="wp-block-list">
+<li>New Home Sales where 30K in March.</li>
+<li>Output = Daily Grain: Value for each day would be 1K (30K/30Days)</li>
+<li>Output = Weekly Grain: Value for each week would be 7K</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<ul class="wp-block-list">
+<li>Keep Data Source Granularity (Default):
+<ul class="wp-block-list">
+<li>When the time source grain is different that the Time output grain, we repeat the same value by default.
+<ul class="wp-block-list">
+<li>Examples
+<ul class="wp-block-list">
+<li>Source grain is “monthly”, wtih a value of 10K, but the desired output grain is daily. We would show 10K for each day.</li>
+<li>Source gain is “yearly”, value 8%, but output is weekly, we would show 8% for each week.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>“Divide evenly based on time” (Optional):
+<ul class="wp-block-list">
+<li>This treatment allows you to spread a value evenly over a period of time. RS will do the simple algebra to spread it evenly.</li>
+<li>If the value is a % you cannot divide it evenly, so even if you select divide evenly we will duplicate the number.
+<ul class="wp-block-list">
+<li>Example:
+<ul class="wp-block-list">
+<li>Unemployment rate of 9%,  has a monthly source grain. We will show as 9% at a daily grain regardless of time grain treatment.</li>
+</ul>
+</li>
+<li>If a value is a whole number, a total, then it can be divided evenly based over time.
+<ul class="wp-block-list">
+<li>Example:
+<ul class="wp-block-list">
+<li>New Home Sales where 30K in March.</li>
+<li>Output = Daily Grain: Value for each day would be 1K (30K/30Days)</li>
+<li>Output = Weekly Grain: Value for each week would be 7K</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<li>Keep Data Source Granularity (Default):
+<ul class="wp-block-list">
+<li>When the time source grain is different that the Time output grain, we repeat the same value by default.
+<ul class="wp-block-list">
+<li>Examples
+<ul class="wp-block-list">
+<li>Source grain is “monthly”, wtih a value of 10K, but the desired output grain is daily. We would show 10K for each day.</li>
+<li>Source gain is “yearly”, value 8%, but output is weekly, we would show 8% for each week.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<ul class="wp-block-list">
+<li>When the time source grain is different that the Time output grain, we repeat the same value by default.
+<ul class="wp-block-list">
+<li>Examples
+<ul class="wp-block-list">
+<li>Source grain is “monthly”, wtih a value of 10K, but the desired output grain is daily. We would show 10K for each day.</li>
+<li>Source gain is “yearly”, value 8%, but output is weekly, we would show 8% for each week.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<li>When the time source grain is different that the Time output grain, we repeat the same value by default.
+<ul class="wp-block-list">
+<li>Examples
+<ul class="wp-block-list">
+<li>Source grain is “monthly”, wtih a value of 10K, but the desired output grain is daily. We would show 10K for each day.</li>
+<li>Source gain is “yearly”, value 8%, but output is weekly, we would show 8% for each week.</li>
+</ul>
+</li>
+</ul>
+</li>
+<ul class="wp-block-list">
+<li>Examples
+<ul class="wp-block-list">
+<li>Source grain is “monthly”, wtih a value of 10K, but the desired output grain is daily. We would show 10K for each day.</li>
+<li>Source gain is “yearly”, value 8%, but output is weekly, we would show 8% for each week.</li>
+</ul>
+</li>
+</ul>
+<li>Examples
+<ul class="wp-block-list">
+<li>Source grain is “monthly”, wtih a value of 10K, but the desired output grain is daily. We would show 10K for each day.</li>
+<li>Source gain is “yearly”, value 8%, but output is weekly, we would show 8% for each week.</li>
+</ul>
+</li>
+<ul class="wp-block-list">
+<li>Source grain is “monthly”, wtih a value of 10K, but the desired output grain is daily. We would show 10K for each day.</li>
+<li>Source gain is “yearly”, value 8%, but output is weekly, we would show 8% for each week.</li>
+</ul>
+<li>Source grain is “monthly”, wtih a value of 10K, but the desired output grain is daily. We would show 10K for each day.</li>
+<li>Source gain is “yearly”, value 8%, but output is weekly, we would show 8% for each week.</li>
+<li>“Divide evenly based on time” (Optional):
+<ul class="wp-block-list">
+<li>This treatment allows you to spread a value evenly over a period of time. RS will do the simple algebra to spread it evenly.</li>
+<li>If the value is a % you cannot divide it evenly, so even if you select divide evenly we will duplicate the number.
+<ul class="wp-block-list">
+<li>Example:
+<ul class="wp-block-list">
+<li>Unemployment rate of 9%,  has a monthly source grain. We will show as 9% at a daily grain regardless of time grain treatment.</li>
+</ul>
+</li>
+<li>If a value is a whole number, a total, then it can be divided evenly based over time.
+<ul class="wp-block-list">
+<li>Example:
+<ul class="wp-block-list">
+<li>New Home Sales where 30K in March.</li>
+<li>Output = Daily Grain: Value for each day would be 1K (30K/30Days)</li>
+<li>Output = Weekly Grain: Value for each week would be 7K</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<ul class="wp-block-list">
+<li>This treatment allows you to spread a value evenly over a period of time. RS will do the simple algebra to spread it evenly.</li>
+<li>If the value is a % you cannot divide it evenly, so even if you select divide evenly we will duplicate the number.
+<ul class="wp-block-list">
+<li>Example:
+<ul class="wp-block-list">
+<li>Unemployment rate of 9%,  has a monthly source grain. We will show as 9% at a daily grain regardless of time grain treatment.</li>
+</ul>
+</li>
+<li>If a value is a whole number, a total, then it can be divided evenly based over time.
+<ul class="wp-block-list">
+<li>Example:
+<ul class="wp-block-list">
+<li>New Home Sales where 30K in March.</li>
+<li>Output = Daily Grain: Value for each day would be 1K (30K/30Days)</li>
+<li>Output = Weekly Grain: Value for each week would be 7K</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<li>This treatment allows you to spread a value evenly over a period of time. RS will do the simple algebra to spread it evenly.</li>
+<li>If the value is a % you cannot divide it evenly, so even if you select divide evenly we will duplicate the number.
+<ul class="wp-block-list">
+<li>Example:
+<ul class="wp-block-list">
+<li>Unemployment rate of 9%,  has a monthly source grain. We will show as 9% at a daily grain regardless of time grain treatment.</li>
+</ul>
+</li>
+<li>If a value is a whole number, a total, then it can be divided evenly based over time.
+<ul class="wp-block-list">
+<li>Example:
+<ul class="wp-block-list">
+<li>New Home Sales where 30K in March.</li>
+<li>Output = Daily Grain: Value for each day would be 1K (30K/30Days)</li>
+<li>Output = Weekly Grain: Value for each week would be 7K</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<ul class="wp-block-list">
+<li>Example:
+<ul class="wp-block-list">
+<li>Unemployment rate of 9%,  has a monthly source grain. We will show as 9% at a daily grain regardless of time grain treatment.</li>
+</ul>
+</li>
+<li>If a value is a whole number, a total, then it can be divided evenly based over time.
+<ul class="wp-block-list">
+<li>Example:
+<ul class="wp-block-list">
+<li>New Home Sales where 30K in March.</li>
+<li>Output = Daily Grain: Value for each day would be 1K (30K/30Days)</li>
+<li>Output = Weekly Grain: Value for each week would be 7K</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<li>Example:
+<ul class="wp-block-list">
+<li>Unemployment rate of 9%,  has a monthly source grain. We will show as 9% at a daily grain regardless of time grain treatment.</li>
+</ul>
+</li>
+<ul class="wp-block-list">
+<li>Unemployment rate of 9%,  has a monthly source grain. We will show as 9% at a daily grain regardless of time grain treatment.</li>
+</ul>
+<li>Unemployment rate of 9%,  has a monthly source grain. We will show as 9% at a daily grain regardless of time grain treatment.</li>
+<li>If a value is a whole number, a total, then it can be divided evenly based over time.
+<ul class="wp-block-list">
+<li>Example:
+<ul class="wp-block-list">
+<li>New Home Sales where 30K in March.</li>
+<li>Output = Daily Grain: Value for each day would be 1K (30K/30Days)</li>
+<li>Output = Weekly Grain: Value for each week would be 7K</li>
+</ul>
+</li>
+</ul>
+</li>
+<ul class="wp-block-list">
+<li>Example:
+<ul class="wp-block-list">
+<li>New Home Sales where 30K in March.</li>
+<li>Output = Daily Grain: Value for each day would be 1K (30K/30Days)</li>
+<li>Output = Weekly Grain: Value for each week would be 7K</li>
+</ul>
+</li>
+</ul>
+<li>Example:
+<ul class="wp-block-list">
+<li>New Home Sales where 30K in March.</li>
+<li>Output = Daily Grain: Value for each day would be 1K (30K/30Days)</li>
+<li>Output = Weekly Grain: Value for each week would be 7K</li>
+</ul>
+</li>
+<ul class="wp-block-list">
+<li>New Home Sales where 30K in March.</li>
+<li>Output = Daily Grain: Value for each day would be 1K (30K/30Days)</li>
+<li>Output = Weekly Grain: Value for each week would be 7K</li>
+</ul>
+<li>New Home Sales where 30K in March.</li>
+<li>Output = Daily Grain: Value for each day would be 1K (30K/30Days)</li>
+<li>Output = Weekly Grain: Value for each week would be 7K</li>
+<ul class="wp-block-list">
+<li><strong>For Geo Grain Treatments:</strong>
+<ul class="wp-block-list">
+<li>Keep Data Source Granularity:
+<ul class="wp-block-list">
+<li>When Source Granularity is LARGER than the Output granularity:
+<ul class="wp-block-list">
+<li>We repeat the same value.</li>
+<li>Examples
+<ul class="wp-block-list">
+<li>Source grain is “state”, value w 10K, but output is city. We would show 10K for each city.</li>
+<li>Source grain is “country”, value is 9%, but output is state. We would show 9% for each state.</li>
+</ul>
+</li>
+<li>When Source Granularity is SMALLER than the Output granularity:
+<ul class="wp-block-list">
+<li>If it’s a whole number, we do sum to the output granularity
+<ul class="wp-block-list">
+<li>Example:  Source grain zip but output is state.  We sum to state.</li>
+</ul>
+</li>
+<li>If it’s a Percentage, we take the weighted average
+<ul class="wp-block-list">
+<li>Example: Source grain zip but output is state.  We take the weighted average to state [sum((percentage * population))/sum(population)].</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>“Divide evenly based on population” (Optional)
+<ul class="wp-block-list">
+<li>This treatment allows you to spread a value over different geographies based on population levels.</li>
+<li>If the value is a % you cannot spread it out, so even if you select divide evenly based on population we will duplicate the number.
+<ul class="wp-block-list">
+<li>Example:
+<ul class="wp-block-list">
+<li>Unemployment rate of 9%,  has a state source grain. We will show as 9% at a zip code level for all zips in that state.</li>
+</ul>
+</li>
+<li>If a value is a whole number, a total, then it can be divided proportionately based on population.
+<ul class="wp-block-list">
+<li>Example:
+<ul class="wp-block-list">
+<li>If that input is at the state level and the output is at the zip level.  [State level value]*(Zip Population /State Population)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Additional topics:</strong>
+<ul class="wp-block-list">
+<li>Census data comes in at track level, we turn it to Zip then, sum up</li>
+<li>Weather data, comes in by weather stations. We assign a weather station to each zip based on proximity.</li>
+<li>Weather data can be rolled up based on population (how people experience the weather) or square miles (how the land experiences weather).</li>
+</ul>
+</li>
+</ul>
+<li><strong>For Geo Grain Treatments:</strong>
+<ul class="wp-block-list">
+<li>Keep Data Source Granularity:
+<ul class="wp-block-list">
+<li>When Source Granularity is LARGER than the Output granularity:
+<ul class="wp-block-list">
+<li>We repeat the same value.</li>
+<li>Examples
+<ul class="wp-block-list">
+<li>Source grain is “state”, value w 10K, but output is city. We would show 10K for each city.</li>
+<li>Source grain is “country”, value is 9%, but output is state. We would show 9% for each state.</li>
+</ul>
+</li>
+<li>When Source Granularity is SMALLER than the Output granularity:
+<ul class="wp-block-list">
+<li>If it’s a whole number, we do sum to the output granularity
+<ul class="wp-block-list">
+<li>Example:  Source grain zip but output is state.  We sum to state.</li>
+</ul>
+</li>
+<li>If it’s a Percentage, we take the weighted average
+<ul class="wp-block-list">
+<li>Example: Source grain zip but output is state.  We take the weighted average to state [sum((percentage * population))/sum(population)].</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>“Divide evenly based on population” (Optional)
+<ul class="wp-block-list">
+<li>This treatment allows you to spread a value over different geographies based on population levels.</li>
+<li>If the value is a % you cannot spread it out, so even if you select divide evenly based on population we will duplicate the number.
+<ul class="wp-block-list">
+<li>Example:
+<ul class="wp-block-list">
+<li>Unemployment rate of 9%,  has a state source grain. We will show as 9% at a zip code level for all zips in that state.</li>
+</ul>
+</li>
+<li>If a value is a whole number, a total, then it can be divided proportionately based on population.
+<ul class="wp-block-list">
+<li>Example:
+<ul class="wp-block-list">
+<li>If that input is at the state level and the output is at the zip level.  [State level value]*(Zip Population /State Population)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<ul class="wp-block-list">
+<li>Keep Data Source Granularity:
+<ul class="wp-block-list">
+<li>When Source Granularity is LARGER than the Output granularity:
+<ul class="wp-block-list">
+<li>We repeat the same value.</li>
+<li>Examples
+<ul class="wp-block-list">
+<li>Source grain is “state”, value w 10K, but output is city. We would show 10K for each city.</li>
+<li>Source grain is “country”, value is 9%, but output is state. We would show 9% for each state.</li>
+</ul>
+</li>
+<li>When Source Granularity is SMALLER than the Output granularity:
+<ul class="wp-block-list">
+<li>If it’s a whole number, we do sum to the output granularity
+<ul class="wp-block-list">
+<li>Example:  Source grain zip but output is state.  We sum to state.</li>
+</ul>
+</li>
+<li>If it’s a Percentage, we take the weighted average
+<ul class="wp-block-list">
+<li>Example: Source grain zip but output is state.  We take the weighted average to state [sum((percentage * population))/sum(population)].</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>“Divide evenly based on population” (Optional)
+<ul class="wp-block-list">
+<li>This treatment allows you to spread a value over different geographies based on population levels.</li>
+<li>If the value is a % you cannot spread it out, so even if you select divide evenly based on population we will duplicate the number.
+<ul class="wp-block-list">
+<li>Example:
+<ul class="wp-block-list">
+<li>Unemployment rate of 9%,  has a state source grain. We will show as 9% at a zip code level for all zips in that state.</li>
+</ul>
+</li>
+<li>If a value is a whole number, a total, then it can be divided proportionately based on population.
+<ul class="wp-block-list">
+<li>Example:
+<ul class="wp-block-list">
+<li>If that input is at the state level and the output is at the zip level.  [State level value]*(Zip Population /State Population)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<li>Keep Data Source Granularity:
+<ul class="wp-block-list">
+<li>When Source Granularity is LARGER than the Output granularity:
+<ul class="wp-block-list">
+<li>We repeat the same value.</li>
+<li>Examples
+<ul class="wp-block-list">
+<li>Source grain is “state”, value w 10K, but output is city. We would show 10K for each city.</li>
+<li>Source grain is “country”, value is 9%, but output is state. We would show 9% for each state.</li>
+</ul>
+</li>
+<li>When Source Granularity is SMALLER than the Output granularity:
+<ul class="wp-block-list">
+<li>If it’s a whole number, we do sum to the output granularity
+<ul class="wp-block-list">
+<li>Example:  Source grain zip but output is state.  We sum to state.</li>
+</ul>
+</li>
+<li>If it’s a Percentage, we take the weighted average
+<ul class="wp-block-list">
+<li>Example: Source grain zip but output is state.  We take the weighted average to state [sum((percentage * population))/sum(population)].</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<ul class="wp-block-list">
+<li>When Source Granularity is LARGER than the Output granularity:
+<ul class="wp-block-list">
+<li>We repeat the same value.</li>
+<li>Examples
+<ul class="wp-block-list">
+<li>Source grain is “state”, value w 10K, but output is city. We would show 10K for each city.</li>
+<li>Source grain is “country”, value is 9%, but output is state. We would show 9% for each state.</li>
+</ul>
+</li>
+<li>When Source Granularity is SMALLER than the Output granularity:
+<ul class="wp-block-list">
+<li>If it’s a whole number, we do sum to the output granularity
+<ul class="wp-block-list">
+<li>Example:  Source grain zip but output is state.  We sum to state.</li>
+</ul>
+</li>
+<li>If it’s a Percentage, we take the weighted average
+<ul class="wp-block-list">
+<li>Example: Source grain zip but output is state.  We take the weighted average to state [sum((percentage * population))/sum(population)].</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<li>When Source Granularity is LARGER than the Output granularity:
+<ul class="wp-block-list">
+<li>We repeat the same value.</li>
+<li>Examples
+<ul class="wp-block-list">
+<li>Source grain is “state”, value w 10K, but output is city. We would show 10K for each city.</li>
+<li>Source grain is “country”, value is 9%, but output is state. We would show 9% for each state.</li>
+</ul>
+</li>
+<li>When Source Granularity is SMALLER than the Output granularity:
+<ul class="wp-block-list">
+<li>If it’s a whole number, we do sum to the output granularity
+<ul class="wp-block-list">
+<li>Example:  Source grain zip but output is state.  We sum to state.</li>
+</ul>
+</li>
+<li>If it’s a Percentage, we take the weighted average
+<ul class="wp-block-list">
+<li>Example: Source grain zip but output is state.  We take the weighted average to state [sum((percentage * population))/sum(population)].</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<ul class="wp-block-list">
+<li>We repeat the same value.</li>
+<li>Examples
+<ul class="wp-block-list">
+<li>Source grain is “state”, value w 10K, but output is city. We would show 10K for each city.</li>
+<li>Source grain is “country”, value is 9%, but output is state. We would show 9% for each state.</li>
+</ul>
+</li>
+<li>When Source Granularity is SMALLER than the Output granularity:
+<ul class="wp-block-list">
+<li>If it’s a whole number, we do sum to the output granularity
+<ul class="wp-block-list">
+<li>Example:  Source grain zip but output is state.  We sum to state.</li>
+</ul>
+</li>
+<li>If it’s a Percentage, we take the weighted average
+<ul class="wp-block-list">
+<li>Example: Source grain zip but output is state.  We take the weighted average to state [sum((percentage * population))/sum(population)].</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<li>We repeat the same value.</li>
+<li>Examples
+<ul class="wp-block-list">
+<li>Source grain is “state”, value w 10K, but output is city. We would show 10K for each city.</li>
+<li>Source grain is “country”, value is 9%, but output is state. We would show 9% for each state.</li>
+</ul>
+</li>
+<ul class="wp-block-list">
+<li>Source grain is “state”, value w 10K, but output is city. We would show 10K for each city.</li>
+<li>Source grain is “country”, value is 9%, but output is state. We would show 9% for each state.</li>
+</ul>
+<li>Source grain is “state”, value w 10K, but output is city. We would show 10K for each city.</li>
+<li>Source grain is “country”, value is 9%, but output is state. We would show 9% for each state.</li>
+<li>When Source Granularity is SMALLER than the Output granularity:
+<ul class="wp-block-list">
+<li>If it’s a whole number, we do sum to the output granularity
+<ul class="wp-block-list">
+<li>Example:  Source grain zip but output is state.  We sum to state.</li>
+</ul>
+</li>
+<li>If it’s a Percentage, we take the weighted average
+<ul class="wp-block-list">
+<li>Example: Source grain zip but output is state.  We take the weighted average to state [sum((percentage * population))/sum(population)].</li>
+</ul>
+</li>
+</ul>
+</li>
+<ul class="wp-block-list">
+<li>If it’s a whole number, we do sum to the output granularity
+<ul class="wp-block-list">
+<li>Example:  Source grain zip but output is state.  We sum to state.</li>
+</ul>
+</li>
+<li>If it’s a Percentage, we take the weighted average
+<ul class="wp-block-list">
+<li>Example: Source grain zip but output is state.  We take the weighted average to state [sum((percentage * population))/sum(population)].</li>
+</ul>
+</li>
+</ul>
+<li>If it’s a whole number, we do sum to the output granularity
+<ul class="wp-block-list">
+<li>Example:  Source grain zip but output is state.  We sum to state.</li>
+</ul>
+</li>
+<ul class="wp-block-list">
+<li>Example:  Source grain zip but output is state.  We sum to state.</li>
+</ul>
+<li>Example:  Source grain zip but output is state.  We sum to state.</li>
+<li>If it’s a Percentage, we take the weighted average
+<ul class="wp-block-list">
+<li>Example: Source grain zip but output is state.  We take the weighted average to state [sum((percentage * population))/sum(population)].</li>
+</ul>
+</li>
+<ul class="wp-block-list">
+<li>Example: Source grain zip but output is state.  We take the weighted average to state [sum((percentage * population))/sum(population)].</li>
+</ul>
+<li>Example: Source grain zip but output is state.  We take the weighted average to state [sum((percentage * population))/sum(population)].</li>
+<li>“Divide evenly based on population” (Optional)
+<ul class="wp-block-list">
+<li>This treatment allows you to spread a value over different geographies based on population levels.</li>
+<li>If the value is a % you cannot spread it out, so even if you select divide evenly based on population we will duplicate the number.
+<ul class="wp-block-list">
+<li>Example:
+<ul class="wp-block-list">
+<li>Unemployment rate of 9%,  has a state source grain. We will show as 9% at a zip code level for all zips in that state.</li>
+</ul>
+</li>
+<li>If a value is a whole number, a total, then it can be divided proportionately based on population.
+<ul class="wp-block-list">
+<li>Example:
+<ul class="wp-block-list">
+<li>If that input is at the state level and the output is at the zip level.  [State level value]*(Zip Population /State Population)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<ul class="wp-block-list">
+<li>This treatment allows you to spread a value over different geographies based on population levels.</li>
+<li>If the value is a % you cannot spread it out, so even if you select divide evenly based on population we will duplicate the number.
+<ul class="wp-block-list">
+<li>Example:
+<ul class="wp-block-list">
+<li>Unemployment rate of 9%,  has a state source grain. We will show as 9% at a zip code level for all zips in that state.</li>
+</ul>
+</li>
+<li>If a value is a whole number, a total, then it can be divided proportionately based on population.
+<ul class="wp-block-list">
+<li>Example:
+<ul class="wp-block-list">
+<li>If that input is at the state level and the output is at the zip level.  [State level value]*(Zip Population /State Population)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<li>This treatment allows you to spread a value over different geographies based on population levels.</li>
+<li>If the value is a % you cannot spread it out, so even if you select divide evenly based on population we will duplicate the number.
+<ul class="wp-block-list">
+<li>Example:
+<ul class="wp-block-list">
+<li>Unemployment rate of 9%,  has a state source grain. We will show as 9% at a zip code level for all zips in that state.</li>
+</ul>
+</li>
+<li>If a value is a whole number, a total, then it can be divided proportionately based on population.
+<ul class="wp-block-list">
+<li>Example:
+<ul class="wp-block-list">
+<li>If that input is at the state level and the output is at the zip level.  [State level value]*(Zip Population /State Population)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<ul class="wp-block-list">
+<li>Example:
+<ul class="wp-block-list">
+<li>Unemployment rate of 9%,  has a state source grain. We will show as 9% at a zip code level for all zips in that state.</li>
+</ul>
+</li>
+<li>If a value is a whole number, a total, then it can be divided proportionately based on population.
+<ul class="wp-block-list">
+<li>Example:
+<ul class="wp-block-list">
+<li>If that input is at the state level and the output is at the zip level.  [State level value]*(Zip Population /State Population)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<li>Example:
+<ul class="wp-block-list">
+<li>Unemployment rate of 9%,  has a state source grain. We will show as 9% at a zip code level for all zips in that state.</li>
+</ul>
+</li>
+<ul class="wp-block-list">
+<li>Unemployment rate of 9%,  has a state source grain. We will show as 9% at a zip code level for all zips in that state.</li>
+</ul>
+<li>Unemployment rate of 9%,  has a state source grain. We will show as 9% at a zip code level for all zips in that state.</li>
+<li>If a value is a whole number, a total, then it can be divided proportionately based on population.
+<ul class="wp-block-list">
+<li>Example:
+<ul class="wp-block-list">
+<li>If that input is at the state level and the output is at the zip level.  [State level value]*(Zip Population /State Population)</li>
+</ul>
+</li>
+</ul>
+</li>
+<ul class="wp-block-list">
+<li>Example:
+<ul class="wp-block-list">
+<li>If that input is at the state level and the output is at the zip level.  [State level value]*(Zip Population /State Population)</li>
+</ul>
+</li>
+</ul>
+<li>Example:
+<ul class="wp-block-list">
+<li>If that input is at the state level and the output is at the zip level.  [State level value]*(Zip Population /State Population)</li>
+</ul>
+</li>
+<ul class="wp-block-list">
+<li>If that input is at the state level and the output is at the zip level.  [State level value]*(Zip Population /State Population)</li>
+</ul>
+<li>If that input is at the state level and the output is at the zip level.  [State level value]*(Zip Population /State Population)</li>
+<li><strong>Additional topics:</strong>
+<ul class="wp-block-list">
+<li>Census data comes in at track level, we turn it to Zip then, sum up</li>
+<li>Weather data, comes in by weather stations. We assign a weather station to each zip based on proximity.</li>
+<li>Weather data can be rolled up based on population (how people experience the weather) or square miles (how the land experiences weather).</li>
+</ul>
+</li>
+<ul class="wp-block-list">
+<li>Census data comes in at track level, we turn it to Zip then, sum up</li>
+<li>Weather data, comes in by weather stations. We assign a weather station to each zip based on proximity.</li>
+<li>Weather data can be rolled up based on population (how people experience the weather) or square miles (how the land experiences weather).</li>
+</ul>
+<li>Census data comes in at track level, we turn it to Zip then, sum up</li>
+<li>Weather data, comes in by weather stations. We assign a weather station to each zip based on proximity.</li>
+<li>Weather data can be rolled up based on population (how people experience the weather) or square miles (how the land experiences weather).</li>
+    </article>
+</body>
+</html>

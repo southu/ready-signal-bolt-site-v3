@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What is Seasonality?</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <article>
+        <h1>What is Seasonality?</h1>
+        <div class="elementor elementor-612 elementor-location-single post-4437 post type-post status-publish format-standard has-post-thumbnail hentry category-resources tag-data-driven-decision tag-deseasonalized tag-how-to-deal-with-seasonality-in-business tag-seasonality tag-seasonality-in-business tag-seasonalized tag-seasonally-adjusted tag-time-series-data tag-time-series-seasonality tag-what-does-seasonally-adjusted-mean tag-what-is-seasonality-in-business tag-what-is-the-meaning-of-seasonality-in-business ast-article-single" data-elementor-id="612" data-elementor-type="single-post">
+<div class="elementor-element elementor-element-3ecacce e-flex e-con-boxed e-con" data-element_type="container" data-id="3ecacce" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-d90718e e-con-full e-flex e-con" data-element_type="container" data-id="d90718e" data-settings='{"content_width":"full"}'>
+<div class="elementor-element elementor-element-62bc9fe elementor-widget elementor-widget-theme-post-title elementor-page-title elementor-widget-heading" data-element_type="widget" data-id="62bc9fe" data-widget_type="theme-post-title.default">
+<div class="elementor-widget-container">
+<style>/*! elementor - v3.14.0 - 14-06-2023 */
+.elementor-heading-title{padding:0;margin:0;line-height:1}.elementor-widget-heading .elementor-heading-title[class*=elementor-size-]>a{color:inherit;font-size:inherit;line-height:inherit}.elementor-widget-heading .elementor-heading-title.elementor-size-small{font-size:15px}.elementor-widget-heading .elementor-heading-title.elementor-size-medium{font-size:19px}.elementor-widget-heading .elementor-heading-title.elementor-size-large{font-size:29px}.elementor-widget-heading .elementor-heading-title.elementor-size-xl{font-size:39px}.elementor-widget-heading .elementor-heading-title.elementor-size-xxl{font-size:59px}</style><h1 class="elementor-heading-title elementor-size-default">What is Seasonality?</h1> </div>
+</div>
+<div class="elementor-element elementor-element-375f26a elementor-align-left elementor-widget elementor-widget-post-info" data-element_type="widget" data-id="375f26a" data-widget_type="post-info.default">
+<div class="elementor-widget-container">
+<link href="https://www.readysignal.com/wp-content/plugins/elementor/assets/css/widget-icon-list.min.css" rel="stylesheet"/><link href="https://www.readysignal.com/wp-content/plugins/elementor-pro/assets/css/widget-theme-elements.min.css" rel="stylesheet"/> <ul class="elementor-inline-items elementor-icon-list-items elementor-post-info">
+<li class="elementor-icon-list-item elementor-repeater-item-7540876 elementor-inline-item" itemprop="author">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-author">
+										Erica Paulos					</span>
+</li>
+<li class="elementor-icon-list-item elementor-repeater-item-450fc99 elementor-inline-item" itemprop="datePublished">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-date">
+<span class="elementor-post-info__item-prefix">/</span>
+										October 10, 2024					</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="elementor-element elementor-element-36730df elementor-widget elementor-widget-theme-post-content" data-element_type="widget" data-id="36730df" data-widget_type="theme-post-content.default">
+<div class="elementor-widget-container">
+<figure class="wp-block-image size-large"><img alt="Ensure accurate predictions by understanding seasonality." class="wp-image-4442" decoding="async" fetchpriority="high" height="256" sizes="(max-width: 1024px) 100vw, 1024px" src="images/What-is-Seasonality-2240-x-560-px-2-1024x256.png" srcset="images/What-is-Seasonality-2240-x-560-px-2-1024x256.png 1024w, https://www.readysignal.com/wp-content/uploads/2024/10/What-is-Seasonality-2240-x-560-px-2-300x75.png 300w, https://www.readysignal.com/wp-content/uploads/2024/10/What-is-Seasonality-2240-x-560-px-2-768x192.png 768w, https://www.readysignal.com/wp-content/uploads/2024/10/What-is-Seasonality-2240-x-560-px-2-1536x384.png 1536w, https://www.readysignal.com/wp-content/uploads/2024/10/What-is-Seasonality-2240-x-560-px-2-2048x512.png 2048w" width="1024"/></figure>
+<p>Seasonality refers to the predictable and recurring fluctuations in data that happen over a specific period. Typically, these fluctuations are related to changes in weather, holidays, or cultural events. In business, seasonality affects sales patterns, staffing needs, and consumer behavior. For example, retail sales often peak during the holiday season. Recognizing these patterns is essential because they can mask underlying trends in the data. Understanding seasonality helps businesses better prepare for these fluctuations and adjust their strategies accordingly.</p>
+<h2 class="wp-block-heading"><strong>Seasonality and Macroeconomic Indicators</strong></h2>
+<p>Seasonality plays a significant role in interpreting macroeconomic indicators like GDP. Many economic statistics are reported both as raw (unadjusted) and seasonally adjusted data to offer a clearer picture of underlying trends, free from predictable seasonal influences. For example, about 25% of U.S. GDP fluctuations can be attributed to seasonal changes such as holiday spending or end-of-year tax measures. Seasonal adjustments also capture subtler patterns, like increased consumer spending on paydays. One common method for isolating these seasonal effects is the X-13 procedure<a href="#_ftn1" id="_ftnref1">[1]</a>, developed by the U.S. Census Bureau, which breaks down data into seasonal, trend-cycle, and irregular components, allowing analysts to focus on long-term trends without distortion from regular seasonal fluctuations.</p>
+<h2 class="wp-block-heading"><strong>The Importance of Seasonally Adjusting Data</strong></h2>
+<p>When predicting a time series, it is crucial to ensure that the historical data of the variables being predicted is seasonally adjusted. Failing to account for seasonality can result in misleading conclusions, as the model may interpret regular seasonal fluctuations, like holiday sales spikes or back-to-school shopping surges, as lasting trends. By adjusting for these predictable patterns, you allow the model to focus on the true underlying factors driving sales. This leads to more accurate and reliable predictions, especially when analyzing historical data to forecast future performance.</p>
+<h2 class="wp-block-heading">Ready Signal</h2>
+<p>We’ve enjoyed helping our clients understand the seasonality of their data to uncover deeper knowledge about what is driving traffic and interest in the businesses they serve.<br/><br/>Let us help you! Ready Signal is an external data platform that helps users discover, test, and integrate data from various external sources to build better predictive models. By properly accounting for seasonality, models can better align with real-world dynamics, enabling more precise forecasts and improving strategic decisions in response to market changes.<br/><br/>If you’re curious about seasonality and how data from external sources can help you understand what’s happening inside your business, <a href="undefined">get in touch tod</a><a href="https://www.readysignal.com/#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">ay!</a></p>
+<h3 class="wp-block-heading">Keep Learning About Seasonality</h3>
+<p>If you’d like to keep learning about seasonality, here are some additional resources that might be of interest:<br/><a href="https://www.kaggle.com/code/ryanholbrook/seasonality">S</a><a href="https://www.kaggle.com/code/ryanholbrook/seasonality" rel="noreferrer noopener" target="_blank">easonality (kaggle.com)</a><br/><a href="https://www.readysignal.com/#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D" rel="noreferrer noopener" target="_blank">Why economists care about “seasonally adjusted” data – Marketplace</a><br/><a href="https://www.census.gov/topics/research/seasonal-adjustment.html">Time Series and Seasonal Adjustment (census.gov)</a></p>
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+<p><a href="#_ftnref1" id="_ftn1">[1]</a> https://www.census.gov/data/software/x13as/about.html</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-eeda3a2 e-con-full e-flex e-con" data-element_type="container" data-id="eeda3a2" data-settings='{"content_width":"full"}'>
+<div class="elementor-element elementor-element-ca7d84f elementor-widget elementor-widget-template" data-element_type="widget" data-id="ca7d84f" data-widget_type="template.default">
+<div class="elementor-widget-container">
+<div class="elementor-template">
+<div class="elementor elementor-1654" data-elementor-id="1654" data-elementor-type="container">
+<div class="elementor-element elementor-element-6bb89eb7 e-flex e-con-boxed e-con" data-element_type="container" data-id="6bb89eb7" data-settings='{"background_background":"classic","content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-38fd0eba e-flex e-con-boxed e-con" data-element_type="container" data-id="38fd0eba" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-23641637 elementor-widget elementor-widget-heading" data-element_type="widget" data-id="23641637" data-widget_type="heading.default">
+<div class="elementor-widget-container">
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3> </div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-c5d0540 e-flex e-con-boxed e-con" data-element_type="container" data-id="c5d0540" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-3b2d7408 elementor-widget elementor-widget-button" data-element_type="widget" data-id="3b2d7408" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-668ff799 elementor-widget elementor-widget-button" data-element_type="widget" data-id="668ff799" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-3ecacce e-flex e-con-boxed e-con" data-element_type="container" data-id="3ecacce" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-d90718e e-con-full e-flex e-con" data-element_type="container" data-id="d90718e" data-settings='{"content_width":"full"}'>
+<div class="elementor-element elementor-element-62bc9fe elementor-widget elementor-widget-theme-post-title elementor-page-title elementor-widget-heading" data-element_type="widget" data-id="62bc9fe" data-widget_type="theme-post-title.default">
+<div class="elementor-widget-container">
+<style>/*! elementor - v3.14.0 - 14-06-2023 */
+.elementor-heading-title{padding:0;margin:0;line-height:1}.elementor-widget-heading .elementor-heading-title[class*=elementor-size-]>a{color:inherit;font-size:inherit;line-height:inherit}.elementor-widget-heading .elementor-heading-title.elementor-size-small{font-size:15px}.elementor-widget-heading .elementor-heading-title.elementor-size-medium{font-size:19px}.elementor-widget-heading .elementor-heading-title.elementor-size-large{font-size:29px}.elementor-widget-heading .elementor-heading-title.elementor-size-xl{font-size:39px}.elementor-widget-heading .elementor-heading-title.elementor-size-xxl{font-size:59px}</style><h1 class="elementor-heading-title elementor-size-default">What is Seasonality?</h1> </div>
+</div>
+<div class="elementor-element elementor-element-375f26a elementor-align-left elementor-widget elementor-widget-post-info" data-element_type="widget" data-id="375f26a" data-widget_type="post-info.default">
+<div class="elementor-widget-container">
+<link href="https://www.readysignal.com/wp-content/plugins/elementor/assets/css/widget-icon-list.min.css" rel="stylesheet"/><link href="https://www.readysignal.com/wp-content/plugins/elementor-pro/assets/css/widget-theme-elements.min.css" rel="stylesheet"/> <ul class="elementor-inline-items elementor-icon-list-items elementor-post-info">
+<li class="elementor-icon-list-item elementor-repeater-item-7540876 elementor-inline-item" itemprop="author">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-author">
+										Erica Paulos					</span>
+</li>
+<li class="elementor-icon-list-item elementor-repeater-item-450fc99 elementor-inline-item" itemprop="datePublished">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-date">
+<span class="elementor-post-info__item-prefix">/</span>
+										October 10, 2024					</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="elementor-element elementor-element-36730df elementor-widget elementor-widget-theme-post-content" data-element_type="widget" data-id="36730df" data-widget_type="theme-post-content.default">
+<div class="elementor-widget-container">
+<figure class="wp-block-image size-large"><img alt="Ensure accurate predictions by understanding seasonality." class="wp-image-4442" decoding="async" fetchpriority="high" height="256" sizes="(max-width: 1024px) 100vw, 1024px" src="images/What-is-Seasonality-2240-x-560-px-2-1024x256.png" srcset="images/What-is-Seasonality-2240-x-560-px-2-1024x256.png 1024w, https://www.readysignal.com/wp-content/uploads/2024/10/What-is-Seasonality-2240-x-560-px-2-300x75.png 300w, https://www.readysignal.com/wp-content/uploads/2024/10/What-is-Seasonality-2240-x-560-px-2-768x192.png 768w, https://www.readysignal.com/wp-content/uploads/2024/10/What-is-Seasonality-2240-x-560-px-2-1536x384.png 1536w, https://www.readysignal.com/wp-content/uploads/2024/10/What-is-Seasonality-2240-x-560-px-2-2048x512.png 2048w" width="1024"/></figure>
+<p>Seasonality refers to the predictable and recurring fluctuations in data that happen over a specific period. Typically, these fluctuations are related to changes in weather, holidays, or cultural events. In business, seasonality affects sales patterns, staffing needs, and consumer behavior. For example, retail sales often peak during the holiday season. Recognizing these patterns is essential because they can mask underlying trends in the data. Understanding seasonality helps businesses better prepare for these fluctuations and adjust their strategies accordingly.</p>
+<h2 class="wp-block-heading"><strong>Seasonality and Macroeconomic Indicators</strong></h2>
+<p>Seasonality plays a significant role in interpreting macroeconomic indicators like GDP. Many economic statistics are reported both as raw (unadjusted) and seasonally adjusted data to offer a clearer picture of underlying trends, free from predictable seasonal influences. For example, about 25% of U.S. GDP fluctuations can be attributed to seasonal changes such as holiday spending or end-of-year tax measures. Seasonal adjustments also capture subtler patterns, like increased consumer spending on paydays. One common method for isolating these seasonal effects is the X-13 procedure<a href="#_ftn1" id="_ftnref1">[1]</a>, developed by the U.S. Census Bureau, which breaks down data into seasonal, trend-cycle, and irregular components, allowing analysts to focus on long-term trends without distortion from regular seasonal fluctuations.</p>
+<h2 class="wp-block-heading"><strong>The Importance of Seasonally Adjusting Data</strong></h2>
+<p>When predicting a time series, it is crucial to ensure that the historical data of the variables being predicted is seasonally adjusted. Failing to account for seasonality can result in misleading conclusions, as the model may interpret regular seasonal fluctuations, like holiday sales spikes or back-to-school shopping surges, as lasting trends. By adjusting for these predictable patterns, you allow the model to focus on the true underlying factors driving sales. This leads to more accurate and reliable predictions, especially when analyzing historical data to forecast future performance.</p>
+<h2 class="wp-block-heading">Ready Signal</h2>
+<p>We’ve enjoyed helping our clients understand the seasonality of their data to uncover deeper knowledge about what is driving traffic and interest in the businesses they serve.<br/><br/>Let us help you! Ready Signal is an external data platform that helps users discover, test, and integrate data from various external sources to build better predictive models. By properly accounting for seasonality, models can better align with real-world dynamics, enabling more precise forecasts and improving strategic decisions in response to market changes.<br/><br/>If you’re curious about seasonality and how data from external sources can help you understand what’s happening inside your business, <a href="undefined">get in touch tod</a><a href="https://www.readysignal.com/#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">ay!</a></p>
+<h3 class="wp-block-heading">Keep Learning About Seasonality</h3>
+<p>If you’d like to keep learning about seasonality, here are some additional resources that might be of interest:<br/><a href="https://www.kaggle.com/code/ryanholbrook/seasonality">S</a><a href="https://www.kaggle.com/code/ryanholbrook/seasonality" rel="noreferrer noopener" target="_blank">easonality (kaggle.com)</a><br/><a href="https://www.readysignal.com/#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D" rel="noreferrer noopener" target="_blank">Why economists care about “seasonally adjusted” data – Marketplace</a><br/><a href="https://www.census.gov/topics/research/seasonal-adjustment.html">Time Series and Seasonal Adjustment (census.gov)</a></p>
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+<p><a href="#_ftnref1" id="_ftn1">[1]</a> https://www.census.gov/data/software/x13as/about.html</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-d90718e e-con-full e-flex e-con" data-element_type="container" data-id="d90718e" data-settings='{"content_width":"full"}'>
+<div class="elementor-element elementor-element-62bc9fe elementor-widget elementor-widget-theme-post-title elementor-page-title elementor-widget-heading" data-element_type="widget" data-id="62bc9fe" data-widget_type="theme-post-title.default">
+<div class="elementor-widget-container">
+<style>/*! elementor - v3.14.0 - 14-06-2023 */
+.elementor-heading-title{padding:0;margin:0;line-height:1}.elementor-widget-heading .elementor-heading-title[class*=elementor-size-]>a{color:inherit;font-size:inherit;line-height:inherit}.elementor-widget-heading .elementor-heading-title.elementor-size-small{font-size:15px}.elementor-widget-heading .elementor-heading-title.elementor-size-medium{font-size:19px}.elementor-widget-heading .elementor-heading-title.elementor-size-large{font-size:29px}.elementor-widget-heading .elementor-heading-title.elementor-size-xl{font-size:39px}.elementor-widget-heading .elementor-heading-title.elementor-size-xxl{font-size:59px}</style><h1 class="elementor-heading-title elementor-size-default">What is Seasonality?</h1> </div>
+</div>
+<div class="elementor-element elementor-element-375f26a elementor-align-left elementor-widget elementor-widget-post-info" data-element_type="widget" data-id="375f26a" data-widget_type="post-info.default">
+<div class="elementor-widget-container">
+<link href="https://www.readysignal.com/wp-content/plugins/elementor/assets/css/widget-icon-list.min.css" rel="stylesheet"/><link href="https://www.readysignal.com/wp-content/plugins/elementor-pro/assets/css/widget-theme-elements.min.css" rel="stylesheet"/> <ul class="elementor-inline-items elementor-icon-list-items elementor-post-info">
+<li class="elementor-icon-list-item elementor-repeater-item-7540876 elementor-inline-item" itemprop="author">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-author">
+										Erica Paulos					</span>
+</li>
+<li class="elementor-icon-list-item elementor-repeater-item-450fc99 elementor-inline-item" itemprop="datePublished">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-date">
+<span class="elementor-post-info__item-prefix">/</span>
+										October 10, 2024					</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="elementor-element elementor-element-36730df elementor-widget elementor-widget-theme-post-content" data-element_type="widget" data-id="36730df" data-widget_type="theme-post-content.default">
+<div class="elementor-widget-container">
+<figure class="wp-block-image size-large"><img alt="Ensure accurate predictions by understanding seasonality." class="wp-image-4442" decoding="async" fetchpriority="high" height="256" sizes="(max-width: 1024px) 100vw, 1024px" src="images/What-is-Seasonality-2240-x-560-px-2-1024x256.png" srcset="images/What-is-Seasonality-2240-x-560-px-2-1024x256.png 1024w, https://www.readysignal.com/wp-content/uploads/2024/10/What-is-Seasonality-2240-x-560-px-2-300x75.png 300w, https://www.readysignal.com/wp-content/uploads/2024/10/What-is-Seasonality-2240-x-560-px-2-768x192.png 768w, https://www.readysignal.com/wp-content/uploads/2024/10/What-is-Seasonality-2240-x-560-px-2-1536x384.png 1536w, https://www.readysignal.com/wp-content/uploads/2024/10/What-is-Seasonality-2240-x-560-px-2-2048x512.png 2048w" width="1024"/></figure>
+<p>Seasonality refers to the predictable and recurring fluctuations in data that happen over a specific period. Typically, these fluctuations are related to changes in weather, holidays, or cultural events. In business, seasonality affects sales patterns, staffing needs, and consumer behavior. For example, retail sales often peak during the holiday season. Recognizing these patterns is essential because they can mask underlying trends in the data. Understanding seasonality helps businesses better prepare for these fluctuations and adjust their strategies accordingly.</p>
+<h2 class="wp-block-heading"><strong>Seasonality and Macroeconomic Indicators</strong></h2>
+<p>Seasonality plays a significant role in interpreting macroeconomic indicators like GDP. Many economic statistics are reported both as raw (unadjusted) and seasonally adjusted data to offer a clearer picture of underlying trends, free from predictable seasonal influences. For example, about 25% of U.S. GDP fluctuations can be attributed to seasonal changes such as holiday spending or end-of-year tax measures. Seasonal adjustments also capture subtler patterns, like increased consumer spending on paydays. One common method for isolating these seasonal effects is the X-13 procedure<a href="#_ftn1" id="_ftnref1">[1]</a>, developed by the U.S. Census Bureau, which breaks down data into seasonal, trend-cycle, and irregular components, allowing analysts to focus on long-term trends without distortion from regular seasonal fluctuations.</p>
+<h2 class="wp-block-heading"><strong>The Importance of Seasonally Adjusting Data</strong></h2>
+<p>When predicting a time series, it is crucial to ensure that the historical data of the variables being predicted is seasonally adjusted. Failing to account for seasonality can result in misleading conclusions, as the model may interpret regular seasonal fluctuations, like holiday sales spikes or back-to-school shopping surges, as lasting trends. By adjusting for these predictable patterns, you allow the model to focus on the true underlying factors driving sales. This leads to more accurate and reliable predictions, especially when analyzing historical data to forecast future performance.</p>
+<h2 class="wp-block-heading">Ready Signal</h2>
+<p>We’ve enjoyed helping our clients understand the seasonality of their data to uncover deeper knowledge about what is driving traffic and interest in the businesses they serve.<br/><br/>Let us help you! Ready Signal is an external data platform that helps users discover, test, and integrate data from various external sources to build better predictive models. By properly accounting for seasonality, models can better align with real-world dynamics, enabling more precise forecasts and improving strategic decisions in response to market changes.<br/><br/>If you’re curious about seasonality and how data from external sources can help you understand what’s happening inside your business, <a href="undefined">get in touch tod</a><a href="https://www.readysignal.com/#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">ay!</a></p>
+<h3 class="wp-block-heading">Keep Learning About Seasonality</h3>
+<p>If you’d like to keep learning about seasonality, here are some additional resources that might be of interest:<br/><a href="https://www.kaggle.com/code/ryanholbrook/seasonality">S</a><a href="https://www.kaggle.com/code/ryanholbrook/seasonality" rel="noreferrer noopener" target="_blank">easonality (kaggle.com)</a><br/><a href="https://www.readysignal.com/#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D" rel="noreferrer noopener" target="_blank">Why economists care about “seasonally adjusted” data – Marketplace</a><br/><a href="https://www.census.gov/topics/research/seasonal-adjustment.html">Time Series and Seasonal Adjustment (census.gov)</a></p>
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+<p><a href="#_ftnref1" id="_ftn1">[1]</a> https://www.census.gov/data/software/x13as/about.html</p>
+</div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-d90718e e-con-full e-flex e-con" data-element_type="container" data-id="d90718e" data-settings='{"content_width":"full"}'>
+<div class="elementor-element elementor-element-62bc9fe elementor-widget elementor-widget-theme-post-title elementor-page-title elementor-widget-heading" data-element_type="widget" data-id="62bc9fe" data-widget_type="theme-post-title.default">
+<div class="elementor-widget-container">
+<style>/*! elementor - v3.14.0 - 14-06-2023 */
+.elementor-heading-title{padding:0;margin:0;line-height:1}.elementor-widget-heading .elementor-heading-title[class*=elementor-size-]>a{color:inherit;font-size:inherit;line-height:inherit}.elementor-widget-heading .elementor-heading-title.elementor-size-small{font-size:15px}.elementor-widget-heading .elementor-heading-title.elementor-size-medium{font-size:19px}.elementor-widget-heading .elementor-heading-title.elementor-size-large{font-size:29px}.elementor-widget-heading .elementor-heading-title.elementor-size-xl{font-size:39px}.elementor-widget-heading .elementor-heading-title.elementor-size-xxl{font-size:59px}</style><h1 class="elementor-heading-title elementor-size-default">What is Seasonality?</h1> </div>
+</div>
+<div class="elementor-element elementor-element-375f26a elementor-align-left elementor-widget elementor-widget-post-info" data-element_type="widget" data-id="375f26a" data-widget_type="post-info.default">
+<div class="elementor-widget-container">
+<link href="https://www.readysignal.com/wp-content/plugins/elementor/assets/css/widget-icon-list.min.css" rel="stylesheet"/><link href="https://www.readysignal.com/wp-content/plugins/elementor-pro/assets/css/widget-theme-elements.min.css" rel="stylesheet"/> <ul class="elementor-inline-items elementor-icon-list-items elementor-post-info">
+<li class="elementor-icon-list-item elementor-repeater-item-7540876 elementor-inline-item" itemprop="author">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-author">
+										Erica Paulos					</span>
+</li>
+<li class="elementor-icon-list-item elementor-repeater-item-450fc99 elementor-inline-item" itemprop="datePublished">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-date">
+<span class="elementor-post-info__item-prefix">/</span>
+										October 10, 2024					</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="elementor-element elementor-element-36730df elementor-widget elementor-widget-theme-post-content" data-element_type="widget" data-id="36730df" data-widget_type="theme-post-content.default">
+<div class="elementor-widget-container">
+<figure class="wp-block-image size-large"><img alt="Ensure accurate predictions by understanding seasonality." class="wp-image-4442" decoding="async" fetchpriority="high" height="256" sizes="(max-width: 1024px) 100vw, 1024px" src="images/What-is-Seasonality-2240-x-560-px-2-1024x256.png" srcset="images/What-is-Seasonality-2240-x-560-px-2-1024x256.png 1024w, https://www.readysignal.com/wp-content/uploads/2024/10/What-is-Seasonality-2240-x-560-px-2-300x75.png 300w, https://www.readysignal.com/wp-content/uploads/2024/10/What-is-Seasonality-2240-x-560-px-2-768x192.png 768w, https://www.readysignal.com/wp-content/uploads/2024/10/What-is-Seasonality-2240-x-560-px-2-1536x384.png 1536w, https://www.readysignal.com/wp-content/uploads/2024/10/What-is-Seasonality-2240-x-560-px-2-2048x512.png 2048w" width="1024"/></figure>
+<p>Seasonality refers to the predictable and recurring fluctuations in data that happen over a specific period. Typically, these fluctuations are related to changes in weather, holidays, or cultural events. In business, seasonality affects sales patterns, staffing needs, and consumer behavior. For example, retail sales often peak during the holiday season. Recognizing these patterns is essential because they can mask underlying trends in the data. Understanding seasonality helps businesses better prepare for these fluctuations and adjust their strategies accordingly.</p>
+<h2 class="wp-block-heading"><strong>Seasonality and Macroeconomic Indicators</strong></h2>
+<p>Seasonality plays a significant role in interpreting macroeconomic indicators like GDP. Many economic statistics are reported both as raw (unadjusted) and seasonally adjusted data to offer a clearer picture of underlying trends, free from predictable seasonal influences. For example, about 25% of U.S. GDP fluctuations can be attributed to seasonal changes such as holiday spending or end-of-year tax measures. Seasonal adjustments also capture subtler patterns, like increased consumer spending on paydays. One common method for isolating these seasonal effects is the X-13 procedure<a href="#_ftn1" id="_ftnref1">[1]</a>, developed by the U.S. Census Bureau, which breaks down data into seasonal, trend-cycle, and irregular components, allowing analysts to focus on long-term trends without distortion from regular seasonal fluctuations.</p>
+<h2 class="wp-block-heading"><strong>The Importance of Seasonally Adjusting Data</strong></h2>
+<p>When predicting a time series, it is crucial to ensure that the historical data of the variables being predicted is seasonally adjusted. Failing to account for seasonality can result in misleading conclusions, as the model may interpret regular seasonal fluctuations, like holiday sales spikes or back-to-school shopping surges, as lasting trends. By adjusting for these predictable patterns, you allow the model to focus on the true underlying factors driving sales. This leads to more accurate and reliable predictions, especially when analyzing historical data to forecast future performance.</p>
+<h2 class="wp-block-heading">Ready Signal</h2>
+<p>We’ve enjoyed helping our clients understand the seasonality of their data to uncover deeper knowledge about what is driving traffic and interest in the businesses they serve.<br/><br/>Let us help you! Ready Signal is an external data platform that helps users discover, test, and integrate data from various external sources to build better predictive models. By properly accounting for seasonality, models can better align with real-world dynamics, enabling more precise forecasts and improving strategic decisions in response to market changes.<br/><br/>If you’re curious about seasonality and how data from external sources can help you understand what’s happening inside your business, <a href="undefined">get in touch tod</a><a href="https://www.readysignal.com/#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">ay!</a></p>
+<h3 class="wp-block-heading">Keep Learning About Seasonality</h3>
+<p>If you’d like to keep learning about seasonality, here are some additional resources that might be of interest:<br/><a href="https://www.kaggle.com/code/ryanholbrook/seasonality">S</a><a href="https://www.kaggle.com/code/ryanholbrook/seasonality" rel="noreferrer noopener" target="_blank">easonality (kaggle.com)</a><br/><a href="https://www.readysignal.com/#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D" rel="noreferrer noopener" target="_blank">Why economists care about “seasonally adjusted” data – Marketplace</a><br/><a href="https://www.census.gov/topics/research/seasonal-adjustment.html">Time Series and Seasonal Adjustment (census.gov)</a></p>
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+<p><a href="#_ftnref1" id="_ftn1">[1]</a> https://www.census.gov/data/software/x13as/about.html</p>
+</div>
+</div>
+</div>
+<h1 class="elementor-heading-title elementor-size-default">What is Seasonality?</h1>
+<ul class="elementor-inline-items elementor-icon-list-items elementor-post-info">
+<li class="elementor-icon-list-item elementor-repeater-item-7540876 elementor-inline-item" itemprop="author">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-author">
+										Erica Paulos					</span>
+</li>
+<li class="elementor-icon-list-item elementor-repeater-item-450fc99 elementor-inline-item" itemprop="datePublished">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-date">
+<span class="elementor-post-info__item-prefix">/</span>
+										October 10, 2024					</span>
+</li>
+</ul>
+<li class="elementor-icon-list-item elementor-repeater-item-7540876 elementor-inline-item" itemprop="author">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-author">
+										Erica Paulos					</span>
+</li>
+<li class="elementor-icon-list-item elementor-repeater-item-450fc99 elementor-inline-item" itemprop="datePublished">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-date">
+<span class="elementor-post-info__item-prefix">/</span>
+										October 10, 2024					</span>
+</li>
+<img alt="Ensure accurate predictions by understanding seasonality." class="wp-image-4442" decoding="async" fetchpriority="high" height="256" sizes="(max-width: 1024px) 100vw, 1024px" src="images/What-is-Seasonality-2240-x-560-px-2-1024x256.png" srcset="images/What-is-Seasonality-2240-x-560-px-2-1024x256.png 1024w, https://www.readysignal.com/wp-content/uploads/2024/10/What-is-Seasonality-2240-x-560-px-2-300x75.png 300w, https://www.readysignal.com/wp-content/uploads/2024/10/What-is-Seasonality-2240-x-560-px-2-768x192.png 768w, https://www.readysignal.com/wp-content/uploads/2024/10/What-is-Seasonality-2240-x-560-px-2-1536x384.png 1536w, https://www.readysignal.com/wp-content/uploads/2024/10/What-is-Seasonality-2240-x-560-px-2-2048x512.png 2048w" width="1024"/>
+<p>Seasonality refers to the predictable and recurring fluctuations in data that happen over a specific period. Typically, these fluctuations are related to changes in weather, holidays, or cultural events. In business, seasonality affects sales patterns, staffing needs, and consumer behavior. For example, retail sales often peak during the holiday season. Recognizing these patterns is essential because they can mask underlying trends in the data. Understanding seasonality helps businesses better prepare for these fluctuations and adjust their strategies accordingly.</p>
+<h2 class="wp-block-heading"><strong>Seasonality and Macroeconomic Indicators</strong></h2>
+<p>Seasonality plays a significant role in interpreting macroeconomic indicators like GDP. Many economic statistics are reported both as raw (unadjusted) and seasonally adjusted data to offer a clearer picture of underlying trends, free from predictable seasonal influences. For example, about 25% of U.S. GDP fluctuations can be attributed to seasonal changes such as holiday spending or end-of-year tax measures. Seasonal adjustments also capture subtler patterns, like increased consumer spending on paydays. One common method for isolating these seasonal effects is the X-13 procedure<a href="#_ftn1" id="_ftnref1">[1]</a>, developed by the U.S. Census Bureau, which breaks down data into seasonal, trend-cycle, and irregular components, allowing analysts to focus on long-term trends without distortion from regular seasonal fluctuations.</p>
+<h2 class="wp-block-heading"><strong>The Importance of Seasonally Adjusting Data</strong></h2>
+<p>When predicting a time series, it is crucial to ensure that the historical data of the variables being predicted is seasonally adjusted. Failing to account for seasonality can result in misleading conclusions, as the model may interpret regular seasonal fluctuations, like holiday sales spikes or back-to-school shopping surges, as lasting trends. By adjusting for these predictable patterns, you allow the model to focus on the true underlying factors driving sales. This leads to more accurate and reliable predictions, especially when analyzing historical data to forecast future performance.</p>
+<h2 class="wp-block-heading">Ready Signal</h2>
+<p>We’ve enjoyed helping our clients understand the seasonality of their data to uncover deeper knowledge about what is driving traffic and interest in the businesses they serve.<br/><br/>Let us help you! Ready Signal is an external data platform that helps users discover, test, and integrate data from various external sources to build better predictive models. By properly accounting for seasonality, models can better align with real-world dynamics, enabling more precise forecasts and improving strategic decisions in response to market changes.<br/><br/>If you’re curious about seasonality and how data from external sources can help you understand what’s happening inside your business, <a href="undefined">get in touch tod</a><a href="https://www.readysignal.com/#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">ay!</a></p>
+<h3 class="wp-block-heading">Keep Learning About Seasonality</h3>
+<p>If you’d like to keep learning about seasonality, here are some additional resources that might be of interest:<br/><a href="https://www.kaggle.com/code/ryanholbrook/seasonality">S</a><a href="https://www.kaggle.com/code/ryanholbrook/seasonality" rel="noreferrer noopener" target="_blank">easonality (kaggle.com)</a><br/><a href="https://www.readysignal.com/#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D" rel="noreferrer noopener" target="_blank">Why economists care about “seasonally adjusted” data – Marketplace</a><br/><a href="https://www.census.gov/topics/research/seasonal-adjustment.html">Time Series and Seasonal Adjustment (census.gov)</a></p>
+<p><a href="#_ftnref1" id="_ftn1">[1]</a> https://www.census.gov/data/software/x13as/about.html</p>
+<div class="elementor-element elementor-element-eeda3a2 e-con-full e-flex e-con" data-element_type="container" data-id="eeda3a2" data-settings='{"content_width":"full"}'>
+<div class="elementor-element elementor-element-ca7d84f elementor-widget elementor-widget-template" data-element_type="widget" data-id="ca7d84f" data-widget_type="template.default">
+<div class="elementor-widget-container">
+<div class="elementor-template">
+<div class="elementor elementor-1654" data-elementor-id="1654" data-elementor-type="container">
+<div class="elementor-element elementor-element-6bb89eb7 e-flex e-con-boxed e-con" data-element_type="container" data-id="6bb89eb7" data-settings='{"background_background":"classic","content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-38fd0eba e-flex e-con-boxed e-con" data-element_type="container" data-id="38fd0eba" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-23641637 elementor-widget elementor-widget-heading" data-element_type="widget" data-id="23641637" data-widget_type="heading.default">
+<div class="elementor-widget-container">
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3> </div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-c5d0540 e-flex e-con-boxed e-con" data-element_type="container" data-id="c5d0540" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-3b2d7408 elementor-widget elementor-widget-button" data-element_type="widget" data-id="3b2d7408" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-668ff799 elementor-widget elementor-widget-button" data-element_type="widget" data-id="668ff799" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="elementor-template">
+<div class="elementor elementor-1654" data-elementor-id="1654" data-elementor-type="container">
+<div class="elementor-element elementor-element-6bb89eb7 e-flex e-con-boxed e-con" data-element_type="container" data-id="6bb89eb7" data-settings='{"background_background":"classic","content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-38fd0eba e-flex e-con-boxed e-con" data-element_type="container" data-id="38fd0eba" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-23641637 elementor-widget elementor-widget-heading" data-element_type="widget" data-id="23641637" data-widget_type="heading.default">
+<div class="elementor-widget-container">
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3> </div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-c5d0540 e-flex e-con-boxed e-con" data-element_type="container" data-id="c5d0540" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-3b2d7408 elementor-widget elementor-widget-button" data-element_type="widget" data-id="3b2d7408" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-668ff799 elementor-widget elementor-widget-button" data-element_type="widget" data-id="668ff799" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="elementor elementor-1654" data-elementor-id="1654" data-elementor-type="container">
+<div class="elementor-element elementor-element-6bb89eb7 e-flex e-con-boxed e-con" data-element_type="container" data-id="6bb89eb7" data-settings='{"background_background":"classic","content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-38fd0eba e-flex e-con-boxed e-con" data-element_type="container" data-id="38fd0eba" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-23641637 elementor-widget elementor-widget-heading" data-element_type="widget" data-id="23641637" data-widget_type="heading.default">
+<div class="elementor-widget-container">
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3> </div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-c5d0540 e-flex e-con-boxed e-con" data-element_type="container" data-id="c5d0540" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-3b2d7408 elementor-widget elementor-widget-button" data-element_type="widget" data-id="3b2d7408" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-668ff799 elementor-widget elementor-widget-button" data-element_type="widget" data-id="668ff799" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-6bb89eb7 e-flex e-con-boxed e-con" data-element_type="container" data-id="6bb89eb7" data-settings='{"background_background":"classic","content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-38fd0eba e-flex e-con-boxed e-con" data-element_type="container" data-id="38fd0eba" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-23641637 elementor-widget elementor-widget-heading" data-element_type="widget" data-id="23641637" data-widget_type="heading.default">
+<div class="elementor-widget-container">
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3> </div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-c5d0540 e-flex e-con-boxed e-con" data-element_type="container" data-id="c5d0540" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-3b2d7408 elementor-widget elementor-widget-button" data-element_type="widget" data-id="3b2d7408" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-668ff799 elementor-widget elementor-widget-button" data-element_type="widget" data-id="668ff799" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-38fd0eba e-flex e-con-boxed e-con" data-element_type="container" data-id="38fd0eba" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-23641637 elementor-widget elementor-widget-heading" data-element_type="widget" data-id="23641637" data-widget_type="heading.default">
+<div class="elementor-widget-container">
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3> </div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-c5d0540 e-flex e-con-boxed e-con" data-element_type="container" data-id="c5d0540" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-3b2d7408 elementor-widget elementor-widget-button" data-element_type="widget" data-id="3b2d7408" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-668ff799 elementor-widget elementor-widget-button" data-element_type="widget" data-id="668ff799" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-38fd0eba e-flex e-con-boxed e-con" data-element_type="container" data-id="38fd0eba" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-23641637 elementor-widget elementor-widget-heading" data-element_type="widget" data-id="23641637" data-widget_type="heading.default">
+<div class="elementor-widget-container">
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3> </div>
+</div>
+</div>
+</div>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-23641637 elementor-widget elementor-widget-heading" data-element_type="widget" data-id="23641637" data-widget_type="heading.default">
+<div class="elementor-widget-container">
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3> </div>
+</div>
+</div>
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3>
+<div class="elementor-element elementor-element-c5d0540 e-flex e-con-boxed e-con" data-element_type="container" data-id="c5d0540" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-3b2d7408 elementor-widget elementor-widget-button" data-element_type="widget" data-id="3b2d7408" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-668ff799 elementor-widget elementor-widget-button" data-element_type="widget" data-id="668ff799" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-3b2d7408 elementor-widget elementor-widget-button" data-element_type="widget" data-id="3b2d7408" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-668ff799 elementor-widget elementor-widget-button" data-element_type="widget" data-id="668ff799" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+    </article>
+</body>
+</html>

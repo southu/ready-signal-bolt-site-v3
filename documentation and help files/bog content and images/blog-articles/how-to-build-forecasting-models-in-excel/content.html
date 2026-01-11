@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to build forecasting models in Excel</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <article>
+        <h1>How to build forecasting models in Excel</h1>
+        <div class="elementor elementor-612 elementor-location-single post-432 post type-post status-publish format-standard has-post-thumbnail hentry category-resources ast-article-single" data-elementor-id="612" data-elementor-type="single-post">
+<div class="elementor-element elementor-element-3ecacce e-flex e-con-boxed e-con" data-element_type="container" data-id="3ecacce" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-d90718e e-con-full e-flex e-con" data-element_type="container" data-id="d90718e" data-settings='{"content_width":"full"}'>
+<div class="elementor-element elementor-element-62bc9fe elementor-widget elementor-widget-theme-post-title elementor-page-title elementor-widget-heading" data-element_type="widget" data-id="62bc9fe" data-widget_type="theme-post-title.default">
+<div class="elementor-widget-container">
+<style>/*! elementor - v3.14.0 - 14-06-2023 */
+.elementor-heading-title{padding:0;margin:0;line-height:1}.elementor-widget-heading .elementor-heading-title[class*=elementor-size-]>a{color:inherit;font-size:inherit;line-height:inherit}.elementor-widget-heading .elementor-heading-title.elementor-size-small{font-size:15px}.elementor-widget-heading .elementor-heading-title.elementor-size-medium{font-size:19px}.elementor-widget-heading .elementor-heading-title.elementor-size-large{font-size:29px}.elementor-widget-heading .elementor-heading-title.elementor-size-xl{font-size:39px}.elementor-widget-heading .elementor-heading-title.elementor-size-xxl{font-size:59px}</style><h1 class="elementor-heading-title elementor-size-default">How to build forecasting models in Excel</h1> </div>
+</div>
+<div class="elementor-element elementor-element-375f26a elementor-align-left elementor-widget elementor-widget-post-info" data-element_type="widget" data-id="375f26a" data-widget_type="post-info.default">
+<div class="elementor-widget-container">
+<link href="https://www.readysignal.com/wp-content/plugins/elementor/assets/css/widget-icon-list.min.css" rel="stylesheet"/><link href="https://www.readysignal.com/wp-content/plugins/elementor-pro/assets/css/widget-theme-elements.min.css" rel="stylesheet"/> <ul class="elementor-inline-items elementor-icon-list-items elementor-post-info">
+<li class="elementor-icon-list-item elementor-repeater-item-7540876 elementor-inline-item" itemprop="author">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-author">
+										Baylen Springer					</span>
+</li>
+<li class="elementor-icon-list-item elementor-repeater-item-450fc99 elementor-inline-item" itemprop="datePublished">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-date">
+<span class="elementor-post-info__item-prefix">/</span>
+										February 16, 2023					</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="elementor-element elementor-element-36730df elementor-widget elementor-widget-theme-post-content" data-element_type="widget" data-id="36730df" data-widget_type="theme-post-content.default">
+<div class="elementor-widget-container">
+<figure class="wp-block-image size-full"><img alt="How to build forecasting models in Excel" class="wp-image-433" decoding="async" fetchpriority="high" height="574" sizes="(max-width: 1024px) 100vw, 1024px" src="images/folder-1-1024x574-1.png" srcset="images/folder-1-1024x574-1.png 1024w, https://www.readysignal.com/wp-content/uploads/2023/05/folder-1-1024x574-1-300x168.png 300w, https://www.readysignal.com/wp-content/uploads/2023/05/folder-1-1024x574-1-768x431.png 768w" width="1024"/></figure>
+<p>This is for anyone who is looking to get their feet wet and learn how to do a quick and easy forecast model, using Excel. For some folks the idea of a “model” can be intimidating, we are here to show you that building a basic model is probably easier than you think. Without further ado here is how you can build forecasting models in Excel…</p>
+<h2 class="wp-block-heading">What is a forecast model?</h2>
+<p>A forecast model is a mathematical representation of a time series, used to predict future values based on historical data. Forecasting models are widely used in business, economics, and other fields to make informed decisions and plan for the future.</p>
+<p>Some industries include:</p>
+<p><strong>Financial Services: </strong>Forecasting models are commonly used in the financial services sector to predict future economic trends, such as interest rates, stock prices, and currency exchange rates.</p>
+<p><strong>Retail and E-commerce:</strong> Retail companies use forecasting models to predict demand for their products, which helps them optimize inventory levels and improve supply chain management.</p>
+<p>E-commerce companies use forecasting models to predict customer behavior and sales trends.</p>
+<p><strong>Manufacturing:</strong> Manufacturers use forecasting models to predict demand for their products, which helps them optimize production schedules, reduce waste, and improve efficiency.</p>
+<p><strong>Energy and Utilities: </strong>Energy and utilities companies use forecasting models to predict energy</p>
+<p>consumption, which helps them plan for energy generation and distribution, and minimize waste and inefficiencies.</p>
+<p><strong>Healthcare:</strong> Healthcare organizations use forecasting models to predict demand for medical services, which helps them optimize staffing levels, reduce waste, and improve patient outcomes.</p>
+<p><strong>Transportation and Logistics: </strong>Transportation and logistics companies use forecasting models to predict demand for their services, which helps them optimize routes, reduce waste, and improve efficiency.</p>
+<p><strong>Government:</strong> Government organizations use forecasting models to predict a variety of economic, social, and environmental trends, which helps them make informed decisions and improve policy outcomes.</p>
+<h2 class="wp-block-heading">How do I make a forecast model?</h2>
+<p>So how do you create a basic forecast? There are several factors that someone might consider when choosing how to build a forecast model:</p>
+<ul class="wp-block-list">
+<li><strong>Data Availability: </strong>One of the first considerations should be the availability and quality of the data needed to build the model. This includes both the historical data needed to train the model, as well as any additional data that may be required for certain forecasting methods. This could include economic indicators, industry trends, and other relevant data that can help to improve the accuracy of the forecast.</li>
+<li><strong>Data Integration: </strong>The process of integrating external data into the model should also be considered. This could include issues such as data format compatibility, data quality, and the resources required to collect and clean the data.</li>
+<li><strong>Computational Requirements: </strong>Some forecasting methods may require more computational power or specialized software to run effectively. For example, more complex models such as ARIMA or neural networks may require specialized software and more computing power.</li>
+<li><strong>Expertise: </strong>The complexity of the forecasting method and the required expertise to build and maintain the model should also be considered. For example, if someone has a background in statistics or machine learning, they may be better suited to build a more complex model.</li>
+<li><strong>Time and Budget: </strong>The time and budget available for building the model should also be considered. More complex models may take longer to build and require more resources, whereas simpler models may be faster and easier to implement.</li>
+<li><strong>Business Needs: </strong>The specific business needs of the forecast should also be considered. For example, if the forecast is needed to make operational decisions, a model with a higher level of accuracy may be preferred. If the forecast is needed for more long-term planning, a model that is able to capture longer-term trends may be more suitable.</li>
+<li><strong>Integration with Other Systems:</strong> If the forecast model needs to be integrated with other systems, such as a database or enterprise software, the compatibility of the chosen method and software should be considered.</li>
+</ul>
+<p>By considering these factors, someone can choose the best way to build a forecast model that meets their specific needs and requirements. It is important to note that incorporating external data (data that is outside of your business) can help to improve the accuracy of the forecast and provide a more complete picture of the future.</p>
+<h2 class="wp-block-heading">Forecasting models in Excel</h2>
+<p>Excel is a commonly used software tool that provides a simple and effective way to build forecasting models. Here is a step-by-step guide on how to build a forecasting model in Excel:</p>
+<p>1. Gather and prepare data: Collect time-series data that you want to forecast. Ensure that the data is organized in a single column, with the date or time in the first column and the corresponding values in the second column.</p>
+<figure class="wp-block-image"><img alt="Forecasting in Excel " class="wp-image-1679" decoding="async" src="images/print-1-1024x491-1.png"/></figure>
+<p>2. Plot the data: Plot the data on a chart in Excel using the “Line chart” type. This will provide a visual representation of the data and help you identify any trends or patterns.</p>
+<figure class="wp-block-image"><img alt="" class="wp-image-1681" decoding="async" src="images/print-2-1024x609-1.png"/></figure>
+<p>3. Use the Forecast Sheet: In Excel, go to the “Data” tab and click on “Forecast Sheet”. This will open a new sheet that will contain the forecast model.</p>
+<figure class="wp-block-image"><img alt="" class="wp-image-1682" decoding="async" src="images/print-3-1024x513-1.png"/></figure>
+<p>4. Select the data range: In the Forecast Sheet, select the data range that you want to forecast. This range should include both the date or time column and the corresponding values column.</p>
+<figure class="wp-block-image"><img alt="" class="wp-image-1683" decoding="async" src="images/print-4.png"/></figure>
+<p>5. Choose the forecasting method: In the Forecast Sheet, select the type of forecasting method you want to use. Excel provides several methods to choose from, including simple moving average, weighted moving average, exponential smoothing, and regression analysis.</p>
+<figure class="wp-block-image"><img alt="" class="wp-image-1685" decoding="async" src="images/print-6-1024x361-1.png"/></figure>
+<p>6. Specify the forecasting period: In the Forecast Sheet, specify the number of periods you want to forecast. This will determine the length of the forecast.</p>
+<p>7. Create the forecast: Click “Include Forecast Statistics” and then click on the “Create Forecast” button in the Forecast Sheet to generate the forecast. Excel will generate the forecast using the selected method and display it in the chart and table.</p>
+<figure class="wp-block-image"><img alt="Forecasting models in Excel " class="wp-image-1686" decoding="async" src="images/print-7.png"/></figure>
+<p>8. Analyze the results: Evaluate the accuracy of the forecast by comparing it to the actual data. If the forecast is not accurate, adjust the model by changing the method or adjusting the parameters.</p>
+<figure class="wp-block-image"><img alt="Forecasting model in Excel " class="wp-image-1687" decoding="async" src="images/print-8-1024x445-1.png"/></figure>
+<p>By following these steps, you can easily build a forecasting model in Excel and use it to make informed decisions about the future. Whether you are a data scientist or simply someone who wants to gain insight into future trends, Excel provides an accessible and effective solution for building forecasting models.</p>
+<h2 class="wp-block-heading">Forecasting models in Excel using external data</h2>
+<p>In this section, we will demonstrate how to expand on the example above, and incorporate external data such as economic indicators or weather information into your forecasting process with ease. With the use of Ready Signal, you can streamline this process and quickly access the latest data, allowing you to make more informed decisions and improve the accuracy of your forecasts. This efficient and effective solution is designed to help you stay ahead of the competition by providing you with up-to-date information at your fingertips. Let’s walk you through the process below.</p>
+<p>Here is a general step-by-step explanation on how to incorporate external data into a forecast model in Excel along with a video summary of the process.</p>
+<p></p>
+<figure class="wp-block-embed is-type-video is-provider-youtube wp-block-embed-youtube wp-embed-aspect-16-9 wp-has-aspect-ratio"><div class="wp-block-embed__wrapper">
+<div class="ast-oembed-container" style="height: 100%;"><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" frameborder="0" height="675" src="https://www.youtube.com/embed/JCtb0U1uI8A?feature=oembed" title="How To Create a Basic Excel Forecast Using Ready Signal" width="1200"></iframe></div>
+</div></figure>
+<p>Step 1: Click the “Create Signal” button and select Auto-Discovery</p>
+<figure class="wp-block-image"><img alt="" class="wp-image-1688" decoding="async" src="images/print-9-1024x530-1.png"/></figure>
+<p>Step 2: Enter the basic information for your signal, select Geographic Granularity and upload your file.</p>
+<figure class="wp-block-image"><img alt="" class="wp-image-1689" decoding="async" src="images/print-10.png"/></figure>
+<p>Step 3: Confirm the selected features and click “Finish” to create the signal.</p>
+<p>Step 4: Modify the signal as needed, including adding/removing features, editing basic signal details, or applying data science treatments.</p>
+<figure class="wp-block-image"><img alt="" class="wp-image-1690" decoding="async" src="images/print-11-1024x545-1.png"/></figure>
+<p>Next steps: Get the output of your signal data in either a CSV or Excel format by using the “Download” option in the platform.</p>
+<figure class="wp-block-image"><img alt="" class="wp-image-1691" decoding="async" src="images/print-12-1024x508-1.png"/></figure>
+<p>Note: More information about time and geo grains, data science treatments, and output options can be found in related resources.</p>
+<p>To create an excel forecast using the information from your signal, you can follow the steps and process outlined above with this data. Here is a recap of those steps.</p>
+<p>Open the output file in Microsoft Excel and familiarize yourself with the data.</p>
+<p>Choose the appropriate forecasting method in Excel, such as simple linear regression, moving average, or exponential smoothing.</p>
+<p>Apply the selected forecasting method to your data in Excel, using the data from your signal as input.</p>
+<p>Review the results and make any necessary adjustments to the forecasting method or input data.</p>
+<p>Create charts and visualizations to help you better understand and present your forecast results.</p>
+<p>Note: The steps and specifics of creating an excel forecast can vary depending on the data and the forecasting method you choose. It may be helpful to familiarize yourself with the different forecasting techniques and tools available in Excel and consult resources such as tutorials or forums for guidance.</p>
+<p>By following these steps, someone can use external data to build a more accurate and comprehensive forecast model in Excel.</p>
+<p>In conclusion, building forecasting models in Excel can be a valuable skill for data analytics professionals and organizations that want to make informed decisions based on historical data.</p>
+<p>By following the steps outlined in this article, users can leverage the powerful tools and featuresof Excel to build a basic forecasting model. Excel is still widely used today and can be the key to unlocking valuable insights and driving better business outcomes. Additionally, tools like Ready Signal can further enhance the capabilities of Excel by allowing users to easily access and incorporate external data into their models. With the right tools and skills, Excel can be a powerful tool for forecasting and data analysis in any organization.</p>
+<p>If you are interested in learning more about how you can enhance and enrich the forecasting capabilities of Excel with external data, contact us or sign up for a free <a href="https://www.readysignal.com/">Ready Signal</a> account today!</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-eeda3a2 e-con-full e-flex e-con" data-element_type="container" data-id="eeda3a2" data-settings='{"content_width":"full"}'>
+<div class="elementor-element elementor-element-ca7d84f elementor-widget elementor-widget-template" data-element_type="widget" data-id="ca7d84f" data-widget_type="template.default">
+<div class="elementor-widget-container">
+<div class="elementor-template">
+<div class="elementor elementor-1654" data-elementor-id="1654" data-elementor-type="container">
+<div class="elementor-element elementor-element-6bb89eb7 e-flex e-con-boxed e-con" data-element_type="container" data-id="6bb89eb7" data-settings='{"background_background":"classic","content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-38fd0eba e-flex e-con-boxed e-con" data-element_type="container" data-id="38fd0eba" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-23641637 elementor-widget elementor-widget-heading" data-element_type="widget" data-id="23641637" data-widget_type="heading.default">
+<div class="elementor-widget-container">
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3> </div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-c5d0540 e-flex e-con-boxed e-con" data-element_type="container" data-id="c5d0540" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-3b2d7408 elementor-widget elementor-widget-button" data-element_type="widget" data-id="3b2d7408" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-668ff799 elementor-widget elementor-widget-button" data-element_type="widget" data-id="668ff799" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-3ecacce e-flex e-con-boxed e-con" data-element_type="container" data-id="3ecacce" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-d90718e e-con-full e-flex e-con" data-element_type="container" data-id="d90718e" data-settings='{"content_width":"full"}'>
+<div class="elementor-element elementor-element-62bc9fe elementor-widget elementor-widget-theme-post-title elementor-page-title elementor-widget-heading" data-element_type="widget" data-id="62bc9fe" data-widget_type="theme-post-title.default">
+<div class="elementor-widget-container">
+<style>/*! elementor - v3.14.0 - 14-06-2023 */
+.elementor-heading-title{padding:0;margin:0;line-height:1}.elementor-widget-heading .elementor-heading-title[class*=elementor-size-]>a{color:inherit;font-size:inherit;line-height:inherit}.elementor-widget-heading .elementor-heading-title.elementor-size-small{font-size:15px}.elementor-widget-heading .elementor-heading-title.elementor-size-medium{font-size:19px}.elementor-widget-heading .elementor-heading-title.elementor-size-large{font-size:29px}.elementor-widget-heading .elementor-heading-title.elementor-size-xl{font-size:39px}.elementor-widget-heading .elementor-heading-title.elementor-size-xxl{font-size:59px}</style><h1 class="elementor-heading-title elementor-size-default">How to build forecasting models in Excel</h1> </div>
+</div>
+<div class="elementor-element elementor-element-375f26a elementor-align-left elementor-widget elementor-widget-post-info" data-element_type="widget" data-id="375f26a" data-widget_type="post-info.default">
+<div class="elementor-widget-container">
+<link href="https://www.readysignal.com/wp-content/plugins/elementor/assets/css/widget-icon-list.min.css" rel="stylesheet"/><link href="https://www.readysignal.com/wp-content/plugins/elementor-pro/assets/css/widget-theme-elements.min.css" rel="stylesheet"/> <ul class="elementor-inline-items elementor-icon-list-items elementor-post-info">
+<li class="elementor-icon-list-item elementor-repeater-item-7540876 elementor-inline-item" itemprop="author">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-author">
+										Baylen Springer					</span>
+</li>
+<li class="elementor-icon-list-item elementor-repeater-item-450fc99 elementor-inline-item" itemprop="datePublished">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-date">
+<span class="elementor-post-info__item-prefix">/</span>
+										February 16, 2023					</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="elementor-element elementor-element-36730df elementor-widget elementor-widget-theme-post-content" data-element_type="widget" data-id="36730df" data-widget_type="theme-post-content.default">
+<div class="elementor-widget-container">
+<figure class="wp-block-image size-full"><img alt="How to build forecasting models in Excel" class="wp-image-433" decoding="async" fetchpriority="high" height="574" sizes="(max-width: 1024px) 100vw, 1024px" src="images/folder-1-1024x574-1.png" srcset="images/folder-1-1024x574-1.png 1024w, https://www.readysignal.com/wp-content/uploads/2023/05/folder-1-1024x574-1-300x168.png 300w, https://www.readysignal.com/wp-content/uploads/2023/05/folder-1-1024x574-1-768x431.png 768w" width="1024"/></figure>
+<p>This is for anyone who is looking to get their feet wet and learn how to do a quick and easy forecast model, using Excel. For some folks the idea of a “model” can be intimidating, we are here to show you that building a basic model is probably easier than you think. Without further ado here is how you can build forecasting models in Excel…</p>
+<h2 class="wp-block-heading">What is a forecast model?</h2>
+<p>A forecast model is a mathematical representation of a time series, used to predict future values based on historical data. Forecasting models are widely used in business, economics, and other fields to make informed decisions and plan for the future.</p>
+<p>Some industries include:</p>
+<p><strong>Financial Services: </strong>Forecasting models are commonly used in the financial services sector to predict future economic trends, such as interest rates, stock prices, and currency exchange rates.</p>
+<p><strong>Retail and E-commerce:</strong> Retail companies use forecasting models to predict demand for their products, which helps them optimize inventory levels and improve supply chain management.</p>
+<p>E-commerce companies use forecasting models to predict customer behavior and sales trends.</p>
+<p><strong>Manufacturing:</strong> Manufacturers use forecasting models to predict demand for their products, which helps them optimize production schedules, reduce waste, and improve efficiency.</p>
+<p><strong>Energy and Utilities: </strong>Energy and utilities companies use forecasting models to predict energy</p>
+<p>consumption, which helps them plan for energy generation and distribution, and minimize waste and inefficiencies.</p>
+<p><strong>Healthcare:</strong> Healthcare organizations use forecasting models to predict demand for medical services, which helps them optimize staffing levels, reduce waste, and improve patient outcomes.</p>
+<p><strong>Transportation and Logistics: </strong>Transportation and logistics companies use forecasting models to predict demand for their services, which helps them optimize routes, reduce waste, and improve efficiency.</p>
+<p><strong>Government:</strong> Government organizations use forecasting models to predict a variety of economic, social, and environmental trends, which helps them make informed decisions and improve policy outcomes.</p>
+<h2 class="wp-block-heading">How do I make a forecast model?</h2>
+<p>So how do you create a basic forecast? There are several factors that someone might consider when choosing how to build a forecast model:</p>
+<ul class="wp-block-list">
+<li><strong>Data Availability: </strong>One of the first considerations should be the availability and quality of the data needed to build the model. This includes both the historical data needed to train the model, as well as any additional data that may be required for certain forecasting methods. This could include economic indicators, industry trends, and other relevant data that can help to improve the accuracy of the forecast.</li>
+<li><strong>Data Integration: </strong>The process of integrating external data into the model should also be considered. This could include issues such as data format compatibility, data quality, and the resources required to collect and clean the data.</li>
+<li><strong>Computational Requirements: </strong>Some forecasting methods may require more computational power or specialized software to run effectively. For example, more complex models such as ARIMA or neural networks may require specialized software and more computing power.</li>
+<li><strong>Expertise: </strong>The complexity of the forecasting method and the required expertise to build and maintain the model should also be considered. For example, if someone has a background in statistics or machine learning, they may be better suited to build a more complex model.</li>
+<li><strong>Time and Budget: </strong>The time and budget available for building the model should also be considered. More complex models may take longer to build and require more resources, whereas simpler models may be faster and easier to implement.</li>
+<li><strong>Business Needs: </strong>The specific business needs of the forecast should also be considered. For example, if the forecast is needed to make operational decisions, a model with a higher level of accuracy may be preferred. If the forecast is needed for more long-term planning, a model that is able to capture longer-term trends may be more suitable.</li>
+<li><strong>Integration with Other Systems:</strong> If the forecast model needs to be integrated with other systems, such as a database or enterprise software, the compatibility of the chosen method and software should be considered.</li>
+</ul>
+<p>By considering these factors, someone can choose the best way to build a forecast model that meets their specific needs and requirements. It is important to note that incorporating external data (data that is outside of your business) can help to improve the accuracy of the forecast and provide a more complete picture of the future.</p>
+<h2 class="wp-block-heading">Forecasting models in Excel</h2>
+<p>Excel is a commonly used software tool that provides a simple and effective way to build forecasting models. Here is a step-by-step guide on how to build a forecasting model in Excel:</p>
+<p>1. Gather and prepare data: Collect time-series data that you want to forecast. Ensure that the data is organized in a single column, with the date or time in the first column and the corresponding values in the second column.</p>
+<figure class="wp-block-image"><img alt="Forecasting in Excel " class="wp-image-1679" decoding="async" src="images/print-1-1024x491-1.png"/></figure>
+<p>2. Plot the data: Plot the data on a chart in Excel using the “Line chart” type. This will provide a visual representation of the data and help you identify any trends or patterns.</p>
+<figure class="wp-block-image"><img alt="" class="wp-image-1681" decoding="async" src="images/print-2-1024x609-1.png"/></figure>
+<p>3. Use the Forecast Sheet: In Excel, go to the “Data” tab and click on “Forecast Sheet”. This will open a new sheet that will contain the forecast model.</p>
+<figure class="wp-block-image"><img alt="" class="wp-image-1682" decoding="async" src="images/print-3-1024x513-1.png"/></figure>
+<p>4. Select the data range: In the Forecast Sheet, select the data range that you want to forecast. This range should include both the date or time column and the corresponding values column.</p>
+<figure class="wp-block-image"><img alt="" class="wp-image-1683" decoding="async" src="images/print-4.png"/></figure>
+<p>5. Choose the forecasting method: In the Forecast Sheet, select the type of forecasting method you want to use. Excel provides several methods to choose from, including simple moving average, weighted moving average, exponential smoothing, and regression analysis.</p>
+<figure class="wp-block-image"><img alt="" class="wp-image-1685" decoding="async" src="images/print-6-1024x361-1.png"/></figure>
+<p>6. Specify the forecasting period: In the Forecast Sheet, specify the number of periods you want to forecast. This will determine the length of the forecast.</p>
+<p>7. Create the forecast: Click “Include Forecast Statistics” and then click on the “Create Forecast” button in the Forecast Sheet to generate the forecast. Excel will generate the forecast using the selected method and display it in the chart and table.</p>
+<figure class="wp-block-image"><img alt="Forecasting models in Excel " class="wp-image-1686" decoding="async" src="images/print-7.png"/></figure>
+<p>8. Analyze the results: Evaluate the accuracy of the forecast by comparing it to the actual data. If the forecast is not accurate, adjust the model by changing the method or adjusting the parameters.</p>
+<figure class="wp-block-image"><img alt="Forecasting model in Excel " class="wp-image-1687" decoding="async" src="images/print-8-1024x445-1.png"/></figure>
+<p>By following these steps, you can easily build a forecasting model in Excel and use it to make informed decisions about the future. Whether you are a data scientist or simply someone who wants to gain insight into future trends, Excel provides an accessible and effective solution for building forecasting models.</p>
+<h2 class="wp-block-heading">Forecasting models in Excel using external data</h2>
+<p>In this section, we will demonstrate how to expand on the example above, and incorporate external data such as economic indicators or weather information into your forecasting process with ease. With the use of Ready Signal, you can streamline this process and quickly access the latest data, allowing you to make more informed decisions and improve the accuracy of your forecasts. This efficient and effective solution is designed to help you stay ahead of the competition by providing you with up-to-date information at your fingertips. Let’s walk you through the process below.</p>
+<p>Here is a general step-by-step explanation on how to incorporate external data into a forecast model in Excel along with a video summary of the process.</p>
+<p></p>
+<figure class="wp-block-embed is-type-video is-provider-youtube wp-block-embed-youtube wp-embed-aspect-16-9 wp-has-aspect-ratio"><div class="wp-block-embed__wrapper">
+<div class="ast-oembed-container" style="height: 100%;"><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" frameborder="0" height="675" src="https://www.youtube.com/embed/JCtb0U1uI8A?feature=oembed" title="How To Create a Basic Excel Forecast Using Ready Signal" width="1200"></iframe></div>
+</div></figure>
+<p>Step 1: Click the “Create Signal” button and select Auto-Discovery</p>
+<figure class="wp-block-image"><img alt="" class="wp-image-1688" decoding="async" src="images/print-9-1024x530-1.png"/></figure>
+<p>Step 2: Enter the basic information for your signal, select Geographic Granularity and upload your file.</p>
+<figure class="wp-block-image"><img alt="" class="wp-image-1689" decoding="async" src="images/print-10.png"/></figure>
+<p>Step 3: Confirm the selected features and click “Finish” to create the signal.</p>
+<p>Step 4: Modify the signal as needed, including adding/removing features, editing basic signal details, or applying data science treatments.</p>
+<figure class="wp-block-image"><img alt="" class="wp-image-1690" decoding="async" src="images/print-11-1024x545-1.png"/></figure>
+<p>Next steps: Get the output of your signal data in either a CSV or Excel format by using the “Download” option in the platform.</p>
+<figure class="wp-block-image"><img alt="" class="wp-image-1691" decoding="async" src="images/print-12-1024x508-1.png"/></figure>
+<p>Note: More information about time and geo grains, data science treatments, and output options can be found in related resources.</p>
+<p>To create an excel forecast using the information from your signal, you can follow the steps and process outlined above with this data. Here is a recap of those steps.</p>
+<p>Open the output file in Microsoft Excel and familiarize yourself with the data.</p>
+<p>Choose the appropriate forecasting method in Excel, such as simple linear regression, moving average, or exponential smoothing.</p>
+<p>Apply the selected forecasting method to your data in Excel, using the data from your signal as input.</p>
+<p>Review the results and make any necessary adjustments to the forecasting method or input data.</p>
+<p>Create charts and visualizations to help you better understand and present your forecast results.</p>
+<p>Note: The steps and specifics of creating an excel forecast can vary depending on the data and the forecasting method you choose. It may be helpful to familiarize yourself with the different forecasting techniques and tools available in Excel and consult resources such as tutorials or forums for guidance.</p>
+<p>By following these steps, someone can use external data to build a more accurate and comprehensive forecast model in Excel.</p>
+<p>In conclusion, building forecasting models in Excel can be a valuable skill for data analytics professionals and organizations that want to make informed decisions based on historical data.</p>
+<p>By following the steps outlined in this article, users can leverage the powerful tools and featuresof Excel to build a basic forecasting model. Excel is still widely used today and can be the key to unlocking valuable insights and driving better business outcomes. Additionally, tools like Ready Signal can further enhance the capabilities of Excel by allowing users to easily access and incorporate external data into their models. With the right tools and skills, Excel can be a powerful tool for forecasting and data analysis in any organization.</p>
+<p>If you are interested in learning more about how you can enhance and enrich the forecasting capabilities of Excel with external data, contact us or sign up for a free <a href="https://www.readysignal.com/">Ready Signal</a> account today!</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-d90718e e-con-full e-flex e-con" data-element_type="container" data-id="d90718e" data-settings='{"content_width":"full"}'>
+<div class="elementor-element elementor-element-62bc9fe elementor-widget elementor-widget-theme-post-title elementor-page-title elementor-widget-heading" data-element_type="widget" data-id="62bc9fe" data-widget_type="theme-post-title.default">
+<div class="elementor-widget-container">
+<style>/*! elementor - v3.14.0 - 14-06-2023 */
+.elementor-heading-title{padding:0;margin:0;line-height:1}.elementor-widget-heading .elementor-heading-title[class*=elementor-size-]>a{color:inherit;font-size:inherit;line-height:inherit}.elementor-widget-heading .elementor-heading-title.elementor-size-small{font-size:15px}.elementor-widget-heading .elementor-heading-title.elementor-size-medium{font-size:19px}.elementor-widget-heading .elementor-heading-title.elementor-size-large{font-size:29px}.elementor-widget-heading .elementor-heading-title.elementor-size-xl{font-size:39px}.elementor-widget-heading .elementor-heading-title.elementor-size-xxl{font-size:59px}</style><h1 class="elementor-heading-title elementor-size-default">How to build forecasting models in Excel</h1> </div>
+</div>
+<div class="elementor-element elementor-element-375f26a elementor-align-left elementor-widget elementor-widget-post-info" data-element_type="widget" data-id="375f26a" data-widget_type="post-info.default">
+<div class="elementor-widget-container">
+<link href="https://www.readysignal.com/wp-content/plugins/elementor/assets/css/widget-icon-list.min.css" rel="stylesheet"/><link href="https://www.readysignal.com/wp-content/plugins/elementor-pro/assets/css/widget-theme-elements.min.css" rel="stylesheet"/> <ul class="elementor-inline-items elementor-icon-list-items elementor-post-info">
+<li class="elementor-icon-list-item elementor-repeater-item-7540876 elementor-inline-item" itemprop="author">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-author">
+										Baylen Springer					</span>
+</li>
+<li class="elementor-icon-list-item elementor-repeater-item-450fc99 elementor-inline-item" itemprop="datePublished">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-date">
+<span class="elementor-post-info__item-prefix">/</span>
+										February 16, 2023					</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="elementor-element elementor-element-36730df elementor-widget elementor-widget-theme-post-content" data-element_type="widget" data-id="36730df" data-widget_type="theme-post-content.default">
+<div class="elementor-widget-container">
+<figure class="wp-block-image size-full"><img alt="How to build forecasting models in Excel" class="wp-image-433" decoding="async" fetchpriority="high" height="574" sizes="(max-width: 1024px) 100vw, 1024px" src="images/folder-1-1024x574-1.png" srcset="images/folder-1-1024x574-1.png 1024w, https://www.readysignal.com/wp-content/uploads/2023/05/folder-1-1024x574-1-300x168.png 300w, https://www.readysignal.com/wp-content/uploads/2023/05/folder-1-1024x574-1-768x431.png 768w" width="1024"/></figure>
+<p>This is for anyone who is looking to get their feet wet and learn how to do a quick and easy forecast model, using Excel. For some folks the idea of a “model” can be intimidating, we are here to show you that building a basic model is probably easier than you think. Without further ado here is how you can build forecasting models in Excel…</p>
+<h2 class="wp-block-heading">What is a forecast model?</h2>
+<p>A forecast model is a mathematical representation of a time series, used to predict future values based on historical data. Forecasting models are widely used in business, economics, and other fields to make informed decisions and plan for the future.</p>
+<p>Some industries include:</p>
+<p><strong>Financial Services: </strong>Forecasting models are commonly used in the financial services sector to predict future economic trends, such as interest rates, stock prices, and currency exchange rates.</p>
+<p><strong>Retail and E-commerce:</strong> Retail companies use forecasting models to predict demand for their products, which helps them optimize inventory levels and improve supply chain management.</p>
+<p>E-commerce companies use forecasting models to predict customer behavior and sales trends.</p>
+<p><strong>Manufacturing:</strong> Manufacturers use forecasting models to predict demand for their products, which helps them optimize production schedules, reduce waste, and improve efficiency.</p>
+<p><strong>Energy and Utilities: </strong>Energy and utilities companies use forecasting models to predict energy</p>
+<p>consumption, which helps them plan for energy generation and distribution, and minimize waste and inefficiencies.</p>
+<p><strong>Healthcare:</strong> Healthcare organizations use forecasting models to predict demand for medical services, which helps them optimize staffing levels, reduce waste, and improve patient outcomes.</p>
+<p><strong>Transportation and Logistics: </strong>Transportation and logistics companies use forecasting models to predict demand for their services, which helps them optimize routes, reduce waste, and improve efficiency.</p>
+<p><strong>Government:</strong> Government organizations use forecasting models to predict a variety of economic, social, and environmental trends, which helps them make informed decisions and improve policy outcomes.</p>
+<h2 class="wp-block-heading">How do I make a forecast model?</h2>
+<p>So how do you create a basic forecast? There are several factors that someone might consider when choosing how to build a forecast model:</p>
+<ul class="wp-block-list">
+<li><strong>Data Availability: </strong>One of the first considerations should be the availability and quality of the data needed to build the model. This includes both the historical data needed to train the model, as well as any additional data that may be required for certain forecasting methods. This could include economic indicators, industry trends, and other relevant data that can help to improve the accuracy of the forecast.</li>
+<li><strong>Data Integration: </strong>The process of integrating external data into the model should also be considered. This could include issues such as data format compatibility, data quality, and the resources required to collect and clean the data.</li>
+<li><strong>Computational Requirements: </strong>Some forecasting methods may require more computational power or specialized software to run effectively. For example, more complex models such as ARIMA or neural networks may require specialized software and more computing power.</li>
+<li><strong>Expertise: </strong>The complexity of the forecasting method and the required expertise to build and maintain the model should also be considered. For example, if someone has a background in statistics or machine learning, they may be better suited to build a more complex model.</li>
+<li><strong>Time and Budget: </strong>The time and budget available for building the model should also be considered. More complex models may take longer to build and require more resources, whereas simpler models may be faster and easier to implement.</li>
+<li><strong>Business Needs: </strong>The specific business needs of the forecast should also be considered. For example, if the forecast is needed to make operational decisions, a model with a higher level of accuracy may be preferred. If the forecast is needed for more long-term planning, a model that is able to capture longer-term trends may be more suitable.</li>
+<li><strong>Integration with Other Systems:</strong> If the forecast model needs to be integrated with other systems, such as a database or enterprise software, the compatibility of the chosen method and software should be considered.</li>
+</ul>
+<p>By considering these factors, someone can choose the best way to build a forecast model that meets their specific needs and requirements. It is important to note that incorporating external data (data that is outside of your business) can help to improve the accuracy of the forecast and provide a more complete picture of the future.</p>
+<h2 class="wp-block-heading">Forecasting models in Excel</h2>
+<p>Excel is a commonly used software tool that provides a simple and effective way to build forecasting models. Here is a step-by-step guide on how to build a forecasting model in Excel:</p>
+<p>1. Gather and prepare data: Collect time-series data that you want to forecast. Ensure that the data is organized in a single column, with the date or time in the first column and the corresponding values in the second column.</p>
+<figure class="wp-block-image"><img alt="Forecasting in Excel " class="wp-image-1679" decoding="async" src="images/print-1-1024x491-1.png"/></figure>
+<p>2. Plot the data: Plot the data on a chart in Excel using the “Line chart” type. This will provide a visual representation of the data and help you identify any trends or patterns.</p>
+<figure class="wp-block-image"><img alt="" class="wp-image-1681" decoding="async" src="images/print-2-1024x609-1.png"/></figure>
+<p>3. Use the Forecast Sheet: In Excel, go to the “Data” tab and click on “Forecast Sheet”. This will open a new sheet that will contain the forecast model.</p>
+<figure class="wp-block-image"><img alt="" class="wp-image-1682" decoding="async" src="images/print-3-1024x513-1.png"/></figure>
+<p>4. Select the data range: In the Forecast Sheet, select the data range that you want to forecast. This range should include both the date or time column and the corresponding values column.</p>
+<figure class="wp-block-image"><img alt="" class="wp-image-1683" decoding="async" src="images/print-4.png"/></figure>
+<p>5. Choose the forecasting method: In the Forecast Sheet, select the type of forecasting method you want to use. Excel provides several methods to choose from, including simple moving average, weighted moving average, exponential smoothing, and regression analysis.</p>
+<figure class="wp-block-image"><img alt="" class="wp-image-1685" decoding="async" src="images/print-6-1024x361-1.png"/></figure>
+<p>6. Specify the forecasting period: In the Forecast Sheet, specify the number of periods you want to forecast. This will determine the length of the forecast.</p>
+<p>7. Create the forecast: Click “Include Forecast Statistics” and then click on the “Create Forecast” button in the Forecast Sheet to generate the forecast. Excel will generate the forecast using the selected method and display it in the chart and table.</p>
+<figure class="wp-block-image"><img alt="Forecasting models in Excel " class="wp-image-1686" decoding="async" src="images/print-7.png"/></figure>
+<p>8. Analyze the results: Evaluate the accuracy of the forecast by comparing it to the actual data. If the forecast is not accurate, adjust the model by changing the method or adjusting the parameters.</p>
+<figure class="wp-block-image"><img alt="Forecasting model in Excel " class="wp-image-1687" decoding="async" src="images/print-8-1024x445-1.png"/></figure>
+<p>By following these steps, you can easily build a forecasting model in Excel and use it to make informed decisions about the future. Whether you are a data scientist or simply someone who wants to gain insight into future trends, Excel provides an accessible and effective solution for building forecasting models.</p>
+<h2 class="wp-block-heading">Forecasting models in Excel using external data</h2>
+<p>In this section, we will demonstrate how to expand on the example above, and incorporate external data such as economic indicators or weather information into your forecasting process with ease. With the use of Ready Signal, you can streamline this process and quickly access the latest data, allowing you to make more informed decisions and improve the accuracy of your forecasts. This efficient and effective solution is designed to help you stay ahead of the competition by providing you with up-to-date information at your fingertips. Let’s walk you through the process below.</p>
+<p>Here is a general step-by-step explanation on how to incorporate external data into a forecast model in Excel along with a video summary of the process.</p>
+<p></p>
+<figure class="wp-block-embed is-type-video is-provider-youtube wp-block-embed-youtube wp-embed-aspect-16-9 wp-has-aspect-ratio"><div class="wp-block-embed__wrapper">
+<div class="ast-oembed-container" style="height: 100%;"><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" frameborder="0" height="675" src="https://www.youtube.com/embed/JCtb0U1uI8A?feature=oembed" title="How To Create a Basic Excel Forecast Using Ready Signal" width="1200"></iframe></div>
+</div></figure>
+<p>Step 1: Click the “Create Signal” button and select Auto-Discovery</p>
+<figure class="wp-block-image"><img alt="" class="wp-image-1688" decoding="async" src="images/print-9-1024x530-1.png"/></figure>
+<p>Step 2: Enter the basic information for your signal, select Geographic Granularity and upload your file.</p>
+<figure class="wp-block-image"><img alt="" class="wp-image-1689" decoding="async" src="images/print-10.png"/></figure>
+<p>Step 3: Confirm the selected features and click “Finish” to create the signal.</p>
+<p>Step 4: Modify the signal as needed, including adding/removing features, editing basic signal details, or applying data science treatments.</p>
+<figure class="wp-block-image"><img alt="" class="wp-image-1690" decoding="async" src="images/print-11-1024x545-1.png"/></figure>
+<p>Next steps: Get the output of your signal data in either a CSV or Excel format by using the “Download” option in the platform.</p>
+<figure class="wp-block-image"><img alt="" class="wp-image-1691" decoding="async" src="images/print-12-1024x508-1.png"/></figure>
+<p>Note: More information about time and geo grains, data science treatments, and output options can be found in related resources.</p>
+<p>To create an excel forecast using the information from your signal, you can follow the steps and process outlined above with this data. Here is a recap of those steps.</p>
+<p>Open the output file in Microsoft Excel and familiarize yourself with the data.</p>
+<p>Choose the appropriate forecasting method in Excel, such as simple linear regression, moving average, or exponential smoothing.</p>
+<p>Apply the selected forecasting method to your data in Excel, using the data from your signal as input.</p>
+<p>Review the results and make any necessary adjustments to the forecasting method or input data.</p>
+<p>Create charts and visualizations to help you better understand and present your forecast results.</p>
+<p>Note: The steps and specifics of creating an excel forecast can vary depending on the data and the forecasting method you choose. It may be helpful to familiarize yourself with the different forecasting techniques and tools available in Excel and consult resources such as tutorials or forums for guidance.</p>
+<p>By following these steps, someone can use external data to build a more accurate and comprehensive forecast model in Excel.</p>
+<p>In conclusion, building forecasting models in Excel can be a valuable skill for data analytics professionals and organizations that want to make informed decisions based on historical data.</p>
+<p>By following the steps outlined in this article, users can leverage the powerful tools and featuresof Excel to build a basic forecasting model. Excel is still widely used today and can be the key to unlocking valuable insights and driving better business outcomes. Additionally, tools like Ready Signal can further enhance the capabilities of Excel by allowing users to easily access and incorporate external data into their models. With the right tools and skills, Excel can be a powerful tool for forecasting and data analysis in any organization.</p>
+<p>If you are interested in learning more about how you can enhance and enrich the forecasting capabilities of Excel with external data, contact us or sign up for a free <a href="https://www.readysignal.com/">Ready Signal</a> account today!</p>
+</div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-d90718e e-con-full e-flex e-con" data-element_type="container" data-id="d90718e" data-settings='{"content_width":"full"}'>
+<div class="elementor-element elementor-element-62bc9fe elementor-widget elementor-widget-theme-post-title elementor-page-title elementor-widget-heading" data-element_type="widget" data-id="62bc9fe" data-widget_type="theme-post-title.default">
+<div class="elementor-widget-container">
+<style>/*! elementor - v3.14.0 - 14-06-2023 */
+.elementor-heading-title{padding:0;margin:0;line-height:1}.elementor-widget-heading .elementor-heading-title[class*=elementor-size-]>a{color:inherit;font-size:inherit;line-height:inherit}.elementor-widget-heading .elementor-heading-title.elementor-size-small{font-size:15px}.elementor-widget-heading .elementor-heading-title.elementor-size-medium{font-size:19px}.elementor-widget-heading .elementor-heading-title.elementor-size-large{font-size:29px}.elementor-widget-heading .elementor-heading-title.elementor-size-xl{font-size:39px}.elementor-widget-heading .elementor-heading-title.elementor-size-xxl{font-size:59px}</style><h1 class="elementor-heading-title elementor-size-default">How to build forecasting models in Excel</h1> </div>
+</div>
+<div class="elementor-element elementor-element-375f26a elementor-align-left elementor-widget elementor-widget-post-info" data-element_type="widget" data-id="375f26a" data-widget_type="post-info.default">
+<div class="elementor-widget-container">
+<link href="https://www.readysignal.com/wp-content/plugins/elementor/assets/css/widget-icon-list.min.css" rel="stylesheet"/><link href="https://www.readysignal.com/wp-content/plugins/elementor-pro/assets/css/widget-theme-elements.min.css" rel="stylesheet"/> <ul class="elementor-inline-items elementor-icon-list-items elementor-post-info">
+<li class="elementor-icon-list-item elementor-repeater-item-7540876 elementor-inline-item" itemprop="author">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-author">
+										Baylen Springer					</span>
+</li>
+<li class="elementor-icon-list-item elementor-repeater-item-450fc99 elementor-inline-item" itemprop="datePublished">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-date">
+<span class="elementor-post-info__item-prefix">/</span>
+										February 16, 2023					</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="elementor-element elementor-element-36730df elementor-widget elementor-widget-theme-post-content" data-element_type="widget" data-id="36730df" data-widget_type="theme-post-content.default">
+<div class="elementor-widget-container">
+<figure class="wp-block-image size-full"><img alt="How to build forecasting models in Excel" class="wp-image-433" decoding="async" fetchpriority="high" height="574" sizes="(max-width: 1024px) 100vw, 1024px" src="images/folder-1-1024x574-1.png" srcset="images/folder-1-1024x574-1.png 1024w, https://www.readysignal.com/wp-content/uploads/2023/05/folder-1-1024x574-1-300x168.png 300w, https://www.readysignal.com/wp-content/uploads/2023/05/folder-1-1024x574-1-768x431.png 768w" width="1024"/></figure>
+<p>This is for anyone who is looking to get their feet wet and learn how to do a quick and easy forecast model, using Excel. For some folks the idea of a “model” can be intimidating, we are here to show you that building a basic model is probably easier than you think. Without further ado here is how you can build forecasting models in Excel…</p>
+<h2 class="wp-block-heading">What is a forecast model?</h2>
+<p>A forecast model is a mathematical representation of a time series, used to predict future values based on historical data. Forecasting models are widely used in business, economics, and other fields to make informed decisions and plan for the future.</p>
+<p>Some industries include:</p>
+<p><strong>Financial Services: </strong>Forecasting models are commonly used in the financial services sector to predict future economic trends, such as interest rates, stock prices, and currency exchange rates.</p>
+<p><strong>Retail and E-commerce:</strong> Retail companies use forecasting models to predict demand for their products, which helps them optimize inventory levels and improve supply chain management.</p>
+<p>E-commerce companies use forecasting models to predict customer behavior and sales trends.</p>
+<p><strong>Manufacturing:</strong> Manufacturers use forecasting models to predict demand for their products, which helps them optimize production schedules, reduce waste, and improve efficiency.</p>
+<p><strong>Energy and Utilities: </strong>Energy and utilities companies use forecasting models to predict energy</p>
+<p>consumption, which helps them plan for energy generation and distribution, and minimize waste and inefficiencies.</p>
+<p><strong>Healthcare:</strong> Healthcare organizations use forecasting models to predict demand for medical services, which helps them optimize staffing levels, reduce waste, and improve patient outcomes.</p>
+<p><strong>Transportation and Logistics: </strong>Transportation and logistics companies use forecasting models to predict demand for their services, which helps them optimize routes, reduce waste, and improve efficiency.</p>
+<p><strong>Government:</strong> Government organizations use forecasting models to predict a variety of economic, social, and environmental trends, which helps them make informed decisions and improve policy outcomes.</p>
+<h2 class="wp-block-heading">How do I make a forecast model?</h2>
+<p>So how do you create a basic forecast? There are several factors that someone might consider when choosing how to build a forecast model:</p>
+<ul class="wp-block-list">
+<li><strong>Data Availability: </strong>One of the first considerations should be the availability and quality of the data needed to build the model. This includes both the historical data needed to train the model, as well as any additional data that may be required for certain forecasting methods. This could include economic indicators, industry trends, and other relevant data that can help to improve the accuracy of the forecast.</li>
+<li><strong>Data Integration: </strong>The process of integrating external data into the model should also be considered. This could include issues such as data format compatibility, data quality, and the resources required to collect and clean the data.</li>
+<li><strong>Computational Requirements: </strong>Some forecasting methods may require more computational power or specialized software to run effectively. For example, more complex models such as ARIMA or neural networks may require specialized software and more computing power.</li>
+<li><strong>Expertise: </strong>The complexity of the forecasting method and the required expertise to build and maintain the model should also be considered. For example, if someone has a background in statistics or machine learning, they may be better suited to build a more complex model.</li>
+<li><strong>Time and Budget: </strong>The time and budget available for building the model should also be considered. More complex models may take longer to build and require more resources, whereas simpler models may be faster and easier to implement.</li>
+<li><strong>Business Needs: </strong>The specific business needs of the forecast should also be considered. For example, if the forecast is needed to make operational decisions, a model with a higher level of accuracy may be preferred. If the forecast is needed for more long-term planning, a model that is able to capture longer-term trends may be more suitable.</li>
+<li><strong>Integration with Other Systems:</strong> If the forecast model needs to be integrated with other systems, such as a database or enterprise software, the compatibility of the chosen method and software should be considered.</li>
+</ul>
+<p>By considering these factors, someone can choose the best way to build a forecast model that meets their specific needs and requirements. It is important to note that incorporating external data (data that is outside of your business) can help to improve the accuracy of the forecast and provide a more complete picture of the future.</p>
+<h2 class="wp-block-heading">Forecasting models in Excel</h2>
+<p>Excel is a commonly used software tool that provides a simple and effective way to build forecasting models. Here is a step-by-step guide on how to build a forecasting model in Excel:</p>
+<p>1. Gather and prepare data: Collect time-series data that you want to forecast. Ensure that the data is organized in a single column, with the date or time in the first column and the corresponding values in the second column.</p>
+<figure class="wp-block-image"><img alt="Forecasting in Excel " class="wp-image-1679" decoding="async" src="images/print-1-1024x491-1.png"/></figure>
+<p>2. Plot the data: Plot the data on a chart in Excel using the “Line chart” type. This will provide a visual representation of the data and help you identify any trends or patterns.</p>
+<figure class="wp-block-image"><img alt="" class="wp-image-1681" decoding="async" src="images/print-2-1024x609-1.png"/></figure>
+<p>3. Use the Forecast Sheet: In Excel, go to the “Data” tab and click on “Forecast Sheet”. This will open a new sheet that will contain the forecast model.</p>
+<figure class="wp-block-image"><img alt="" class="wp-image-1682" decoding="async" src="images/print-3-1024x513-1.png"/></figure>
+<p>4. Select the data range: In the Forecast Sheet, select the data range that you want to forecast. This range should include both the date or time column and the corresponding values column.</p>
+<figure class="wp-block-image"><img alt="" class="wp-image-1683" decoding="async" src="images/print-4.png"/></figure>
+<p>5. Choose the forecasting method: In the Forecast Sheet, select the type of forecasting method you want to use. Excel provides several methods to choose from, including simple moving average, weighted moving average, exponential smoothing, and regression analysis.</p>
+<figure class="wp-block-image"><img alt="" class="wp-image-1685" decoding="async" src="images/print-6-1024x361-1.png"/></figure>
+<p>6. Specify the forecasting period: In the Forecast Sheet, specify the number of periods you want to forecast. This will determine the length of the forecast.</p>
+<p>7. Create the forecast: Click “Include Forecast Statistics” and then click on the “Create Forecast” button in the Forecast Sheet to generate the forecast. Excel will generate the forecast using the selected method and display it in the chart and table.</p>
+<figure class="wp-block-image"><img alt="Forecasting models in Excel " class="wp-image-1686" decoding="async" src="images/print-7.png"/></figure>
+<p>8. Analyze the results: Evaluate the accuracy of the forecast by comparing it to the actual data. If the forecast is not accurate, adjust the model by changing the method or adjusting the parameters.</p>
+<figure class="wp-block-image"><img alt="Forecasting model in Excel " class="wp-image-1687" decoding="async" src="images/print-8-1024x445-1.png"/></figure>
+<p>By following these steps, you can easily build a forecasting model in Excel and use it to make informed decisions about the future. Whether you are a data scientist or simply someone who wants to gain insight into future trends, Excel provides an accessible and effective solution for building forecasting models.</p>
+<h2 class="wp-block-heading">Forecasting models in Excel using external data</h2>
+<p>In this section, we will demonstrate how to expand on the example above, and incorporate external data such as economic indicators or weather information into your forecasting process with ease. With the use of Ready Signal, you can streamline this process and quickly access the latest data, allowing you to make more informed decisions and improve the accuracy of your forecasts. This efficient and effective solution is designed to help you stay ahead of the competition by providing you with up-to-date information at your fingertips. Let’s walk you through the process below.</p>
+<p>Here is a general step-by-step explanation on how to incorporate external data into a forecast model in Excel along with a video summary of the process.</p>
+<p></p>
+<figure class="wp-block-embed is-type-video is-provider-youtube wp-block-embed-youtube wp-embed-aspect-16-9 wp-has-aspect-ratio"><div class="wp-block-embed__wrapper">
+<div class="ast-oembed-container" style="height: 100%;"><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" frameborder="0" height="675" src="https://www.youtube.com/embed/JCtb0U1uI8A?feature=oembed" title="How To Create a Basic Excel Forecast Using Ready Signal" width="1200"></iframe></div>
+</div></figure>
+<p>Step 1: Click the “Create Signal” button and select Auto-Discovery</p>
+<figure class="wp-block-image"><img alt="" class="wp-image-1688" decoding="async" src="images/print-9-1024x530-1.png"/></figure>
+<p>Step 2: Enter the basic information for your signal, select Geographic Granularity and upload your file.</p>
+<figure class="wp-block-image"><img alt="" class="wp-image-1689" decoding="async" src="images/print-10.png"/></figure>
+<p>Step 3: Confirm the selected features and click “Finish” to create the signal.</p>
+<p>Step 4: Modify the signal as needed, including adding/removing features, editing basic signal details, or applying data science treatments.</p>
+<figure class="wp-block-image"><img alt="" class="wp-image-1690" decoding="async" src="images/print-11-1024x545-1.png"/></figure>
+<p>Next steps: Get the output of your signal data in either a CSV or Excel format by using the “Download” option in the platform.</p>
+<figure class="wp-block-image"><img alt="" class="wp-image-1691" decoding="async" src="images/print-12-1024x508-1.png"/></figure>
+<p>Note: More information about time and geo grains, data science treatments, and output options can be found in related resources.</p>
+<p>To create an excel forecast using the information from your signal, you can follow the steps and process outlined above with this data. Here is a recap of those steps.</p>
+<p>Open the output file in Microsoft Excel and familiarize yourself with the data.</p>
+<p>Choose the appropriate forecasting method in Excel, such as simple linear regression, moving average, or exponential smoothing.</p>
+<p>Apply the selected forecasting method to your data in Excel, using the data from your signal as input.</p>
+<p>Review the results and make any necessary adjustments to the forecasting method or input data.</p>
+<p>Create charts and visualizations to help you better understand and present your forecast results.</p>
+<p>Note: The steps and specifics of creating an excel forecast can vary depending on the data and the forecasting method you choose. It may be helpful to familiarize yourself with the different forecasting techniques and tools available in Excel and consult resources such as tutorials or forums for guidance.</p>
+<p>By following these steps, someone can use external data to build a more accurate and comprehensive forecast model in Excel.</p>
+<p>In conclusion, building forecasting models in Excel can be a valuable skill for data analytics professionals and organizations that want to make informed decisions based on historical data.</p>
+<p>By following the steps outlined in this article, users can leverage the powerful tools and featuresof Excel to build a basic forecasting model. Excel is still widely used today and can be the key to unlocking valuable insights and driving better business outcomes. Additionally, tools like Ready Signal can further enhance the capabilities of Excel by allowing users to easily access and incorporate external data into their models. With the right tools and skills, Excel can be a powerful tool for forecasting and data analysis in any organization.</p>
+<p>If you are interested in learning more about how you can enhance and enrich the forecasting capabilities of Excel with external data, contact us or sign up for a free <a href="https://www.readysignal.com/">Ready Signal</a> account today!</p>
+</div>
+</div>
+</div>
+<h1 class="elementor-heading-title elementor-size-default">How to build forecasting models in Excel</h1>
+<ul class="elementor-inline-items elementor-icon-list-items elementor-post-info">
+<li class="elementor-icon-list-item elementor-repeater-item-7540876 elementor-inline-item" itemprop="author">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-author">
+										Baylen Springer					</span>
+</li>
+<li class="elementor-icon-list-item elementor-repeater-item-450fc99 elementor-inline-item" itemprop="datePublished">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-date">
+<span class="elementor-post-info__item-prefix">/</span>
+										February 16, 2023					</span>
+</li>
+</ul>
+<li class="elementor-icon-list-item elementor-repeater-item-7540876 elementor-inline-item" itemprop="author">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-author">
+										Baylen Springer					</span>
+</li>
+<li class="elementor-icon-list-item elementor-repeater-item-450fc99 elementor-inline-item" itemprop="datePublished">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-date">
+<span class="elementor-post-info__item-prefix">/</span>
+										February 16, 2023					</span>
+</li>
+<img alt="How to build forecasting models in Excel" class="wp-image-433" decoding="async" fetchpriority="high" height="574" sizes="(max-width: 1024px) 100vw, 1024px" src="images/folder-1-1024x574-1.png" srcset="images/folder-1-1024x574-1.png 1024w, https://www.readysignal.com/wp-content/uploads/2023/05/folder-1-1024x574-1-300x168.png 300w, https://www.readysignal.com/wp-content/uploads/2023/05/folder-1-1024x574-1-768x431.png 768w" width="1024"/>
+<p>This is for anyone who is looking to get their feet wet and learn how to do a quick and easy forecast model, using Excel. For some folks the idea of a “model” can be intimidating, we are here to show you that building a basic model is probably easier than you think. Without further ado here is how you can build forecasting models in Excel…</p>
+<h2 class="wp-block-heading">What is a forecast model?</h2>
+<p>A forecast model is a mathematical representation of a time series, used to predict future values based on historical data. Forecasting models are widely used in business, economics, and other fields to make informed decisions and plan for the future.</p>
+<p>Some industries include:</p>
+<p><strong>Financial Services: </strong>Forecasting models are commonly used in the financial services sector to predict future economic trends, such as interest rates, stock prices, and currency exchange rates.</p>
+<p><strong>Retail and E-commerce:</strong> Retail companies use forecasting models to predict demand for their products, which helps them optimize inventory levels and improve supply chain management.</p>
+<p>E-commerce companies use forecasting models to predict customer behavior and sales trends.</p>
+<p><strong>Manufacturing:</strong> Manufacturers use forecasting models to predict demand for their products, which helps them optimize production schedules, reduce waste, and improve efficiency.</p>
+<p><strong>Energy and Utilities: </strong>Energy and utilities companies use forecasting models to predict energy</p>
+<p>consumption, which helps them plan for energy generation and distribution, and minimize waste and inefficiencies.</p>
+<p><strong>Healthcare:</strong> Healthcare organizations use forecasting models to predict demand for medical services, which helps them optimize staffing levels, reduce waste, and improve patient outcomes.</p>
+<p><strong>Transportation and Logistics: </strong>Transportation and logistics companies use forecasting models to predict demand for their services, which helps them optimize routes, reduce waste, and improve efficiency.</p>
+<p><strong>Government:</strong> Government organizations use forecasting models to predict a variety of economic, social, and environmental trends, which helps them make informed decisions and improve policy outcomes.</p>
+<h2 class="wp-block-heading">How do I make a forecast model?</h2>
+<p>So how do you create a basic forecast? There are several factors that someone might consider when choosing how to build a forecast model:</p>
+<ul class="wp-block-list">
+<li><strong>Data Availability: </strong>One of the first considerations should be the availability and quality of the data needed to build the model. This includes both the historical data needed to train the model, as well as any additional data that may be required for certain forecasting methods. This could include economic indicators, industry trends, and other relevant data that can help to improve the accuracy of the forecast.</li>
+<li><strong>Data Integration: </strong>The process of integrating external data into the model should also be considered. This could include issues such as data format compatibility, data quality, and the resources required to collect and clean the data.</li>
+<li><strong>Computational Requirements: </strong>Some forecasting methods may require more computational power or specialized software to run effectively. For example, more complex models such as ARIMA or neural networks may require specialized software and more computing power.</li>
+<li><strong>Expertise: </strong>The complexity of the forecasting method and the required expertise to build and maintain the model should also be considered. For example, if someone has a background in statistics or machine learning, they may be better suited to build a more complex model.</li>
+<li><strong>Time and Budget: </strong>The time and budget available for building the model should also be considered. More complex models may take longer to build and require more resources, whereas simpler models may be faster and easier to implement.</li>
+<li><strong>Business Needs: </strong>The specific business needs of the forecast should also be considered. For example, if the forecast is needed to make operational decisions, a model with a higher level of accuracy may be preferred. If the forecast is needed for more long-term planning, a model that is able to capture longer-term trends may be more suitable.</li>
+<li><strong>Integration with Other Systems:</strong> If the forecast model needs to be integrated with other systems, such as a database or enterprise software, the compatibility of the chosen method and software should be considered.</li>
+</ul>
+<li><strong>Data Availability: </strong>One of the first considerations should be the availability and quality of the data needed to build the model. This includes both the historical data needed to train the model, as well as any additional data that may be required for certain forecasting methods. This could include economic indicators, industry trends, and other relevant data that can help to improve the accuracy of the forecast.</li>
+<li><strong>Data Integration: </strong>The process of integrating external data into the model should also be considered. This could include issues such as data format compatibility, data quality, and the resources required to collect and clean the data.</li>
+<li><strong>Computational Requirements: </strong>Some forecasting methods may require more computational power or specialized software to run effectively. For example, more complex models such as ARIMA or neural networks may require specialized software and more computing power.</li>
+<li><strong>Expertise: </strong>The complexity of the forecasting method and the required expertise to build and maintain the model should also be considered. For example, if someone has a background in statistics or machine learning, they may be better suited to build a more complex model.</li>
+<li><strong>Time and Budget: </strong>The time and budget available for building the model should also be considered. More complex models may take longer to build and require more resources, whereas simpler models may be faster and easier to implement.</li>
+<li><strong>Business Needs: </strong>The specific business needs of the forecast should also be considered. For example, if the forecast is needed to make operational decisions, a model with a higher level of accuracy may be preferred. If the forecast is needed for more long-term planning, a model that is able to capture longer-term trends may be more suitable.</li>
+<li><strong>Integration with Other Systems:</strong> If the forecast model needs to be integrated with other systems, such as a database or enterprise software, the compatibility of the chosen method and software should be considered.</li>
+<p>By considering these factors, someone can choose the best way to build a forecast model that meets their specific needs and requirements. It is important to note that incorporating external data (data that is outside of your business) can help to improve the accuracy of the forecast and provide a more complete picture of the future.</p>
+<h2 class="wp-block-heading">Forecasting models in Excel</h2>
+<p>Excel is a commonly used software tool that provides a simple and effective way to build forecasting models. Here is a step-by-step guide on how to build a forecasting model in Excel:</p>
+<p>1. Gather and prepare data: Collect time-series data that you want to forecast. Ensure that the data is organized in a single column, with the date or time in the first column and the corresponding values in the second column.</p>
+<img alt="Forecasting in Excel " class="wp-image-1679" decoding="async" src="images/print-1-1024x491-1.png"/>
+<p>2. Plot the data: Plot the data on a chart in Excel using the “Line chart” type. This will provide a visual representation of the data and help you identify any trends or patterns.</p>
+<img alt="" class="wp-image-1681" decoding="async" src="images/print-2-1024x609-1.png"/>
+<p>3. Use the Forecast Sheet: In Excel, go to the “Data” tab and click on “Forecast Sheet”. This will open a new sheet that will contain the forecast model.</p>
+<img alt="" class="wp-image-1682" decoding="async" src="images/print-3-1024x513-1.png"/>
+<p>4. Select the data range: In the Forecast Sheet, select the data range that you want to forecast. This range should include both the date or time column and the corresponding values column.</p>
+<img alt="" class="wp-image-1683" decoding="async" src="images/print-4.png"/>
+<p>5. Choose the forecasting method: In the Forecast Sheet, select the type of forecasting method you want to use. Excel provides several methods to choose from, including simple moving average, weighted moving average, exponential smoothing, and regression analysis.</p>
+<img alt="" class="wp-image-1685" decoding="async" src="images/print-6-1024x361-1.png"/>
+<p>6. Specify the forecasting period: In the Forecast Sheet, specify the number of periods you want to forecast. This will determine the length of the forecast.</p>
+<p>7. Create the forecast: Click “Include Forecast Statistics” and then click on the “Create Forecast” button in the Forecast Sheet to generate the forecast. Excel will generate the forecast using the selected method and display it in the chart and table.</p>
+<img alt="Forecasting models in Excel " class="wp-image-1686" decoding="async" src="images/print-7.png"/>
+<p>8. Analyze the results: Evaluate the accuracy of the forecast by comparing it to the actual data. If the forecast is not accurate, adjust the model by changing the method or adjusting the parameters.</p>
+<img alt="Forecasting model in Excel " class="wp-image-1687" decoding="async" src="images/print-8-1024x445-1.png"/>
+<p>By following these steps, you can easily build a forecasting model in Excel and use it to make informed decisions about the future. Whether you are a data scientist or simply someone who wants to gain insight into future trends, Excel provides an accessible and effective solution for building forecasting models.</p>
+<h2 class="wp-block-heading">Forecasting models in Excel using external data</h2>
+<p>In this section, we will demonstrate how to expand on the example above, and incorporate external data such as economic indicators or weather information into your forecasting process with ease. With the use of Ready Signal, you can streamline this process and quickly access the latest data, allowing you to make more informed decisions and improve the accuracy of your forecasts. This efficient and effective solution is designed to help you stay ahead of the competition by providing you with up-to-date information at your fingertips. Let’s walk you through the process below.</p>
+<p>Here is a general step-by-step explanation on how to incorporate external data into a forecast model in Excel along with a video summary of the process.</p>
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" frameborder="0" height="675" src="https://www.youtube.com/embed/JCtb0U1uI8A?feature=oembed" title="How To Create a Basic Excel Forecast Using Ready Signal" width="1200"></iframe>
+<p>Step 1: Click the “Create Signal” button and select Auto-Discovery</p>
+<img alt="" class="wp-image-1688" decoding="async" src="images/print-9-1024x530-1.png"/>
+<p>Step 2: Enter the basic information for your signal, select Geographic Granularity and upload your file.</p>
+<img alt="" class="wp-image-1689" decoding="async" src="images/print-10.png"/>
+<p>Step 3: Confirm the selected features and click “Finish” to create the signal.</p>
+<p>Step 4: Modify the signal as needed, including adding/removing features, editing basic signal details, or applying data science treatments.</p>
+<img alt="" class="wp-image-1690" decoding="async" src="images/print-11-1024x545-1.png"/>
+<p>Next steps: Get the output of your signal data in either a CSV or Excel format by using the “Download” option in the platform.</p>
+<img alt="" class="wp-image-1691" decoding="async" src="images/print-12-1024x508-1.png"/>
+<p>Note: More information about time and geo grains, data science treatments, and output options can be found in related resources.</p>
+<p>To create an excel forecast using the information from your signal, you can follow the steps and process outlined above with this data. Here is a recap of those steps.</p>
+<p>Open the output file in Microsoft Excel and familiarize yourself with the data.</p>
+<p>Choose the appropriate forecasting method in Excel, such as simple linear regression, moving average, or exponential smoothing.</p>
+<p>Apply the selected forecasting method to your data in Excel, using the data from your signal as input.</p>
+<p>Review the results and make any necessary adjustments to the forecasting method or input data.</p>
+<p>Create charts and visualizations to help you better understand and present your forecast results.</p>
+<p>Note: The steps and specifics of creating an excel forecast can vary depending on the data and the forecasting method you choose. It may be helpful to familiarize yourself with the different forecasting techniques and tools available in Excel and consult resources such as tutorials or forums for guidance.</p>
+<p>By following these steps, someone can use external data to build a more accurate and comprehensive forecast model in Excel.</p>
+<p>In conclusion, building forecasting models in Excel can be a valuable skill for data analytics professionals and organizations that want to make informed decisions based on historical data.</p>
+<p>By following the steps outlined in this article, users can leverage the powerful tools and featuresof Excel to build a basic forecasting model. Excel is still widely used today and can be the key to unlocking valuable insights and driving better business outcomes. Additionally, tools like Ready Signal can further enhance the capabilities of Excel by allowing users to easily access and incorporate external data into their models. With the right tools and skills, Excel can be a powerful tool for forecasting and data analysis in any organization.</p>
+<p>If you are interested in learning more about how you can enhance and enrich the forecasting capabilities of Excel with external data, contact us or sign up for a free <a href="https://www.readysignal.com/">Ready Signal</a> account today!</p>
+<div class="elementor-element elementor-element-eeda3a2 e-con-full e-flex e-con" data-element_type="container" data-id="eeda3a2" data-settings='{"content_width":"full"}'>
+<div class="elementor-element elementor-element-ca7d84f elementor-widget elementor-widget-template" data-element_type="widget" data-id="ca7d84f" data-widget_type="template.default">
+<div class="elementor-widget-container">
+<div class="elementor-template">
+<div class="elementor elementor-1654" data-elementor-id="1654" data-elementor-type="container">
+<div class="elementor-element elementor-element-6bb89eb7 e-flex e-con-boxed e-con" data-element_type="container" data-id="6bb89eb7" data-settings='{"background_background":"classic","content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-38fd0eba e-flex e-con-boxed e-con" data-element_type="container" data-id="38fd0eba" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-23641637 elementor-widget elementor-widget-heading" data-element_type="widget" data-id="23641637" data-widget_type="heading.default">
+<div class="elementor-widget-container">
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3> </div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-c5d0540 e-flex e-con-boxed e-con" data-element_type="container" data-id="c5d0540" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-3b2d7408 elementor-widget elementor-widget-button" data-element_type="widget" data-id="3b2d7408" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-668ff799 elementor-widget elementor-widget-button" data-element_type="widget" data-id="668ff799" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="elementor-template">
+<div class="elementor elementor-1654" data-elementor-id="1654" data-elementor-type="container">
+<div class="elementor-element elementor-element-6bb89eb7 e-flex e-con-boxed e-con" data-element_type="container" data-id="6bb89eb7" data-settings='{"background_background":"classic","content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-38fd0eba e-flex e-con-boxed e-con" data-element_type="container" data-id="38fd0eba" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-23641637 elementor-widget elementor-widget-heading" data-element_type="widget" data-id="23641637" data-widget_type="heading.default">
+<div class="elementor-widget-container">
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3> </div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-c5d0540 e-flex e-con-boxed e-con" data-element_type="container" data-id="c5d0540" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-3b2d7408 elementor-widget elementor-widget-button" data-element_type="widget" data-id="3b2d7408" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-668ff799 elementor-widget elementor-widget-button" data-element_type="widget" data-id="668ff799" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="elementor elementor-1654" data-elementor-id="1654" data-elementor-type="container">
+<div class="elementor-element elementor-element-6bb89eb7 e-flex e-con-boxed e-con" data-element_type="container" data-id="6bb89eb7" data-settings='{"background_background":"classic","content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-38fd0eba e-flex e-con-boxed e-con" data-element_type="container" data-id="38fd0eba" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-23641637 elementor-widget elementor-widget-heading" data-element_type="widget" data-id="23641637" data-widget_type="heading.default">
+<div class="elementor-widget-container">
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3> </div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-c5d0540 e-flex e-con-boxed e-con" data-element_type="container" data-id="c5d0540" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-3b2d7408 elementor-widget elementor-widget-button" data-element_type="widget" data-id="3b2d7408" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-668ff799 elementor-widget elementor-widget-button" data-element_type="widget" data-id="668ff799" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-6bb89eb7 e-flex e-con-boxed e-con" data-element_type="container" data-id="6bb89eb7" data-settings='{"background_background":"classic","content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-38fd0eba e-flex e-con-boxed e-con" data-element_type="container" data-id="38fd0eba" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-23641637 elementor-widget elementor-widget-heading" data-element_type="widget" data-id="23641637" data-widget_type="heading.default">
+<div class="elementor-widget-container">
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3> </div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-c5d0540 e-flex e-con-boxed e-con" data-element_type="container" data-id="c5d0540" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-3b2d7408 elementor-widget elementor-widget-button" data-element_type="widget" data-id="3b2d7408" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-668ff799 elementor-widget elementor-widget-button" data-element_type="widget" data-id="668ff799" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-38fd0eba e-flex e-con-boxed e-con" data-element_type="container" data-id="38fd0eba" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-23641637 elementor-widget elementor-widget-heading" data-element_type="widget" data-id="23641637" data-widget_type="heading.default">
+<div class="elementor-widget-container">
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3> </div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-c5d0540 e-flex e-con-boxed e-con" data-element_type="container" data-id="c5d0540" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-3b2d7408 elementor-widget elementor-widget-button" data-element_type="widget" data-id="3b2d7408" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-668ff799 elementor-widget elementor-widget-button" data-element_type="widget" data-id="668ff799" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-38fd0eba e-flex e-con-boxed e-con" data-element_type="container" data-id="38fd0eba" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-23641637 elementor-widget elementor-widget-heading" data-element_type="widget" data-id="23641637" data-widget_type="heading.default">
+<div class="elementor-widget-container">
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3> </div>
+</div>
+</div>
+</div>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-23641637 elementor-widget elementor-widget-heading" data-element_type="widget" data-id="23641637" data-widget_type="heading.default">
+<div class="elementor-widget-container">
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3> </div>
+</div>
+</div>
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3>
+<div class="elementor-element elementor-element-c5d0540 e-flex e-con-boxed e-con" data-element_type="container" data-id="c5d0540" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-3b2d7408 elementor-widget elementor-widget-button" data-element_type="widget" data-id="3b2d7408" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-668ff799 elementor-widget elementor-widget-button" data-element_type="widget" data-id="668ff799" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-3b2d7408 elementor-widget elementor-widget-button" data-element_type="widget" data-id="3b2d7408" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-668ff799 elementor-widget elementor-widget-button" data-element_type="widget" data-id="668ff799" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+    </article>
+</body>
+</html>

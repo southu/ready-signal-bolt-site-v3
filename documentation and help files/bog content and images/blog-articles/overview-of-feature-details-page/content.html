@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Overview of Feature Details Page</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <article>
+        <h1>Overview of Feature Details Page</h1>
+        <p>This article walks through the different sections of the Feature/Data details page on the RS platform. This page provides more detail on a data set, along with guidance on data science treatments to consider applying.</p>
+<p><strong>Feature Detail Page:</strong></p>
+<p>Accessible From:</p>
+<p>You can access the data details page by clicking on the feature name from the <a href="https://www.readysignal.com/data/" rel="noreferrer noopener" target="_blank">Data Sets page</a> of the Ready Signal website: </p>
+<img alt="" decoding="async" src="images/image-18-1024x157-1.png"/>
+<p>Or by clicking on the feature name while adding features to a signal:</p>
+<img alt="" decoding="async" src="images/image-17-1024x151-1.png"/>
+<p>Importance in Data Science Treatment Selection</p>
+<p>There are a variety of Data Science Treatments you can apply to features within a signal. These DS treatments can greatly improve the usefulness of your data.  Note that these treatments are applied at the individual feature level.  </p>
+<p><strong>TIP: </strong>Each feature offered by Ready Signal undergoes a transformation analysis to determine its suitability to be used in modeling in its raw form.  Users can test the data science transformations suggested by adding both the untransformed feature and the feature using the recommended treatments to their signal in order to test its fit and predictive power in their analysis. </p>
+<p><strong>Details Page Components</strong></p>
+<p>1) F<strong>eature Specs</strong></p>
+<img alt="" decoding="async" src="images/image-19-1024x658-1.png"/>
+<p>This section provides an overview of the data.  Source, release, units and frequency are provided in order to understand where they data comes from, what form it takes and how often it is updated.  The data is graphed over time for time series data and geographically for point in time data.  The ‘Why Use’ section gives a brief overview of the benefit of using this data stream in analyses. The suggested transformation provides a recommendation of how to best transform the data in order to improve normality and, for time series data, ensure the data is stationary, not autocorrelated, and not seasonally impacted.  Details for the suggestions and their rationale are provided below.</p>
+<h4 class="wp-block-heading">2) Time Series Analysis</h4>
+<img alt="" decoding="async" src="images/image-20-1024x622-1.png"/>
+<p>Time series analysis is conducted on features which have repeated measures over time at a set interval.  The data is tested for autocorrelation (also referred to as serial correlation.  This looks at whether observations are independent over time. </p>
+<p>In order to determine the cases when the prior values of a time series have an influence on the current value and autocorrelation function (ACF) is used.  The ACF computes the correlation between the current value and previous values in time.  The ACF plot shows the correlation between the current value (T) and the K previous values (T-1,T-2,…,T-K). </p>
+<ul class="wp-block-list">
+<li>When autocorrelation is present, constant or slowly diminishing across values of K then there is autocorrelation present and differencing {hyperlink to data transforms page} is recommended.</li>
+</ul>
+<li>When autocorrelation is present, constant or slowly diminishing across values of K then there is autocorrelation present and differencing {hyperlink to data transforms page} is recommended.</li>
+<p>The partial autocorrelation function (PACF) is the correlation of a lag after the computation of the previous lags.  This allows the viewer to determine if additional differencing is needed beyond the first order.</p>
+<ul class="wp-block-list">
+<li>Peaks at intervals representing a year indicate there may be a need for seasonal differencing.</li>
+</ul>
+<li>Peaks at intervals representing a year indicate there may be a need for seasonal differencing.</li>
+<p>The autocorrelation function (ACF) after first order differencing is also shown.  This indicates the residual correlation after the data has been differenced. </p>
+<ul class="wp-block-list">
+<li>If it shows a sustained autocorrelation than further differencing is required.</li>
+<li>If it is near zero or slightly negative, then no further differencing is needed.</li>
+</ul>
+<li>If it shows a sustained autocorrelation than further differencing is required.</li>
+<li>If it is near zero or slightly negative, then no further differencing is needed.</li>
+<img alt="" decoding="async" src="https://www.readysignal.com/wp-content/uploads/2022/04/image-14.png"/>
+<p>The feature is also tested for stationarity.  A time series is considered stationary when its mean and variance are constant over time. The Kwiatkowski–Phillips–Schmidt–Shin (KPSS) test measures if the feature is stationary around the mean or linear trend. It decomposes data into a trend component, a random walk, and an error term.  The null hypothesis is that the data is stationary.  P-values of less than 0.05 indicate the data is not stationary.  This test is used to recommend whether or not the data should be differenced. {hyperlink to data transforms page}</p>
+<p>3) Seasonality</p>
+<img alt="" decoding="async" src="images/image-21-1024x678-1.png"/>
+<p>For data that is quarterly, monthly, weekly or daily a seasonality analysis is performed.  The data is decomposed into a trend component, a seasonal component and a random component.  The process computes the trend through a moving average, the seasonality by averaging each time period across years and the remainder becomes the error term. The multiplicative seasonality is shown as the seasonal impact. {hyperlink to data transforms page}  The seasonality levels are quarterly for quarterly data, monthly for both monthly and daily data, and weekly for weekly data.  A seasonal unit root test utilizes a measure of seasonal strength to recommend if seasonal differencing is required. </p>
+<p><strong>4) Normality</strong></p>
+<img alt="" decoding="async" src="images/image-22-1024x724-1.png"/>
+<p>Each feature, both time series and point in time, undergoes a distribution analysis. </p>
+<p>The Shapiro-Wilk test compares the order distribution of the feature to the expected values of standard normal distribution.  The null hypothesis is the data is normally distributed.  In cases where the p-values are less than 0.05 then the message is shown that the data is not normally distributed. </p>
+<p>The kurtosis is computed which measures the thickness of the distribution’s tails relative to the normal distribution.   When kurtosis is greater than one it indicates the distribution has heavier tails and follows a leptokurtic distribution. When kurtosis is less than negative one it indicates the distribution has lighter tails and follows a platykurtic  distribution.  When kurtosis is between negative one and one it indicates the distribution is relatively normal and follows a mesokurtic distribution.</p>
+<p>The skewness is computed which measures the symmetry of the feature’s distribution.  Absolute values greater than 1 show substantial skewness.</p>
+<p>Hartigan’s dip test is computed to estimate if the feature comes from a unimodal distribution.  It examines the feature distribution function and the unimodal distribution function.   The null hypothesis is that the data is unimodal.  P-values of less than 0.05 indicate the data is multimodal.</p>
+<p>Finally a series of transformations are tested to determine if they improve the normality of the data. The Pearson test statistic is across classes that are equiprobable under the hypothesis of normality. The transformation with the lowest Pearson statistic is recommended to improve normality.</p>
+    </article>
+</body>
+</html>

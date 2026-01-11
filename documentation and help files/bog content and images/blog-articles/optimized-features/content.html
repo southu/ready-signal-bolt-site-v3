@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Optimized Features</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <article>
+        <h1>Optimized Features</h1>
+        <h2>Optimized Features</h2>
+<p>The <strong>Optimized Features</strong> section in Ready Signal displays the predictors that have been automatically filtered, tested, and validated by our feature selection algorithm. This process ensures that only the most statistically relevant and stable predictors are surfaced to the user. </p>
+<h2 class="wp-block-heading">How Optimized Features Are Determined</h2>
+<ol>
+<li><strong>Check for Multicollinearity</strong>
+<ul>
+<li>The algorithm calculates the <strong>Variance Inflation Factor (VIF)</strong> for each predictor.</li>
+<li>Predictors with a <strong>VIF greater than the defined threshold</strong> (commonly 10) are removed to avoid unstable regression results caused by multicollinearity.</li>
+</ul>
+</li>
+<li><strong>Run Univariate Regression Tests</strong>
+<ul>
+<li>Each remaining predictor is tested individually against the target variable.</li>
+<li>Predictors with a statistically significant relationship (<strong>p-value &lt; 0.05</strong>) are flagged as potentially important.</li>
+</ul>
+</li>
+<li><strong>Apply Machine Learning Feature Selection</strong><br/>Three different methods are applied to further refine the predictor set:
+<ul>
+<li><strong>LassoCV:</strong> Shrinks coefficients of weak predictors to zero. Predictors with non-zero coefficients are retained.</li>
+<li><strong>Recursive Feature Elimination (RFE):</strong> Iteratively removes the weakest predictors until the optimal set is identified.</li>
+<li><strong>Random Forest Regressor:</strong> Assigns an importance score to each predictor. Predictors above the median importance threshold are kept.</li>
+</ul>
+</li>
+<li><strong>Combine Results</strong>
+<ul>
+<li>Each method produces a set of selected predictors.</li>
+<li>A <strong>majority vote</strong><strong> is</strong> applied (e.g., predictor must be chosen by at least 3 out of 4 methods to remain).</li>
+<li>Predictors selected by <strong>all methods</strong> are highlighted as the strongest candidates.</li>
+</ul>
+</li>
+<li><strong>Fit the Final Model</strong>
+<ul>
+<li>A final regression model is built using the predictors that survived the selection process.</li>
+<li>The summary output includes coefficients, p-values, and performance statistics describing the model’s fit.</li>
+</ul>
+</li>
+<li><strong>Handling Edge Cases</strong>
+<ul>
+<li>If <strong>no predictors meet the selection criteria</strong>, the algorithm applies a default rule.</li>
+<li><strong>Defaults display the most highly correlated features</strong> to the target variable, ensuring stability and interpretability of results.</li>
+</ul>
+</li>
+</ol>
+<li><strong>Check for Multicollinearity</strong>
+<ul>
+<li>The algorithm calculates the <strong>Variance Inflation Factor (VIF)</strong> for each predictor.</li>
+<li>Predictors with a <strong>VIF greater than the defined threshold</strong> (commonly 10) are removed to avoid unstable regression results caused by multicollinearity.</li>
+</ul>
+</li>
+<ul>
+<li>The algorithm calculates the <strong>Variance Inflation Factor (VIF)</strong> for each predictor.</li>
+<li>Predictors with a <strong>VIF greater than the defined threshold</strong> (commonly 10) are removed to avoid unstable regression results caused by multicollinearity.</li>
+</ul>
+<li>The algorithm calculates the <strong>Variance Inflation Factor (VIF)</strong> for each predictor.</li>
+<li>Predictors with a <strong>VIF greater than the defined threshold</strong> (commonly 10) are removed to avoid unstable regression results caused by multicollinearity.</li>
+<li><strong>Run Univariate Regression Tests</strong>
+<ul>
+<li>Each remaining predictor is tested individually against the target variable.</li>
+<li>Predictors with a statistically significant relationship (<strong>p-value &lt; 0.05</strong>) are flagged as potentially important.</li>
+</ul>
+</li>
+<ul>
+<li>Each remaining predictor is tested individually against the target variable.</li>
+<li>Predictors with a statistically significant relationship (<strong>p-value &lt; 0.05</strong>) are flagged as potentially important.</li>
+</ul>
+<li>Each remaining predictor is tested individually against the target variable.</li>
+<li>Predictors with a statistically significant relationship (<strong>p-value &lt; 0.05</strong>) are flagged as potentially important.</li>
+<li><strong>Apply Machine Learning Feature Selection</strong><br/>Three different methods are applied to further refine the predictor set:
+<ul>
+<li><strong>LassoCV:</strong> Shrinks coefficients of weak predictors to zero. Predictors with non-zero coefficients are retained.</li>
+<li><strong>Recursive Feature Elimination (RFE):</strong> Iteratively removes the weakest predictors until the optimal set is identified.</li>
+<li><strong>Random Forest Regressor:</strong> Assigns an importance score to each predictor. Predictors above the median importance threshold are kept.</li>
+</ul>
+</li>
+<ul>
+<li><strong>LassoCV:</strong> Shrinks coefficients of weak predictors to zero. Predictors with non-zero coefficients are retained.</li>
+<li><strong>Recursive Feature Elimination (RFE):</strong> Iteratively removes the weakest predictors until the optimal set is identified.</li>
+<li><strong>Random Forest Regressor:</strong> Assigns an importance score to each predictor. Predictors above the median importance threshold are kept.</li>
+</ul>
+<li><strong>LassoCV:</strong> Shrinks coefficients of weak predictors to zero. Predictors with non-zero coefficients are retained.</li>
+<li><strong>Recursive Feature Elimination (RFE):</strong> Iteratively removes the weakest predictors until the optimal set is identified.</li>
+<li><strong>Random Forest Regressor:</strong> Assigns an importance score to each predictor. Predictors above the median importance threshold are kept.</li>
+<li><strong>Combine Results</strong>
+<ul>
+<li>Each method produces a set of selected predictors.</li>
+<li>A <strong>majority vote</strong><strong> is</strong> applied (e.g., predictor must be chosen by at least 3 out of 4 methods to remain).</li>
+<li>Predictors selected by <strong>all methods</strong> are highlighted as the strongest candidates.</li>
+</ul>
+</li>
+<ul>
+<li>Each method produces a set of selected predictors.</li>
+<li>A <strong>majority vote</strong><strong> is</strong> applied (e.g., predictor must be chosen by at least 3 out of 4 methods to remain).</li>
+<li>Predictors selected by <strong>all methods</strong> are highlighted as the strongest candidates.</li>
+</ul>
+<li>Each method produces a set of selected predictors.</li>
+<li>A <strong>majority vote</strong><strong> is</strong> applied (e.g., predictor must be chosen by at least 3 out of 4 methods to remain).</li>
+<li>Predictors selected by <strong>all methods</strong> are highlighted as the strongest candidates.</li>
+<li><strong>Fit the Final Model</strong>
+<ul>
+<li>A final regression model is built using the predictors that survived the selection process.</li>
+<li>The summary output includes coefficients, p-values, and performance statistics describing the model’s fit.</li>
+</ul>
+</li>
+<ul>
+<li>A final regression model is built using the predictors that survived the selection process.</li>
+<li>The summary output includes coefficients, p-values, and performance statistics describing the model’s fit.</li>
+</ul>
+<li>A final regression model is built using the predictors that survived the selection process.</li>
+<li>The summary output includes coefficients, p-values, and performance statistics describing the model’s fit.</li>
+<li><strong>Handling Edge Cases</strong>
+<ul>
+<li>If <strong>no predictors meet the selection criteria</strong>, the algorithm applies a default rule.</li>
+<li><strong>Defaults display the most highly correlated features</strong> to the target variable, ensuring stability and interpretability of results.</li>
+</ul>
+</li>
+<ul>
+<li>If <strong>no predictors meet the selection criteria</strong>, the algorithm applies a default rule.</li>
+<li><strong>Defaults display the most highly correlated features</strong> to the target variable, ensuring stability and interpretability of results.</li>
+</ul>
+<li>If <strong>no predictors meet the selection criteria</strong>, the algorithm applies a default rule.</li>
+<li><strong>Defaults display the most highly correlated features</strong> to the target variable, ensuring stability and interpretability of results.</li>
+<h2>Why This Matters</h2>
+<p>The <strong>Optimized Features</strong> you see in the platform are not just raw correlations — they are the output of this rigorous selection pipeline. By surfacing these features, Ready Signal helps ensure your models are based on predictors that are:</p>
+<ul>
+<li>Statistically validated</li>
+<li>Non-redundant</li>
+<li>Relevant to your target outcome</li>
+</ul>
+<li>Statistically validated</li>
+<li>Non-redundant</li>
+<li>Relevant to your target outcome</li>
+<p>This means that what appears in the <strong>Optimized Features</strong> section represents the predictors most likely to improve model performance and provide actionable business insights.</p>
+    </article>
+</body>
+</html>

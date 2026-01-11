@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What is Control Data? | Control Data 101</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <article>
+        <h1>What is Control Data? | Control Data 101</h1>
+        <div class="elementor elementor-612 elementor-location-single post-1 post type-post status-publish format-standard has-post-thumbnail hentry category-resources ast-article-single" data-elementor-id="612" data-elementor-type="single-post">
+<div class="elementor-element elementor-element-3ecacce e-flex e-con-boxed e-con" data-element_type="container" data-id="3ecacce" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-d90718e e-con-full e-flex e-con" data-element_type="container" data-id="d90718e" data-settings='{"content_width":"full"}'>
+<div class="elementor-element elementor-element-62bc9fe elementor-widget elementor-widget-theme-post-title elementor-page-title elementor-widget-heading" data-element_type="widget" data-id="62bc9fe" data-widget_type="theme-post-title.default">
+<div class="elementor-widget-container">
+<style>/*! elementor - v3.14.0 - 14-06-2023 */
+.elementor-heading-title{padding:0;margin:0;line-height:1}.elementor-widget-heading .elementor-heading-title[class*=elementor-size-]>a{color:inherit;font-size:inherit;line-height:inherit}.elementor-widget-heading .elementor-heading-title.elementor-size-small{font-size:15px}.elementor-widget-heading .elementor-heading-title.elementor-size-medium{font-size:19px}.elementor-widget-heading .elementor-heading-title.elementor-size-large{font-size:29px}.elementor-widget-heading .elementor-heading-title.elementor-size-xl{font-size:39px}.elementor-widget-heading .elementor-heading-title.elementor-size-xxl{font-size:59px}</style><h1 class="elementor-heading-title elementor-size-default">What is Control Data? | Control Data 101</h1> </div>
+</div>
+<div class="elementor-element elementor-element-375f26a elementor-align-left elementor-widget elementor-widget-post-info" data-element_type="widget" data-id="375f26a" data-widget_type="post-info.default">
+<div class="elementor-widget-container">
+<link href="https://www.readysignal.com/wp-content/plugins/elementor/assets/css/widget-icon-list.min.css" rel="stylesheet"/><link href="https://www.readysignal.com/wp-content/plugins/elementor-pro/assets/css/widget-theme-elements.min.css" rel="stylesheet"/> <ul class="elementor-inline-items elementor-icon-list-items elementor-post-info">
+<li class="elementor-icon-list-item elementor-repeater-item-7540876 elementor-inline-item" itemprop="author">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-author">
+										Baylen Springer					</span>
+</li>
+<li class="elementor-icon-list-item elementor-repeater-item-450fc99 elementor-inline-item" itemprop="datePublished">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-date">
+<span class="elementor-post-info__item-prefix">/</span>
+										February 1, 2022					</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="elementor-element elementor-element-36730df elementor-widget elementor-widget-theme-post-content" data-element_type="widget" data-id="36730df" data-widget_type="theme-post-content.default">
+<div class="elementor-widget-container">
+<figure class="wp-block-image size-full"><img alt="Control Data 101" class="wp-image-361" decoding="async" fetchpriority="high" height="535" sizes="(max-width: 768px) 100vw, 768px" src="images/Control-Data-768x535-1.jpg" srcset="images/Control-Data-768x535-1.jpg 768w, https://www.readysignal.com/wp-content/uploads/2023/05/Control-Data-768x535-1-300x209.jpg 300w" width="768"/></figure>
+<p>External factors constantly affect your company and the sales, operational, marketing, staffing, and planning decisions you make on a day-to-day basis. No company operates in a vacuum; all are subject to environmental changes that are outside of their control. And while I wish this was an article about how to adjust those external factors to fit your business plan, that is rarely possible. Instead, what you can do is incorporate these factors into your decision-making process by incorporating them into your analytics and business intelligence. </p>
+<p>Most companies have turned to data analytics, statistical modeling, prescriptive analytics, and artificial intelligence to inform business decisions; but many models are built only from internal data, analyzing how these internal components are trending over time or seasons. When models don’t account for the complexities of external events, there is potential for false positives or negatives and result in a lack of comprehensive understanding of the causes of these outcomes.  Therefore, control data is an incredibly important, but often overlooked, component of applied data science.</p>
+<h2 class="wp-block-heading"><strong>What is Control Data?</strong></h2>
+<p>Control data is data about external factors that impact the outcome of variables in a model. Control data is often referred to as external data or third-party data. Using control data in a model allows data scientists to figure out which factors outside of the business have affected outcomes in the past, map out the correlation between those factors, and inform how the business may perform in the future due to these same factors. Of course, correlation does not always prove causation, so it is important for humans (rather than solely AI) to analyze information for a deep understanding of how and why these factors have a correlation in the first place.</p>
+<p>Examples of control data include economic trends, weather, demographic trends, COVID-19 numbers, government regulations, population growth or decline, inventory or input availability, and workforce availability. It is important to test all potential factors in your models to understand which factors, and at which grain, affect your business; there may be some that you don’t even know about yet!</p>
+<h2 class="wp-block-heading"><strong>When Should I Use Control Data?</strong></h2>
+<p>Control data should be used when external factors can affect the outcome of a real-world scenario you are trying to predict. This is true for all predictive analysis when trying to answer a business question. All businesses experience environmental factors that affect demand, inventory availability, costs, workforce availability, and more. Even something as high-level as overall economic trends will affect your business and need to be accounted for in a predictive model.</p>
+<p>For example, if you operate a brick-and-mortar business, understanding the population growth in your area will be paramount to predicting demand; as the population of your target audience grows, sales may also grow. Weather is another important factor for a business operating out of a physical location, as patrons may be more likely to come to your business on warm days than in a blizzard. Adding these factors to models will allow you to understand the impact each has on your business and will allow you to plan for future changes.</p>
+<p>For an online business, overall economic growth or decline is more suitable for predicting sales than regional changes. If an input to your business is steel, understanding how government regulations have affected steel imports in the past will allow you to plan for regulation changes in the future. These are a few simple examples of the way external factors affect businesses every day. Testing out various correlations will allow you to understand how each factor interacts to create your overall business outcome.</p>
+<h2 class="wp-block-heading"><strong>How Can I Connect to Control Data?</strong></h2>
+<p>There are many online resources to source control data at your disposal. Many government-related sets can be access for free or a small fee, such as economic data from the <a href="https://fred.stlouisfed.org/">FRED database</a> or weather data from the <a href="https://www.ncdc.noaa.gov/cdo-web/">NOAA database</a>. Other types of data, like consumer marketing data, can be found through paid services like <a href="https://www.experian.com/marketing-services/targeting/data-driven-marketing/consumer-view-data">Experian</a>. Sourcing datasets in this way is useful when you already know what data you are looking for and are comfortable building connections to these data sources through resources at your own company. You will also need to know how to transform these datasets to the correct dimensions and granularity you are looking for.</p>
+<p>Another option is through services like <a href="https://www.readysignal.com/">Ready Signal</a>, a platform that we’ve developed to source and deliver various control datasets. Users can start from scratch or receive dataset recommendations based on a type of analysis and industry. Then, datasets can be automatically transformed based on geographic area, timeframe, time granularity, through data science treatments like leads, lags, and decays, and exported to a variety of destinations for your model in real time.  Ready Signal also provides the Auto Discovery tool, which is a patent pending technology that allows you to upload the target variable you wish to explain and the tool will automatically identify correlated control features to test and train your models, saving you the time and effort of having to know which external factors may be interacting with your business.</p>
+<p>One example of this process, that we’ve seen firsthand in the Food Service industry. When predicting sales without control features, our model developed with internal data only had a 16.7% error.  When control features identified by the Ready Signal Auto Discovery process were included into the model, the error was reduced to 6.9%. That’s a 60% increase in accuracy achieved through the incorporation of control data where it counts.</p>
+<figure class="wp-block-image"><img alt="" class="wp-image-656" decoding="async" src="images/Picture1.png"/></figure>
+<figure class="wp-block-image"><img alt="" class="wp-image-657" decoding="async" src="images/Picture2.png"/></figure>
+<p>If you are looking to incorporate control data into your models and are interested in Ready Signal’s services, learn more by visiting <a href="https://www.readysignal.com/">https://www.readysignal.com/</a> or emailing <a href="/cdn-cgi/l/email-protection#14777b7a6075776054667175706d677d737a75783a777b79"><span class="__cf_email__" data-cfemail="e0838f8e94818394a092858184999389878e818cce838f8d">[email protected]</span></a>.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-eeda3a2 e-con-full e-flex e-con" data-element_type="container" data-id="eeda3a2" data-settings='{"content_width":"full"}'>
+<div class="elementor-element elementor-element-ca7d84f elementor-widget elementor-widget-template" data-element_type="widget" data-id="ca7d84f" data-widget_type="template.default">
+<div class="elementor-widget-container">
+<div class="elementor-template">
+<div class="elementor elementor-1654" data-elementor-id="1654" data-elementor-type="container">
+<div class="elementor-element elementor-element-6bb89eb7 e-flex e-con-boxed e-con" data-element_type="container" data-id="6bb89eb7" data-settings='{"background_background":"classic","content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-38fd0eba e-flex e-con-boxed e-con" data-element_type="container" data-id="38fd0eba" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-23641637 elementor-widget elementor-widget-heading" data-element_type="widget" data-id="23641637" data-widget_type="heading.default">
+<div class="elementor-widget-container">
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3> </div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-c5d0540 e-flex e-con-boxed e-con" data-element_type="container" data-id="c5d0540" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-3b2d7408 elementor-widget elementor-widget-button" data-element_type="widget" data-id="3b2d7408" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-668ff799 elementor-widget elementor-widget-button" data-element_type="widget" data-id="668ff799" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-3ecacce e-flex e-con-boxed e-con" data-element_type="container" data-id="3ecacce" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-d90718e e-con-full e-flex e-con" data-element_type="container" data-id="d90718e" data-settings='{"content_width":"full"}'>
+<div class="elementor-element elementor-element-62bc9fe elementor-widget elementor-widget-theme-post-title elementor-page-title elementor-widget-heading" data-element_type="widget" data-id="62bc9fe" data-widget_type="theme-post-title.default">
+<div class="elementor-widget-container">
+<style>/*! elementor - v3.14.0 - 14-06-2023 */
+.elementor-heading-title{padding:0;margin:0;line-height:1}.elementor-widget-heading .elementor-heading-title[class*=elementor-size-]>a{color:inherit;font-size:inherit;line-height:inherit}.elementor-widget-heading .elementor-heading-title.elementor-size-small{font-size:15px}.elementor-widget-heading .elementor-heading-title.elementor-size-medium{font-size:19px}.elementor-widget-heading .elementor-heading-title.elementor-size-large{font-size:29px}.elementor-widget-heading .elementor-heading-title.elementor-size-xl{font-size:39px}.elementor-widget-heading .elementor-heading-title.elementor-size-xxl{font-size:59px}</style><h1 class="elementor-heading-title elementor-size-default">What is Control Data? | Control Data 101</h1> </div>
+</div>
+<div class="elementor-element elementor-element-375f26a elementor-align-left elementor-widget elementor-widget-post-info" data-element_type="widget" data-id="375f26a" data-widget_type="post-info.default">
+<div class="elementor-widget-container">
+<link href="https://www.readysignal.com/wp-content/plugins/elementor/assets/css/widget-icon-list.min.css" rel="stylesheet"/><link href="https://www.readysignal.com/wp-content/plugins/elementor-pro/assets/css/widget-theme-elements.min.css" rel="stylesheet"/> <ul class="elementor-inline-items elementor-icon-list-items elementor-post-info">
+<li class="elementor-icon-list-item elementor-repeater-item-7540876 elementor-inline-item" itemprop="author">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-author">
+										Baylen Springer					</span>
+</li>
+<li class="elementor-icon-list-item elementor-repeater-item-450fc99 elementor-inline-item" itemprop="datePublished">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-date">
+<span class="elementor-post-info__item-prefix">/</span>
+										February 1, 2022					</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="elementor-element elementor-element-36730df elementor-widget elementor-widget-theme-post-content" data-element_type="widget" data-id="36730df" data-widget_type="theme-post-content.default">
+<div class="elementor-widget-container">
+<figure class="wp-block-image size-full"><img alt="Control Data 101" class="wp-image-361" decoding="async" fetchpriority="high" height="535" sizes="(max-width: 768px) 100vw, 768px" src="images/Control-Data-768x535-1.jpg" srcset="images/Control-Data-768x535-1.jpg 768w, https://www.readysignal.com/wp-content/uploads/2023/05/Control-Data-768x535-1-300x209.jpg 300w" width="768"/></figure>
+<p>External factors constantly affect your company and the sales, operational, marketing, staffing, and planning decisions you make on a day-to-day basis. No company operates in a vacuum; all are subject to environmental changes that are outside of their control. And while I wish this was an article about how to adjust those external factors to fit your business plan, that is rarely possible. Instead, what you can do is incorporate these factors into your decision-making process by incorporating them into your analytics and business intelligence. </p>
+<p>Most companies have turned to data analytics, statistical modeling, prescriptive analytics, and artificial intelligence to inform business decisions; but many models are built only from internal data, analyzing how these internal components are trending over time or seasons. When models don’t account for the complexities of external events, there is potential for false positives or negatives and result in a lack of comprehensive understanding of the causes of these outcomes.  Therefore, control data is an incredibly important, but often overlooked, component of applied data science.</p>
+<h2 class="wp-block-heading"><strong>What is Control Data?</strong></h2>
+<p>Control data is data about external factors that impact the outcome of variables in a model. Control data is often referred to as external data or third-party data. Using control data in a model allows data scientists to figure out which factors outside of the business have affected outcomes in the past, map out the correlation between those factors, and inform how the business may perform in the future due to these same factors. Of course, correlation does not always prove causation, so it is important for humans (rather than solely AI) to analyze information for a deep understanding of how and why these factors have a correlation in the first place.</p>
+<p>Examples of control data include economic trends, weather, demographic trends, COVID-19 numbers, government regulations, population growth or decline, inventory or input availability, and workforce availability. It is important to test all potential factors in your models to understand which factors, and at which grain, affect your business; there may be some that you don’t even know about yet!</p>
+<h2 class="wp-block-heading"><strong>When Should I Use Control Data?</strong></h2>
+<p>Control data should be used when external factors can affect the outcome of a real-world scenario you are trying to predict. This is true for all predictive analysis when trying to answer a business question. All businesses experience environmental factors that affect demand, inventory availability, costs, workforce availability, and more. Even something as high-level as overall economic trends will affect your business and need to be accounted for in a predictive model.</p>
+<p>For example, if you operate a brick-and-mortar business, understanding the population growth in your area will be paramount to predicting demand; as the population of your target audience grows, sales may also grow. Weather is another important factor for a business operating out of a physical location, as patrons may be more likely to come to your business on warm days than in a blizzard. Adding these factors to models will allow you to understand the impact each has on your business and will allow you to plan for future changes.</p>
+<p>For an online business, overall economic growth or decline is more suitable for predicting sales than regional changes. If an input to your business is steel, understanding how government regulations have affected steel imports in the past will allow you to plan for regulation changes in the future. These are a few simple examples of the way external factors affect businesses every day. Testing out various correlations will allow you to understand how each factor interacts to create your overall business outcome.</p>
+<h2 class="wp-block-heading"><strong>How Can I Connect to Control Data?</strong></h2>
+<p>There are many online resources to source control data at your disposal. Many government-related sets can be access for free or a small fee, such as economic data from the <a href="https://fred.stlouisfed.org/">FRED database</a> or weather data from the <a href="https://www.ncdc.noaa.gov/cdo-web/">NOAA database</a>. Other types of data, like consumer marketing data, can be found through paid services like <a href="https://www.experian.com/marketing-services/targeting/data-driven-marketing/consumer-view-data">Experian</a>. Sourcing datasets in this way is useful when you already know what data you are looking for and are comfortable building connections to these data sources through resources at your own company. You will also need to know how to transform these datasets to the correct dimensions and granularity you are looking for.</p>
+<p>Another option is through services like <a href="https://www.readysignal.com/">Ready Signal</a>, a platform that we’ve developed to source and deliver various control datasets. Users can start from scratch or receive dataset recommendations based on a type of analysis and industry. Then, datasets can be automatically transformed based on geographic area, timeframe, time granularity, through data science treatments like leads, lags, and decays, and exported to a variety of destinations for your model in real time.  Ready Signal also provides the Auto Discovery tool, which is a patent pending technology that allows you to upload the target variable you wish to explain and the tool will automatically identify correlated control features to test and train your models, saving you the time and effort of having to know which external factors may be interacting with your business.</p>
+<p>One example of this process, that we’ve seen firsthand in the Food Service industry. When predicting sales without control features, our model developed with internal data only had a 16.7% error.  When control features identified by the Ready Signal Auto Discovery process were included into the model, the error was reduced to 6.9%. That’s a 60% increase in accuracy achieved through the incorporation of control data where it counts.</p>
+<figure class="wp-block-image"><img alt="" class="wp-image-656" decoding="async" src="images/Picture1.png"/></figure>
+<figure class="wp-block-image"><img alt="" class="wp-image-657" decoding="async" src="images/Picture2.png"/></figure>
+<p>If you are looking to incorporate control data into your models and are interested in Ready Signal’s services, learn more by visiting <a href="https://www.readysignal.com/">https://www.readysignal.com/</a> or emailing <a href="/cdn-cgi/l/email-protection#14777b7a6075776054667175706d677d737a75783a777b79"><span class="__cf_email__" data-cfemail="e0838f8e94818394a092858184999389878e818cce838f8d">[email protected]</span></a>.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-d90718e e-con-full e-flex e-con" data-element_type="container" data-id="d90718e" data-settings='{"content_width":"full"}'>
+<div class="elementor-element elementor-element-62bc9fe elementor-widget elementor-widget-theme-post-title elementor-page-title elementor-widget-heading" data-element_type="widget" data-id="62bc9fe" data-widget_type="theme-post-title.default">
+<div class="elementor-widget-container">
+<style>/*! elementor - v3.14.0 - 14-06-2023 */
+.elementor-heading-title{padding:0;margin:0;line-height:1}.elementor-widget-heading .elementor-heading-title[class*=elementor-size-]>a{color:inherit;font-size:inherit;line-height:inherit}.elementor-widget-heading .elementor-heading-title.elementor-size-small{font-size:15px}.elementor-widget-heading .elementor-heading-title.elementor-size-medium{font-size:19px}.elementor-widget-heading .elementor-heading-title.elementor-size-large{font-size:29px}.elementor-widget-heading .elementor-heading-title.elementor-size-xl{font-size:39px}.elementor-widget-heading .elementor-heading-title.elementor-size-xxl{font-size:59px}</style><h1 class="elementor-heading-title elementor-size-default">What is Control Data? | Control Data 101</h1> </div>
+</div>
+<div class="elementor-element elementor-element-375f26a elementor-align-left elementor-widget elementor-widget-post-info" data-element_type="widget" data-id="375f26a" data-widget_type="post-info.default">
+<div class="elementor-widget-container">
+<link href="https://www.readysignal.com/wp-content/plugins/elementor/assets/css/widget-icon-list.min.css" rel="stylesheet"/><link href="https://www.readysignal.com/wp-content/plugins/elementor-pro/assets/css/widget-theme-elements.min.css" rel="stylesheet"/> <ul class="elementor-inline-items elementor-icon-list-items elementor-post-info">
+<li class="elementor-icon-list-item elementor-repeater-item-7540876 elementor-inline-item" itemprop="author">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-author">
+										Baylen Springer					</span>
+</li>
+<li class="elementor-icon-list-item elementor-repeater-item-450fc99 elementor-inline-item" itemprop="datePublished">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-date">
+<span class="elementor-post-info__item-prefix">/</span>
+										February 1, 2022					</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="elementor-element elementor-element-36730df elementor-widget elementor-widget-theme-post-content" data-element_type="widget" data-id="36730df" data-widget_type="theme-post-content.default">
+<div class="elementor-widget-container">
+<figure class="wp-block-image size-full"><img alt="Control Data 101" class="wp-image-361" decoding="async" fetchpriority="high" height="535" sizes="(max-width: 768px) 100vw, 768px" src="images/Control-Data-768x535-1.jpg" srcset="images/Control-Data-768x535-1.jpg 768w, https://www.readysignal.com/wp-content/uploads/2023/05/Control-Data-768x535-1-300x209.jpg 300w" width="768"/></figure>
+<p>External factors constantly affect your company and the sales, operational, marketing, staffing, and planning decisions you make on a day-to-day basis. No company operates in a vacuum; all are subject to environmental changes that are outside of their control. And while I wish this was an article about how to adjust those external factors to fit your business plan, that is rarely possible. Instead, what you can do is incorporate these factors into your decision-making process by incorporating them into your analytics and business intelligence. </p>
+<p>Most companies have turned to data analytics, statistical modeling, prescriptive analytics, and artificial intelligence to inform business decisions; but many models are built only from internal data, analyzing how these internal components are trending over time or seasons. When models don’t account for the complexities of external events, there is potential for false positives or negatives and result in a lack of comprehensive understanding of the causes of these outcomes.  Therefore, control data is an incredibly important, but often overlooked, component of applied data science.</p>
+<h2 class="wp-block-heading"><strong>What is Control Data?</strong></h2>
+<p>Control data is data about external factors that impact the outcome of variables in a model. Control data is often referred to as external data or third-party data. Using control data in a model allows data scientists to figure out which factors outside of the business have affected outcomes in the past, map out the correlation between those factors, and inform how the business may perform in the future due to these same factors. Of course, correlation does not always prove causation, so it is important for humans (rather than solely AI) to analyze information for a deep understanding of how and why these factors have a correlation in the first place.</p>
+<p>Examples of control data include economic trends, weather, demographic trends, COVID-19 numbers, government regulations, population growth or decline, inventory or input availability, and workforce availability. It is important to test all potential factors in your models to understand which factors, and at which grain, affect your business; there may be some that you don’t even know about yet!</p>
+<h2 class="wp-block-heading"><strong>When Should I Use Control Data?</strong></h2>
+<p>Control data should be used when external factors can affect the outcome of a real-world scenario you are trying to predict. This is true for all predictive analysis when trying to answer a business question. All businesses experience environmental factors that affect demand, inventory availability, costs, workforce availability, and more. Even something as high-level as overall economic trends will affect your business and need to be accounted for in a predictive model.</p>
+<p>For example, if you operate a brick-and-mortar business, understanding the population growth in your area will be paramount to predicting demand; as the population of your target audience grows, sales may also grow. Weather is another important factor for a business operating out of a physical location, as patrons may be more likely to come to your business on warm days than in a blizzard. Adding these factors to models will allow you to understand the impact each has on your business and will allow you to plan for future changes.</p>
+<p>For an online business, overall economic growth or decline is more suitable for predicting sales than regional changes. If an input to your business is steel, understanding how government regulations have affected steel imports in the past will allow you to plan for regulation changes in the future. These are a few simple examples of the way external factors affect businesses every day. Testing out various correlations will allow you to understand how each factor interacts to create your overall business outcome.</p>
+<h2 class="wp-block-heading"><strong>How Can I Connect to Control Data?</strong></h2>
+<p>There are many online resources to source control data at your disposal. Many government-related sets can be access for free or a small fee, such as economic data from the <a href="https://fred.stlouisfed.org/">FRED database</a> or weather data from the <a href="https://www.ncdc.noaa.gov/cdo-web/">NOAA database</a>. Other types of data, like consumer marketing data, can be found through paid services like <a href="https://www.experian.com/marketing-services/targeting/data-driven-marketing/consumer-view-data">Experian</a>. Sourcing datasets in this way is useful when you already know what data you are looking for and are comfortable building connections to these data sources through resources at your own company. You will also need to know how to transform these datasets to the correct dimensions and granularity you are looking for.</p>
+<p>Another option is through services like <a href="https://www.readysignal.com/">Ready Signal</a>, a platform that we’ve developed to source and deliver various control datasets. Users can start from scratch or receive dataset recommendations based on a type of analysis and industry. Then, datasets can be automatically transformed based on geographic area, timeframe, time granularity, through data science treatments like leads, lags, and decays, and exported to a variety of destinations for your model in real time.  Ready Signal also provides the Auto Discovery tool, which is a patent pending technology that allows you to upload the target variable you wish to explain and the tool will automatically identify correlated control features to test and train your models, saving you the time and effort of having to know which external factors may be interacting with your business.</p>
+<p>One example of this process, that we’ve seen firsthand in the Food Service industry. When predicting sales without control features, our model developed with internal data only had a 16.7% error.  When control features identified by the Ready Signal Auto Discovery process were included into the model, the error was reduced to 6.9%. That’s a 60% increase in accuracy achieved through the incorporation of control data where it counts.</p>
+<figure class="wp-block-image"><img alt="" class="wp-image-656" decoding="async" src="images/Picture1.png"/></figure>
+<figure class="wp-block-image"><img alt="" class="wp-image-657" decoding="async" src="images/Picture2.png"/></figure>
+<p>If you are looking to incorporate control data into your models and are interested in Ready Signal’s services, learn more by visiting <a href="https://www.readysignal.com/">https://www.readysignal.com/</a> or emailing <a href="/cdn-cgi/l/email-protection#14777b7a6075776054667175706d677d737a75783a777b79"><span class="__cf_email__" data-cfemail="e0838f8e94818394a092858184999389878e818cce838f8d">[email protected]</span></a>.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-d90718e e-con-full e-flex e-con" data-element_type="container" data-id="d90718e" data-settings='{"content_width":"full"}'>
+<div class="elementor-element elementor-element-62bc9fe elementor-widget elementor-widget-theme-post-title elementor-page-title elementor-widget-heading" data-element_type="widget" data-id="62bc9fe" data-widget_type="theme-post-title.default">
+<div class="elementor-widget-container">
+<style>/*! elementor - v3.14.0 - 14-06-2023 */
+.elementor-heading-title{padding:0;margin:0;line-height:1}.elementor-widget-heading .elementor-heading-title[class*=elementor-size-]>a{color:inherit;font-size:inherit;line-height:inherit}.elementor-widget-heading .elementor-heading-title.elementor-size-small{font-size:15px}.elementor-widget-heading .elementor-heading-title.elementor-size-medium{font-size:19px}.elementor-widget-heading .elementor-heading-title.elementor-size-large{font-size:29px}.elementor-widget-heading .elementor-heading-title.elementor-size-xl{font-size:39px}.elementor-widget-heading .elementor-heading-title.elementor-size-xxl{font-size:59px}</style><h1 class="elementor-heading-title elementor-size-default">What is Control Data? | Control Data 101</h1> </div>
+</div>
+<div class="elementor-element elementor-element-375f26a elementor-align-left elementor-widget elementor-widget-post-info" data-element_type="widget" data-id="375f26a" data-widget_type="post-info.default">
+<div class="elementor-widget-container">
+<link href="https://www.readysignal.com/wp-content/plugins/elementor/assets/css/widget-icon-list.min.css" rel="stylesheet"/><link href="https://www.readysignal.com/wp-content/plugins/elementor-pro/assets/css/widget-theme-elements.min.css" rel="stylesheet"/> <ul class="elementor-inline-items elementor-icon-list-items elementor-post-info">
+<li class="elementor-icon-list-item elementor-repeater-item-7540876 elementor-inline-item" itemprop="author">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-author">
+										Baylen Springer					</span>
+</li>
+<li class="elementor-icon-list-item elementor-repeater-item-450fc99 elementor-inline-item" itemprop="datePublished">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-date">
+<span class="elementor-post-info__item-prefix">/</span>
+										February 1, 2022					</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="elementor-element elementor-element-36730df elementor-widget elementor-widget-theme-post-content" data-element_type="widget" data-id="36730df" data-widget_type="theme-post-content.default">
+<div class="elementor-widget-container">
+<figure class="wp-block-image size-full"><img alt="Control Data 101" class="wp-image-361" decoding="async" fetchpriority="high" height="535" sizes="(max-width: 768px) 100vw, 768px" src="images/Control-Data-768x535-1.jpg" srcset="images/Control-Data-768x535-1.jpg 768w, https://www.readysignal.com/wp-content/uploads/2023/05/Control-Data-768x535-1-300x209.jpg 300w" width="768"/></figure>
+<p>External factors constantly affect your company and the sales, operational, marketing, staffing, and planning decisions you make on a day-to-day basis. No company operates in a vacuum; all are subject to environmental changes that are outside of their control. And while I wish this was an article about how to adjust those external factors to fit your business plan, that is rarely possible. Instead, what you can do is incorporate these factors into your decision-making process by incorporating them into your analytics and business intelligence. </p>
+<p>Most companies have turned to data analytics, statistical modeling, prescriptive analytics, and artificial intelligence to inform business decisions; but many models are built only from internal data, analyzing how these internal components are trending over time or seasons. When models don’t account for the complexities of external events, there is potential for false positives or negatives and result in a lack of comprehensive understanding of the causes of these outcomes.  Therefore, control data is an incredibly important, but often overlooked, component of applied data science.</p>
+<h2 class="wp-block-heading"><strong>What is Control Data?</strong></h2>
+<p>Control data is data about external factors that impact the outcome of variables in a model. Control data is often referred to as external data or third-party data. Using control data in a model allows data scientists to figure out which factors outside of the business have affected outcomes in the past, map out the correlation between those factors, and inform how the business may perform in the future due to these same factors. Of course, correlation does not always prove causation, so it is important for humans (rather than solely AI) to analyze information for a deep understanding of how and why these factors have a correlation in the first place.</p>
+<p>Examples of control data include economic trends, weather, demographic trends, COVID-19 numbers, government regulations, population growth or decline, inventory or input availability, and workforce availability. It is important to test all potential factors in your models to understand which factors, and at which grain, affect your business; there may be some that you don’t even know about yet!</p>
+<h2 class="wp-block-heading"><strong>When Should I Use Control Data?</strong></h2>
+<p>Control data should be used when external factors can affect the outcome of a real-world scenario you are trying to predict. This is true for all predictive analysis when trying to answer a business question. All businesses experience environmental factors that affect demand, inventory availability, costs, workforce availability, and more. Even something as high-level as overall economic trends will affect your business and need to be accounted for in a predictive model.</p>
+<p>For example, if you operate a brick-and-mortar business, understanding the population growth in your area will be paramount to predicting demand; as the population of your target audience grows, sales may also grow. Weather is another important factor for a business operating out of a physical location, as patrons may be more likely to come to your business on warm days than in a blizzard. Adding these factors to models will allow you to understand the impact each has on your business and will allow you to plan for future changes.</p>
+<p>For an online business, overall economic growth or decline is more suitable for predicting sales than regional changes. If an input to your business is steel, understanding how government regulations have affected steel imports in the past will allow you to plan for regulation changes in the future. These are a few simple examples of the way external factors affect businesses every day. Testing out various correlations will allow you to understand how each factor interacts to create your overall business outcome.</p>
+<h2 class="wp-block-heading"><strong>How Can I Connect to Control Data?</strong></h2>
+<p>There are many online resources to source control data at your disposal. Many government-related sets can be access for free or a small fee, such as economic data from the <a href="https://fred.stlouisfed.org/">FRED database</a> or weather data from the <a href="https://www.ncdc.noaa.gov/cdo-web/">NOAA database</a>. Other types of data, like consumer marketing data, can be found through paid services like <a href="https://www.experian.com/marketing-services/targeting/data-driven-marketing/consumer-view-data">Experian</a>. Sourcing datasets in this way is useful when you already know what data you are looking for and are comfortable building connections to these data sources through resources at your own company. You will also need to know how to transform these datasets to the correct dimensions and granularity you are looking for.</p>
+<p>Another option is through services like <a href="https://www.readysignal.com/">Ready Signal</a>, a platform that we’ve developed to source and deliver various control datasets. Users can start from scratch or receive dataset recommendations based on a type of analysis and industry. Then, datasets can be automatically transformed based on geographic area, timeframe, time granularity, through data science treatments like leads, lags, and decays, and exported to a variety of destinations for your model in real time.  Ready Signal also provides the Auto Discovery tool, which is a patent pending technology that allows you to upload the target variable you wish to explain and the tool will automatically identify correlated control features to test and train your models, saving you the time and effort of having to know which external factors may be interacting with your business.</p>
+<p>One example of this process, that we’ve seen firsthand in the Food Service industry. When predicting sales without control features, our model developed with internal data only had a 16.7% error.  When control features identified by the Ready Signal Auto Discovery process were included into the model, the error was reduced to 6.9%. That’s a 60% increase in accuracy achieved through the incorporation of control data where it counts.</p>
+<figure class="wp-block-image"><img alt="" class="wp-image-656" decoding="async" src="images/Picture1.png"/></figure>
+<figure class="wp-block-image"><img alt="" class="wp-image-657" decoding="async" src="images/Picture2.png"/></figure>
+<p>If you are looking to incorporate control data into your models and are interested in Ready Signal’s services, learn more by visiting <a href="https://www.readysignal.com/">https://www.readysignal.com/</a> or emailing <a href="/cdn-cgi/l/email-protection#14777b7a6075776054667175706d677d737a75783a777b79"><span class="__cf_email__" data-cfemail="e0838f8e94818394a092858184999389878e818cce838f8d">[email protected]</span></a>.</p>
+</div>
+</div>
+</div>
+<h1 class="elementor-heading-title elementor-size-default">What is Control Data? | Control Data 101</h1>
+<ul class="elementor-inline-items elementor-icon-list-items elementor-post-info">
+<li class="elementor-icon-list-item elementor-repeater-item-7540876 elementor-inline-item" itemprop="author">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-author">
+										Baylen Springer					</span>
+</li>
+<li class="elementor-icon-list-item elementor-repeater-item-450fc99 elementor-inline-item" itemprop="datePublished">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-date">
+<span class="elementor-post-info__item-prefix">/</span>
+										February 1, 2022					</span>
+</li>
+</ul>
+<li class="elementor-icon-list-item elementor-repeater-item-7540876 elementor-inline-item" itemprop="author">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-author">
+										Baylen Springer					</span>
+</li>
+<li class="elementor-icon-list-item elementor-repeater-item-450fc99 elementor-inline-item" itemprop="datePublished">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-date">
+<span class="elementor-post-info__item-prefix">/</span>
+										February 1, 2022					</span>
+</li>
+<img alt="Control Data 101" class="wp-image-361" decoding="async" fetchpriority="high" height="535" sizes="(max-width: 768px) 100vw, 768px" src="images/Control-Data-768x535-1.jpg" srcset="images/Control-Data-768x535-1.jpg 768w, https://www.readysignal.com/wp-content/uploads/2023/05/Control-Data-768x535-1-300x209.jpg 300w" width="768"/>
+<p>External factors constantly affect your company and the sales, operational, marketing, staffing, and planning decisions you make on a day-to-day basis. No company operates in a vacuum; all are subject to environmental changes that are outside of their control. And while I wish this was an article about how to adjust those external factors to fit your business plan, that is rarely possible. Instead, what you can do is incorporate these factors into your decision-making process by incorporating them into your analytics and business intelligence. </p>
+<p>Most companies have turned to data analytics, statistical modeling, prescriptive analytics, and artificial intelligence to inform business decisions; but many models are built only from internal data, analyzing how these internal components are trending over time or seasons. When models don’t account for the complexities of external events, there is potential for false positives or negatives and result in a lack of comprehensive understanding of the causes of these outcomes.  Therefore, control data is an incredibly important, but often overlooked, component of applied data science.</p>
+<h2 class="wp-block-heading"><strong>What is Control Data?</strong></h2>
+<p>Control data is data about external factors that impact the outcome of variables in a model. Control data is often referred to as external data or third-party data. Using control data in a model allows data scientists to figure out which factors outside of the business have affected outcomes in the past, map out the correlation between those factors, and inform how the business may perform in the future due to these same factors. Of course, correlation does not always prove causation, so it is important for humans (rather than solely AI) to analyze information for a deep understanding of how and why these factors have a correlation in the first place.</p>
+<p>Examples of control data include economic trends, weather, demographic trends, COVID-19 numbers, government regulations, population growth or decline, inventory or input availability, and workforce availability. It is important to test all potential factors in your models to understand which factors, and at which grain, affect your business; there may be some that you don’t even know about yet!</p>
+<h2 class="wp-block-heading"><strong>When Should I Use Control Data?</strong></h2>
+<p>Control data should be used when external factors can affect the outcome of a real-world scenario you are trying to predict. This is true for all predictive analysis when trying to answer a business question. All businesses experience environmental factors that affect demand, inventory availability, costs, workforce availability, and more. Even something as high-level as overall economic trends will affect your business and need to be accounted for in a predictive model.</p>
+<p>For example, if you operate a brick-and-mortar business, understanding the population growth in your area will be paramount to predicting demand; as the population of your target audience grows, sales may also grow. Weather is another important factor for a business operating out of a physical location, as patrons may be more likely to come to your business on warm days than in a blizzard. Adding these factors to models will allow you to understand the impact each has on your business and will allow you to plan for future changes.</p>
+<p>For an online business, overall economic growth or decline is more suitable for predicting sales than regional changes. If an input to your business is steel, understanding how government regulations have affected steel imports in the past will allow you to plan for regulation changes in the future. These are a few simple examples of the way external factors affect businesses every day. Testing out various correlations will allow you to understand how each factor interacts to create your overall business outcome.</p>
+<h2 class="wp-block-heading"><strong>How Can I Connect to Control Data?</strong></h2>
+<p>There are many online resources to source control data at your disposal. Many government-related sets can be access for free or a small fee, such as economic data from the <a href="https://fred.stlouisfed.org/">FRED database</a> or weather data from the <a href="https://www.ncdc.noaa.gov/cdo-web/">NOAA database</a>. Other types of data, like consumer marketing data, can be found through paid services like <a href="https://www.experian.com/marketing-services/targeting/data-driven-marketing/consumer-view-data">Experian</a>. Sourcing datasets in this way is useful when you already know what data you are looking for and are comfortable building connections to these data sources through resources at your own company. You will also need to know how to transform these datasets to the correct dimensions and granularity you are looking for.</p>
+<p>Another option is through services like <a href="https://www.readysignal.com/">Ready Signal</a>, a platform that we’ve developed to source and deliver various control datasets. Users can start from scratch or receive dataset recommendations based on a type of analysis and industry. Then, datasets can be automatically transformed based on geographic area, timeframe, time granularity, through data science treatments like leads, lags, and decays, and exported to a variety of destinations for your model in real time.  Ready Signal also provides the Auto Discovery tool, which is a patent pending technology that allows you to upload the target variable you wish to explain and the tool will automatically identify correlated control features to test and train your models, saving you the time and effort of having to know which external factors may be interacting with your business.</p>
+<p>One example of this process, that we’ve seen firsthand in the Food Service industry. When predicting sales without control features, our model developed with internal data only had a 16.7% error.  When control features identified by the Ready Signal Auto Discovery process were included into the model, the error was reduced to 6.9%. That’s a 60% increase in accuracy achieved through the incorporation of control data where it counts.</p>
+<img alt="" class="wp-image-656" decoding="async" src="images/Picture1.png"/>
+<img alt="" class="wp-image-657" decoding="async" src="images/Picture2.png"/>
+<p>If you are looking to incorporate control data into your models and are interested in Ready Signal’s services, learn more by visiting <a href="https://www.readysignal.com/">https://www.readysignal.com/</a> or emailing <a href="/cdn-cgi/l/email-protection#14777b7a6075776054667175706d677d737a75783a777b79"><span class="__cf_email__" data-cfemail="e0838f8e94818394a092858184999389878e818cce838f8d">[email protected]</span></a>.</p>
+<div class="elementor-element elementor-element-eeda3a2 e-con-full e-flex e-con" data-element_type="container" data-id="eeda3a2" data-settings='{"content_width":"full"}'>
+<div class="elementor-element elementor-element-ca7d84f elementor-widget elementor-widget-template" data-element_type="widget" data-id="ca7d84f" data-widget_type="template.default">
+<div class="elementor-widget-container">
+<div class="elementor-template">
+<div class="elementor elementor-1654" data-elementor-id="1654" data-elementor-type="container">
+<div class="elementor-element elementor-element-6bb89eb7 e-flex e-con-boxed e-con" data-element_type="container" data-id="6bb89eb7" data-settings='{"background_background":"classic","content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-38fd0eba e-flex e-con-boxed e-con" data-element_type="container" data-id="38fd0eba" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-23641637 elementor-widget elementor-widget-heading" data-element_type="widget" data-id="23641637" data-widget_type="heading.default">
+<div class="elementor-widget-container">
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3> </div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-c5d0540 e-flex e-con-boxed e-con" data-element_type="container" data-id="c5d0540" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-3b2d7408 elementor-widget elementor-widget-button" data-element_type="widget" data-id="3b2d7408" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-668ff799 elementor-widget elementor-widget-button" data-element_type="widget" data-id="668ff799" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="elementor-template">
+<div class="elementor elementor-1654" data-elementor-id="1654" data-elementor-type="container">
+<div class="elementor-element elementor-element-6bb89eb7 e-flex e-con-boxed e-con" data-element_type="container" data-id="6bb89eb7" data-settings='{"background_background":"classic","content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-38fd0eba e-flex e-con-boxed e-con" data-element_type="container" data-id="38fd0eba" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-23641637 elementor-widget elementor-widget-heading" data-element_type="widget" data-id="23641637" data-widget_type="heading.default">
+<div class="elementor-widget-container">
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3> </div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-c5d0540 e-flex e-con-boxed e-con" data-element_type="container" data-id="c5d0540" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-3b2d7408 elementor-widget elementor-widget-button" data-element_type="widget" data-id="3b2d7408" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-668ff799 elementor-widget elementor-widget-button" data-element_type="widget" data-id="668ff799" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="elementor elementor-1654" data-elementor-id="1654" data-elementor-type="container">
+<div class="elementor-element elementor-element-6bb89eb7 e-flex e-con-boxed e-con" data-element_type="container" data-id="6bb89eb7" data-settings='{"background_background":"classic","content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-38fd0eba e-flex e-con-boxed e-con" data-element_type="container" data-id="38fd0eba" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-23641637 elementor-widget elementor-widget-heading" data-element_type="widget" data-id="23641637" data-widget_type="heading.default">
+<div class="elementor-widget-container">
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3> </div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-c5d0540 e-flex e-con-boxed e-con" data-element_type="container" data-id="c5d0540" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-3b2d7408 elementor-widget elementor-widget-button" data-element_type="widget" data-id="3b2d7408" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-668ff799 elementor-widget elementor-widget-button" data-element_type="widget" data-id="668ff799" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-6bb89eb7 e-flex e-con-boxed e-con" data-element_type="container" data-id="6bb89eb7" data-settings='{"background_background":"classic","content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-38fd0eba e-flex e-con-boxed e-con" data-element_type="container" data-id="38fd0eba" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-23641637 elementor-widget elementor-widget-heading" data-element_type="widget" data-id="23641637" data-widget_type="heading.default">
+<div class="elementor-widget-container">
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3> </div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-c5d0540 e-flex e-con-boxed e-con" data-element_type="container" data-id="c5d0540" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-3b2d7408 elementor-widget elementor-widget-button" data-element_type="widget" data-id="3b2d7408" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-668ff799 elementor-widget elementor-widget-button" data-element_type="widget" data-id="668ff799" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-38fd0eba e-flex e-con-boxed e-con" data-element_type="container" data-id="38fd0eba" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-23641637 elementor-widget elementor-widget-heading" data-element_type="widget" data-id="23641637" data-widget_type="heading.default">
+<div class="elementor-widget-container">
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3> </div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-c5d0540 e-flex e-con-boxed e-con" data-element_type="container" data-id="c5d0540" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-3b2d7408 elementor-widget elementor-widget-button" data-element_type="widget" data-id="3b2d7408" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-668ff799 elementor-widget elementor-widget-button" data-element_type="widget" data-id="668ff799" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-38fd0eba e-flex e-con-boxed e-con" data-element_type="container" data-id="38fd0eba" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-23641637 elementor-widget elementor-widget-heading" data-element_type="widget" data-id="23641637" data-widget_type="heading.default">
+<div class="elementor-widget-container">
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3> </div>
+</div>
+</div>
+</div>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-23641637 elementor-widget elementor-widget-heading" data-element_type="widget" data-id="23641637" data-widget_type="heading.default">
+<div class="elementor-widget-container">
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3> </div>
+</div>
+</div>
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3>
+<div class="elementor-element elementor-element-c5d0540 e-flex e-con-boxed e-con" data-element_type="container" data-id="c5d0540" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-3b2d7408 elementor-widget elementor-widget-button" data-element_type="widget" data-id="3b2d7408" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-668ff799 elementor-widget elementor-widget-button" data-element_type="widget" data-id="668ff799" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-3b2d7408 elementor-widget elementor-widget-button" data-element_type="widget" data-id="3b2d7408" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-668ff799 elementor-widget elementor-widget-button" data-element_type="widget" data-id="668ff799" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+    </article>
+</body>
+</html>

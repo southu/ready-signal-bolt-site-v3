@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What is ETL and why is it important?</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <article>
+        <h1>What is ETL and why is it important?</h1>
+        <div class="elementor elementor-612 elementor-location-single post-422 post type-post status-publish format-standard has-post-thumbnail hentry category-resources ast-article-single" data-elementor-id="612" data-elementor-type="single-post">
+<div class="elementor-element elementor-element-3ecacce e-flex e-con-boxed e-con" data-element_type="container" data-id="3ecacce" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-d90718e e-con-full e-flex e-con" data-element_type="container" data-id="d90718e" data-settings='{"content_width":"full"}'>
+<div class="elementor-element elementor-element-62bc9fe elementor-widget elementor-widget-theme-post-title elementor-page-title elementor-widget-heading" data-element_type="widget" data-id="62bc9fe" data-widget_type="theme-post-title.default">
+<div class="elementor-widget-container">
+<style>/*! elementor - v3.14.0 - 14-06-2023 */
+.elementor-heading-title{padding:0;margin:0;line-height:1}.elementor-widget-heading .elementor-heading-title[class*=elementor-size-]>a{color:inherit;font-size:inherit;line-height:inherit}.elementor-widget-heading .elementor-heading-title.elementor-size-small{font-size:15px}.elementor-widget-heading .elementor-heading-title.elementor-size-medium{font-size:19px}.elementor-widget-heading .elementor-heading-title.elementor-size-large{font-size:29px}.elementor-widget-heading .elementor-heading-title.elementor-size-xl{font-size:39px}.elementor-widget-heading .elementor-heading-title.elementor-size-xxl{font-size:59px}</style><h1 class="elementor-heading-title elementor-size-default">What is ETL and why is it important?</h1> </div>
+</div>
+<div class="elementor-element elementor-element-375f26a elementor-align-left elementor-widget elementor-widget-post-info" data-element_type="widget" data-id="375f26a" data-widget_type="post-info.default">
+<div class="elementor-widget-container">
+<link href="https://www.readysignal.com/wp-content/plugins/elementor/assets/css/widget-icon-list.min.css" rel="stylesheet"/><link href="https://www.readysignal.com/wp-content/plugins/elementor-pro/assets/css/widget-theme-elements.min.css" rel="stylesheet"/> <ul class="elementor-inline-items elementor-icon-list-items elementor-post-info">
+<li class="elementor-icon-list-item elementor-repeater-item-7540876 elementor-inline-item" itemprop="author">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-author">
+										Baylen Springer					</span>
+</li>
+<li class="elementor-icon-list-item elementor-repeater-item-450fc99 elementor-inline-item" itemprop="datePublished">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-date">
+<span class="elementor-post-info__item-prefix">/</span>
+										September 29, 2021					</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="elementor-element elementor-element-36730df elementor-widget elementor-widget-theme-post-content" data-element_type="widget" data-id="36730df" data-widget_type="theme-post-content.default">
+<div class="elementor-widget-container">
+<figure class="wp-block-image size-full"><img alt="ETL Process" class="wp-image-423" decoding="async" fetchpriority="high" height="461" sizes="(max-width: 768px) 100vw, 768px" src="images/What-is-ETL-768x461-1.jpg" srcset="images/What-is-ETL-768x461-1.jpg 768w, https://www.readysignal.com/wp-content/uploads/2023/05/What-is-ETL-768x461-1-300x180.jpg 300w" width="768"/></figure>
+<p>Nearly every role in business is heavily reliant on data on a daily basis.  Whether it is  marketing, operations, finance, or analytics, everyone’s role depends upon having reliable and consistent data to work with.  The data landscape today consists of countless sources, and it is important for every organization to identify all relevant data, and consolidate into one place to work with.  The business question then becomes, how do you get data from external applications and sources into a consolidated and usable format for your organization to utilize to make informed business decisions.</p>
+<p>ETL (Extract, Transform, Load) is a process that enables this, and is a core building block to your data strategy and data warehouse efforts, which will provide enhanced data quality and consistency.</p>
+<h2 class="wp-block-heading"><strong>What is the ETL Process?</strong></h2>
+<p>There are three main steps to the ETL process.  This is applied to a wide range of data sources, anything from flat files posted to an FTP to an application API and any type of data pipeline in between.  For example, <a href="https://www.readysignal.com/etl-integrations/">Ready Signal provides streamlined integration</a> of control data sets into ETL processes, making accessing and integrating external control data into your internal workflow simple and easy.</p>
+<p><strong>Step 1 Extract:  </strong>Extracting data from different source systems into a staging area to analyze and QA prior integrating into the data warehouse</p>
+<p><strong>Step 2 Transform:  </strong>Applying a defined set of rules to the raw data to convert to a standardized format ready to be integrated into the data warehouse.  This ensures that all data can work together in the data warehouse.  This step includes but is not limited to the following:</p>
+<ul class="wp-block-list">
+<li>Filtering the data to only provide the subset necessary for the data warehouse </li>
+<li>Removing unnecessary data points</li>
+<li>Adding new calculated fields or meta data descriptors</li>
+<li>Cleaning the data</li>
+<li>Normalizing</li>
+<li>Advanced data science treatments to prepare data for modeling</li>
+</ul>
+<p><strong>Step 3 Load:</strong>  Transferring the transformed data from the staging area to the data warehouse to be utilized as the single source of data truth.</p>
+<p>The ETL process is typically designed to initiate with a one-time batch load of all necessary historical data, and then set up on a defined schedule to retrieve data in real time or whenever new data from that source is available.</p>
+<h2 class="wp-block-heading"><strong>Common ETL Issues to Watch Out For</strong></h2>
+<p>As with anything in life, processes involving sourcing and moving data is not without possible hiccups. The main issues organizations typically face are either related to Quality Assurance and/or scalability.  First and foremost, when the ETL process is put in place, the organization needs to put the proper Quality Assurance checks in place to validate that the transformed data is still complete and correct.  The last thing you want to do is to publish inaccurate data to the data warehouse.  The second layer of Quality Assurance is monitoring the success of the ETL process itself.  Whether you build these in-house or use a third party ETL tool, it is important to monitor the status and confirm all processes are both functioning and completing as expected.  Lastly, organizations need to be aware of and manage the scalability of the ETL processes.  Given the amount of big data available, the time to complete and processing power required can vary wildly depending on both the size of the data and the complexity of the transformations.  For example, if there is a data set that is posted every 24 hours, but the ETL process takes 30 hours to complete, and your organization is expecting the most up to date data, that is not going to accomplish the objective, so being mindful of how the ETL process fits into your business strategy and finding ways to optimize the process to meet your business objectives is important.</p>
+<h2 class="wp-block-heading"><strong>Business Applications of ETL</strong></h2>
+<p>Whether you are a data scientist, a marketer, or an executive; clean, consistent, and accessible data is important to your everyday work.  The ETL process in coordination with a sound data strategy for your organization enables this.  It becomes the building blocks for your organization to be prepared to have your data accessible and useful for:</p>
+<ul class="wp-block-list">
+<li>Modeling and analytics efforts</li>
+<li>Make the most use out of dashboarding tools,</li>
+<li>Provide input and insight into business forecasts </li>
+<li>as well as create efficiencies and time saving and avoid having to disparate resources doing this work consolidate, clean and harmonize these data manually.</li>
+</ul>
+<p>Without ETL tools, it would be difficult and time consuming to pull all of your data together and make it useful for integration into your data warehouse.  It is important to understand the value of these and execute them as part of your overall data strategy.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-eeda3a2 e-con-full e-flex e-con" data-element_type="container" data-id="eeda3a2" data-settings='{"content_width":"full"}'>
+<div class="elementor-element elementor-element-ca7d84f elementor-widget elementor-widget-template" data-element_type="widget" data-id="ca7d84f" data-widget_type="template.default">
+<div class="elementor-widget-container">
+<div class="elementor-template">
+<div class="elementor elementor-1654" data-elementor-id="1654" data-elementor-type="container">
+<div class="elementor-element elementor-element-6bb89eb7 e-flex e-con-boxed e-con" data-element_type="container" data-id="6bb89eb7" data-settings='{"background_background":"classic","content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-38fd0eba e-flex e-con-boxed e-con" data-element_type="container" data-id="38fd0eba" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-23641637 elementor-widget elementor-widget-heading" data-element_type="widget" data-id="23641637" data-widget_type="heading.default">
+<div class="elementor-widget-container">
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3> </div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-c5d0540 e-flex e-con-boxed e-con" data-element_type="container" data-id="c5d0540" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-3b2d7408 elementor-widget elementor-widget-button" data-element_type="widget" data-id="3b2d7408" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-668ff799 elementor-widget elementor-widget-button" data-element_type="widget" data-id="668ff799" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-3ecacce e-flex e-con-boxed e-con" data-element_type="container" data-id="3ecacce" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-d90718e e-con-full e-flex e-con" data-element_type="container" data-id="d90718e" data-settings='{"content_width":"full"}'>
+<div class="elementor-element elementor-element-62bc9fe elementor-widget elementor-widget-theme-post-title elementor-page-title elementor-widget-heading" data-element_type="widget" data-id="62bc9fe" data-widget_type="theme-post-title.default">
+<div class="elementor-widget-container">
+<style>/*! elementor - v3.14.0 - 14-06-2023 */
+.elementor-heading-title{padding:0;margin:0;line-height:1}.elementor-widget-heading .elementor-heading-title[class*=elementor-size-]>a{color:inherit;font-size:inherit;line-height:inherit}.elementor-widget-heading .elementor-heading-title.elementor-size-small{font-size:15px}.elementor-widget-heading .elementor-heading-title.elementor-size-medium{font-size:19px}.elementor-widget-heading .elementor-heading-title.elementor-size-large{font-size:29px}.elementor-widget-heading .elementor-heading-title.elementor-size-xl{font-size:39px}.elementor-widget-heading .elementor-heading-title.elementor-size-xxl{font-size:59px}</style><h1 class="elementor-heading-title elementor-size-default">What is ETL and why is it important?</h1> </div>
+</div>
+<div class="elementor-element elementor-element-375f26a elementor-align-left elementor-widget elementor-widget-post-info" data-element_type="widget" data-id="375f26a" data-widget_type="post-info.default">
+<div class="elementor-widget-container">
+<link href="https://www.readysignal.com/wp-content/plugins/elementor/assets/css/widget-icon-list.min.css" rel="stylesheet"/><link href="https://www.readysignal.com/wp-content/plugins/elementor-pro/assets/css/widget-theme-elements.min.css" rel="stylesheet"/> <ul class="elementor-inline-items elementor-icon-list-items elementor-post-info">
+<li class="elementor-icon-list-item elementor-repeater-item-7540876 elementor-inline-item" itemprop="author">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-author">
+										Baylen Springer					</span>
+</li>
+<li class="elementor-icon-list-item elementor-repeater-item-450fc99 elementor-inline-item" itemprop="datePublished">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-date">
+<span class="elementor-post-info__item-prefix">/</span>
+										September 29, 2021					</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="elementor-element elementor-element-36730df elementor-widget elementor-widget-theme-post-content" data-element_type="widget" data-id="36730df" data-widget_type="theme-post-content.default">
+<div class="elementor-widget-container">
+<figure class="wp-block-image size-full"><img alt="ETL Process" class="wp-image-423" decoding="async" fetchpriority="high" height="461" sizes="(max-width: 768px) 100vw, 768px" src="images/What-is-ETL-768x461-1.jpg" srcset="images/What-is-ETL-768x461-1.jpg 768w, https://www.readysignal.com/wp-content/uploads/2023/05/What-is-ETL-768x461-1-300x180.jpg 300w" width="768"/></figure>
+<p>Nearly every role in business is heavily reliant on data on a daily basis.  Whether it is  marketing, operations, finance, or analytics, everyone’s role depends upon having reliable and consistent data to work with.  The data landscape today consists of countless sources, and it is important for every organization to identify all relevant data, and consolidate into one place to work with.  The business question then becomes, how do you get data from external applications and sources into a consolidated and usable format for your organization to utilize to make informed business decisions.</p>
+<p>ETL (Extract, Transform, Load) is a process that enables this, and is a core building block to your data strategy and data warehouse efforts, which will provide enhanced data quality and consistency.</p>
+<h2 class="wp-block-heading"><strong>What is the ETL Process?</strong></h2>
+<p>There are three main steps to the ETL process.  This is applied to a wide range of data sources, anything from flat files posted to an FTP to an application API and any type of data pipeline in between.  For example, <a href="https://www.readysignal.com/etl-integrations/">Ready Signal provides streamlined integration</a> of control data sets into ETL processes, making accessing and integrating external control data into your internal workflow simple and easy.</p>
+<p><strong>Step 1 Extract:  </strong>Extracting data from different source systems into a staging area to analyze and QA prior integrating into the data warehouse</p>
+<p><strong>Step 2 Transform:  </strong>Applying a defined set of rules to the raw data to convert to a standardized format ready to be integrated into the data warehouse.  This ensures that all data can work together in the data warehouse.  This step includes but is not limited to the following:</p>
+<ul class="wp-block-list">
+<li>Filtering the data to only provide the subset necessary for the data warehouse </li>
+<li>Removing unnecessary data points</li>
+<li>Adding new calculated fields or meta data descriptors</li>
+<li>Cleaning the data</li>
+<li>Normalizing</li>
+<li>Advanced data science treatments to prepare data for modeling</li>
+</ul>
+<p><strong>Step 3 Load:</strong>  Transferring the transformed data from the staging area to the data warehouse to be utilized as the single source of data truth.</p>
+<p>The ETL process is typically designed to initiate with a one-time batch load of all necessary historical data, and then set up on a defined schedule to retrieve data in real time or whenever new data from that source is available.</p>
+<h2 class="wp-block-heading"><strong>Common ETL Issues to Watch Out For</strong></h2>
+<p>As with anything in life, processes involving sourcing and moving data is not without possible hiccups. The main issues organizations typically face are either related to Quality Assurance and/or scalability.  First and foremost, when the ETL process is put in place, the organization needs to put the proper Quality Assurance checks in place to validate that the transformed data is still complete and correct.  The last thing you want to do is to publish inaccurate data to the data warehouse.  The second layer of Quality Assurance is monitoring the success of the ETL process itself.  Whether you build these in-house or use a third party ETL tool, it is important to monitor the status and confirm all processes are both functioning and completing as expected.  Lastly, organizations need to be aware of and manage the scalability of the ETL processes.  Given the amount of big data available, the time to complete and processing power required can vary wildly depending on both the size of the data and the complexity of the transformations.  For example, if there is a data set that is posted every 24 hours, but the ETL process takes 30 hours to complete, and your organization is expecting the most up to date data, that is not going to accomplish the objective, so being mindful of how the ETL process fits into your business strategy and finding ways to optimize the process to meet your business objectives is important.</p>
+<h2 class="wp-block-heading"><strong>Business Applications of ETL</strong></h2>
+<p>Whether you are a data scientist, a marketer, or an executive; clean, consistent, and accessible data is important to your everyday work.  The ETL process in coordination with a sound data strategy for your organization enables this.  It becomes the building blocks for your organization to be prepared to have your data accessible and useful for:</p>
+<ul class="wp-block-list">
+<li>Modeling and analytics efforts</li>
+<li>Make the most use out of dashboarding tools,</li>
+<li>Provide input and insight into business forecasts </li>
+<li>as well as create efficiencies and time saving and avoid having to disparate resources doing this work consolidate, clean and harmonize these data manually.</li>
+</ul>
+<p>Without ETL tools, it would be difficult and time consuming to pull all of your data together and make it useful for integration into your data warehouse.  It is important to understand the value of these and execute them as part of your overall data strategy.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-d90718e e-con-full e-flex e-con" data-element_type="container" data-id="d90718e" data-settings='{"content_width":"full"}'>
+<div class="elementor-element elementor-element-62bc9fe elementor-widget elementor-widget-theme-post-title elementor-page-title elementor-widget-heading" data-element_type="widget" data-id="62bc9fe" data-widget_type="theme-post-title.default">
+<div class="elementor-widget-container">
+<style>/*! elementor - v3.14.0 - 14-06-2023 */
+.elementor-heading-title{padding:0;margin:0;line-height:1}.elementor-widget-heading .elementor-heading-title[class*=elementor-size-]>a{color:inherit;font-size:inherit;line-height:inherit}.elementor-widget-heading .elementor-heading-title.elementor-size-small{font-size:15px}.elementor-widget-heading .elementor-heading-title.elementor-size-medium{font-size:19px}.elementor-widget-heading .elementor-heading-title.elementor-size-large{font-size:29px}.elementor-widget-heading .elementor-heading-title.elementor-size-xl{font-size:39px}.elementor-widget-heading .elementor-heading-title.elementor-size-xxl{font-size:59px}</style><h1 class="elementor-heading-title elementor-size-default">What is ETL and why is it important?</h1> </div>
+</div>
+<div class="elementor-element elementor-element-375f26a elementor-align-left elementor-widget elementor-widget-post-info" data-element_type="widget" data-id="375f26a" data-widget_type="post-info.default">
+<div class="elementor-widget-container">
+<link href="https://www.readysignal.com/wp-content/plugins/elementor/assets/css/widget-icon-list.min.css" rel="stylesheet"/><link href="https://www.readysignal.com/wp-content/plugins/elementor-pro/assets/css/widget-theme-elements.min.css" rel="stylesheet"/> <ul class="elementor-inline-items elementor-icon-list-items elementor-post-info">
+<li class="elementor-icon-list-item elementor-repeater-item-7540876 elementor-inline-item" itemprop="author">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-author">
+										Baylen Springer					</span>
+</li>
+<li class="elementor-icon-list-item elementor-repeater-item-450fc99 elementor-inline-item" itemprop="datePublished">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-date">
+<span class="elementor-post-info__item-prefix">/</span>
+										September 29, 2021					</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="elementor-element elementor-element-36730df elementor-widget elementor-widget-theme-post-content" data-element_type="widget" data-id="36730df" data-widget_type="theme-post-content.default">
+<div class="elementor-widget-container">
+<figure class="wp-block-image size-full"><img alt="ETL Process" class="wp-image-423" decoding="async" fetchpriority="high" height="461" sizes="(max-width: 768px) 100vw, 768px" src="images/What-is-ETL-768x461-1.jpg" srcset="images/What-is-ETL-768x461-1.jpg 768w, https://www.readysignal.com/wp-content/uploads/2023/05/What-is-ETL-768x461-1-300x180.jpg 300w" width="768"/></figure>
+<p>Nearly every role in business is heavily reliant on data on a daily basis.  Whether it is  marketing, operations, finance, or analytics, everyone’s role depends upon having reliable and consistent data to work with.  The data landscape today consists of countless sources, and it is important for every organization to identify all relevant data, and consolidate into one place to work with.  The business question then becomes, how do you get data from external applications and sources into a consolidated and usable format for your organization to utilize to make informed business decisions.</p>
+<p>ETL (Extract, Transform, Load) is a process that enables this, and is a core building block to your data strategy and data warehouse efforts, which will provide enhanced data quality and consistency.</p>
+<h2 class="wp-block-heading"><strong>What is the ETL Process?</strong></h2>
+<p>There are three main steps to the ETL process.  This is applied to a wide range of data sources, anything from flat files posted to an FTP to an application API and any type of data pipeline in between.  For example, <a href="https://www.readysignal.com/etl-integrations/">Ready Signal provides streamlined integration</a> of control data sets into ETL processes, making accessing and integrating external control data into your internal workflow simple and easy.</p>
+<p><strong>Step 1 Extract:  </strong>Extracting data from different source systems into a staging area to analyze and QA prior integrating into the data warehouse</p>
+<p><strong>Step 2 Transform:  </strong>Applying a defined set of rules to the raw data to convert to a standardized format ready to be integrated into the data warehouse.  This ensures that all data can work together in the data warehouse.  This step includes but is not limited to the following:</p>
+<ul class="wp-block-list">
+<li>Filtering the data to only provide the subset necessary for the data warehouse </li>
+<li>Removing unnecessary data points</li>
+<li>Adding new calculated fields or meta data descriptors</li>
+<li>Cleaning the data</li>
+<li>Normalizing</li>
+<li>Advanced data science treatments to prepare data for modeling</li>
+</ul>
+<p><strong>Step 3 Load:</strong>  Transferring the transformed data from the staging area to the data warehouse to be utilized as the single source of data truth.</p>
+<p>The ETL process is typically designed to initiate with a one-time batch load of all necessary historical data, and then set up on a defined schedule to retrieve data in real time or whenever new data from that source is available.</p>
+<h2 class="wp-block-heading"><strong>Common ETL Issues to Watch Out For</strong></h2>
+<p>As with anything in life, processes involving sourcing and moving data is not without possible hiccups. The main issues organizations typically face are either related to Quality Assurance and/or scalability.  First and foremost, when the ETL process is put in place, the organization needs to put the proper Quality Assurance checks in place to validate that the transformed data is still complete and correct.  The last thing you want to do is to publish inaccurate data to the data warehouse.  The second layer of Quality Assurance is monitoring the success of the ETL process itself.  Whether you build these in-house or use a third party ETL tool, it is important to monitor the status and confirm all processes are both functioning and completing as expected.  Lastly, organizations need to be aware of and manage the scalability of the ETL processes.  Given the amount of big data available, the time to complete and processing power required can vary wildly depending on both the size of the data and the complexity of the transformations.  For example, if there is a data set that is posted every 24 hours, but the ETL process takes 30 hours to complete, and your organization is expecting the most up to date data, that is not going to accomplish the objective, so being mindful of how the ETL process fits into your business strategy and finding ways to optimize the process to meet your business objectives is important.</p>
+<h2 class="wp-block-heading"><strong>Business Applications of ETL</strong></h2>
+<p>Whether you are a data scientist, a marketer, or an executive; clean, consistent, and accessible data is important to your everyday work.  The ETL process in coordination with a sound data strategy for your organization enables this.  It becomes the building blocks for your organization to be prepared to have your data accessible and useful for:</p>
+<ul class="wp-block-list">
+<li>Modeling and analytics efforts</li>
+<li>Make the most use out of dashboarding tools,</li>
+<li>Provide input and insight into business forecasts </li>
+<li>as well as create efficiencies and time saving and avoid having to disparate resources doing this work consolidate, clean and harmonize these data manually.</li>
+</ul>
+<p>Without ETL tools, it would be difficult and time consuming to pull all of your data together and make it useful for integration into your data warehouse.  It is important to understand the value of these and execute them as part of your overall data strategy.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-d90718e e-con-full e-flex e-con" data-element_type="container" data-id="d90718e" data-settings='{"content_width":"full"}'>
+<div class="elementor-element elementor-element-62bc9fe elementor-widget elementor-widget-theme-post-title elementor-page-title elementor-widget-heading" data-element_type="widget" data-id="62bc9fe" data-widget_type="theme-post-title.default">
+<div class="elementor-widget-container">
+<style>/*! elementor - v3.14.0 - 14-06-2023 */
+.elementor-heading-title{padding:0;margin:0;line-height:1}.elementor-widget-heading .elementor-heading-title[class*=elementor-size-]>a{color:inherit;font-size:inherit;line-height:inherit}.elementor-widget-heading .elementor-heading-title.elementor-size-small{font-size:15px}.elementor-widget-heading .elementor-heading-title.elementor-size-medium{font-size:19px}.elementor-widget-heading .elementor-heading-title.elementor-size-large{font-size:29px}.elementor-widget-heading .elementor-heading-title.elementor-size-xl{font-size:39px}.elementor-widget-heading .elementor-heading-title.elementor-size-xxl{font-size:59px}</style><h1 class="elementor-heading-title elementor-size-default">What is ETL and why is it important?</h1> </div>
+</div>
+<div class="elementor-element elementor-element-375f26a elementor-align-left elementor-widget elementor-widget-post-info" data-element_type="widget" data-id="375f26a" data-widget_type="post-info.default">
+<div class="elementor-widget-container">
+<link href="https://www.readysignal.com/wp-content/plugins/elementor/assets/css/widget-icon-list.min.css" rel="stylesheet"/><link href="https://www.readysignal.com/wp-content/plugins/elementor-pro/assets/css/widget-theme-elements.min.css" rel="stylesheet"/> <ul class="elementor-inline-items elementor-icon-list-items elementor-post-info">
+<li class="elementor-icon-list-item elementor-repeater-item-7540876 elementor-inline-item" itemprop="author">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-author">
+										Baylen Springer					</span>
+</li>
+<li class="elementor-icon-list-item elementor-repeater-item-450fc99 elementor-inline-item" itemprop="datePublished">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-date">
+<span class="elementor-post-info__item-prefix">/</span>
+										September 29, 2021					</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="elementor-element elementor-element-36730df elementor-widget elementor-widget-theme-post-content" data-element_type="widget" data-id="36730df" data-widget_type="theme-post-content.default">
+<div class="elementor-widget-container">
+<figure class="wp-block-image size-full"><img alt="ETL Process" class="wp-image-423" decoding="async" fetchpriority="high" height="461" sizes="(max-width: 768px) 100vw, 768px" src="images/What-is-ETL-768x461-1.jpg" srcset="images/What-is-ETL-768x461-1.jpg 768w, https://www.readysignal.com/wp-content/uploads/2023/05/What-is-ETL-768x461-1-300x180.jpg 300w" width="768"/></figure>
+<p>Nearly every role in business is heavily reliant on data on a daily basis.  Whether it is  marketing, operations, finance, or analytics, everyone’s role depends upon having reliable and consistent data to work with.  The data landscape today consists of countless sources, and it is important for every organization to identify all relevant data, and consolidate into one place to work with.  The business question then becomes, how do you get data from external applications and sources into a consolidated and usable format for your organization to utilize to make informed business decisions.</p>
+<p>ETL (Extract, Transform, Load) is a process that enables this, and is a core building block to your data strategy and data warehouse efforts, which will provide enhanced data quality and consistency.</p>
+<h2 class="wp-block-heading"><strong>What is the ETL Process?</strong></h2>
+<p>There are three main steps to the ETL process.  This is applied to a wide range of data sources, anything from flat files posted to an FTP to an application API and any type of data pipeline in between.  For example, <a href="https://www.readysignal.com/etl-integrations/">Ready Signal provides streamlined integration</a> of control data sets into ETL processes, making accessing and integrating external control data into your internal workflow simple and easy.</p>
+<p><strong>Step 1 Extract:  </strong>Extracting data from different source systems into a staging area to analyze and QA prior integrating into the data warehouse</p>
+<p><strong>Step 2 Transform:  </strong>Applying a defined set of rules to the raw data to convert to a standardized format ready to be integrated into the data warehouse.  This ensures that all data can work together in the data warehouse.  This step includes but is not limited to the following:</p>
+<ul class="wp-block-list">
+<li>Filtering the data to only provide the subset necessary for the data warehouse </li>
+<li>Removing unnecessary data points</li>
+<li>Adding new calculated fields or meta data descriptors</li>
+<li>Cleaning the data</li>
+<li>Normalizing</li>
+<li>Advanced data science treatments to prepare data for modeling</li>
+</ul>
+<p><strong>Step 3 Load:</strong>  Transferring the transformed data from the staging area to the data warehouse to be utilized as the single source of data truth.</p>
+<p>The ETL process is typically designed to initiate with a one-time batch load of all necessary historical data, and then set up on a defined schedule to retrieve data in real time or whenever new data from that source is available.</p>
+<h2 class="wp-block-heading"><strong>Common ETL Issues to Watch Out For</strong></h2>
+<p>As with anything in life, processes involving sourcing and moving data is not without possible hiccups. The main issues organizations typically face are either related to Quality Assurance and/or scalability.  First and foremost, when the ETL process is put in place, the organization needs to put the proper Quality Assurance checks in place to validate that the transformed data is still complete and correct.  The last thing you want to do is to publish inaccurate data to the data warehouse.  The second layer of Quality Assurance is monitoring the success of the ETL process itself.  Whether you build these in-house or use a third party ETL tool, it is important to monitor the status and confirm all processes are both functioning and completing as expected.  Lastly, organizations need to be aware of and manage the scalability of the ETL processes.  Given the amount of big data available, the time to complete and processing power required can vary wildly depending on both the size of the data and the complexity of the transformations.  For example, if there is a data set that is posted every 24 hours, but the ETL process takes 30 hours to complete, and your organization is expecting the most up to date data, that is not going to accomplish the objective, so being mindful of how the ETL process fits into your business strategy and finding ways to optimize the process to meet your business objectives is important.</p>
+<h2 class="wp-block-heading"><strong>Business Applications of ETL</strong></h2>
+<p>Whether you are a data scientist, a marketer, or an executive; clean, consistent, and accessible data is important to your everyday work.  The ETL process in coordination with a sound data strategy for your organization enables this.  It becomes the building blocks for your organization to be prepared to have your data accessible and useful for:</p>
+<ul class="wp-block-list">
+<li>Modeling and analytics efforts</li>
+<li>Make the most use out of dashboarding tools,</li>
+<li>Provide input and insight into business forecasts </li>
+<li>as well as create efficiencies and time saving and avoid having to disparate resources doing this work consolidate, clean and harmonize these data manually.</li>
+</ul>
+<p>Without ETL tools, it would be difficult and time consuming to pull all of your data together and make it useful for integration into your data warehouse.  It is important to understand the value of these and execute them as part of your overall data strategy.</p>
+</div>
+</div>
+</div>
+<h1 class="elementor-heading-title elementor-size-default">What is ETL and why is it important?</h1>
+<ul class="elementor-inline-items elementor-icon-list-items elementor-post-info">
+<li class="elementor-icon-list-item elementor-repeater-item-7540876 elementor-inline-item" itemprop="author">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-author">
+										Baylen Springer					</span>
+</li>
+<li class="elementor-icon-list-item elementor-repeater-item-450fc99 elementor-inline-item" itemprop="datePublished">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-date">
+<span class="elementor-post-info__item-prefix">/</span>
+										September 29, 2021					</span>
+</li>
+</ul>
+<li class="elementor-icon-list-item elementor-repeater-item-7540876 elementor-inline-item" itemprop="author">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-author">
+										Baylen Springer					</span>
+</li>
+<li class="elementor-icon-list-item elementor-repeater-item-450fc99 elementor-inline-item" itemprop="datePublished">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-date">
+<span class="elementor-post-info__item-prefix">/</span>
+										September 29, 2021					</span>
+</li>
+<img alt="ETL Process" class="wp-image-423" decoding="async" fetchpriority="high" height="461" sizes="(max-width: 768px) 100vw, 768px" src="images/What-is-ETL-768x461-1.jpg" srcset="images/What-is-ETL-768x461-1.jpg 768w, https://www.readysignal.com/wp-content/uploads/2023/05/What-is-ETL-768x461-1-300x180.jpg 300w" width="768"/>
+<p>Nearly every role in business is heavily reliant on data on a daily basis.  Whether it is  marketing, operations, finance, or analytics, everyone’s role depends upon having reliable and consistent data to work with.  The data landscape today consists of countless sources, and it is important for every organization to identify all relevant data, and consolidate into one place to work with.  The business question then becomes, how do you get data from external applications and sources into a consolidated and usable format for your organization to utilize to make informed business decisions.</p>
+<p>ETL (Extract, Transform, Load) is a process that enables this, and is a core building block to your data strategy and data warehouse efforts, which will provide enhanced data quality and consistency.</p>
+<h2 class="wp-block-heading"><strong>What is the ETL Process?</strong></h2>
+<p>There are three main steps to the ETL process.  This is applied to a wide range of data sources, anything from flat files posted to an FTP to an application API and any type of data pipeline in between.  For example, <a href="https://www.readysignal.com/etl-integrations/">Ready Signal provides streamlined integration</a> of control data sets into ETL processes, making accessing and integrating external control data into your internal workflow simple and easy.</p>
+<p><strong>Step 1 Extract:  </strong>Extracting data from different source systems into a staging area to analyze and QA prior integrating into the data warehouse</p>
+<p><strong>Step 2 Transform:  </strong>Applying a defined set of rules to the raw data to convert to a standardized format ready to be integrated into the data warehouse.  This ensures that all data can work together in the data warehouse.  This step includes but is not limited to the following:</p>
+<ul class="wp-block-list">
+<li>Filtering the data to only provide the subset necessary for the data warehouse </li>
+<li>Removing unnecessary data points</li>
+<li>Adding new calculated fields or meta data descriptors</li>
+<li>Cleaning the data</li>
+<li>Normalizing</li>
+<li>Advanced data science treatments to prepare data for modeling</li>
+</ul>
+<li>Filtering the data to only provide the subset necessary for the data warehouse </li>
+<li>Removing unnecessary data points</li>
+<li>Adding new calculated fields or meta data descriptors</li>
+<li>Cleaning the data</li>
+<li>Normalizing</li>
+<li>Advanced data science treatments to prepare data for modeling</li>
+<p><strong>Step 3 Load:</strong>  Transferring the transformed data from the staging area to the data warehouse to be utilized as the single source of data truth.</p>
+<p>The ETL process is typically designed to initiate with a one-time batch load of all necessary historical data, and then set up on a defined schedule to retrieve data in real time or whenever new data from that source is available.</p>
+<h2 class="wp-block-heading"><strong>Common ETL Issues to Watch Out For</strong></h2>
+<p>As with anything in life, processes involving sourcing and moving data is not without possible hiccups. The main issues organizations typically face are either related to Quality Assurance and/or scalability.  First and foremost, when the ETL process is put in place, the organization needs to put the proper Quality Assurance checks in place to validate that the transformed data is still complete and correct.  The last thing you want to do is to publish inaccurate data to the data warehouse.  The second layer of Quality Assurance is monitoring the success of the ETL process itself.  Whether you build these in-house or use a third party ETL tool, it is important to monitor the status and confirm all processes are both functioning and completing as expected.  Lastly, organizations need to be aware of and manage the scalability of the ETL processes.  Given the amount of big data available, the time to complete and processing power required can vary wildly depending on both the size of the data and the complexity of the transformations.  For example, if there is a data set that is posted every 24 hours, but the ETL process takes 30 hours to complete, and your organization is expecting the most up to date data, that is not going to accomplish the objective, so being mindful of how the ETL process fits into your business strategy and finding ways to optimize the process to meet your business objectives is important.</p>
+<h2 class="wp-block-heading"><strong>Business Applications of ETL</strong></h2>
+<p>Whether you are a data scientist, a marketer, or an executive; clean, consistent, and accessible data is important to your everyday work.  The ETL process in coordination with a sound data strategy for your organization enables this.  It becomes the building blocks for your organization to be prepared to have your data accessible and useful for:</p>
+<ul class="wp-block-list">
+<li>Modeling and analytics efforts</li>
+<li>Make the most use out of dashboarding tools,</li>
+<li>Provide input and insight into business forecasts </li>
+<li>as well as create efficiencies and time saving and avoid having to disparate resources doing this work consolidate, clean and harmonize these data manually.</li>
+</ul>
+<li>Modeling and analytics efforts</li>
+<li>Make the most use out of dashboarding tools,</li>
+<li>Provide input and insight into business forecasts </li>
+<li>as well as create efficiencies and time saving and avoid having to disparate resources doing this work consolidate, clean and harmonize these data manually.</li>
+<p>Without ETL tools, it would be difficult and time consuming to pull all of your data together and make it useful for integration into your data warehouse.  It is important to understand the value of these and execute them as part of your overall data strategy.</p>
+<div class="elementor-element elementor-element-eeda3a2 e-con-full e-flex e-con" data-element_type="container" data-id="eeda3a2" data-settings='{"content_width":"full"}'>
+<div class="elementor-element elementor-element-ca7d84f elementor-widget elementor-widget-template" data-element_type="widget" data-id="ca7d84f" data-widget_type="template.default">
+<div class="elementor-widget-container">
+<div class="elementor-template">
+<div class="elementor elementor-1654" data-elementor-id="1654" data-elementor-type="container">
+<div class="elementor-element elementor-element-6bb89eb7 e-flex e-con-boxed e-con" data-element_type="container" data-id="6bb89eb7" data-settings='{"background_background":"classic","content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-38fd0eba e-flex e-con-boxed e-con" data-element_type="container" data-id="38fd0eba" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-23641637 elementor-widget elementor-widget-heading" data-element_type="widget" data-id="23641637" data-widget_type="heading.default">
+<div class="elementor-widget-container">
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3> </div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-c5d0540 e-flex e-con-boxed e-con" data-element_type="container" data-id="c5d0540" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-3b2d7408 elementor-widget elementor-widget-button" data-element_type="widget" data-id="3b2d7408" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-668ff799 elementor-widget elementor-widget-button" data-element_type="widget" data-id="668ff799" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="elementor-template">
+<div class="elementor elementor-1654" data-elementor-id="1654" data-elementor-type="container">
+<div class="elementor-element elementor-element-6bb89eb7 e-flex e-con-boxed e-con" data-element_type="container" data-id="6bb89eb7" data-settings='{"background_background":"classic","content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-38fd0eba e-flex e-con-boxed e-con" data-element_type="container" data-id="38fd0eba" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-23641637 elementor-widget elementor-widget-heading" data-element_type="widget" data-id="23641637" data-widget_type="heading.default">
+<div class="elementor-widget-container">
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3> </div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-c5d0540 e-flex e-con-boxed e-con" data-element_type="container" data-id="c5d0540" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-3b2d7408 elementor-widget elementor-widget-button" data-element_type="widget" data-id="3b2d7408" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-668ff799 elementor-widget elementor-widget-button" data-element_type="widget" data-id="668ff799" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="elementor elementor-1654" data-elementor-id="1654" data-elementor-type="container">
+<div class="elementor-element elementor-element-6bb89eb7 e-flex e-con-boxed e-con" data-element_type="container" data-id="6bb89eb7" data-settings='{"background_background":"classic","content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-38fd0eba e-flex e-con-boxed e-con" data-element_type="container" data-id="38fd0eba" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-23641637 elementor-widget elementor-widget-heading" data-element_type="widget" data-id="23641637" data-widget_type="heading.default">
+<div class="elementor-widget-container">
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3> </div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-c5d0540 e-flex e-con-boxed e-con" data-element_type="container" data-id="c5d0540" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-3b2d7408 elementor-widget elementor-widget-button" data-element_type="widget" data-id="3b2d7408" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-668ff799 elementor-widget elementor-widget-button" data-element_type="widget" data-id="668ff799" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-6bb89eb7 e-flex e-con-boxed e-con" data-element_type="container" data-id="6bb89eb7" data-settings='{"background_background":"classic","content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-38fd0eba e-flex e-con-boxed e-con" data-element_type="container" data-id="38fd0eba" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-23641637 elementor-widget elementor-widget-heading" data-element_type="widget" data-id="23641637" data-widget_type="heading.default">
+<div class="elementor-widget-container">
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3> </div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-c5d0540 e-flex e-con-boxed e-con" data-element_type="container" data-id="c5d0540" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-3b2d7408 elementor-widget elementor-widget-button" data-element_type="widget" data-id="3b2d7408" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-668ff799 elementor-widget elementor-widget-button" data-element_type="widget" data-id="668ff799" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-38fd0eba e-flex e-con-boxed e-con" data-element_type="container" data-id="38fd0eba" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-23641637 elementor-widget elementor-widget-heading" data-element_type="widget" data-id="23641637" data-widget_type="heading.default">
+<div class="elementor-widget-container">
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3> </div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-c5d0540 e-flex e-con-boxed e-con" data-element_type="container" data-id="c5d0540" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-3b2d7408 elementor-widget elementor-widget-button" data-element_type="widget" data-id="3b2d7408" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-668ff799 elementor-widget elementor-widget-button" data-element_type="widget" data-id="668ff799" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-38fd0eba e-flex e-con-boxed e-con" data-element_type="container" data-id="38fd0eba" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-23641637 elementor-widget elementor-widget-heading" data-element_type="widget" data-id="23641637" data-widget_type="heading.default">
+<div class="elementor-widget-container">
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3> </div>
+</div>
+</div>
+</div>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-23641637 elementor-widget elementor-widget-heading" data-element_type="widget" data-id="23641637" data-widget_type="heading.default">
+<div class="elementor-widget-container">
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3> </div>
+</div>
+</div>
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3>
+<div class="elementor-element elementor-element-c5d0540 e-flex e-con-boxed e-con" data-element_type="container" data-id="c5d0540" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-3b2d7408 elementor-widget elementor-widget-button" data-element_type="widget" data-id="3b2d7408" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-668ff799 elementor-widget elementor-widget-button" data-element_type="widget" data-id="668ff799" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-3b2d7408 elementor-widget elementor-widget-button" data-element_type="widget" data-id="3b2d7408" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-668ff799 elementor-widget elementor-widget-button" data-element_type="widget" data-id="668ff799" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+    </article>
+</body>
+</html>

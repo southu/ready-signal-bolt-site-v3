@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Build Forecasting Models in R</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <article>
+        <h1>How to Build Forecasting Models in R</h1>
+        <div class="elementor elementor-612 elementor-location-single post-3404 post type-post status-publish format-standard has-post-thumbnail hentry category-resources ast-article-single" data-elementor-id="612" data-elementor-type="single-post">
+<div class="elementor-element elementor-element-3ecacce e-flex e-con-boxed e-con" data-element_type="container" data-id="3ecacce" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-d90718e e-con-full e-flex e-con" data-element_type="container" data-id="d90718e" data-settings='{"content_width":"full"}'>
+<div class="elementor-element elementor-element-62bc9fe elementor-widget elementor-widget-theme-post-title elementor-page-title elementor-widget-heading" data-element_type="widget" data-id="62bc9fe" data-widget_type="theme-post-title.default">
+<div class="elementor-widget-container">
+<style>/*! elementor - v3.14.0 - 14-06-2023 */
+.elementor-heading-title{padding:0;margin:0;line-height:1}.elementor-widget-heading .elementor-heading-title[class*=elementor-size-]>a{color:inherit;font-size:inherit;line-height:inherit}.elementor-widget-heading .elementor-heading-title.elementor-size-small{font-size:15px}.elementor-widget-heading .elementor-heading-title.elementor-size-medium{font-size:19px}.elementor-widget-heading .elementor-heading-title.elementor-size-large{font-size:29px}.elementor-widget-heading .elementor-heading-title.elementor-size-xl{font-size:39px}.elementor-widget-heading .elementor-heading-title.elementor-size-xxl{font-size:59px}</style><h1 class="elementor-heading-title elementor-size-default">How to Build Forecasting Models in R</h1> </div>
+</div>
+<div class="elementor-element elementor-element-375f26a elementor-align-left elementor-widget elementor-widget-post-info" data-element_type="widget" data-id="375f26a" data-widget_type="post-info.default">
+<div class="elementor-widget-container">
+<link href="https://www.readysignal.com/wp-content/plugins/elementor/assets/css/widget-icon-list.min.css" rel="stylesheet"/><link href="https://www.readysignal.com/wp-content/plugins/elementor-pro/assets/css/widget-theme-elements.min.css" rel="stylesheet"/> <ul class="elementor-inline-items elementor-icon-list-items elementor-post-info">
+<li class="elementor-icon-list-item elementor-repeater-item-7540876 elementor-inline-item" itemprop="author">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-author">
+										Megan Foley					</span>
+</li>
+<li class="elementor-icon-list-item elementor-repeater-item-450fc99 elementor-inline-item" itemprop="datePublished">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-date">
+<span class="elementor-post-info__item-prefix">/</span>
+										September 18, 2023					</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="elementor-element elementor-element-36730df elementor-widget elementor-widget-theme-post-content" data-element_type="widget" data-id="36730df" data-widget_type="theme-post-content.default">
+<div class="elementor-widget-container">
+<figure class="wp-block-image size-large"><img alt="How to Build Forecast Models in R" class="wp-image-3408" decoding="async" fetchpriority="high" height="576" sizes="(max-width: 1024px) 100vw, 1024px" src="images/R-code-1024x576.png" srcset="images/R-code-1024x576.png 1024w, https://www.readysignal.com/wp-content/uploads/2023/09/R-code-300x169.png 300w, https://www.readysignal.com/wp-content/uploads/2023/09/R-code-768x432.png 768w, https://www.readysignal.com/wp-content/uploads/2023/09/R-code-1536x864.png 1536w, https://www.readysignal.com/wp-content/uploads/2023/09/R-code-2048x1152.png 2048w" width="1024"/></figure>
+<h2 class="wp-block-heading">Why use R?</h2>
+<p>Once you have mastered using <a href="https://www.readysignal.com/how-to-build-forecasting-models-in-excel/">Excel to build forecasting models</a>, you may want to explore using other programming languages such as Python and R. Both Python and R have powerful libraries and packages for data analysis, modeling, and forecasting. Here are some benefits of using Python and R over Excel: </p>
+<ul class="wp-block-list">
+<li><strong>Scalability:</strong> Python and R are more scalable than Excel, which means they can handle larger datasets and more complex models with greater ease. This can be especially important for organizations with large amounts of data and more advanced forecasting needs. </li>
+</ul>
+<ul class="wp-block-list">
+<li><strong>Flexibility:</strong> Python and R offer more flexibility in terms of the types of models that can be built, and the methods used for data analysis and modeling. This allows data scientists to build more complex and sophisticated models and to explore new methods and techniques as needed. </li>
+</ul>
+<ul class="wp-block-list">
+<li><strong>Reproducibility:</strong> Python and R both have features for version control and reproducibility, which means that models can be easily shared and replicated by others. This can be particularly important in collaborative projects and in scientific research. </li>
+</ul>
+<ul class="wp-block-list">
+<li><strong>Automation:</strong> Python and R have libraries and packages for automating tasks, such as data cleaning, data preparation, and model evaluation. This can be especially useful for organizations with large amounts of data or frequent forecasting needs. </li>
+</ul>
+<p>R specifically is a popular programming language and statistical software widely used for forecasting in businesses. Forecasting is an essential skill for businesses as it helps them anticipate future trends, plan for potential risks, and make informed decisions. By using R for forecasting, businesses can analyze large amounts of data, identify patterns and trends, and create accurate predictions for future outcomes. </p>
+<p>R provides a wide range of packages and tools for forecasting, including forecast, fable, and ggplot2. These packages can help businesses build predictive models, visualize data, and make accurate forecasts. Additionally, R’s flexibility allows businesses to customize their forecasting models to meet their specific needs and goals. </p>
+<p>Now that we have established the importance of forecasting in businesses and the role that R plays in this process, let’s dive deeper into how one can create a forecast using R. Forecasting with R involves several steps, including data cleaning, data visualization, model selection, and evaluation. These steps are crucial in building a reliable and accurate forecast model. In this response, we will explore these steps in detail to understand how to create a forecast using R. </p>
+<h2 class="wp-block-heading">Building a Forecast Model in R </h2>
+<p>Building a forecast model in R can be done in several steps: </p>
+<ul class="wp-block-list">
+<li><strong>Load and Prepare the Data:</strong> The first step is to load the data into R and prepare it for use in the model. This may include importing the data from a file, transforming the data in some way, or aggregating the data to a higher level of granularity. </li>
+</ul>
+<ul class="wp-block-list">
+<li><strong>Choose a Forecasting Method:</strong> The next step is to choose a forecasting method. R has several built-in packages for time-series analysis and forecasting, including the forecast and t series packages. There are also many other packages available for more specialized forecasting methods, such as exponential smoothing, ARIMA, and machine learning-based methods.  We recommend exploring each of these packages and determining which package will meet your needs. </li>
+</ul>
+<ul class="wp-block-list">
+<li><strong>Train the Model:</strong> Once a forecasting method has been chosen, the next step is to train the model. This involves fitting the model to the historical data, either by specifying the model parameters manually or by using an automated process. </li>
+</ul>
+<ul class="wp-block-list">
+<li><strong>Validate the Model:</strong> After the model has been trained, it should be validated to ensure that it is accurate and suitable for the data. This may involve comparing the forecast results to actual data, adjusting the model parameters, or incorporating additional data sources. </li>
+</ul>
+<ul class="wp-block-list">
+<li><strong>Make Forecasts:</strong> The final step is to use the model to make forecasts. This may involve generating a forecast for a single point in time or generating a complete forecast for a period of time. The results can be visualized using R’s built-in plotting functions, or by exporting the data to another tool for further analysis. </li>
+</ul>
+<p>By following these steps, someone can build a forecast model using R that is tailored to their specific data and forecasting needs. R’s extensive library of packages and tools for time-series analysis and forecasting makes it a powerful tool for building accurate and reliable forecasting models. </p>
+<h2 class="wp-block-heading">Learn how to code the model</h2>
+<p>Here are some high level examples of how to get started. </p>
+<p>First, you need to load the data into R using the read.csv() or read.table() function. Once you have the data loaded, you will need to perform some basic data cleaning, such as removing missing values or outliers. </p>
+<p>After cleaning the data, the next step is to create a time series object. The ts() function in R can be used to create a time series object. The ts() function takes two arguments: the data and the frequency of the time series. </p>
+<p>Once you have created the time series object, you can use R’s forecasting package to create a forecast. The forecast package provides several functions for forecasting, including auto.arima(), which automatically selects the best ARIMA model for the time series. </p>
+<h4 class="wp-block-heading">Here’s an example code for a basic forecast in R: </h4>
+<figure class="wp-block-image size-full"><img alt="How to Build Forecast Models in R" class="wp-image-3405" decoding="async" height="565" sizes="(max-width: 830px) 100vw, 830px" src="images/image.png" srcset="images/image.png 830w, https://www.readysignal.com/wp-content/uploads/2023/09/image-300x204.png 300w, https://www.readysignal.com/wp-content/uploads/2023/09/image-768x523.png 768w" width="830"/></figure>
+<p>In this example, we assume that the data is in a CSV file called “mydata.csv” and contains a single column of sales data. We first load the data into R, clean the data by removing any missing values, create a time series object with a frequency of 12 (assuming monthly data), and create a forecast using the auto.arima() function from the forecast package. In the final step, we print the forecast object to see the model stats.  You can further explore the model object to evaluate the fitted/predicted values of the model. </p>
+<h2 class="wp-block-heading">How to Enrich Your Forecast Further</h2>
+<p>The next step you can take is to enrich your forecast with external factors that could be impacting business (weather, economic conditions, etc.)  </p>
+<p>Using the data to wish to forecast, you can pass that data to the ready signal Auto Discovery function, and the Ready Signal application will test your data against all the data available in the catalog, and recommend features that are highly correlated to your business that you can test in your forecast model.  You can learn more about this at <a href="https://www.readysignal.com/" rel="noreferrer noopener" target="_blank">Ready Signal</a>. </p>
+<p>All you need is an API key from Ready Signal. You can visit the Ready Signal website and sign up for an account to obtain the API key.  Then using your “mydata” from the prior example, you can call the auto_discover() function from the readysignal library, pass your API Key/access token, your mydata as a dataframe, and define how the data is structured based on time and geographic granularity.  This function will produce a signal_id specific to this data set and project. </p>
+<figure class="wp-block-image size-full"><img alt="How to Build Forecast Models in R" class="wp-image-3406" decoding="async" height="342" sizes="(max-width: 936px) 100vw, 936px" src="images/image-1.png" srcset="images/image-1.png 936w, https://www.readysignal.com/wp-content/uploads/2023/09/image-1-300x110.png 300w, https://www.readysignal.com/wp-content/uploads/2023/09/image-1-768x281.png 768w" width="936"/></figure>
+<p>Once that signal_id is produced, you can then execute the get_signal() function, using that signal_id to return a data frame which includes up to 20 external features correlated to the target variable you are looking to forecast. </p>
+<figure class="wp-block-image size-large"><img alt="" class="wp-image-3407" decoding="async" height="239" loading="lazy" sizes="(max-width: 1024px) 100vw, 1024px" src="images/image-2-1024x239.png" srcset="images/image-2-1024x239.png 1024w, https://www.readysignal.com/wp-content/uploads/2023/09/image-2-300x70.png 300w, https://www.readysignal.com/wp-content/uploads/2023/09/image-2-768x180.png 768w, https://www.readysignal.com/wp-content/uploads/2023/09/image-2-1536x359.png 1536w, https://www.readysignal.com/wp-content/uploads/2023/09/image-2.png 1600w" width="1024"/></figure>
+<p>From here you can then join these external factors back to your data and begin testing these features in your forecast model. </p>
+<p>Ready Signal offers a powerful platform for businesses to easily access, analyze, and forecast external data. With our intuitive interface and robust API, you can quickly integrate external data into your forecasting models and make data-driven decisions that drive business success. So why not sign up for a free account today and see for yourself how Ready Signal can help you take your forecasting to the next level? Visit our website at www.readysignal.com to learn more and get started. </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-eeda3a2 e-con-full e-flex e-con" data-element_type="container" data-id="eeda3a2" data-settings='{"content_width":"full"}'>
+<div class="elementor-element elementor-element-ca7d84f elementor-widget elementor-widget-template" data-element_type="widget" data-id="ca7d84f" data-widget_type="template.default">
+<div class="elementor-widget-container">
+<div class="elementor-template">
+<div class="elementor elementor-1654" data-elementor-id="1654" data-elementor-type="container">
+<div class="elementor-element elementor-element-6bb89eb7 e-flex e-con-boxed e-con" data-element_type="container" data-id="6bb89eb7" data-settings='{"background_background":"classic","content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-38fd0eba e-flex e-con-boxed e-con" data-element_type="container" data-id="38fd0eba" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-23641637 elementor-widget elementor-widget-heading" data-element_type="widget" data-id="23641637" data-widget_type="heading.default">
+<div class="elementor-widget-container">
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3> </div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-c5d0540 e-flex e-con-boxed e-con" data-element_type="container" data-id="c5d0540" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-3b2d7408 elementor-widget elementor-widget-button" data-element_type="widget" data-id="3b2d7408" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-668ff799 elementor-widget elementor-widget-button" data-element_type="widget" data-id="668ff799" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-3ecacce e-flex e-con-boxed e-con" data-element_type="container" data-id="3ecacce" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-d90718e e-con-full e-flex e-con" data-element_type="container" data-id="d90718e" data-settings='{"content_width":"full"}'>
+<div class="elementor-element elementor-element-62bc9fe elementor-widget elementor-widget-theme-post-title elementor-page-title elementor-widget-heading" data-element_type="widget" data-id="62bc9fe" data-widget_type="theme-post-title.default">
+<div class="elementor-widget-container">
+<style>/*! elementor - v3.14.0 - 14-06-2023 */
+.elementor-heading-title{padding:0;margin:0;line-height:1}.elementor-widget-heading .elementor-heading-title[class*=elementor-size-]>a{color:inherit;font-size:inherit;line-height:inherit}.elementor-widget-heading .elementor-heading-title.elementor-size-small{font-size:15px}.elementor-widget-heading .elementor-heading-title.elementor-size-medium{font-size:19px}.elementor-widget-heading .elementor-heading-title.elementor-size-large{font-size:29px}.elementor-widget-heading .elementor-heading-title.elementor-size-xl{font-size:39px}.elementor-widget-heading .elementor-heading-title.elementor-size-xxl{font-size:59px}</style><h1 class="elementor-heading-title elementor-size-default">How to Build Forecasting Models in R</h1> </div>
+</div>
+<div class="elementor-element elementor-element-375f26a elementor-align-left elementor-widget elementor-widget-post-info" data-element_type="widget" data-id="375f26a" data-widget_type="post-info.default">
+<div class="elementor-widget-container">
+<link href="https://www.readysignal.com/wp-content/plugins/elementor/assets/css/widget-icon-list.min.css" rel="stylesheet"/><link href="https://www.readysignal.com/wp-content/plugins/elementor-pro/assets/css/widget-theme-elements.min.css" rel="stylesheet"/> <ul class="elementor-inline-items elementor-icon-list-items elementor-post-info">
+<li class="elementor-icon-list-item elementor-repeater-item-7540876 elementor-inline-item" itemprop="author">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-author">
+										Megan Foley					</span>
+</li>
+<li class="elementor-icon-list-item elementor-repeater-item-450fc99 elementor-inline-item" itemprop="datePublished">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-date">
+<span class="elementor-post-info__item-prefix">/</span>
+										September 18, 2023					</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="elementor-element elementor-element-36730df elementor-widget elementor-widget-theme-post-content" data-element_type="widget" data-id="36730df" data-widget_type="theme-post-content.default">
+<div class="elementor-widget-container">
+<figure class="wp-block-image size-large"><img alt="How to Build Forecast Models in R" class="wp-image-3408" decoding="async" fetchpriority="high" height="576" sizes="(max-width: 1024px) 100vw, 1024px" src="images/R-code-1024x576.png" srcset="images/R-code-1024x576.png 1024w, https://www.readysignal.com/wp-content/uploads/2023/09/R-code-300x169.png 300w, https://www.readysignal.com/wp-content/uploads/2023/09/R-code-768x432.png 768w, https://www.readysignal.com/wp-content/uploads/2023/09/R-code-1536x864.png 1536w, https://www.readysignal.com/wp-content/uploads/2023/09/R-code-2048x1152.png 2048w" width="1024"/></figure>
+<h2 class="wp-block-heading">Why use R?</h2>
+<p>Once you have mastered using <a href="https://www.readysignal.com/how-to-build-forecasting-models-in-excel/">Excel to build forecasting models</a>, you may want to explore using other programming languages such as Python and R. Both Python and R have powerful libraries and packages for data analysis, modeling, and forecasting. Here are some benefits of using Python and R over Excel: </p>
+<ul class="wp-block-list">
+<li><strong>Scalability:</strong> Python and R are more scalable than Excel, which means they can handle larger datasets and more complex models with greater ease. This can be especially important for organizations with large amounts of data and more advanced forecasting needs. </li>
+</ul>
+<ul class="wp-block-list">
+<li><strong>Flexibility:</strong> Python and R offer more flexibility in terms of the types of models that can be built, and the methods used for data analysis and modeling. This allows data scientists to build more complex and sophisticated models and to explore new methods and techniques as needed. </li>
+</ul>
+<ul class="wp-block-list">
+<li><strong>Reproducibility:</strong> Python and R both have features for version control and reproducibility, which means that models can be easily shared and replicated by others. This can be particularly important in collaborative projects and in scientific research. </li>
+</ul>
+<ul class="wp-block-list">
+<li><strong>Automation:</strong> Python and R have libraries and packages for automating tasks, such as data cleaning, data preparation, and model evaluation. This can be especially useful for organizations with large amounts of data or frequent forecasting needs. </li>
+</ul>
+<p>R specifically is a popular programming language and statistical software widely used for forecasting in businesses. Forecasting is an essential skill for businesses as it helps them anticipate future trends, plan for potential risks, and make informed decisions. By using R for forecasting, businesses can analyze large amounts of data, identify patterns and trends, and create accurate predictions for future outcomes. </p>
+<p>R provides a wide range of packages and tools for forecasting, including forecast, fable, and ggplot2. These packages can help businesses build predictive models, visualize data, and make accurate forecasts. Additionally, R’s flexibility allows businesses to customize their forecasting models to meet their specific needs and goals. </p>
+<p>Now that we have established the importance of forecasting in businesses and the role that R plays in this process, let’s dive deeper into how one can create a forecast using R. Forecasting with R involves several steps, including data cleaning, data visualization, model selection, and evaluation. These steps are crucial in building a reliable and accurate forecast model. In this response, we will explore these steps in detail to understand how to create a forecast using R. </p>
+<h2 class="wp-block-heading">Building a Forecast Model in R </h2>
+<p>Building a forecast model in R can be done in several steps: </p>
+<ul class="wp-block-list">
+<li><strong>Load and Prepare the Data:</strong> The first step is to load the data into R and prepare it for use in the model. This may include importing the data from a file, transforming the data in some way, or aggregating the data to a higher level of granularity. </li>
+</ul>
+<ul class="wp-block-list">
+<li><strong>Choose a Forecasting Method:</strong> The next step is to choose a forecasting method. R has several built-in packages for time-series analysis and forecasting, including the forecast and t series packages. There are also many other packages available for more specialized forecasting methods, such as exponential smoothing, ARIMA, and machine learning-based methods.  We recommend exploring each of these packages and determining which package will meet your needs. </li>
+</ul>
+<ul class="wp-block-list">
+<li><strong>Train the Model:</strong> Once a forecasting method has been chosen, the next step is to train the model. This involves fitting the model to the historical data, either by specifying the model parameters manually or by using an automated process. </li>
+</ul>
+<ul class="wp-block-list">
+<li><strong>Validate the Model:</strong> After the model has been trained, it should be validated to ensure that it is accurate and suitable for the data. This may involve comparing the forecast results to actual data, adjusting the model parameters, or incorporating additional data sources. </li>
+</ul>
+<ul class="wp-block-list">
+<li><strong>Make Forecasts:</strong> The final step is to use the model to make forecasts. This may involve generating a forecast for a single point in time or generating a complete forecast for a period of time. The results can be visualized using R’s built-in plotting functions, or by exporting the data to another tool for further analysis. </li>
+</ul>
+<p>By following these steps, someone can build a forecast model using R that is tailored to their specific data and forecasting needs. R’s extensive library of packages and tools for time-series analysis and forecasting makes it a powerful tool for building accurate and reliable forecasting models. </p>
+<h2 class="wp-block-heading">Learn how to code the model</h2>
+<p>Here are some high level examples of how to get started. </p>
+<p>First, you need to load the data into R using the read.csv() or read.table() function. Once you have the data loaded, you will need to perform some basic data cleaning, such as removing missing values or outliers. </p>
+<p>After cleaning the data, the next step is to create a time series object. The ts() function in R can be used to create a time series object. The ts() function takes two arguments: the data and the frequency of the time series. </p>
+<p>Once you have created the time series object, you can use R’s forecasting package to create a forecast. The forecast package provides several functions for forecasting, including auto.arima(), which automatically selects the best ARIMA model for the time series. </p>
+<h4 class="wp-block-heading">Here’s an example code for a basic forecast in R: </h4>
+<figure class="wp-block-image size-full"><img alt="How to Build Forecast Models in R" class="wp-image-3405" decoding="async" height="565" sizes="(max-width: 830px) 100vw, 830px" src="images/image.png" srcset="images/image.png 830w, https://www.readysignal.com/wp-content/uploads/2023/09/image-300x204.png 300w, https://www.readysignal.com/wp-content/uploads/2023/09/image-768x523.png 768w" width="830"/></figure>
+<p>In this example, we assume that the data is in a CSV file called “mydata.csv” and contains a single column of sales data. We first load the data into R, clean the data by removing any missing values, create a time series object with a frequency of 12 (assuming monthly data), and create a forecast using the auto.arima() function from the forecast package. In the final step, we print the forecast object to see the model stats.  You can further explore the model object to evaluate the fitted/predicted values of the model. </p>
+<h2 class="wp-block-heading">How to Enrich Your Forecast Further</h2>
+<p>The next step you can take is to enrich your forecast with external factors that could be impacting business (weather, economic conditions, etc.)  </p>
+<p>Using the data to wish to forecast, you can pass that data to the ready signal Auto Discovery function, and the Ready Signal application will test your data against all the data available in the catalog, and recommend features that are highly correlated to your business that you can test in your forecast model.  You can learn more about this at <a href="https://www.readysignal.com/" rel="noreferrer noopener" target="_blank">Ready Signal</a>. </p>
+<p>All you need is an API key from Ready Signal. You can visit the Ready Signal website and sign up for an account to obtain the API key.  Then using your “mydata” from the prior example, you can call the auto_discover() function from the readysignal library, pass your API Key/access token, your mydata as a dataframe, and define how the data is structured based on time and geographic granularity.  This function will produce a signal_id specific to this data set and project. </p>
+<figure class="wp-block-image size-full"><img alt="How to Build Forecast Models in R" class="wp-image-3406" decoding="async" height="342" sizes="(max-width: 936px) 100vw, 936px" src="images/image-1.png" srcset="images/image-1.png 936w, https://www.readysignal.com/wp-content/uploads/2023/09/image-1-300x110.png 300w, https://www.readysignal.com/wp-content/uploads/2023/09/image-1-768x281.png 768w" width="936"/></figure>
+<p>Once that signal_id is produced, you can then execute the get_signal() function, using that signal_id to return a data frame which includes up to 20 external features correlated to the target variable you are looking to forecast. </p>
+<figure class="wp-block-image size-large"><img alt="" class="wp-image-3407" decoding="async" height="239" loading="lazy" sizes="(max-width: 1024px) 100vw, 1024px" src="images/image-2-1024x239.png" srcset="images/image-2-1024x239.png 1024w, https://www.readysignal.com/wp-content/uploads/2023/09/image-2-300x70.png 300w, https://www.readysignal.com/wp-content/uploads/2023/09/image-2-768x180.png 768w, https://www.readysignal.com/wp-content/uploads/2023/09/image-2-1536x359.png 1536w, https://www.readysignal.com/wp-content/uploads/2023/09/image-2.png 1600w" width="1024"/></figure>
+<p>From here you can then join these external factors back to your data and begin testing these features in your forecast model. </p>
+<p>Ready Signal offers a powerful platform for businesses to easily access, analyze, and forecast external data. With our intuitive interface and robust API, you can quickly integrate external data into your forecasting models and make data-driven decisions that drive business success. So why not sign up for a free account today and see for yourself how Ready Signal can help you take your forecasting to the next level? Visit our website at www.readysignal.com to learn more and get started. </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-d90718e e-con-full e-flex e-con" data-element_type="container" data-id="d90718e" data-settings='{"content_width":"full"}'>
+<div class="elementor-element elementor-element-62bc9fe elementor-widget elementor-widget-theme-post-title elementor-page-title elementor-widget-heading" data-element_type="widget" data-id="62bc9fe" data-widget_type="theme-post-title.default">
+<div class="elementor-widget-container">
+<style>/*! elementor - v3.14.0 - 14-06-2023 */
+.elementor-heading-title{padding:0;margin:0;line-height:1}.elementor-widget-heading .elementor-heading-title[class*=elementor-size-]>a{color:inherit;font-size:inherit;line-height:inherit}.elementor-widget-heading .elementor-heading-title.elementor-size-small{font-size:15px}.elementor-widget-heading .elementor-heading-title.elementor-size-medium{font-size:19px}.elementor-widget-heading .elementor-heading-title.elementor-size-large{font-size:29px}.elementor-widget-heading .elementor-heading-title.elementor-size-xl{font-size:39px}.elementor-widget-heading .elementor-heading-title.elementor-size-xxl{font-size:59px}</style><h1 class="elementor-heading-title elementor-size-default">How to Build Forecasting Models in R</h1> </div>
+</div>
+<div class="elementor-element elementor-element-375f26a elementor-align-left elementor-widget elementor-widget-post-info" data-element_type="widget" data-id="375f26a" data-widget_type="post-info.default">
+<div class="elementor-widget-container">
+<link href="https://www.readysignal.com/wp-content/plugins/elementor/assets/css/widget-icon-list.min.css" rel="stylesheet"/><link href="https://www.readysignal.com/wp-content/plugins/elementor-pro/assets/css/widget-theme-elements.min.css" rel="stylesheet"/> <ul class="elementor-inline-items elementor-icon-list-items elementor-post-info">
+<li class="elementor-icon-list-item elementor-repeater-item-7540876 elementor-inline-item" itemprop="author">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-author">
+										Megan Foley					</span>
+</li>
+<li class="elementor-icon-list-item elementor-repeater-item-450fc99 elementor-inline-item" itemprop="datePublished">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-date">
+<span class="elementor-post-info__item-prefix">/</span>
+										September 18, 2023					</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="elementor-element elementor-element-36730df elementor-widget elementor-widget-theme-post-content" data-element_type="widget" data-id="36730df" data-widget_type="theme-post-content.default">
+<div class="elementor-widget-container">
+<figure class="wp-block-image size-large"><img alt="How to Build Forecast Models in R" class="wp-image-3408" decoding="async" fetchpriority="high" height="576" sizes="(max-width: 1024px) 100vw, 1024px" src="images/R-code-1024x576.png" srcset="images/R-code-1024x576.png 1024w, https://www.readysignal.com/wp-content/uploads/2023/09/R-code-300x169.png 300w, https://www.readysignal.com/wp-content/uploads/2023/09/R-code-768x432.png 768w, https://www.readysignal.com/wp-content/uploads/2023/09/R-code-1536x864.png 1536w, https://www.readysignal.com/wp-content/uploads/2023/09/R-code-2048x1152.png 2048w" width="1024"/></figure>
+<h2 class="wp-block-heading">Why use R?</h2>
+<p>Once you have mastered using <a href="https://www.readysignal.com/how-to-build-forecasting-models-in-excel/">Excel to build forecasting models</a>, you may want to explore using other programming languages such as Python and R. Both Python and R have powerful libraries and packages for data analysis, modeling, and forecasting. Here are some benefits of using Python and R over Excel: </p>
+<ul class="wp-block-list">
+<li><strong>Scalability:</strong> Python and R are more scalable than Excel, which means they can handle larger datasets and more complex models with greater ease. This can be especially important for organizations with large amounts of data and more advanced forecasting needs. </li>
+</ul>
+<ul class="wp-block-list">
+<li><strong>Flexibility:</strong> Python and R offer more flexibility in terms of the types of models that can be built, and the methods used for data analysis and modeling. This allows data scientists to build more complex and sophisticated models and to explore new methods and techniques as needed. </li>
+</ul>
+<ul class="wp-block-list">
+<li><strong>Reproducibility:</strong> Python and R both have features for version control and reproducibility, which means that models can be easily shared and replicated by others. This can be particularly important in collaborative projects and in scientific research. </li>
+</ul>
+<ul class="wp-block-list">
+<li><strong>Automation:</strong> Python and R have libraries and packages for automating tasks, such as data cleaning, data preparation, and model evaluation. This can be especially useful for organizations with large amounts of data or frequent forecasting needs. </li>
+</ul>
+<p>R specifically is a popular programming language and statistical software widely used for forecasting in businesses. Forecasting is an essential skill for businesses as it helps them anticipate future trends, plan for potential risks, and make informed decisions. By using R for forecasting, businesses can analyze large amounts of data, identify patterns and trends, and create accurate predictions for future outcomes. </p>
+<p>R provides a wide range of packages and tools for forecasting, including forecast, fable, and ggplot2. These packages can help businesses build predictive models, visualize data, and make accurate forecasts. Additionally, R’s flexibility allows businesses to customize their forecasting models to meet their specific needs and goals. </p>
+<p>Now that we have established the importance of forecasting in businesses and the role that R plays in this process, let’s dive deeper into how one can create a forecast using R. Forecasting with R involves several steps, including data cleaning, data visualization, model selection, and evaluation. These steps are crucial in building a reliable and accurate forecast model. In this response, we will explore these steps in detail to understand how to create a forecast using R. </p>
+<h2 class="wp-block-heading">Building a Forecast Model in R </h2>
+<p>Building a forecast model in R can be done in several steps: </p>
+<ul class="wp-block-list">
+<li><strong>Load and Prepare the Data:</strong> The first step is to load the data into R and prepare it for use in the model. This may include importing the data from a file, transforming the data in some way, or aggregating the data to a higher level of granularity. </li>
+</ul>
+<ul class="wp-block-list">
+<li><strong>Choose a Forecasting Method:</strong> The next step is to choose a forecasting method. R has several built-in packages for time-series analysis and forecasting, including the forecast and t series packages. There are also many other packages available for more specialized forecasting methods, such as exponential smoothing, ARIMA, and machine learning-based methods.  We recommend exploring each of these packages and determining which package will meet your needs. </li>
+</ul>
+<ul class="wp-block-list">
+<li><strong>Train the Model:</strong> Once a forecasting method has been chosen, the next step is to train the model. This involves fitting the model to the historical data, either by specifying the model parameters manually or by using an automated process. </li>
+</ul>
+<ul class="wp-block-list">
+<li><strong>Validate the Model:</strong> After the model has been trained, it should be validated to ensure that it is accurate and suitable for the data. This may involve comparing the forecast results to actual data, adjusting the model parameters, or incorporating additional data sources. </li>
+</ul>
+<ul class="wp-block-list">
+<li><strong>Make Forecasts:</strong> The final step is to use the model to make forecasts. This may involve generating a forecast for a single point in time or generating a complete forecast for a period of time. The results can be visualized using R’s built-in plotting functions, or by exporting the data to another tool for further analysis. </li>
+</ul>
+<p>By following these steps, someone can build a forecast model using R that is tailored to their specific data and forecasting needs. R’s extensive library of packages and tools for time-series analysis and forecasting makes it a powerful tool for building accurate and reliable forecasting models. </p>
+<h2 class="wp-block-heading">Learn how to code the model</h2>
+<p>Here are some high level examples of how to get started. </p>
+<p>First, you need to load the data into R using the read.csv() or read.table() function. Once you have the data loaded, you will need to perform some basic data cleaning, such as removing missing values or outliers. </p>
+<p>After cleaning the data, the next step is to create a time series object. The ts() function in R can be used to create a time series object. The ts() function takes two arguments: the data and the frequency of the time series. </p>
+<p>Once you have created the time series object, you can use R’s forecasting package to create a forecast. The forecast package provides several functions for forecasting, including auto.arima(), which automatically selects the best ARIMA model for the time series. </p>
+<h4 class="wp-block-heading">Here’s an example code for a basic forecast in R: </h4>
+<figure class="wp-block-image size-full"><img alt="How to Build Forecast Models in R" class="wp-image-3405" decoding="async" height="565" sizes="(max-width: 830px) 100vw, 830px" src="images/image.png" srcset="images/image.png 830w, https://www.readysignal.com/wp-content/uploads/2023/09/image-300x204.png 300w, https://www.readysignal.com/wp-content/uploads/2023/09/image-768x523.png 768w" width="830"/></figure>
+<p>In this example, we assume that the data is in a CSV file called “mydata.csv” and contains a single column of sales data. We first load the data into R, clean the data by removing any missing values, create a time series object with a frequency of 12 (assuming monthly data), and create a forecast using the auto.arima() function from the forecast package. In the final step, we print the forecast object to see the model stats.  You can further explore the model object to evaluate the fitted/predicted values of the model. </p>
+<h2 class="wp-block-heading">How to Enrich Your Forecast Further</h2>
+<p>The next step you can take is to enrich your forecast with external factors that could be impacting business (weather, economic conditions, etc.)  </p>
+<p>Using the data to wish to forecast, you can pass that data to the ready signal Auto Discovery function, and the Ready Signal application will test your data against all the data available in the catalog, and recommend features that are highly correlated to your business that you can test in your forecast model.  You can learn more about this at <a href="https://www.readysignal.com/" rel="noreferrer noopener" target="_blank">Ready Signal</a>. </p>
+<p>All you need is an API key from Ready Signal. You can visit the Ready Signal website and sign up for an account to obtain the API key.  Then using your “mydata” from the prior example, you can call the auto_discover() function from the readysignal library, pass your API Key/access token, your mydata as a dataframe, and define how the data is structured based on time and geographic granularity.  This function will produce a signal_id specific to this data set and project. </p>
+<figure class="wp-block-image size-full"><img alt="How to Build Forecast Models in R" class="wp-image-3406" decoding="async" height="342" sizes="(max-width: 936px) 100vw, 936px" src="images/image-1.png" srcset="images/image-1.png 936w, https://www.readysignal.com/wp-content/uploads/2023/09/image-1-300x110.png 300w, https://www.readysignal.com/wp-content/uploads/2023/09/image-1-768x281.png 768w" width="936"/></figure>
+<p>Once that signal_id is produced, you can then execute the get_signal() function, using that signal_id to return a data frame which includes up to 20 external features correlated to the target variable you are looking to forecast. </p>
+<figure class="wp-block-image size-large"><img alt="" class="wp-image-3407" decoding="async" height="239" loading="lazy" sizes="(max-width: 1024px) 100vw, 1024px" src="images/image-2-1024x239.png" srcset="images/image-2-1024x239.png 1024w, https://www.readysignal.com/wp-content/uploads/2023/09/image-2-300x70.png 300w, https://www.readysignal.com/wp-content/uploads/2023/09/image-2-768x180.png 768w, https://www.readysignal.com/wp-content/uploads/2023/09/image-2-1536x359.png 1536w, https://www.readysignal.com/wp-content/uploads/2023/09/image-2.png 1600w" width="1024"/></figure>
+<p>From here you can then join these external factors back to your data and begin testing these features in your forecast model. </p>
+<p>Ready Signal offers a powerful platform for businesses to easily access, analyze, and forecast external data. With our intuitive interface and robust API, you can quickly integrate external data into your forecasting models and make data-driven decisions that drive business success. So why not sign up for a free account today and see for yourself how Ready Signal can help you take your forecasting to the next level? Visit our website at www.readysignal.com to learn more and get started. </p>
+</div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-d90718e e-con-full e-flex e-con" data-element_type="container" data-id="d90718e" data-settings='{"content_width":"full"}'>
+<div class="elementor-element elementor-element-62bc9fe elementor-widget elementor-widget-theme-post-title elementor-page-title elementor-widget-heading" data-element_type="widget" data-id="62bc9fe" data-widget_type="theme-post-title.default">
+<div class="elementor-widget-container">
+<style>/*! elementor - v3.14.0 - 14-06-2023 */
+.elementor-heading-title{padding:0;margin:0;line-height:1}.elementor-widget-heading .elementor-heading-title[class*=elementor-size-]>a{color:inherit;font-size:inherit;line-height:inherit}.elementor-widget-heading .elementor-heading-title.elementor-size-small{font-size:15px}.elementor-widget-heading .elementor-heading-title.elementor-size-medium{font-size:19px}.elementor-widget-heading .elementor-heading-title.elementor-size-large{font-size:29px}.elementor-widget-heading .elementor-heading-title.elementor-size-xl{font-size:39px}.elementor-widget-heading .elementor-heading-title.elementor-size-xxl{font-size:59px}</style><h1 class="elementor-heading-title elementor-size-default">How to Build Forecasting Models in R</h1> </div>
+</div>
+<div class="elementor-element elementor-element-375f26a elementor-align-left elementor-widget elementor-widget-post-info" data-element_type="widget" data-id="375f26a" data-widget_type="post-info.default">
+<div class="elementor-widget-container">
+<link href="https://www.readysignal.com/wp-content/plugins/elementor/assets/css/widget-icon-list.min.css" rel="stylesheet"/><link href="https://www.readysignal.com/wp-content/plugins/elementor-pro/assets/css/widget-theme-elements.min.css" rel="stylesheet"/> <ul class="elementor-inline-items elementor-icon-list-items elementor-post-info">
+<li class="elementor-icon-list-item elementor-repeater-item-7540876 elementor-inline-item" itemprop="author">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-author">
+										Megan Foley					</span>
+</li>
+<li class="elementor-icon-list-item elementor-repeater-item-450fc99 elementor-inline-item" itemprop="datePublished">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-date">
+<span class="elementor-post-info__item-prefix">/</span>
+										September 18, 2023					</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="elementor-element elementor-element-36730df elementor-widget elementor-widget-theme-post-content" data-element_type="widget" data-id="36730df" data-widget_type="theme-post-content.default">
+<div class="elementor-widget-container">
+<figure class="wp-block-image size-large"><img alt="How to Build Forecast Models in R" class="wp-image-3408" decoding="async" fetchpriority="high" height="576" sizes="(max-width: 1024px) 100vw, 1024px" src="images/R-code-1024x576.png" srcset="images/R-code-1024x576.png 1024w, https://www.readysignal.com/wp-content/uploads/2023/09/R-code-300x169.png 300w, https://www.readysignal.com/wp-content/uploads/2023/09/R-code-768x432.png 768w, https://www.readysignal.com/wp-content/uploads/2023/09/R-code-1536x864.png 1536w, https://www.readysignal.com/wp-content/uploads/2023/09/R-code-2048x1152.png 2048w" width="1024"/></figure>
+<h2 class="wp-block-heading">Why use R?</h2>
+<p>Once you have mastered using <a href="https://www.readysignal.com/how-to-build-forecasting-models-in-excel/">Excel to build forecasting models</a>, you may want to explore using other programming languages such as Python and R. Both Python and R have powerful libraries and packages for data analysis, modeling, and forecasting. Here are some benefits of using Python and R over Excel: </p>
+<ul class="wp-block-list">
+<li><strong>Scalability:</strong> Python and R are more scalable than Excel, which means they can handle larger datasets and more complex models with greater ease. This can be especially important for organizations with large amounts of data and more advanced forecasting needs. </li>
+</ul>
+<ul class="wp-block-list">
+<li><strong>Flexibility:</strong> Python and R offer more flexibility in terms of the types of models that can be built, and the methods used for data analysis and modeling. This allows data scientists to build more complex and sophisticated models and to explore new methods and techniques as needed. </li>
+</ul>
+<ul class="wp-block-list">
+<li><strong>Reproducibility:</strong> Python and R both have features for version control and reproducibility, which means that models can be easily shared and replicated by others. This can be particularly important in collaborative projects and in scientific research. </li>
+</ul>
+<ul class="wp-block-list">
+<li><strong>Automation:</strong> Python and R have libraries and packages for automating tasks, such as data cleaning, data preparation, and model evaluation. This can be especially useful for organizations with large amounts of data or frequent forecasting needs. </li>
+</ul>
+<p>R specifically is a popular programming language and statistical software widely used for forecasting in businesses. Forecasting is an essential skill for businesses as it helps them anticipate future trends, plan for potential risks, and make informed decisions. By using R for forecasting, businesses can analyze large amounts of data, identify patterns and trends, and create accurate predictions for future outcomes. </p>
+<p>R provides a wide range of packages and tools for forecasting, including forecast, fable, and ggplot2. These packages can help businesses build predictive models, visualize data, and make accurate forecasts. Additionally, R’s flexibility allows businesses to customize their forecasting models to meet their specific needs and goals. </p>
+<p>Now that we have established the importance of forecasting in businesses and the role that R plays in this process, let’s dive deeper into how one can create a forecast using R. Forecasting with R involves several steps, including data cleaning, data visualization, model selection, and evaluation. These steps are crucial in building a reliable and accurate forecast model. In this response, we will explore these steps in detail to understand how to create a forecast using R. </p>
+<h2 class="wp-block-heading">Building a Forecast Model in R </h2>
+<p>Building a forecast model in R can be done in several steps: </p>
+<ul class="wp-block-list">
+<li><strong>Load and Prepare the Data:</strong> The first step is to load the data into R and prepare it for use in the model. This may include importing the data from a file, transforming the data in some way, or aggregating the data to a higher level of granularity. </li>
+</ul>
+<ul class="wp-block-list">
+<li><strong>Choose a Forecasting Method:</strong> The next step is to choose a forecasting method. R has several built-in packages for time-series analysis and forecasting, including the forecast and t series packages. There are also many other packages available for more specialized forecasting methods, such as exponential smoothing, ARIMA, and machine learning-based methods.  We recommend exploring each of these packages and determining which package will meet your needs. </li>
+</ul>
+<ul class="wp-block-list">
+<li><strong>Train the Model:</strong> Once a forecasting method has been chosen, the next step is to train the model. This involves fitting the model to the historical data, either by specifying the model parameters manually or by using an automated process. </li>
+</ul>
+<ul class="wp-block-list">
+<li><strong>Validate the Model:</strong> After the model has been trained, it should be validated to ensure that it is accurate and suitable for the data. This may involve comparing the forecast results to actual data, adjusting the model parameters, or incorporating additional data sources. </li>
+</ul>
+<ul class="wp-block-list">
+<li><strong>Make Forecasts:</strong> The final step is to use the model to make forecasts. This may involve generating a forecast for a single point in time or generating a complete forecast for a period of time. The results can be visualized using R’s built-in plotting functions, or by exporting the data to another tool for further analysis. </li>
+</ul>
+<p>By following these steps, someone can build a forecast model using R that is tailored to their specific data and forecasting needs. R’s extensive library of packages and tools for time-series analysis and forecasting makes it a powerful tool for building accurate and reliable forecasting models. </p>
+<h2 class="wp-block-heading">Learn how to code the model</h2>
+<p>Here are some high level examples of how to get started. </p>
+<p>First, you need to load the data into R using the read.csv() or read.table() function. Once you have the data loaded, you will need to perform some basic data cleaning, such as removing missing values or outliers. </p>
+<p>After cleaning the data, the next step is to create a time series object. The ts() function in R can be used to create a time series object. The ts() function takes two arguments: the data and the frequency of the time series. </p>
+<p>Once you have created the time series object, you can use R’s forecasting package to create a forecast. The forecast package provides several functions for forecasting, including auto.arima(), which automatically selects the best ARIMA model for the time series. </p>
+<h4 class="wp-block-heading">Here’s an example code for a basic forecast in R: </h4>
+<figure class="wp-block-image size-full"><img alt="How to Build Forecast Models in R" class="wp-image-3405" decoding="async" height="565" sizes="(max-width: 830px) 100vw, 830px" src="images/image.png" srcset="images/image.png 830w, https://www.readysignal.com/wp-content/uploads/2023/09/image-300x204.png 300w, https://www.readysignal.com/wp-content/uploads/2023/09/image-768x523.png 768w" width="830"/></figure>
+<p>In this example, we assume that the data is in a CSV file called “mydata.csv” and contains a single column of sales data. We first load the data into R, clean the data by removing any missing values, create a time series object with a frequency of 12 (assuming monthly data), and create a forecast using the auto.arima() function from the forecast package. In the final step, we print the forecast object to see the model stats.  You can further explore the model object to evaluate the fitted/predicted values of the model. </p>
+<h2 class="wp-block-heading">How to Enrich Your Forecast Further</h2>
+<p>The next step you can take is to enrich your forecast with external factors that could be impacting business (weather, economic conditions, etc.)  </p>
+<p>Using the data to wish to forecast, you can pass that data to the ready signal Auto Discovery function, and the Ready Signal application will test your data against all the data available in the catalog, and recommend features that are highly correlated to your business that you can test in your forecast model.  You can learn more about this at <a href="https://www.readysignal.com/" rel="noreferrer noopener" target="_blank">Ready Signal</a>. </p>
+<p>All you need is an API key from Ready Signal. You can visit the Ready Signal website and sign up for an account to obtain the API key.  Then using your “mydata” from the prior example, you can call the auto_discover() function from the readysignal library, pass your API Key/access token, your mydata as a dataframe, and define how the data is structured based on time and geographic granularity.  This function will produce a signal_id specific to this data set and project. </p>
+<figure class="wp-block-image size-full"><img alt="How to Build Forecast Models in R" class="wp-image-3406" decoding="async" height="342" sizes="(max-width: 936px) 100vw, 936px" src="images/image-1.png" srcset="images/image-1.png 936w, https://www.readysignal.com/wp-content/uploads/2023/09/image-1-300x110.png 300w, https://www.readysignal.com/wp-content/uploads/2023/09/image-1-768x281.png 768w" width="936"/></figure>
+<p>Once that signal_id is produced, you can then execute the get_signal() function, using that signal_id to return a data frame which includes up to 20 external features correlated to the target variable you are looking to forecast. </p>
+<figure class="wp-block-image size-large"><img alt="" class="wp-image-3407" decoding="async" height="239" loading="lazy" sizes="(max-width: 1024px) 100vw, 1024px" src="images/image-2-1024x239.png" srcset="images/image-2-1024x239.png 1024w, https://www.readysignal.com/wp-content/uploads/2023/09/image-2-300x70.png 300w, https://www.readysignal.com/wp-content/uploads/2023/09/image-2-768x180.png 768w, https://www.readysignal.com/wp-content/uploads/2023/09/image-2-1536x359.png 1536w, https://www.readysignal.com/wp-content/uploads/2023/09/image-2.png 1600w" width="1024"/></figure>
+<p>From here you can then join these external factors back to your data and begin testing these features in your forecast model. </p>
+<p>Ready Signal offers a powerful platform for businesses to easily access, analyze, and forecast external data. With our intuitive interface and robust API, you can quickly integrate external data into your forecasting models and make data-driven decisions that drive business success. So why not sign up for a free account today and see for yourself how Ready Signal can help you take your forecasting to the next level? Visit our website at www.readysignal.com to learn more and get started. </p>
+</div>
+</div>
+</div>
+<h1 class="elementor-heading-title elementor-size-default">How to Build Forecasting Models in R</h1>
+<ul class="elementor-inline-items elementor-icon-list-items elementor-post-info">
+<li class="elementor-icon-list-item elementor-repeater-item-7540876 elementor-inline-item" itemprop="author">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-author">
+										Megan Foley					</span>
+</li>
+<li class="elementor-icon-list-item elementor-repeater-item-450fc99 elementor-inline-item" itemprop="datePublished">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-date">
+<span class="elementor-post-info__item-prefix">/</span>
+										September 18, 2023					</span>
+</li>
+</ul>
+<li class="elementor-icon-list-item elementor-repeater-item-7540876 elementor-inline-item" itemprop="author">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-author">
+										Megan Foley					</span>
+</li>
+<li class="elementor-icon-list-item elementor-repeater-item-450fc99 elementor-inline-item" itemprop="datePublished">
+<span class="elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-date">
+<span class="elementor-post-info__item-prefix">/</span>
+										September 18, 2023					</span>
+</li>
+<img alt="How to Build Forecast Models in R" class="wp-image-3408" decoding="async" fetchpriority="high" height="576" sizes="(max-width: 1024px) 100vw, 1024px" src="images/R-code-1024x576.png" srcset="images/R-code-1024x576.png 1024w, https://www.readysignal.com/wp-content/uploads/2023/09/R-code-300x169.png 300w, https://www.readysignal.com/wp-content/uploads/2023/09/R-code-768x432.png 768w, https://www.readysignal.com/wp-content/uploads/2023/09/R-code-1536x864.png 1536w, https://www.readysignal.com/wp-content/uploads/2023/09/R-code-2048x1152.png 2048w" width="1024"/>
+<h2 class="wp-block-heading">Why use R?</h2>
+<p>Once you have mastered using <a href="https://www.readysignal.com/how-to-build-forecasting-models-in-excel/">Excel to build forecasting models</a>, you may want to explore using other programming languages such as Python and R. Both Python and R have powerful libraries and packages for data analysis, modeling, and forecasting. Here are some benefits of using Python and R over Excel: </p>
+<ul class="wp-block-list">
+<li><strong>Scalability:</strong> Python and R are more scalable than Excel, which means they can handle larger datasets and more complex models with greater ease. This can be especially important for organizations with large amounts of data and more advanced forecasting needs. </li>
+</ul>
+<li><strong>Scalability:</strong> Python and R are more scalable than Excel, which means they can handle larger datasets and more complex models with greater ease. This can be especially important for organizations with large amounts of data and more advanced forecasting needs. </li>
+<ul class="wp-block-list">
+<li><strong>Flexibility:</strong> Python and R offer more flexibility in terms of the types of models that can be built, and the methods used for data analysis and modeling. This allows data scientists to build more complex and sophisticated models and to explore new methods and techniques as needed. </li>
+</ul>
+<li><strong>Flexibility:</strong> Python and R offer more flexibility in terms of the types of models that can be built, and the methods used for data analysis and modeling. This allows data scientists to build more complex and sophisticated models and to explore new methods and techniques as needed. </li>
+<ul class="wp-block-list">
+<li><strong>Reproducibility:</strong> Python and R both have features for version control and reproducibility, which means that models can be easily shared and replicated by others. This can be particularly important in collaborative projects and in scientific research. </li>
+</ul>
+<li><strong>Reproducibility:</strong> Python and R both have features for version control and reproducibility, which means that models can be easily shared and replicated by others. This can be particularly important in collaborative projects and in scientific research. </li>
+<ul class="wp-block-list">
+<li><strong>Automation:</strong> Python and R have libraries and packages for automating tasks, such as data cleaning, data preparation, and model evaluation. This can be especially useful for organizations with large amounts of data or frequent forecasting needs. </li>
+</ul>
+<li><strong>Automation:</strong> Python and R have libraries and packages for automating tasks, such as data cleaning, data preparation, and model evaluation. This can be especially useful for organizations with large amounts of data or frequent forecasting needs. </li>
+<p>R specifically is a popular programming language and statistical software widely used for forecasting in businesses. Forecasting is an essential skill for businesses as it helps them anticipate future trends, plan for potential risks, and make informed decisions. By using R for forecasting, businesses can analyze large amounts of data, identify patterns and trends, and create accurate predictions for future outcomes. </p>
+<p>R provides a wide range of packages and tools for forecasting, including forecast, fable, and ggplot2. These packages can help businesses build predictive models, visualize data, and make accurate forecasts. Additionally, R’s flexibility allows businesses to customize their forecasting models to meet their specific needs and goals. </p>
+<p>Now that we have established the importance of forecasting in businesses and the role that R plays in this process, let’s dive deeper into how one can create a forecast using R. Forecasting with R involves several steps, including data cleaning, data visualization, model selection, and evaluation. These steps are crucial in building a reliable and accurate forecast model. In this response, we will explore these steps in detail to understand how to create a forecast using R. </p>
+<h2 class="wp-block-heading">Building a Forecast Model in R </h2>
+<p>Building a forecast model in R can be done in several steps: </p>
+<ul class="wp-block-list">
+<li><strong>Load and Prepare the Data:</strong> The first step is to load the data into R and prepare it for use in the model. This may include importing the data from a file, transforming the data in some way, or aggregating the data to a higher level of granularity. </li>
+</ul>
+<li><strong>Load and Prepare the Data:</strong> The first step is to load the data into R and prepare it for use in the model. This may include importing the data from a file, transforming the data in some way, or aggregating the data to a higher level of granularity. </li>
+<ul class="wp-block-list">
+<li><strong>Choose a Forecasting Method:</strong> The next step is to choose a forecasting method. R has several built-in packages for time-series analysis and forecasting, including the forecast and t series packages. There are also many other packages available for more specialized forecasting methods, such as exponential smoothing, ARIMA, and machine learning-based methods.  We recommend exploring each of these packages and determining which package will meet your needs. </li>
+</ul>
+<li><strong>Choose a Forecasting Method:</strong> The next step is to choose a forecasting method. R has several built-in packages for time-series analysis and forecasting, including the forecast and t series packages. There are also many other packages available for more specialized forecasting methods, such as exponential smoothing, ARIMA, and machine learning-based methods.  We recommend exploring each of these packages and determining which package will meet your needs. </li>
+<ul class="wp-block-list">
+<li><strong>Train the Model:</strong> Once a forecasting method has been chosen, the next step is to train the model. This involves fitting the model to the historical data, either by specifying the model parameters manually or by using an automated process. </li>
+</ul>
+<li><strong>Train the Model:</strong> Once a forecasting method has been chosen, the next step is to train the model. This involves fitting the model to the historical data, either by specifying the model parameters manually or by using an automated process. </li>
+<ul class="wp-block-list">
+<li><strong>Validate the Model:</strong> After the model has been trained, it should be validated to ensure that it is accurate and suitable for the data. This may involve comparing the forecast results to actual data, adjusting the model parameters, or incorporating additional data sources. </li>
+</ul>
+<li><strong>Validate the Model:</strong> After the model has been trained, it should be validated to ensure that it is accurate and suitable for the data. This may involve comparing the forecast results to actual data, adjusting the model parameters, or incorporating additional data sources. </li>
+<ul class="wp-block-list">
+<li><strong>Make Forecasts:</strong> The final step is to use the model to make forecasts. This may involve generating a forecast for a single point in time or generating a complete forecast for a period of time. The results can be visualized using R’s built-in plotting functions, or by exporting the data to another tool for further analysis. </li>
+</ul>
+<li><strong>Make Forecasts:</strong> The final step is to use the model to make forecasts. This may involve generating a forecast for a single point in time or generating a complete forecast for a period of time. The results can be visualized using R’s built-in plotting functions, or by exporting the data to another tool for further analysis. </li>
+<p>By following these steps, someone can build a forecast model using R that is tailored to their specific data and forecasting needs. R’s extensive library of packages and tools for time-series analysis and forecasting makes it a powerful tool for building accurate and reliable forecasting models. </p>
+<h2 class="wp-block-heading">Learn how to code the model</h2>
+<p>Here are some high level examples of how to get started. </p>
+<p>First, you need to load the data into R using the read.csv() or read.table() function. Once you have the data loaded, you will need to perform some basic data cleaning, such as removing missing values or outliers. </p>
+<p>After cleaning the data, the next step is to create a time series object. The ts() function in R can be used to create a time series object. The ts() function takes two arguments: the data and the frequency of the time series. </p>
+<p>Once you have created the time series object, you can use R’s forecasting package to create a forecast. The forecast package provides several functions for forecasting, including auto.arima(), which automatically selects the best ARIMA model for the time series. </p>
+<h4 class="wp-block-heading">Here’s an example code for a basic forecast in R: </h4>
+<img alt="How to Build Forecast Models in R" class="wp-image-3405" decoding="async" height="565" sizes="(max-width: 830px) 100vw, 830px" src="images/image.png" srcset="images/image.png 830w, https://www.readysignal.com/wp-content/uploads/2023/09/image-300x204.png 300w, https://www.readysignal.com/wp-content/uploads/2023/09/image-768x523.png 768w" width="830"/>
+<p>In this example, we assume that the data is in a CSV file called “mydata.csv” and contains a single column of sales data. We first load the data into R, clean the data by removing any missing values, create a time series object with a frequency of 12 (assuming monthly data), and create a forecast using the auto.arima() function from the forecast package. In the final step, we print the forecast object to see the model stats.  You can further explore the model object to evaluate the fitted/predicted values of the model. </p>
+<h2 class="wp-block-heading">How to Enrich Your Forecast Further</h2>
+<p>The next step you can take is to enrich your forecast with external factors that could be impacting business (weather, economic conditions, etc.)  </p>
+<p>Using the data to wish to forecast, you can pass that data to the ready signal Auto Discovery function, and the Ready Signal application will test your data against all the data available in the catalog, and recommend features that are highly correlated to your business that you can test in your forecast model.  You can learn more about this at <a href="https://www.readysignal.com/" rel="noreferrer noopener" target="_blank">Ready Signal</a>. </p>
+<p>All you need is an API key from Ready Signal. You can visit the Ready Signal website and sign up for an account to obtain the API key.  Then using your “mydata” from the prior example, you can call the auto_discover() function from the readysignal library, pass your API Key/access token, your mydata as a dataframe, and define how the data is structured based on time and geographic granularity.  This function will produce a signal_id specific to this data set and project. </p>
+<img alt="How to Build Forecast Models in R" class="wp-image-3406" decoding="async" height="342" sizes="(max-width: 936px) 100vw, 936px" src="images/image-1.png" srcset="images/image-1.png 936w, https://www.readysignal.com/wp-content/uploads/2023/09/image-1-300x110.png 300w, https://www.readysignal.com/wp-content/uploads/2023/09/image-1-768x281.png 768w" width="936"/>
+<p>Once that signal_id is produced, you can then execute the get_signal() function, using that signal_id to return a data frame which includes up to 20 external features correlated to the target variable you are looking to forecast. </p>
+<img alt="" class="wp-image-3407" decoding="async" height="239" loading="lazy" sizes="(max-width: 1024px) 100vw, 1024px" src="images/image-2-1024x239.png" srcset="images/image-2-1024x239.png 1024w, https://www.readysignal.com/wp-content/uploads/2023/09/image-2-300x70.png 300w, https://www.readysignal.com/wp-content/uploads/2023/09/image-2-768x180.png 768w, https://www.readysignal.com/wp-content/uploads/2023/09/image-2-1536x359.png 1536w, https://www.readysignal.com/wp-content/uploads/2023/09/image-2.png 1600w" width="1024"/>
+<p>From here you can then join these external factors back to your data and begin testing these features in your forecast model. </p>
+<p>Ready Signal offers a powerful platform for businesses to easily access, analyze, and forecast external data. With our intuitive interface and robust API, you can quickly integrate external data into your forecasting models and make data-driven decisions that drive business success. So why not sign up for a free account today and see for yourself how Ready Signal can help you take your forecasting to the next level? Visit our website at www.readysignal.com to learn more and get started. </p>
+<div class="elementor-element elementor-element-eeda3a2 e-con-full e-flex e-con" data-element_type="container" data-id="eeda3a2" data-settings='{"content_width":"full"}'>
+<div class="elementor-element elementor-element-ca7d84f elementor-widget elementor-widget-template" data-element_type="widget" data-id="ca7d84f" data-widget_type="template.default">
+<div class="elementor-widget-container">
+<div class="elementor-template">
+<div class="elementor elementor-1654" data-elementor-id="1654" data-elementor-type="container">
+<div class="elementor-element elementor-element-6bb89eb7 e-flex e-con-boxed e-con" data-element_type="container" data-id="6bb89eb7" data-settings='{"background_background":"classic","content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-38fd0eba e-flex e-con-boxed e-con" data-element_type="container" data-id="38fd0eba" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-23641637 elementor-widget elementor-widget-heading" data-element_type="widget" data-id="23641637" data-widget_type="heading.default">
+<div class="elementor-widget-container">
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3> </div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-c5d0540 e-flex e-con-boxed e-con" data-element_type="container" data-id="c5d0540" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-3b2d7408 elementor-widget elementor-widget-button" data-element_type="widget" data-id="3b2d7408" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-668ff799 elementor-widget elementor-widget-button" data-element_type="widget" data-id="668ff799" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="elementor-template">
+<div class="elementor elementor-1654" data-elementor-id="1654" data-elementor-type="container">
+<div class="elementor-element elementor-element-6bb89eb7 e-flex e-con-boxed e-con" data-element_type="container" data-id="6bb89eb7" data-settings='{"background_background":"classic","content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-38fd0eba e-flex e-con-boxed e-con" data-element_type="container" data-id="38fd0eba" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-23641637 elementor-widget elementor-widget-heading" data-element_type="widget" data-id="23641637" data-widget_type="heading.default">
+<div class="elementor-widget-container">
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3> </div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-c5d0540 e-flex e-con-boxed e-con" data-element_type="container" data-id="c5d0540" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-3b2d7408 elementor-widget elementor-widget-button" data-element_type="widget" data-id="3b2d7408" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-668ff799 elementor-widget elementor-widget-button" data-element_type="widget" data-id="668ff799" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="elementor elementor-1654" data-elementor-id="1654" data-elementor-type="container">
+<div class="elementor-element elementor-element-6bb89eb7 e-flex e-con-boxed e-con" data-element_type="container" data-id="6bb89eb7" data-settings='{"background_background":"classic","content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-38fd0eba e-flex e-con-boxed e-con" data-element_type="container" data-id="38fd0eba" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-23641637 elementor-widget elementor-widget-heading" data-element_type="widget" data-id="23641637" data-widget_type="heading.default">
+<div class="elementor-widget-container">
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3> </div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-c5d0540 e-flex e-con-boxed e-con" data-element_type="container" data-id="c5d0540" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-3b2d7408 elementor-widget elementor-widget-button" data-element_type="widget" data-id="3b2d7408" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-668ff799 elementor-widget elementor-widget-button" data-element_type="widget" data-id="668ff799" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-6bb89eb7 e-flex e-con-boxed e-con" data-element_type="container" data-id="6bb89eb7" data-settings='{"background_background":"classic","content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-38fd0eba e-flex e-con-boxed e-con" data-element_type="container" data-id="38fd0eba" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-23641637 elementor-widget elementor-widget-heading" data-element_type="widget" data-id="23641637" data-widget_type="heading.default">
+<div class="elementor-widget-container">
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3> </div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-c5d0540 e-flex e-con-boxed e-con" data-element_type="container" data-id="c5d0540" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-3b2d7408 elementor-widget elementor-widget-button" data-element_type="widget" data-id="3b2d7408" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-668ff799 elementor-widget elementor-widget-button" data-element_type="widget" data-id="668ff799" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-38fd0eba e-flex e-con-boxed e-con" data-element_type="container" data-id="38fd0eba" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-23641637 elementor-widget elementor-widget-heading" data-element_type="widget" data-id="23641637" data-widget_type="heading.default">
+<div class="elementor-widget-container">
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3> </div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-c5d0540 e-flex e-con-boxed e-con" data-element_type="container" data-id="c5d0540" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-3b2d7408 elementor-widget elementor-widget-button" data-element_type="widget" data-id="3b2d7408" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-668ff799 elementor-widget elementor-widget-button" data-element_type="widget" data-id="668ff799" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-38fd0eba e-flex e-con-boxed e-con" data-element_type="container" data-id="38fd0eba" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-23641637 elementor-widget elementor-widget-heading" data-element_type="widget" data-id="23641637" data-widget_type="heading.default">
+<div class="elementor-widget-container">
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3> </div>
+</div>
+</div>
+</div>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-23641637 elementor-widget elementor-widget-heading" data-element_type="widget" data-id="23641637" data-widget_type="heading.default">
+<div class="elementor-widget-container">
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3> </div>
+</div>
+</div>
+<h3 class="elementor-heading-title elementor-size-default">TAKE THE NEXT STEP</h3>
+<div class="elementor-element elementor-element-c5d0540 e-flex e-con-boxed e-con" data-element_type="container" data-id="c5d0540" data-settings='{"content_width":"boxed"}'>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-3b2d7408 elementor-widget elementor-widget-button" data-element_type="widget" data-id="3b2d7408" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-668ff799 elementor-widget elementor-widget-button" data-element_type="widget" data-id="668ff799" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="e-con-inner">
+<div class="elementor-element elementor-element-3b2d7408 elementor-widget elementor-widget-button" data-element_type="widget" data-id="3b2d7408" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+<div class="elementor-element elementor-element-668ff799 elementor-widget elementor-widget-button" data-element_type="widget" data-id="668ff799" data-widget_type="button.default">
+<div class="elementor-widget-container">
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="https://app.readysignal.com/auth/sign-up/4/6">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">Sign Up Free</span>
+</span>
+</a>
+</div>
+<div class="elementor-button-wrapper">
+<a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjMxMjAiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D">
+<span class="elementor-button-content-wrapper">
+<span class="elementor-button-text">SCHEDULE DEMO</span>
+</span>
+</a>
+</div>
+    </article>
+</body>
+</html>

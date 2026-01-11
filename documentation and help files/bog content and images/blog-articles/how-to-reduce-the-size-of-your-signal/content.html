@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to reduce the size of your signal</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <article>
+        <h1>How to reduce the size of your signal</h1>
+        <p>At this time RS limits the # of rows that can be in a Signal Output to 1 Million. The information in this article explains how to control the size of your signal.</p>
+<p>You can reduce the size of your signal (# of Rows) by adjusting these 3 settings:</p>
+<ul class="wp-block-list">
+<li><strong>Time Grain</strong> (Day grain creates more rows than Year grain)</li>
+<li><strong>Geo Grain</strong> (Zip grain creates more rows than State grain)</li>
+<li><strong>Date Range</strong> (a two year time period will create more rows than a 1 month time period)</li>
+</ul>
+<li><strong>Time Grain</strong> (Day grain creates more rows than Year grain)</li>
+<li><strong>Geo Grain</strong> (Zip grain creates more rows than State grain)</li>
+<li><strong>Date Range</strong> (a two year time period will create more rows than a 1 month time period)</li>
+<p># of Rows ~= Geo Grain x (Date Range / Time Granularity)</p>
+<p>Two of the easiest ways to reduce the size of your signal include:</p>
+<ul class="wp-block-list">
+<li>Switching your Geo grain from Zip to City or State</li>
+<li>Moving your Time grain from Daily to Weekly (or higher)</li>
+</ul>
+<li>Switching your Geo grain from Zip to City or State</li>
+<li>Moving your Time grain from Daily to Weekly (or higher)</li>
+    </article>
+</body>
+</html>
