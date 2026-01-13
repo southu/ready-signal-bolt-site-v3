@@ -51,6 +51,7 @@ const Navbar = () => {
     { name: 'Integrations', path: '/integrations/' },
     { name: 'Help Center', path: '/help-center/' },
     { name: 'API Documentation', path: '/ready-signal-api-documentation/' },
+    { name: 'Blog & Resources', path: '/blog/' },
   ];
 
   return (
