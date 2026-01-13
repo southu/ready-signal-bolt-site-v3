@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 /**
- * Blog Migration Script
+ * Blog Migration Script v2.0
  * 
  * This script parses WordPress blog exports and generates the blogArticles.ts data file.
- * It also copies images to the public/blog-images directory.
+ * It includes advanced HTML cleaning to handle Elementor markup, deduplication,
+ * proper list formatting, and download link extraction.
  * 
  * Usage: node scripts/migrate-blogs.mjs
  */
@@ -11,6 +12,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import crypto from 'crypto';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -26,11 +28,100 @@ if (!fs.existsSync(BLOG_IMAGES_DIR)) {
   fs.mkdirSync(BLOG_IMAGES_DIR, { recursive: true });
 }
 
+// Icon images to exclude (used for download buttons, not actual content)
+const ICON_IMAGES = [
+  'excel.png',
+  'download.png',
+  'excel-icon.png',
+  'download-icon.png',
+  'pdf-icon.png',
+  'pdf.png',
+  'csv.png',
+  'file-icon.png',
+  'icon.png'
+];
+
 /**
- * Clean HTML content by stripping Elementor markup and extracting semantic content
+ * Check if an image filename is an icon (should be excluded)
+ */
+function isIconImage(filename) {
+  const basename = path.basename(filename).toLowerCase();
+  // Check against known icon names
+  if (ICON_IMAGES.some(icon => basename === icon || basename.includes(icon.replace('.png', '')))) {
+    return true;
+  }
+  // Also check for very small icon-like names
+  if (basename.match(/^(excel|download|pdf|csv|file|icon|doc|xls|xlsx)\.(png|jpg|gif|svg)$/i)) {
+    return true;
+  }
+  return false;
+}
+
+/**
+ * Create a hash of content for deduplication
+ */
+function hashContent(text) {
+  return crypto.createHash('md5').update(text.trim()).digest('hex');
+}
+
+/**
+ * Extract download links from WordPress file blocks
+ */
+function extractDownloadLinks(html) {
+  const downloads = [];
+  const fileBlockRegex = /<div[^>]*class="[^"]*wp-block-file[^"]*"[^>]*>[\s\S]*?<a[^>]*href="([^"]+)"[^>]*>([^<]*)<\/a>[\s\S]*?<\/div>/gi;
+  
+  let match;
+  while ((match = fileBlockRegex.exec(html)) !== null) {
+    const url = match[1];
+    const text = match[2].trim() || 'Download';
+    if (url && !url.includes('#elementor-action')) {
+      downloads.push({ url, text });
+    }
+  }
+  
+  // Also find standalone file links
+  const standaloneRegex = /<a[^>]*class="[^"]*wp-block-file__button[^"]*"[^>]*href="([^"]+)"[^>]*>([^<]*)<\/a>/gi;
+  while ((match = standaloneRegex.exec(html)) !== null) {
+    const url = match[1];
+    const text = match[2].trim() || 'Download';
+    if (url && !url.includes('#elementor-action')) {
+      downloads.push({ url, text });
+    }
+  }
+  
+  return downloads;
+}
+
+/**
+ * Convert br-separated text to proper list
+ */
+function convertBrToList(text) {
+  // Split by <br/> or <br> tags
+  const items = text.split(/<br\s*\/?>/gi).map(item => item.trim()).filter(item => item.length > 0);
+  
+  // If we have 3+ items, convert to a list
+  if (items.length >= 3) {
+    const listItems = items.map(item => `<li>${item}</li>`).join('\n');
+    return `<ul>\n${listItems}\n</ul>`;
+  }
+  
+  // Otherwise, return with proper line breaks
+  return items.join('<br/>');
+}
+
+/**
+ * Clean HTML content with advanced processing
  */
 function cleanHtmlContent(html, slug) {
-  // Remove DOCTYPE, html, head, body wrapper
+  // Track seen content for deduplication
+  const seenParagraphs = new Set();
+  const seenLists = new Set();
+  
+  // Extract download links before cleaning (we'll add them back styled)
+  const downloads = extractDownloadLinks(html);
+  
+  // Step 1: Remove document wrapper elements
   let content = html
     .replace(/<!DOCTYPE[^>]*>/gi, '')
     .replace(/<html[^>]*>/gi, '')
@@ -41,102 +132,247 @@ function cleanHtmlContent(html, slug) {
     .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
     .replace(/<link[^>]*>/gi, '');
 
-  // Remove Elementor-specific divs and wrappers
-  content = content
-    .replace(/<div[^>]*class="[^"]*elementor[^"]*"[^>]*>/gi, '')
-    .replace(/<div[^>]*data-elementor[^>]*>/gi, '')
-    .replace(/<div[^>]*data-element_type[^>]*>/gi, '')
-    .replace(/<div[^>]*data-widget_type[^>]*>/gi, '')
-    .replace(/<div[^>]*class="[^"]*e-con[^"]*"[^>]*>/gi, '')
-    .replace(/<div[^>]*class="[^"]*e-flex[^"]*"[^>]*>/gi, '')
-    .replace(/<div[^>]*class="elementor-widget-container"[^>]*>/gi, '')
-    .replace(/<div[^>]*class="e-con-inner"[^>]*>/gi, '');
+  // Step 2: Remove all h1 titles (we use metadata title)
+  content = content.replace(/<h1[^>]*>[\s\S]*?<\/h1>/gi, '');
 
-  // Remove article wrapper
-  content = content
-    .replace(/<article[^>]*>/gi, '')
-    .replace(/<\/article>/gi, '');
+  // Step 3: Remove Elementor post info (author/date blocks)
+  content = content.replace(/<ul[^>]*class="[^"]*elementor-post-info[^"]*"[^>]*>[\s\S]*?<\/ul>/gi, '');
+  content = content.replace(/<ul[^>]*class="[^"]*elementor-inline-items[^"]*"[^>]*>[\s\S]*?<\/ul>/gi, '');
 
-  // Clean up empty divs and extra closing divs
-  // Multiple passes to handle nested empty divs
-  for (let i = 0; i < 10; i++) {
-    content = content.replace(/<div[^>]*>\s*<\/div>/gi, '');
+  // Step 4: Remove "TAKE THE NEXT STEP" CTA sections entirely
+  content = content.replace(/<h3[^>]*>[\s\S]*?TAKE THE NEXT STEP[\s\S]*?<\/h3>/gi, '');
+  content = content.replace(/TAKE THE NEXT STEP/gi, '');
+  
+  // Remove CTA button containers
+  content = content.replace(/<div[^>]*class="[^"]*elementor-button-wrapper[^"]*"[^>]*>[\s\S]*?<\/div>/gi, '');
+  
+  // Step 5: Remove popup action links (Elementor popup triggers)
+  content = content.replace(/<a[^>]*href="[^"]*#elementor-action[^"]*"[^>]*>[\s\S]*?<\/a>/gi, '');
+  content = content.replace(/<a[^>]*href="[^"]*elementor-action%3A[^"]*"[^>]*>[\s\S]*?<\/a>/gi, '');
+
+  // Step 6: Remove app.readysignal.com signup links (we add our own CTA)
+  content = content.replace(/<a[^>]*href="https:\/\/app\.readysignal\.com\/auth\/sign-up[^"]*"[^>]*>[\s\S]*?<\/a>/gi, '');
+
+  // Step 7: Remove file download blocks (we'll add them back styled)
+  content = content.replace(/<div[^>]*class="[^"]*wp-block-file[^"]*"[^>]*>[\s\S]*?<\/div>/gi, '');
+  content = content.replace(/<a[^>]*class="[^"]*wp-block-file__button[^"]*"[^>]*>[\s\S]*?<\/a>/gi, '');
+
+  // Step 8: Remove wp-block-buttons containers
+  content = content.replace(/<div[^>]*class="[^"]*wp-block-buttons[^"]*"[^>]*>[\s\S]*?<\/div>/gi, '');
+  content = content.replace(/<div[^>]*class="[^"]*wp-block-button[^"]*"[^>]*>[\s\S]*?<\/div>/gi, '');
+
+  // Step 9: Remove spacer blocks
+  content = content.replace(/<div[^>]*class="[^"]*wp-block-spacer[^"]*"[^>]*>[\s\S]*?<\/div>/gi, '');
+  content = content.replace(/<div[^>]*aria-hidden="true"[^>]*class="[^"]*wp-block-spacer[^"]*"[^>]*><\/div>/gi, '');
+
+  // Step 10: Clean up Elementor wrapper divs
+  const elementorDivPatterns = [
+    /<div[^>]*class="[^"]*elementor[^"]*"[^>]*>/gi,
+    /<div[^>]*data-elementor[^"]*[^>]*>/gi,
+    /<div[^>]*data-element_type[^>]*>/gi,
+    /<div[^>]*data-widget_type[^>]*>/gi,
+    /<div[^>]*class="[^"]*e-con[^"]*"[^>]*>/gi,
+    /<div[^>]*class="[^"]*e-flex[^"]*"[^>]*>/gi,
+    /<div[^>]*class="[^"]*elementor-widget-container[^"]*"[^>]*>/gi,
+    /<div[^>]*class="[^"]*e-con-inner[^"]*"[^>]*>/gi,
+    /<div[^>]*class="[^"]*wp-block-columns[^"]*"[^>]*>/gi,
+    /<div[^>]*class="[^"]*wp-block-column[^"]*"[^>]*>/gi,
+  ];
+  
+  for (const pattern of elementorDivPatterns) {
+    content = content.replace(pattern, '');
+  }
+
+  // Step 11: Remove orphan li elements (outside of ul/ol)
+  content = content.replace(/<li[^>]*class="[^"]*elementor[^"]*"[^>]*>[\s\S]*?<\/li>/gi, '');
+
+  // Step 12: Remove article wrapper
+  content = content.replace(/<article[^>]*>/gi, '');
+  content = content.replace(/<\/article>/gi, '');
+
+  // Step 13: Fix image paths
+  content = content.replace(/src="images\//g, `src="/blog-images/${slug}/`);
+  
+  // Remove srcset attributes (they reference WordPress CDN)
+  content = content.replace(/\s*srcset="[^"]*"/gi, '');
+  content = content.replace(/\s*sizes="[^"]*"/gi, '');
+
+  // Step 14: Clean up remaining class and style attributes
+  content = content.replace(/\s*class="[^"]*"/gi, '');
+  content = content.replace(/\s*style="[^"]*"/gi, '');
+  content = content.replace(/\s*data-[a-z-]+="[^"]*"/gi, '');
+  content = content.replace(/\s*itemprop="[^"]*"/gi, '');
+  content = content.replace(/\s*decoding="[^"]*"/gi, '');
+  content = content.replace(/\s*fetchpriority="[^"]*"/gi, '');
+  content = content.replace(/\s*loading="[^"]*"/gi, '');
+
+  // Step 15: Remove empty/orphan closing divs - multiple passes
+  for (let i = 0; i < 20; i++) {
+    content = content.replace(/<div>\s*<\/div>/gi, '');
   }
   
-  // Remove orphan closing divs (be careful here)
-  // Count opening and closing divs and balance them
-  const openDivs = (content.match(/<div/gi) || []).length;
-  const closeDivs = (content.match(/<\/div>/gi) || []).length;
-  const extraClosing = closeDivs - openDivs;
+  // Balance div tags
+  const openDivCount = (content.match(/<div[^>]*>/gi) || []).length;
+  const closeDivCount = (content.match(/<\/div>/gi) || []).length;
   
-  if (extraClosing > 0) {
-    for (let i = 0; i < extraClosing; i++) {
+  if (closeDivCount > openDivCount) {
+    for (let i = 0; i < closeDivCount - openDivCount; i++) {
       content = content.replace(/<\/div>/, '');
     }
   }
 
-  // Remove the repeated "TAKE THE NEXT STEP" sections and CTA blocks
-  content = content.replace(/<h3[^>]*>TAKE THE NEXT STEP<\/h3>[\s\S]*?(?=<h[1-6]|$)/gi, '');
-  content = content.replace(/TAKE THE NEXT STEP/gi, '');
+  // Step 16: Remove empty spans, figures without images
+  content = content.replace(/<span>\s*<\/span>/gi, '');
+  content = content.replace(/<figure>\s*<\/figure>/gi, '');
+
+  // Step 17: Clean up figure tags - keep only the image
+  content = content.replace(/<figure[^>]*>([\s\S]*?)<\/figure>/gi, (match, inner) => {
+    const imgMatch = inner.match(/<img[^>]*>/i);
+    if (imgMatch) {
+      return imgMatch[0];
+    }
+    return '';
+  });
+
+  // Step 18: Convert <br/>-separated text in paragraphs to lists
+  content = content.replace(/<p>([\s\S]*?)<\/p>/gi, (match, inner) => {
+    // Check if this paragraph has multiple <br/> separated items
+    if ((inner.match(/<br\s*\/?>/gi) || []).length >= 2) {
+      return convertBrToList(inner);
+    }
+    return match;
+  });
+
+  // Step 19: Deduplicate paragraphs
+  const paragraphPattern = /<p>([\s\S]*?)<\/p>/gi;
+  content = content.replace(paragraphPattern, (match, inner) => {
+    const trimmed = inner.trim();
+    if (!trimmed) return '';
+    
+    const hash = hashContent(trimmed);
+    if (seenParagraphs.has(hash)) {
+      return ''; // Skip duplicate
+    }
+    seenParagraphs.add(hash);
+    return `<p>${trimmed}</p>`;
+  });
+
+  // Step 20: Deduplicate headings (h2, h3)
+  const seenHeadings = new Set();
+  content = content.replace(/<(h[2-6])>([\s\S]*?)<\/\1>/gi, (match, tag, inner) => {
+    const trimmed = inner.trim();
+    if (!trimmed) return '';
+    
+    const hash = hashContent(trimmed);
+    if (seenHeadings.has(hash)) {
+      return ''; // Skip duplicate
+    }
+    seenHeadings.add(hash);
+    return `<${tag}>${trimmed}</${tag}>`;
+  });
+
+  // Step 21: Deduplicate images and remove icon images
+  const seenImages = new Set();
+  content = content.replace(/<img[^>]*src="([^"]+)"[^>]*>/gi, (match, src) => {
+    const filename = src.split('/').pop() || src;
+    
+    // Skip icon images (excel.png, download.png, etc.)
+    if (isIconImage(filename)) {
+      return ''; // Remove icon images
+    }
+    
+    if (seenImages.has(src)) {
+      return ''; // Skip duplicate
+    }
+    seenImages.add(src);
+    // Clean the img tag
+    const altMatch = match.match(/alt="([^"]*)"/i);
+    const alt = altMatch ? altMatch[1] : '';
+    return `<img src="${src}" alt="${alt}" />`;
+  });
+
+  // Step 21b: First, normalize all lists by removing their class attributes
+  content = content.replace(/<(ol|ul)[^>]*>/gi, (match, tag) => `<${tag}>`);
   
-  // Remove button wrappers and links to app signup
-  content = content.replace(/<div[^>]*class="[^"]*button-wrapper[^"]*"[^>]*>[\s\S]*?<\/div>/gi, '');
-  content = content.replace(/<a[^>]*href="https:\/\/app\.readysignal\.com[^"]*"[^>]*>[\s\S]*?<\/a>/gi, '');
-  content = content.replace(/<a[^>]*href="#elementor-action[^"]*"[^>]*>[\s\S]*?<\/a>/gi, '');
-
-  // Remove duplicate h1 titles (keep only first one)
-  const h1Match = content.match(/<h1[^>]*>[\s\S]*?<\/h1>/i);
-  if (h1Match) {
-    const firstH1 = h1Match[0];
-    // Remove all h1s then add back the first one at the beginning isn't needed
-    // Just remove duplicates after the first
-    let foundFirst = false;
-    content = content.replace(/<h1[^>]*>[\s\S]*?<\/h1>/gi, (match) => {
-      if (!foundFirst) {
-        foundFirst = true;
-        return ''; // Remove the h1 entirely - we'll use the title from metadata
-      }
-      return '';
-    });
-  }
-
-  // Clean up Elementor post info (author/date) - we'll use metadata for this
-  content = content.replace(/<ul[^>]*class="[^"]*elementor-post-info[^"]*"[^>]*>[\s\S]*?<\/ul>/gi, '');
-  content = content.replace(/<li[^>]*class="[^"]*elementor-icon-list-item[^"]*"[^>]*>[\s\S]*?<\/li>/gi, '');
-
-  // Fix image paths - update to use local blog-images folder
-  content = content.replace(/src="images\//g, `src="/blog-images/${slug}/`);
-  content = content.replace(/srcset="images\//g, `srcset="/blog-images/${slug}/`);
+  // Step 21c: Deduplicate lists (ul and ol elements)
+  content = content.replace(/<(ul|ol)>([\s\S]*?)<\/\1>/gi, (match, tag, inner) => {
+    const trimmed = inner.trim();
+    if (!trimmed) return '';
+    
+    // Normalize content for hashing (remove extra whitespace, normalize item text)
+    const normalizedItems = trimmed.match(/<li[^>]*>([\s\S]*?)<\/li>/gi) || [];
+    const itemTexts = normalizedItems.map(item => {
+      const textMatch = item.match(/<li[^>]*>([\s\S]*?)<\/li>/i);
+      return textMatch ? textMatch[1].replace(/<[^>]*>/g, '').trim() : '';
+    }).filter(t => t);
+    
+    const hash = hashContent(itemTexts.join('|'));
+    if (seenLists.has(hash)) {
+      return ''; // Skip duplicate list
+    }
+    seenLists.add(hash);
+    return `<ul>${trimmed}</ul>`; // Convert all lists to ul for consistency
+  });
   
-  // Remove external WordPress image URLs from srcset (keep only local)
-  content = content.replace(/srcset="[^"]*https:\/\/www\.readysignal\.com[^"]*"/gi, '');
+  // Step 21d: Remove orphaned li items (not inside ul/ol)
+  // Store valid lists and replace with placeholders
+  const savedLists = [];
+  content = content.replace(/<(ul|ol)>([\s\S]*?)<\/\1>/gi, (match) => {
+    savedLists.push(match);
+    return `<!--LIST_PLACEHOLDER_${savedLists.length - 1}-->`;
+  });
+  // Remove orphaned li items (now safe since lists are placeholders)
+  content = content.replace(/<li[^>]*>[\s\S]*?<\/li>/gi, '');
+  // Restore saved lists
+  savedLists.forEach((list, i) => {
+    content = content.replace(`<!--LIST_PLACEHOLDER_${i}-->`, list);
+  });
 
-  // Clean up wp-block classes but keep semantic structure
-  content = content.replace(/class="wp-block-[^"]*"/gi, '');
-  content = content.replace(/class="is-layout-[^"]*"/gi, '');
-  content = content.replace(/class="wp-container-[^"]*"/gi, '');
-  content = content.replace(/class="has-text-align-[^"]*"/gi, '');
-  content = content.replace(/class="wp-element-button"/gi, '');
+  // Step 22: Update internal links to use relative paths
+  content = content.replace(/href="https:\/\/www\.readysignal\.com\/([^"]+)"/gi, (match, path) => {
+    // Convert to relative path
+    return `href="/${path}"`;
+  });
 
-  // Remove figure/image wrappers with empty style attributes
-  content = content.replace(/style="flex-basis:\d+%"/gi, '');
-  content = content.replace(/<div[^>]*style=""[^>]*>/gi, '');
+  // Step 23: Convert strong headings to proper h3
+  content = content.replace(/<p><strong>([^<]{20,})<\/strong>\s*<\/p>/gi, (match, text) => {
+    // If it looks like a heading (ends with common patterns), convert to h3
+    if (text.match(/[?:]$/) || text.length < 100) {
+      return `<h3>${text}</h3>`;
+    }
+    return match;
+  });
 
-  // Clean up empty spans
-  content = content.replace(/<span[^>]*>\s*<\/span>/gi, '');
-
-  // Remove multiple consecutive whitespace/newlines
-  content = content.replace(/\n\s*\n\s*\n/g, '\n\n');
-  content = content.replace(/>\s+</g, '>\n<');
-
-  // Trim whitespace
-  content = content.trim();
-
-  // Final cleanup - remove any remaining empty elements
+  // Step 24: Remove empty paragraphs and clean whitespace
   content = content.replace(/<p>\s*<\/p>/gi, '');
+  content = content.replace(/<p>\s*<br\s*\/?>\s*<\/p>/gi, '');
   content = content.replace(/<ul>\s*<\/ul>/gi, '');
   content = content.replace(/<ol>\s*<\/ol>/gi, '');
-  content = content.replace(/<div>\s*<\/div>/gi, '');
+
+  // Step 25: Add download cards back if we found any
+  if (downloads.length > 0) {
+    const uniqueDownloads = [...new Map(downloads.map(d => [d.url, d])).values()];
+    const downloadHtml = uniqueDownloads.map(d => 
+      `<div class="download-card">
+        <a href="${d.url}" target="_blank" rel="noopener noreferrer" class="download-button">${d.text}</a>
+      </div>`
+    ).join('\n');
+    
+    // Find a good place to insert (after first image or first few paragraphs)
+    const paragraphs = content.split('</p>');
+    if (paragraphs.length > 3) {
+      // Insert after 3rd paragraph
+      paragraphs.splice(3, 0, `</p>\n${downloadHtml}`);
+      content = paragraphs.join('</p>');
+    } else {
+      content += '\n' + downloadHtml;
+    }
+  }
+
+  // Step 26: Final whitespace cleanup
+  content = content.replace(/\n\s*\n\s*\n/g, '\n\n');
+  content = content.replace(/>\s+</g, '>\n<');
+  content = content.trim();
 
   return content;
 }
@@ -157,7 +393,8 @@ function determineCategory(categories) {
     'News': 'News',
     'Case Studies': 'Case Studies',
     'Tutorials': 'Tutorials',
-    'Documentation': 'Documentation'
+    'Documentation': 'Documentation',
+    'Help': 'Help'
   };
   
   return categoryMap[categories[0]] || categories[0];
@@ -193,9 +430,11 @@ function copyImages(slug, articleDir) {
   
   const targetDir = path.join(BLOG_IMAGES_DIR, slug);
   
-  if (!fs.existsSync(targetDir)) {
-    fs.mkdirSync(targetDir, { recursive: true });
+  // Clean existing directory
+  if (fs.existsSync(targetDir)) {
+    fs.rmSync(targetDir, { recursive: true });
   }
+  fs.mkdirSync(targetDir, { recursive: true });
   
   const images = fs.readdirSync(imagesDir);
   
@@ -219,11 +458,22 @@ function copyImages(slug, articleDir) {
 
 /**
  * Get the first significant image from content for featured image
+ * Skips icon images like excel.png, download.png
  */
 function extractFeaturedImage(content, slug) {
-  const imgMatch = content.match(/<img[^>]*src="([^"]+)"[^>]*>/i);
-  if (imgMatch && imgMatch[1]) {
-    const src = imgMatch[1];
+  // Find all images in content
+  const imgRegex = /<img[^>]*src="([^"]+)"[^>]*>/gi;
+  let match;
+  
+  while ((match = imgRegex.exec(content)) !== null) {
+    const src = match[1];
+    const filename = path.basename(src);
+    
+    // Skip icon images
+    if (isIconImage(filename)) {
+      continue;
+    }
+    
     // If it's a local path, return it
     if (src.startsWith('/blog-images/')) {
       return src;
@@ -233,6 +483,7 @@ function extractFeaturedImage(content, slug) {
       return `/blog-images/${slug}/${src.replace('images/', '')}`;
     }
   }
+  
   return undefined;
 }
 
@@ -341,16 +592,23 @@ export const blogArticles: BlogArticle[] = ${JSON.stringify(articles, null, 2)};
 `;
 
   fs.writeFileSync(OUTPUT_FILE, output, 'utf-8');
-  console.log(`\\nGenerated ${OUTPUT_FILE} with ${articles.length} articles`);
+  console.log(`\nGenerated ${OUTPUT_FILE} with ${articles.length} articles`);
 }
 
 /**
  * Main migration function
  */
 async function migrate() {
-  console.log('Starting blog migration...\\n');
+  console.log('Starting blog migration v2.0...\n');
   console.log(`Source: ${BLOG_SOURCE_DIR}`);
-  console.log(`Output: ${OUTPUT_FILE}\\n`);
+  console.log(`Output: ${OUTPUT_FILE}\n`);
+  
+  // Clean existing blog images
+  if (fs.existsSync(BLOG_IMAGES_DIR)) {
+    console.log('Cleaning existing blog-images directory...');
+    fs.rmSync(BLOG_IMAGES_DIR, { recursive: true });
+    fs.mkdirSync(BLOG_IMAGES_DIR, { recursive: true });
+  }
   
   // Get all article directories
   const articleDirs = fs.readdirSync(BLOG_SOURCE_DIR)
@@ -359,7 +617,7 @@ async function migrate() {
       return fs.statSync(fullPath).isDirectory();
     });
   
-  console.log(`Found ${articleDirs.length} article directories\\n`);
+  console.log(`Found ${articleDirs.length} article directories\n`);
   
   const articles = [];
   
@@ -379,9 +637,8 @@ async function migrate() {
   // Generate output file
   generateOutputFile(articles);
   
-  console.log(`\\nMigration complete! ${articles.length} articles processed.`);
+  console.log(`\nMigration complete! ${articles.length} articles processed.`);
 }
 
 // Run migration
 migrate().catch(console.error);
-
