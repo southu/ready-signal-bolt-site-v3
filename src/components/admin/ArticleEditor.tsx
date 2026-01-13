@@ -1,9 +1,10 @@
 import { useState, useEffect, useMemo } from 'react';
-import { ArrowLeft, Save, Eye, Send, FileText, X } from 'lucide-react';
+import { ArrowLeft, Save, Eye, Send, FileText, X, Sparkles } from 'lucide-react';
 import { Article, generateSlug, isSlugUnique } from '../../lib/supabaseArticles';
 import RichTextEditor from './RichTextEditor';
 import AIEnhanceButton from './AIEnhanceButton';
 import SEOAnalyzer from './SEOAnalyzer';
+import AIArticleGenerator from './AIArticleGenerator';
 
 interface ArticleEditorProps {
   article?: Article | null;
@@ -41,8 +42,9 @@ export default function ArticleEditor({
     ...article,
   });
   const [slugError, setSlugError] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<'edit' | 'preview' | 'seo'>('edit');
+  const [activeTab, setActiveTab] = useState<'generate' | 'edit' | 'preview' | 'seo'>(isEditing ? 'edit' : 'generate');
   const [tagInput, setTagInput] = useState('');
+  const [dataSuggestions, setDataSuggestions] = useState<string[]>([]);
 
   // Update form data when article prop changes
   useEffect(() => {
@@ -144,6 +146,29 @@ export default function ArticleEditor({
     return existingTags.filter(t => !formData.tags.includes(t)).slice(0, 10);
   }, [existingTags, formData.tags]);
 
+  // Handle AI-generated article
+  const handleGeneratedArticle = (generated: {
+    title: string;
+    slug: string;
+    description: string;
+    content: string;
+    category: string;
+    tags: string[];
+    dataSuggestions: string[];
+  }) => {
+    setFormData(prev => ({
+      ...prev,
+      title: generated.title,
+      slug: generated.slug,
+      description: generated.description,
+      content: generated.content,
+      category: generated.category,
+      tags: generated.tags,
+    }));
+    setDataSuggestions(generated.dataSuggestions);
+    setActiveTab('edit');
+  };
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -185,6 +210,20 @@ export default function ArticleEditor({
 
       {/* Tabs */}
       <div className="flex gap-2 border-b border-gray-200">
+        {!isEditing && (
+          <button
+            type="button"
+            onClick={() => setActiveTab('generate')}
+            className={`flex items-center gap-2 px-4 py-3 font-medium border-b-2 transition-colors ${
+              activeTab === 'generate'
+                ? 'border-amber-500 text-amber-600'
+                : 'border-transparent text-gray-600 hover:text-gray-900'
+            }`}
+          >
+            <Sparkles className="w-4 h-4" />
+            AI Generate
+          </button>
+        )}
         <button
           type="button"
           onClick={() => setActiveTab('edit')}
@@ -221,6 +260,14 @@ export default function ArticleEditor({
           SEO Analysis
         </button>
       </div>
+
+      {/* AI Generate Tab */}
+      {activeTab === 'generate' && (
+        <AIArticleGenerator
+          onGenerated={handleGeneratedArticle}
+          onCancel={onCancel}
+        />
+      )}
 
       {/* Edit Tab */}
       {activeTab === 'edit' && (
@@ -475,6 +522,26 @@ export default function ArticleEditor({
                 </div>
               )}
             </div>
+
+            {/* AI Data Suggestions */}
+            {dataSuggestions.length > 0 && (
+              <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl border border-blue-200 p-6">
+                <label className="block text-sm font-semibold text-blue-800 mb-3">
+                  External Data Suggestions
+                </label>
+                <p className="text-xs text-blue-600 mb-3">
+                  Consider adding these data sources to strengthen your article:
+                </p>
+                <ul className="space-y-2">
+                  {dataSuggestions.map((suggestion, i) => (
+                    <li key={i} className="flex items-start gap-2 text-sm text-blue-700">
+                      <span className="text-blue-400 mt-0.5">*</span>
+                      {suggestion}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         </div>
       )}
