@@ -9,7 +9,7 @@ export default function DataCatalog() {
     <>
       <SEO
         title="Data Catalog | Ready Signal"
-        description="Thousands of data sources to enrich your forecasts. Centralized data repository continuously updated and easy to integrate."
+        description="Over 40,000 data sources and 3 million+ features to enrich your forecasts. Centralized data repository continuously updated and easy to integrate."
       />
       <Navbar />
 
@@ -22,7 +22,7 @@ export default function DataCatalog() {
                 Data Catalog
               </h1>
               <p className="text-xl md:text-2xl text-gray-600 mb-8">
-                Thousands of Data Sources to Enrich Your Forecasts
+                Over 40,000 Data Sources & 3 Million+ Features to Enrich Your Forecasts
               </p>
               <p className="text-lg text-gray-600 mb-12">
                 Centralized Data Repository Continuously Updated and Easy to Integrate
@@ -44,7 +44,7 @@ export default function DataCatalog() {
             <div className="text-center mb-16">
               <h2 className="text-4xl font-bold mb-4">Comprehensive Data Coverage</h2>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                Access thousands of curated data sources across multiple domains to enhance your forecasting accuracy
+                Access over 40,000 curated data sources with 3 million+ features across multiple domains to enhance your forecasting accuracy
               </p>
             </div>
 
@@ -240,7 +240,7 @@ export default function DataCatalog() {
               Ready to Explore Our Data Catalog?
             </h2>
             <p className="text-xl mb-8 text-amber-50">
-              Start enriching your forecasts with thousands of curated data sources today
+              Start enriching your forecasts with over 40,000 data sources and 3 million+ features today
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link

@@ -15,7 +15,7 @@ function Platform() {
     <div className="min-h-screen bg-white">
       <SEO
         title="Signal Discovery Engine | Automate Feature Engineering & Selection"
-        description="Eliminate 80% of data wrangling time. Instantly test 40,000+ economic and weather features for causality. Pipe results directly into Python, R, or Databricks."
+        description="Eliminate 80% of data wrangling time. Instantly test 3 million+ features from 40,000+ data sources for causality. Pipe results directly into Python, R, or Databricks."
       />
       <Navbar />
 

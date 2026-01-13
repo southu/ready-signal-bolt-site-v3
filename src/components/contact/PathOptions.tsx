@@ -34,7 +34,7 @@ const PathOptions = () => {
                 <ul className="space-y-3">
                   <li className="flex items-start space-x-3">
                     <CheckCircle className="w-6 h-6 text-rs-cyan flex-shrink-0 mt-0.5" />
-                    <span className="text-rs-dark">Full access to 40k+ Data Catalog.</span>
+                    <span className="text-rs-dark">Full access to 3M+ features from 40k+ data sources.</span>
                   </li>
                   <li className="flex items-start space-x-3">
                     <CheckCircle className="w-6 h-6 text-rs-cyan flex-shrink-0 mt-0.5" />

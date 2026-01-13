@@ -58,8 +58,8 @@ const HeroSection = () => {
 
             <div className="flex items-center space-x-8 pt-4">
               <div>
-                <div className="text-3xl font-bold text-rs-dark">40,000+</div>
-                <div className="text-sm text-rs-dark opacity-75">External Signals</div>
+                <div className="text-3xl font-bold text-rs-dark">3M+</div>
+                <div className="text-sm text-rs-dark opacity-75">Data Features</div>
               </div>
               <div className="h-12 w-px bg-gray-300"></div>
               <div>

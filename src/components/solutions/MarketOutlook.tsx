@@ -44,7 +44,7 @@ const MarketOutlook = () => {
             Know What's About to Happen
           </h2>
           <p className="text-lg text-rs-dark opacity-75 max-w-3xl mx-auto">
-            Our Market Outlook service continuously analyzes 40,000+ economic signals to predict market
+            Our Market Outlook service continuously analyzes 3 million+ features from 40,000+ data sources to predict market
             conditions that will impact your business. Stay ahead of economic shifts, labor market changes,
             supply chain disruptions, and demand fluctuations before they affect your bottom line.
           </p>
@@ -79,9 +79,9 @@ const MarketOutlook = () => {
               <div className="space-y-4">
                 {[
                   {
-                    label: 'Economic Indicators',
-                    value: '40,000+',
-                    description: 'Signals monitored continuously',
+                    label: 'Data Features',
+                    value: '3 Million+',
+                    description: 'Features monitored continuously',
                   },
                   {
                     label: 'Forecast Horizon',

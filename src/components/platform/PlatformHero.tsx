@@ -29,7 +29,7 @@ const PlatformHero = () => {
             </h1>
 
             <p className="text-xl text-gray-300">
-              The world's first Signal Discovery Engine that instantly tests 40,000+ external factors against your target variable.
+              The world's first Signal Discovery Engine that instantly tests 3 million+ features from 40,000+ data sources against your target variable.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
@@ -82,7 +82,7 @@ const PlatformHero = () => {
                   <span className="text-green-400">$</span> signals = rs.discover(target='sales.csv')
                 </div>
                 <div className="text-rs-cyan mt-4">
-                  ✓ Analyzing 40,000+ external signals...
+                  ✓ Analyzing 3M+ features from 40,000+ sources...
                 </div>
                 <div className="text-rs-yellow">
                   ✓ Found 12 causal predictors

@@ -16,7 +16,7 @@ const PricingFAQ = () => {
     {
       question: 'Do you charge for data consumption?',
       answer:
-        'No. Unlike other providers who charge by the "row" or "API call," we offer flat-rate access to our 40k+ signal catalog so you can experiment without fear of overages.',
+        'No. Unlike other providers who charge by the "row" or "API call," we offer flat-rate access to our 3 million+ features from 40,000+ data sources so you can experiment without fear of overages.',
     },
   ];
 

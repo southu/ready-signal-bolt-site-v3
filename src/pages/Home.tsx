@@ -17,7 +17,7 @@ function Home() {
     <div className="min-h-screen bg-white">
       <SEO
         title="Ready Signal | The AI Signal Discovery Engine for Precision Forecasting"
-        description="Stop reacting. Ready Signal is the only platform that validates Granger Causality between your sales and 40k+ external economic signals. Start predicting today."
+        description="Stop reacting. Ready Signal validates Granger Causality across 40,000+ data sources and 3 million+ features. Start predicting today."
       />
       <Navbar />
 

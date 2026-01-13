@@ -18,7 +18,7 @@ const IntegrationsHero = () => {
 
             <p className="text-xl text-gray-700 mb-8 leading-relaxed">
               No new dashboards to learn. No rip-and-replace. Just a high-performance pipe delivering{' '}
-              <span className="font-semibold text-rs-cyan">40,000+ signals</span> directly into your existing stack.
+              <span className="font-semibold text-rs-cyan">3 million+ features from 40,000+ data sources</span> directly into your existing stack.
             </p>
 
             <div className="flex flex-wrap gap-4">

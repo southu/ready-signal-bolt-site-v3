@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Cloud, Database, Lock, Map } from 'lucide-react';
+import { Cloud, Database, Lock, Map, AlertTriangle } from 'lucide-react';
 
 const StepIngest = () => {
   return (
@@ -61,7 +61,7 @@ const StepIngest = () => {
                 <div>
                   <p className="font-medium text-rs-dark">The Catalog</p>
                   <p className="text-sm text-rs-dark opacity-75">
-                    We maintain a live, pre-normalized data lake of 40,000+ signals.
+                    We maintain a live, pre-normalized data lake of 3 million+ features from 40,000+ data sources.
                   </p>
                 </div>
               </div>

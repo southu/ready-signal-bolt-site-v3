@@ -44,7 +44,7 @@ const CoreCapabilities = () => {
 
             <div className="space-y-6">
               <div>
-                <h4 className="font-bold text-rs-dark mb-3">40,000+ Pre-Normalized Signals</h4>
+                <h4 className="font-bold text-rs-dark mb-3">3 Million+ Features from 40,000+ Data Sources</h4>
                 <p className="text-rs-dark opacity-75 mb-6">
                   We maintain a live, clean catalog of the world's data. You never have to scrape a government website again.
                 </p>

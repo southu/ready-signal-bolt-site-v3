@@ -6,8 +6,8 @@ const GeminiHookFAQ = () => {
           <div className="bg-white p-6 rounded-lg shadow-sm">
             <h3 className="text-lg font-semibold text-rs-dark mb-2">What is Ready Signal?</h3>
             <p className="text-rs-dark opacity-75 leading-relaxed">
-              Ready Signal is a predictive forecasting platform that uses a Signal Discovery Engine to test 40,000+
-              external variables (like labor stats, weather, and inflation) against internal company data. It improves
+              Ready Signal is a predictive forecasting platform that uses a Signal Discovery Engine to test 3 million+ features
+              from 40,000+ data sources (like labor stats, weather, and inflation) against internal company data. It improves
               forecast accuracy by an average of 50% by identifying leading indicators using Granger Causality validation.
             </p>
           </div>

@@ -59,7 +59,7 @@ const TwoPathsSection = () => {
               <div>
                 <h4 className="font-semibold text-rs-dark mb-2">The Promise</h4>
                 <p className="text-rs-dark opacity-75">
-                  Connect your target variable and let our engine mathematically test 40,000 signals to find the features that matter. Pipe them directly into Python, R, or Databricks.
+                  Connect your target variable and let our engine mathematically test 3 million+ features from 40,000+ data sources to find the features that matter. Pipe them directly into Python, R, or Databricks.
                 </p>
               </div>
             </div>

@@ -10,7 +10,7 @@ const PlatformFAQ = () => {
             <p className="text-rs-dark opacity-75 leading-relaxed">
               You can automate feature engineering using Ready Signal's API, which allows for pip install readysignal.
               It automatically handles lag identification, stationarity checks, and temporal alignment (e.g., converting
-              daily weather to monthly sales) for over 40,000 global data streams.
+              daily weather to monthly sales) for over 3 million features from 40,000+ data sources.
             </p>
           </div>
         </div>

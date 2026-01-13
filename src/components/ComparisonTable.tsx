@@ -13,7 +13,7 @@ const ComparisonTable = () => {
       feature: 'Data Source',
       consulting: 'Manual Scraping (Slow)',
       automl: 'Internal Data Only (Blind)',
-      readySignal: '40k+ Live External Signals',
+      readySignal: '3M+ Features from 40k+ Sources',
     },
     {
       feature: 'Transparency',
