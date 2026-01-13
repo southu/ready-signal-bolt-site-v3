@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Cloud, Database, Lock, Map, AlertTriangle } from 'lucide-react';
+import { Cloud, Database, Lock, Map } from 'lucide-react';
 
 const StepIngest = () => {
   return (
