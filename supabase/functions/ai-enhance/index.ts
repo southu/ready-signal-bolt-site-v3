@@ -1,0 +1,238 @@
+// Supabase Edge Function: AI Enhancement with GPT-5
+// 
+// This function handles AI-powered content enhancement for the blog admin.
+// It uses OpenAI's GPT-5 model for:
+// - Title enhancement
+// - Description enhancement
+// - Content enhancement
+// - SEO optimization and analysis
+
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
+
+const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
+
+// CORS headers for browser requests
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+};
+
+interface EnhanceRequest {
+  type: 'title' | 'description' | 'content' | 'seo';
+  value: string;
+  context?: {
+    title?: string;
+    description?: string;
+    content?: string;
+  };
+}
+
+async function callGPT5(systemPrompt: string, userPrompt: string): Promise<string> {
+  if (!OPENAI_API_KEY) {
+    throw new Error('OpenAI API key not configured');
+  }
+
+  const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${OPENAI_API_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      model: 'gpt-5', // Using GPT-5 as specified
+      messages: [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: userPrompt },
+      ],
+      temperature: 0.7,
+      max_tokens: 2000,
+    }),
+  });
+
+  if (!response.ok) {
+    const error = await response.text();
+    console.error('OpenAI API error:', error);
+    throw new Error(`OpenAI API error: ${response.status}`);
+  }
+
+  const data = await response.json();
+  return data.choices[0]?.message?.content || '';
+}
+
+async function enhanceTitle(title: string): Promise<string> {
+  const systemPrompt = `You are an expert copywriter specializing in B2B data analytics and forecasting content.
+Your task is to improve article titles to be more engaging, click-worthy, and SEO-friendly.
+Guidelines:
+- Keep titles under 60 characters for SEO
+- Make them compelling and action-oriented
+- Include relevant keywords naturally
+- Maintain professional B2B tone
+- Don't use clickbait or sensationalism
+Return ONLY the improved title, nothing else.`;
+
+  const userPrompt = `Improve this article title for a B2B data analytics company: "${title}"`;
+  
+  return await callGPT5(systemPrompt, userPrompt);
+}
+
+async function enhanceDescription(description: string, context?: { title?: string; content?: string }): Promise<string> {
+  const systemPrompt = `You are an SEO expert specializing in B2B content for data analytics companies.
+Your task is to create compelling meta descriptions that:
+- Are between 150-160 characters
+- Include relevant keywords naturally
+- Have a clear value proposition
+- Encourage clicks without being clickbait
+- Summarize the content accurately
+Return ONLY the improved description, nothing else.`;
+
+  const contextInfo = context ? `
+Title: ${context.title || 'Not provided'}
+Content preview: ${context.content?.substring(0, 500) || 'Not provided'}` : '';
+
+  const userPrompt = `Improve this meta description for a B2B data analytics article:
+Current description: "${description}"
+${contextInfo}`;
+  
+  return await callGPT5(systemPrompt, userPrompt);
+}
+
+async function enhanceContent(content: string, context?: { title?: string; description?: string }): Promise<string> {
+  const systemPrompt = `You are an expert editor for B2B data analytics and forecasting content.
+Your task is to improve the article content for:
+- Better readability and flow
+- Clearer explanations
+- Professional B2B tone
+- Proper HTML formatting
+- Grammar and style improvements
+- Logical structure with clear headings
+
+Keep the same HTML structure but improve the text quality.
+Return ONLY the improved HTML content, nothing else.`;
+
+  const contextInfo = context ? `
+Title: ${context.title || 'Not provided'}
+Description: ${context.description || 'Not provided'}` : '';
+
+  const userPrompt = `Improve this article content:
+${contextInfo}
+
+Content:
+${content}`;
+  
+  return await callGPT5(systemPrompt, userPrompt);
+}
+
+interface SEOAnalysis {
+  score: number;
+  suggestedTitle: string;
+  suggestedDescription: string;
+  keywords: string[];
+  improvements: string[];
+}
+
+async function analyzeSEO(content: string, context?: { title?: string; description?: string }): Promise<SEOAnalysis> {
+  const systemPrompt = `You are an SEO expert analyzing B2B data analytics content.
+Analyze the content and provide:
+1. An SEO score (0-100)
+2. A suggested optimized title (under 60 chars)
+3. A suggested meta description (150-160 chars)
+4. 5-7 target keywords
+5. 3-5 specific improvements
+
+Respond in valid JSON format ONLY:
+{
+  "score": 75,
+  "suggestedTitle": "...",
+  "suggestedDescription": "...",
+  "keywords": ["keyword1", "keyword2"],
+  "improvements": ["improvement1", "improvement2"]
+}`;
+
+  const userPrompt = `Analyze this article for SEO:
+Title: ${context?.title || 'Not provided'}
+Description: ${context?.description || 'Not provided'}
+Content: ${content.substring(0, 3000)}`;
+  
+  const response = await callGPT5(systemPrompt, userPrompt);
+  
+  try {
+    // Extract JSON from response
+    const jsonMatch = response.match(/\{[\s\S]*\}/);
+    if (jsonMatch) {
+      return JSON.parse(jsonMatch[0]);
+    }
+    throw new Error('No valid JSON found in response');
+  } catch (err) {
+    console.error('Failed to parse SEO analysis:', err);
+    return {
+      score: 50,
+      suggestedTitle: context?.title || '',
+      suggestedDescription: context?.description || '',
+      keywords: [],
+      improvements: ['Unable to analyze content. Please try again.'],
+    };
+  }
+}
+
+serve(async (req) => {
+  // Handle CORS preflight
+  if (req.method === 'OPTIONS') {
+    return new Response('ok', { headers: corsHeaders });
+  }
+
+  try {
+    const { type, value, context } = await req.json() as EnhanceRequest;
+
+    if (!type) {
+      return new Response(
+        JSON.stringify({ error: 'Missing enhancement type' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    let result: string | SEOAnalysis;
+
+    switch (type) {
+      case 'title':
+        result = await enhanceTitle(value);
+        return new Response(
+          JSON.stringify({ enhanced: result }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+
+      case 'description':
+        result = await enhanceDescription(value, context);
+        return new Response(
+          JSON.stringify({ enhanced: result }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+
+      case 'content':
+        result = await enhanceContent(value, context);
+        return new Response(
+          JSON.stringify({ enhanced: result }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+
+      case 'seo':
+        result = await analyzeSEO(value, context);
+        return new Response(
+          JSON.stringify(result),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+
+      default:
+        return new Response(
+          JSON.stringify({ error: `Unknown enhancement type: ${type}` }),
+          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+    }
+  } catch (err) {
+    console.error('Enhancement error:', err);
+    return new Response(
+      JSON.stringify({ error: err.message || 'Enhancement failed' }),
+      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+    );
+  }
+});
+

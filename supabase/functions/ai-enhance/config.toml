@@ -1,0 +1,6 @@
+# Configuration for ai-enhance edge function
+# Make sure to set OPENAI_API_KEY in your Supabase project secrets
+
+[function]
+verify_jwt = false  # Allow unauthenticated calls for simplicity (consider securing in production)
+
