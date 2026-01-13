@@ -1,20 +1,21 @@
-// Supabase Edge Function: AI Enhancement with GPT-5
-// 
+// Supabase Edge Function: AI Enhancement with GPT-4o
+//
 // This function handles AI-powered content enhancement for the blog admin.
-// It uses OpenAI's GPT-5 model for:
+// It uses OpenAI's GPT-4o model for:
 // - Title enhancement
 // - Description enhancement
 // - Content enhancement
 // - SEO optimization and analysis
 
-import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
+import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 
 const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
 
 // CORS headers for browser requests
 const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Client-Info, Apikey",
 };
 
 interface EnhanceRequest {
@@ -27,7 +28,7 @@ interface EnhanceRequest {
   };
 }
 
-async function callGPT5(systemPrompt: string, userPrompt: string): Promise<string> {
+async function callGPT4o(systemPrompt: string, userPrompt: string, maxTokens: number = 2000): Promise<string> {
   if (!OPENAI_API_KEY) {
     throw new Error('OpenAI API key not configured');
   }
@@ -39,13 +40,13 @@ async function callGPT5(systemPrompt: string, userPrompt: string): Promise<strin
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      model: 'gpt-5', // Using GPT-5 as specified
+      model: 'gpt-4o',
       messages: [
         { role: 'system', content: systemPrompt },
         { role: 'user', content: userPrompt },
       ],
       temperature: 0.7,
-      max_tokens: 2000,
+      max_tokens: maxTokens,
     }),
   });
 
@@ -71,8 +72,8 @@ Guidelines:
 Return ONLY the improved title, nothing else.`;
 
   const userPrompt = `Improve this article title for a B2B data analytics company: "${title}"`;
-  
-  return await callGPT5(systemPrompt, userPrompt);
+
+  return await callGPT4o(systemPrompt, userPrompt, 1000);
 }
 
 async function enhanceDescription(description: string, context?: { title?: string; content?: string }): Promise<string> {
@@ -92,8 +93,8 @@ Content preview: ${context.content?.substring(0, 500) || 'Not provided'}` : '';
   const userPrompt = `Improve this meta description for a B2B data analytics article:
 Current description: "${description}"
 ${contextInfo}`;
-  
-  return await callGPT5(systemPrompt, userPrompt);
+
+  return await callGPT4o(systemPrompt, userPrompt, 1000);
 }
 
 async function enhanceContent(content: string, context?: { title?: string; description?: string }): Promise<string> {
@@ -118,8 +119,8 @@ ${contextInfo}
 
 Content:
 ${content}`;
-  
-  return await callGPT5(systemPrompt, userPrompt);
+
+  return await callGPT4o(systemPrompt, userPrompt, 4000);
 }
 
 interface SEOAnalysis {
@@ -152,8 +153,8 @@ Respond in valid JSON format ONLY:
 Title: ${context?.title || 'Not provided'}
 Description: ${context?.description || 'Not provided'}
 Content: ${content.substring(0, 3000)}`;
-  
-  const response = await callGPT5(systemPrompt, userPrompt);
+
+  const response = await callGPT4o(systemPrompt, userPrompt, 2000);
   
   try {
     // Extract JSON from response
@@ -174,13 +175,16 @@ Content: ${content.substring(0, 3000)}`;
   }
 }
 
-serve(async (req) => {
-  // Handle CORS preflight
-  if (req.method === 'OPTIONS') {
-    return new Response('ok', { headers: corsHeaders });
-  }
-
+Deno.serve(async (req: Request) => {
   try {
+    // Handle CORS preflight
+    if (req.method === 'OPTIONS') {
+      return new Response(null, {
+        status: 200,
+        headers: corsHeaders,
+      });
+    }
+
     const { type, value, context } = await req.json() as EnhanceRequest;
 
     if (!type) {

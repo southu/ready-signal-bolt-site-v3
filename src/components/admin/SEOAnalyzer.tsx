@@ -338,7 +338,7 @@ export default function SEOAnalyzer({
           <div className="text-center py-12">
             <Sparkles className="w-12 h-12 text-gray-300 mx-auto mb-4" />
             <p className="text-gray-500">
-              Click "Analyze with AI" to get GPT-5 powered SEO recommendations
+              Click "Analyze with AI" to get AI-powered SEO recommendations
             </p>
           </div>
         )}
