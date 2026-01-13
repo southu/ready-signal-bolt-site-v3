@@ -1,4 +1,4 @@
-import { Linkedin, Twitter, Facebook, Mail } from 'lucide-react';
+import { Linkedin, Twitter, Youtube, Mail } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import logo from '../assets/images/ready-signal-full-logo.png';
 
@@ -17,16 +17,38 @@ const Footer = () => {
               Stop Reacting. Start Predicting.
             </p>
             <div className="flex space-x-4">
-              <a href="#linkedin" className="text-gray-300 hover:text-rs-cyan transition-colors">
+              <a
+                href="https://www.linkedin.com/company/ready-signal"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-300 hover:text-rs-cyan transition-colors"
+                aria-label="LinkedIn"
+              >
                 <Linkedin className="w-5 h-5" />
               </a>
-              <a href="#twitter" className="text-gray-300 hover:text-rs-cyan transition-colors">
+              <a
+                href="https://x.com/ready_signal"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-300 hover:text-rs-cyan transition-colors"
+                aria-label="X (formerly Twitter)"
+              >
                 <Twitter className="w-5 h-5" />
               </a>
-              <a href="#facebook" className="text-gray-300 hover:text-rs-cyan transition-colors">
-                <Facebook className="w-5 h-5" />
+              <a
+                href="https://www.youtube.com/@readysignal6698"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-300 hover:text-rs-cyan transition-colors"
+                aria-label="YouTube"
+              >
+                <Youtube className="w-5 h-5" />
               </a>
-              <a href="#email" className="text-gray-300 hover:text-rs-cyan transition-colors">
+              <a
+                href="mailto:info@readysignal.com"
+                className="text-gray-300 hover:text-rs-cyan transition-colors"
+                aria-label="Email"
+              >
                 <Mail className="w-5 h-5" />
               </a>
             </div>
