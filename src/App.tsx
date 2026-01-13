@@ -20,6 +20,13 @@ import APIDocs from './pages/APIDocs';
 import APIDocsPython from './pages/APIDocsPython';
 import APIDocsR from './pages/APIDocsR';
 import HelpCenter from './pages/HelpCenter';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
+import DataRobot from './pages/DataRobot';
+import DataEconomic from './pages/DataEconomic';
+import DataWeather from './pages/DataWeather';
+import DataDemographic from './pages/DataDemographic';
+import DataPublicHealth from './pages/DataPublicHealth';
 import CPGRetail from './pages/industries/CPGRetail';
 import Manufacturing from './pages/industries/Manufacturing';
 import PrivateEquity from './pages/industries/PrivateEquity';
@@ -76,6 +83,28 @@ function App() {
           <Route path="/ai-bi-consulting/" element={<AIBIConsulting />} />
           <Route path="/help-center" element={<HelpCenter />} />
           <Route path="/help-center/" element={<HelpCenter />} />
+
+          {/* Legal pages */}
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/privacy-policy/" element={<PrivacyPolicy />} />
+          <Route path="/terms-of-use" element={<TermsOfService />} />
+          <Route path="/terms-of-use/" element={<TermsOfService />} />
+          <Route path="/terms-of-service" element={<TermsOfService />} />
+          <Route path="/terms-of-service/" element={<TermsOfService />} />
+
+          {/* DataRobot AI Accelerator */}
+          <Route path="/datarobot" element={<DataRobot />} />
+          <Route path="/datarobot/" element={<DataRobot />} />
+
+          {/* Data category pages */}
+          <Route path="/data-economic" element={<DataEconomic />} />
+          <Route path="/data-economic/" element={<DataEconomic />} />
+          <Route path="/data-weather" element={<DataWeather />} />
+          <Route path="/data-weather/" element={<DataWeather />} />
+          <Route path="/data-demographic" element={<DataDemographic />} />
+          <Route path="/data-demographic/" element={<DataDemographic />} />
+          <Route path="/public-health" element={<DataPublicHealth />} />
+          <Route path="/public-health/" element={<DataPublicHealth />} />
           
           {/* Industry pages */}
           <Route path="/industries/cpg-retail" element={<CPGRetail />} />

@@ -122,12 +122,12 @@ const Footer = () => {
               © {currentYear} Ready Signal. All rights reserved.
             </p>
             <div className="flex space-x-6">
-              <a href="https://www.readysignal.com/privacy-policy/" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-rs-cyan transition-colors text-sm">
+              <Link to="/privacy-policy/" className="text-gray-300 hover:text-rs-cyan transition-colors text-sm">
                 Privacy Policy
-              </a>
-              <a href="https://www.readysignal.com/terms-of-use/" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-rs-cyan transition-colors text-sm">
+              </Link>
+              <Link to="/terms-of-use/" className="text-gray-300 hover:text-rs-cyan transition-colors text-sm">
                 Terms of Service
-              </a>
+              </Link>
               <a href="#cookies" className="text-gray-300 hover:text-rs-cyan transition-colors text-sm">
                 Cookie Policy
               </a>
