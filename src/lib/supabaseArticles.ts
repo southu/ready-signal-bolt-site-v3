@@ -11,11 +11,11 @@ export interface DBArticle {
   modified_date: string | null;
   category: string;
   tags: string[];
-  image: string | null;
+  featured_image: string | null;
   content: string;
-  status: 'draft' | 'published';
+  excerpt: string | null;
+  is_published: boolean;
   created_at: string;
-  updated_at: string;
 }
 
 // Frontend article type (for compatibility with existing components)
@@ -42,20 +42,20 @@ export function dbToFrontend(dbArticle: DBArticle): Article {
     title: dbArticle.title,
     description: dbArticle.description || '',
     author: dbArticle.author,
-    publishedDate: dbArticle.published_date,
-    modifiedDate: dbArticle.modified_date || undefined,
+    publishedDate: dbArticle.published_date ? dbArticle.published_date.split('T')[0] : new Date().toISOString().split('T')[0],
+    modifiedDate: dbArticle.modified_date ? dbArticle.modified_date.split('T')[0] : undefined,
     category: dbArticle.category,
     tags: dbArticle.tags || [],
-    image: dbArticle.image || undefined,
+    image: dbArticle.featured_image || undefined,
     content: dbArticle.content,
-    status: dbArticle.status,
+    status: dbArticle.is_published ? 'published' : 'draft',
   };
 }
 
 // Convert frontend format to database format
 export function frontendToDb(article: Partial<Article>): Partial<DBArticle> {
   const dbArticle: Partial<DBArticle> = {};
-  
+
   if (article.slug !== undefined) dbArticle.slug = article.slug;
   if (article.title !== undefined) dbArticle.title = article.title;
   if (article.description !== undefined) dbArticle.description = article.description;
@@ -64,10 +64,10 @@ export function frontendToDb(article: Partial<Article>): Partial<DBArticle> {
   if (article.modifiedDate !== undefined) dbArticle.modified_date = article.modifiedDate;
   if (article.category !== undefined) dbArticle.category = article.category;
   if (article.tags !== undefined) dbArticle.tags = article.tags;
-  if (article.image !== undefined) dbArticle.image = article.image || null;
+  if (article.image !== undefined) dbArticle.featured_image = article.image || null;
   if (article.content !== undefined) dbArticle.content = article.content;
-  if (article.status !== undefined) dbArticle.status = article.status;
-  
+  if (article.status !== undefined) dbArticle.is_published = article.status === 'published';
+
   return dbArticle;
 }
 
