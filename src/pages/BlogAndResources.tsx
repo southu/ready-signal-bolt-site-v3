@@ -3,32 +3,31 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
-import { BookOpen, TrendingUp, FileText, Search, ChevronLeft, ChevronRight } from 'lucide-react';
-import { blogArticles, getRecentArticles } from '../data/blogArticles';
+import { BookOpen, TrendingUp, FileText, Search, ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
+import { usePublishedArticles } from '../hooks/useArticles';
 
 const ARTICLES_PER_PAGE = 12;
 
-// Get unique categories from articles
-const allCategories = [...new Set(blogArticles.map(a => a.category))];
-
 export default function BlogAndResources() {
+  const { articles, loading } = usePublishedArticles();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Filter articles based on search and category
+  const allCategories = useMemo(() => [...new Set(articles.map(a => a.category))], [articles]);
+
   const filteredArticles = useMemo(() => {
-    return blogArticles.filter(article => {
-      const matchesSearch = searchQuery === '' || 
+    return articles.filter(article => {
+      const matchesSearch = searchQuery === '' ||
         article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         article.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
         article.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
-      
+
       const matchesCategory = selectedCategory === null || article.category === selectedCategory;
-      
+
       return matchesSearch && matchesCategory;
     });
-  }, [searchQuery, selectedCategory]);
+  }, [articles, searchQuery, selectedCategory]);
 
   // Pagination
   const totalPages = Math.ceil(filteredArticles.length / ARTICLES_PER_PAGE);
@@ -48,8 +47,7 @@ export default function BlogAndResources() {
     setCurrentPage(1);
   };
 
-  // Featured articles (most recent 3)
-  const featuredArticles = getRecentArticles(3);
+  const featuredArticles = useMemo(() => articles.slice(0, 3), [articles]);
 
   // Get a stock image based on category with variety
   const getCategoryImage = (category: string, title: string) => {
@@ -143,6 +141,13 @@ export default function BlogAndResources() {
           </div>
         </section>
 
+        {loading ? (
+          <div className="py-32 flex flex-col items-center justify-center">
+            <Loader2 className="w-12 h-12 text-amber-500 animate-spin mb-4" />
+            <p className="text-gray-600">Loading articles...</p>
+          </div>
+        ) : (
+          <>
         {/* Category Filters */}
         <section className="py-8 bg-white border-b border-gray-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -155,10 +160,10 @@ export default function BlogAndResources() {
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
-                All ({blogArticles.length})
+                All ({articles.length})
               </button>
               {allCategories.map((category) => {
-                const count = blogArticles.filter(a => a.category === category).length;
+                const count = articles.filter(a => a.category === category).length;
                 return (
                   <button
                     key={category}
@@ -387,6 +392,8 @@ export default function BlogAndResources() {
             </div>
           </div>
         </section>
+          </>
+        )}
 
         {/* CTA Section */}
         <section className="py-20 bg-gradient-to-r from-amber-500 to-amber-600 text-white">
