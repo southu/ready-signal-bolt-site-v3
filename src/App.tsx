@@ -68,6 +68,8 @@ function App() {
           <Route path="/forecasting-engine/" element={<ForecastingEngine />} />
           <Route path="/recommendation-engine" element={<RecommendationEngine />} />
           <Route path="/recommendation-engine/" element={<RecommendationEngine />} />
+          <Route path="/blog" element={<BlogAndResources />} />
+          <Route path="/blog/" element={<BlogAndResources />} />
           <Route path="/blog-and-resources" element={<BlogAndResources />} />
           <Route path="/blog-and-resources/" element={<BlogAndResources />} />
           <Route path="/ai-bi-consulting" element={<AIBIConsulting />} />
