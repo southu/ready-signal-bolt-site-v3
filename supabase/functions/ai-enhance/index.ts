@@ -108,7 +108,7 @@ Your task is to improve the article content for:
 - Logical structure with clear headings
 
 Keep the same HTML structure but improve the text quality.
-Return ONLY the improved HTML content, nothing else.`;
+Return ONLY the improved HTML content, nothing else. Do not wrap in code blocks or markdown.`;
 
   const contextInfo = context ? `
 Title: ${context.title || 'Not provided'}
@@ -120,7 +120,14 @@ ${contextInfo}
 Content:
 ${content}`;
 
-  return await callGPT4o(systemPrompt, userPrompt, 4000);
+  const result = await callGPT4o(systemPrompt, userPrompt, 4000);
+
+  // Strip markdown code blocks if present
+  return result
+    .replace(/^```html\s*/i, '')  // Remove opening ```html
+    .replace(/^```\s*/i, '')       // Remove opening ```
+    .replace(/\s*```$/i, '')       // Remove closing ```
+    .trim();
 }
 
 interface SEOAnalysis {
@@ -239,4 +246,3 @@ Deno.serve(async (req: Request) => {
     );
   }
 });
-
