@@ -37,10 +37,6 @@ import AdminBlog from './pages/AdminBlog';
 
 // Blog system - data-driven articles
 import BlogArticle from './pages/blog/BlogArticle';
-import { getAllSlugs } from './data/blogArticles';
-
-// Get all blog article slugs for dynamic routing
-const blogSlugs = getAllSlugs();
 
 function App() {
   return (
@@ -124,28 +120,17 @@ function App() {
           <Route path="/admin-blog" element={<AdminBlog />} />
           <Route path="/admin-blog/" element={<AdminBlog />} />
 
-          {/* 
-            Dynamic blog article routes - generated from blogArticles data
-            These match WordPress URL structure: /slug/ at root level
-          */}
-          {blogSlugs.map((slug) => (
-            <Route 
-              key={slug} 
-              path={`/${slug}`} 
-              element={<BlogArticle />} 
-            />
-          ))}
-          {blogSlugs.map((slug) => (
-            <Route 
-              key={`${slug}-trailing`} 
-              path={`/${slug}/`} 
-              element={<BlogArticle />} 
-            />
-          ))}
-
-          {/* Legacy blog paths - redirect to new root-level URLs via BlogArticle */}
+          {/* Blog article routes - both /blog/:slug and root-level /:slug */}
           <Route path="/blog/:slug" element={<BlogArticle />} />
           <Route path="/blog/:slug/" element={<BlogArticle />} />
+
+          {/*
+            Catch-all route for blog articles at root level
+            This must be LAST to not interfere with other routes
+            Handles WordPress-style URLs: /article-slug/
+          */}
+          <Route path="/:slug" element={<BlogArticle />} />
+          <Route path="/:slug/" element={<BlogArticle />} />
         </Routes>
       </ChatProvider>
     </Router>

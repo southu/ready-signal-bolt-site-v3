@@ -2,8 +2,8 @@ import { useParams, useLocation, Link, Navigate } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import SEO from '../../components/SEO';
-import { ArrowLeft, Calendar, User, Download } from 'lucide-react';
-import { getArticleBySlug } from '../../data/blogArticles';
+import { ArrowLeft, Calendar, User } from 'lucide-react';
+import { useArticleBySlug } from '../../hooks/useArticles';
 
 // Custom styles for blog content elements
 const blogStyles = `
@@ -172,13 +172,37 @@ const blogStyles = `
 export default function BlogArticle() {
   const { slug: paramSlug } = useParams<{ slug: string }>();
   const location = useLocation();
-  
+
   // Get slug from URL params (for /blog/:slug routes) or from pathname (for root-level routes)
   const slug = paramSlug || location.pathname.replace(/^\/|\/$/g, '');
-  
-  // Look up the article by slug
-  const article = slug ? getArticleBySlug(slug) : undefined;
-  
+
+  // Fetch the article by slug from Supabase (or fallback to static data)
+  const { article, loading, error } = useArticleBySlug(slug);
+
+  // Show loading state
+  if (loading) {
+    return (
+      <>
+        <Navbar />
+        <div className="pt-20 bg-gradient-to-br from-slate-50 to-white min-h-screen">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div className="animate-pulse">
+              <div className="h-8 bg-gray-200 rounded w-3/4 mb-4"></div>
+              <div className="h-6 bg-gray-200 rounded w-1/2 mb-8"></div>
+              <div className="h-64 bg-gray-200 rounded mb-8"></div>
+              <div className="space-y-4">
+                <div className="h-4 bg-gray-200 rounded"></div>
+                <div className="h-4 bg-gray-200 rounded"></div>
+                <div className="h-4 bg-gray-200 rounded w-5/6"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <Footer />
+      </>
+    );
+  }
+
   // If article not found, redirect to blog listing
   if (!article) {
     return <Navigate to="/blog-and-resources/" replace />;
