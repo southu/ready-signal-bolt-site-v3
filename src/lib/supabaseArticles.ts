@@ -87,7 +87,7 @@ export async function fetchPublishedArticles(): Promise<Article[]> {
   const { data, error } = await supabase
     .from('blog_articles')
     .select('*')
-    .eq('status', 'published')
+    .eq('is_published', true)
     .order('published_date', { ascending: false });
 
   if (error) {
