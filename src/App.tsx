@@ -27,6 +27,8 @@ import DataEconomic from './pages/DataEconomic';
 import DataWeather from './pages/DataWeather';
 import DataDemographic from './pages/DataDemographic';
 import DataPublicHealth from './pages/DataPublicHealth';
+import DataSources from './pages/DataSources';
+import DataFeature from './pages/data/DataFeature';
 import CPGRetail from './pages/industries/CPGRetail';
 import Manufacturing from './pages/industries/Manufacturing';
 import PrivateEquity from './pages/industries/PrivateEquity';
@@ -101,6 +103,12 @@ function App() {
           <Route path="/data-demographic/" element={<DataDemographic />} />
           <Route path="/public-health" element={<DataPublicHealth />} />
           <Route path="/public-health/" element={<DataPublicHealth />} />
+
+          {/* Data Sources & Individual Feature Pages */}
+          <Route path="/data-sources" element={<DataSources />} />
+          <Route path="/data-sources/" element={<DataSources />} />
+          <Route path="/data/:slug" element={<DataFeature />} />
+          <Route path="/data/:slug/" element={<DataFeature />} />
           
           {/* Industry pages */}
           <Route path="/industries/cpg-retail" element={<CPGRetail />} />

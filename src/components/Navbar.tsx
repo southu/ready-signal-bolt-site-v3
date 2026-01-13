@@ -48,6 +48,7 @@ const Navbar = () => {
 
   const howItWorksItems = [
     { name: 'How It Works', path: '/how-it-works/' },
+    { name: 'Data Sources', path: '/data-sources/' },
     { name: 'Integrations', path: '/integrations/' },
     { name: 'Help Center', path: '/help-center/' },
     { name: 'API Documentation', path: '/ready-signal-api-documentation/' },
