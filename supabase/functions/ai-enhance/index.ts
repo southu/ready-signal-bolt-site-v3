@@ -1,7 +1,7 @@
-// Supabase Edge Function: AI Enhancement with GPT-4o
+// Supabase Edge Function: AI Enhancement with GPT-5.2
 //
 // This function handles AI-powered content enhancement for the blog admin.
-// It uses OpenAI's GPT-4o model for:
+// It uses OpenAI's GPT-5.2 model for:
 // - Title enhancement
 // - Description enhancement
 // - Content enhancement
@@ -28,7 +28,7 @@ interface EnhanceRequest {
   };
 }
 
-async function callGPT4o(systemPrompt: string, userPrompt: string, maxTokens: number = 2000): Promise<string> {
+async function callGPT(systemPrompt: string, userPrompt: string, maxTokens: number = 2000): Promise<string> {
   if (!OPENAI_API_KEY) {
     throw new Error('OpenAI API key not configured');
   }
@@ -40,7 +40,7 @@ async function callGPT4o(systemPrompt: string, userPrompt: string, maxTokens: nu
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      model: 'gpt-4o',
+      model: 'gpt-5.2',
       messages: [
         { role: 'system', content: systemPrompt },
         { role: 'user', content: userPrompt },
@@ -73,7 +73,7 @@ Return ONLY the improved title, nothing else.`;
 
   const userPrompt = `Improve this article title for a B2B data analytics company: "${title}"`;
 
-  return await callGPT4o(systemPrompt, userPrompt, 1000);
+  return await callGPT(systemPrompt, userPrompt, 1000);
 }
 
 async function enhanceDescription(description: string, context?: { title?: string; content?: string }): Promise<string> {
@@ -94,7 +94,7 @@ Content preview: ${context.content?.substring(0, 500) || 'Not provided'}` : '';
 Current description: "${description}"
 ${contextInfo}`;
 
-  return await callGPT4o(systemPrompt, userPrompt, 1000);
+  return await callGPT(systemPrompt, userPrompt, 1000);
 }
 
 async function enhanceContent(content: string, context?: { title?: string; description?: string }): Promise<string> {
@@ -120,7 +120,7 @@ ${contextInfo}
 Content:
 ${content}`;
 
-  const result = await callGPT4o(systemPrompt, userPrompt, 4000);
+  const result = await callGPT(systemPrompt, userPrompt, 4000);
 
   // Strip markdown code blocks if present
   return result
@@ -161,7 +161,7 @@ Title: ${context?.title || 'Not provided'}
 Description: ${context?.description || 'Not provided'}
 Content: ${content.substring(0, 3000)}`;
 
-  const response = await callGPT4o(systemPrompt, userPrompt, 2000);
+  const response = await callGPT(systemPrompt, userPrompt, 2000);
   
   try {
     // Extract JSON from response

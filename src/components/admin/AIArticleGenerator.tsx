@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Sparkles, Loader2, Check, Copy, ArrowRight, FileText, AlertCircle } from 'lucide-react';
+import { Sparkles, Loader2, Check, Copy, ArrowRight, FileText, AlertCircle, Search, Zap, Settings, ExternalLink, Image, RefreshCw } from 'lucide-react';
 
 interface GeneratedArticle {
   title: string;
@@ -9,6 +9,21 @@ interface GeneratedArticle {
   category: string;
   tags: string[];
   dataSuggestions: string[];
+  image?: string;
+}
+
+interface ResearchSource {
+  title: string;
+  url: string;
+  snippet: string;
+}
+
+interface ResearchResult {
+  summary: string;
+  keyFindings: string[];
+  statistics: string[];
+  recentTrends: string[];
+  sources: ResearchSource[];
 }
 
 interface AIArticleGeneratorProps {
@@ -16,7 +31,15 @@ interface AIArticleGeneratorProps {
   onCancel: () => void;
 }
 
-const SYSTEM_PROMPT = `You are an expert blog content creator and SEO specialist with deep knowledge of B2B data analytics, forecasting, and business intelligence. Your task is to transform raw text input into a comprehensive, publication-ready blog article with all necessary metadata and optimizations.
+type GenerationMode = 'quick' | 'advanced';
+type GenerationStep = 'input' | 'researching' | 'research-review' | 'writing' | 'generating-image' | 'complete';
+
+const SYSTEM_PROMPT = `You are an expert blog content creator and SEO specialist with deep knowledge of B2B data analytics, forecasting, and business intelligence.
+
+**CRITICAL RULES:**
+1. **ORIGINALITY FIRST**: If the user provides existing content (articles, tweets, notes), treat it as INSPIRATION ONLY. Extract the core topic and angle, but write completely original analysis with fresh insights. NEVER copy or closely paraphrase the input.
+2. **USE PROVIDED RESEARCH**: Incorporate the research data provided, including statistics and findings. Always cite sources with hyperlinks.
+3. **HYPERLINKED CITATIONS**: When citing statistics or claims, use HTML anchor tags: <a href="URL" target="_blank" rel="noopener">Source Name</a>
 
 **YOUR TASK:** Generate a complete blog article package in JSON format including:
 
@@ -26,16 +49,16 @@ const SYSTEM_PROMPT = `You are an expert blog content creator and SEO specialist
 4. **content** - Article Content (1,500-2,500 words, well-structured HTML with H2/H3 headings, paragraphs, lists)
 5. **category** - Single most appropriate category from: Resources, Insights, Case Studies, Tutorials, Documentation, News
 6. **tags** - Array of 5-8 relevant lowercase tags for discoverability
-7. **dataSuggestions** - Array of 3-5 specific recommendations for incorporating external data sources
+7. **dataSuggestions** - Array of 3-5 specific recommendations for incorporating additional external data sources
 
 **CONTENT REQUIREMENTS:**
 - Write in an expert, authoritative tone while remaining accessible
 - Structure content with clear H2/H3 headings, bullet points, and logical flow
 - Include actionable insights and practical takeaways
-- Optimize for both human readers and search engines
-- Use proper HTML formatting: <h2>, <h3>, <p>, <ul>, <li>, <strong>, <em>
+- Weave in statistics naturally with inline hyperlinks to sources
+- Use proper HTML formatting: <h2>, <h3>, <p>, <ul>, <li>, <strong>, <em>, <a>
 - Do NOT include <h1> tags (title is separate)
-- Integrate opportunities to showcase data-driven insights naturally
+- Add a "Sources" section at the end with a list of all referenced URLs
 
 **OUTPUT FORMAT:**
 Return ONLY valid JSON with this exact structure:
@@ -43,7 +66,7 @@ Return ONLY valid JSON with this exact structure:
   "title": "Your SEO Title Here",
   "slug": "your-seo-slug-here",
   "description": "Your compelling meta description here...",
-  "content": "<h2>First Section</h2><p>Content here...</p>...",
+  "content": "<h2>First Section</h2><p>Content with <a href='URL'>cited sources</a>...</p>...<h2>Sources</h2><ul><li><a href='URL'>Source 1</a></li>...</ul>",
   "category": "Insights",
   "tags": ["tag1", "tag2", "tag3"],
   "dataSuggestions": ["Suggestion 1", "Suggestion 2", "Suggestion 3"]
@@ -51,86 +74,250 @@ Return ONLY valid JSON with this exact structure:
 
 export default function AIArticleGenerator({ onGenerated, onCancel }: AIArticleGeneratorProps) {
   const [rawContent, setRawContent] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [mode, setMode] = useState<GenerationMode>('quick');
+  const [step, setStep] = useState<GenerationStep>('input');
+  const [research, setResearch] = useState<ResearchResult | null>(null);
+  const [editedResearch, setEditedResearch] = useState<ResearchResult | null>(null);
   const [generatedArticle, setGeneratedArticle] = useState<GeneratedArticle | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [copiedField, setCopiedField] = useState<string | null>(null);
+  const [generatingImage, setGeneratingImage] = useState(false);
 
-  const generateArticle = async () => {
-    if (!rawContent.trim()) {
-      setError('Please enter some content to transform');
-      return;
+  // Get Supabase URL for edge functions
+  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+
+  const performResearch = async (topic: string): Promise<ResearchResult> => {
+    const response = await fetch(`${supabaseUrl}/functions/v1/research`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ topic, context: rawContent }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.error || `Research failed: ${response.status}`);
     }
 
-    if (rawContent.trim().length < 100) {
+    return await response.json();
+  };
+
+  const generateImage = async (title: string, topic: string): Promise<string> => {
+    const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
+    if (!apiKey) {
+      console.warn('OpenAI API key not configured for image generation');
+      return '';
+    }
+
+    const imagePrompt = `Professional, modern B2B business illustration for a blog article titled "${title}". 
+Topic: ${topic}
+Style: Clean, corporate, data-driven aesthetic with abstract geometric shapes, charts, or professional business imagery. 
+Colors: Professional blues, teals, and amber accents on a clean background.
+No text or words in the image. Suitable for a data analytics company blog.`;
+
+    const response = await fetch('https://api.openai.com/v1/images/generations', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'dall-e-3',
+        prompt: imagePrompt,
+        n: 1,
+        size: '1792x1024',
+        quality: 'standard',
+      }),
+    });
+
+    if (!response.ok) {
+      console.error('DALL-E API error:', await response.text());
+      return '';
+    }
+
+    const data = await response.json();
+    return data.data[0]?.url || '';
+  };
+
+  const generateArticle = async (researchData?: ResearchResult) => {
+    const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
+
+    if (!apiKey) {
+      throw new Error('OpenAI API key not configured. Please add VITE_OPENAI_API_KEY to your environment.');
+    }
+
+    // Build the user prompt with research data
+    let userPrompt = `Transform this into a complete, ORIGINAL blog article:\n\n${rawContent}`;
+    
+    if (researchData) {
+      userPrompt += `\n\n--- RESEARCH DATA (incorporate with citations) ---\n`;
+      userPrompt += `\nSummary: ${researchData.summary}`;
+      
+      if (researchData.keyFindings.length > 0) {
+        userPrompt += `\n\nKey Findings:\n${researchData.keyFindings.map(f => `- ${f}`).join('\n')}`;
+      }
+      
+      if (researchData.statistics.length > 0) {
+        userPrompt += `\n\nStatistics to cite:\n${researchData.statistics.map(s => `- ${s}`).join('\n')}`;
+      }
+      
+      if (researchData.recentTrends.length > 0) {
+        userPrompt += `\n\nRecent Trends:\n${researchData.recentTrends.map(t => `- ${t}`).join('\n')}`;
+      }
+      
+      if (researchData.sources.length > 0) {
+        userPrompt += `\n\nSources (use these URLs in citations):\n${researchData.sources.map(s => `- ${s.title}: ${s.url}`).join('\n')}`;
+      }
+    }
+
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'gpt-5.2',
+        messages: [
+          { role: 'system', content: SYSTEM_PROMPT },
+          { role: 'user', content: userPrompt },
+        ],
+        temperature: 0.7,
+        max_tokens: 8000,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      console.error('OpenAI API error:', errorData);
+
+      if (response.status === 401) {
+        throw new Error('Invalid API key');
+      } else if (response.status === 429) {
+        throw new Error('Rate limit exceeded. Please wait a moment and try again.');
+      }
+      throw new Error(`API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    const content = data.choices[0]?.message?.content?.trim();
+
+    if (!content) {
+      throw new Error('No content returned from AI');
+    }
+
+    const jsonMatch = content.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) {
+      throw new Error('Invalid response format from AI');
+    }
+
+    const parsed = JSON.parse(jsonMatch[0]) as GeneratedArticle;
+
+    if (!parsed.title || !parsed.content) {
+      throw new Error('Generated content is missing required fields');
+    }
+
+    return parsed;
+  };
+
+  const handleQuickGenerate = async () => {
+    if (!rawContent.trim() || rawContent.trim().length < 100) {
       setError('Please provide more content (at least 100 characters)');
       return;
     }
 
-    setLoading(true);
     setError(null);
+    
+    try {
+      // Step 1: Research
+      setStep('researching');
+      const researchData = await performResearch(rawContent.substring(0, 500));
+      setResearch(researchData);
+      
+      // Step 2: Generate article
+      setStep('writing');
+      const article = await generateArticle(researchData);
+      
+      // Step 3: Generate image
+      setStep('generating-image');
+      setGeneratingImage(true);
+      const imageUrl = await generateImage(article.title, rawContent.substring(0, 200));
+      if (imageUrl) {
+        article.image = imageUrl;
+      }
+      setGeneratingImage(false);
+      
+      setGeneratedArticle(article);
+      setStep('complete');
+    } catch (err) {
+      console.error('Generation error:', err);
+      setError(err instanceof Error ? err.message : 'Failed to generate article');
+      setStep('input');
+    }
+  };
+
+  const handleAdvancedResearch = async () => {
+    if (!rawContent.trim() || rawContent.trim().length < 50) {
+      setError('Please provide a topic or content (at least 50 characters)');
+      return;
+    }
+
+    setError(null);
+    setStep('researching');
 
     try {
-      const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
-
-      if (!apiKey) {
-        throw new Error('OpenAI API key not configured. Please add VITE_OPENAI_API_KEY to your environment.');
-      }
-
-      const response = await fetch('https://api.openai.com/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${apiKey}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          model: 'gpt-4o',
-          messages: [
-            { role: 'system', content: SYSTEM_PROMPT },
-            { role: 'user', content: `Transform this raw content into a complete blog article:\n\n${rawContent}` },
-          ],
-          temperature: 0.7,
-          max_tokens: 8000,
-        }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        console.error('OpenAI API error:', errorData);
-
-        if (response.status === 401) {
-          throw new Error('Invalid API key');
-        } else if (response.status === 429) {
-          throw new Error('Rate limit exceeded. Please wait a moment and try again.');
-        }
-        throw new Error(`API error: ${response.status}`);
-      }
-
-      const data = await response.json();
-      const content = data.choices[0]?.message?.content?.trim();
-
-      if (!content) {
-        throw new Error('No content returned from AI');
-      }
-
-      const jsonMatch = content.match(/\{[\s\S]*\}/);
-      if (!jsonMatch) {
-        throw new Error('Invalid response format from AI');
-      }
-
-      const parsed = JSON.parse(jsonMatch[0]) as GeneratedArticle;
-
-      if (!parsed.title || !parsed.content) {
-        throw new Error('Generated content is missing required fields');
-      }
-
-      setGeneratedArticle(parsed);
+      const researchData = await performResearch(rawContent.substring(0, 500));
+      setResearch(researchData);
+      setEditedResearch(researchData);
+      setStep('research-review');
     } catch (err) {
-      console.error('Article generation error:', err);
-      setError(err instanceof Error ? err.message : 'Failed to generate article');
-    } finally {
-      setLoading(false);
+      console.error('Research error:', err);
+      setError(err instanceof Error ? err.message : 'Failed to perform research');
+      setStep('input');
     }
+  };
+
+  const handleAdvancedGenerate = async () => {
+    if (!editedResearch) return;
+
+    setError(null);
+    
+    try {
+      setStep('writing');
+      const article = await generateArticle(editedResearch);
+      
+      // Generate image
+      setStep('generating-image');
+      setGeneratingImage(true);
+      const imageUrl = await generateImage(article.title, rawContent.substring(0, 200));
+      if (imageUrl) {
+        article.image = imageUrl;
+      }
+      setGeneratingImage(false);
+      
+      setGeneratedArticle(article);
+      setStep('complete');
+    } catch (err) {
+      console.error('Generation error:', err);
+      setError(err instanceof Error ? err.message : 'Failed to generate article');
+      setStep('research-review');
+    }
+  };
+
+  const handleRegenerateImage = async () => {
+    if (!generatedArticle) return;
+    
+    setGeneratingImage(true);
+    try {
+      const imageUrl = await generateImage(generatedArticle.title, rawContent.substring(0, 200));
+      if (imageUrl) {
+        setGeneratedArticle({ ...generatedArticle, image: imageUrl });
+      }
+    } catch (err) {
+      console.error('Image regeneration error:', err);
+    }
+    setGeneratingImage(false);
   };
 
   const copyToClipboard = (text: string, field: string) => {
@@ -145,7 +332,122 @@ export default function AIArticleGenerator({ onGenerated, onCancel }: AIArticleG
     }
   };
 
-  if (generatedArticle) {
+  const handleStartOver = () => {
+    setStep('input');
+    setResearch(null);
+    setEditedResearch(null);
+    setGeneratedArticle(null);
+    setError(null);
+  };
+
+  // Research Review UI
+  if (step === 'research-review' && editedResearch) {
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+              <Search className="w-5 h-5 text-blue-600" />
+            </div>
+            <div>
+              <h3 className="text-lg font-bold text-gray-900">Research Complete</h3>
+              <p className="text-sm text-gray-500">Review and edit the research before generating</p>
+            </div>
+          </div>
+          <div className="flex gap-3">
+            <button
+              onClick={handleStartOver}
+              className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
+            >
+              Start Over
+            </button>
+            <button
+              onClick={handleAdvancedGenerate}
+              className="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700"
+            >
+              Write Article
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-6">
+          {/* Summary */}
+          <div className="col-span-2 bg-white rounded-xl border border-gray-200 p-4">
+            <label className="text-sm font-semibold text-gray-700 block mb-2">Research Summary</label>
+            <textarea
+              value={editedResearch.summary}
+              onChange={(e) => setEditedResearch({ ...editedResearch, summary: e.target.value })}
+              rows={3}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          {/* Key Findings */}
+          <div className="bg-white rounded-xl border border-gray-200 p-4">
+            <label className="text-sm font-semibold text-gray-700 block mb-2">Key Findings</label>
+            <textarea
+              value={editedResearch.keyFindings.join('\n')}
+              onChange={(e) => setEditedResearch({ ...editedResearch, keyFindings: e.target.value.split('\n').filter(f => f.trim()) })}
+              rows={6}
+              placeholder="One finding per line..."
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+            />
+          </div>
+
+          {/* Statistics */}
+          <div className="bg-white rounded-xl border border-gray-200 p-4">
+            <label className="text-sm font-semibold text-gray-700 block mb-2">Statistics to Cite</label>
+            <textarea
+              value={editedResearch.statistics.join('\n')}
+              onChange={(e) => setEditedResearch({ ...editedResearch, statistics: e.target.value.split('\n').filter(s => s.trim()) })}
+              rows={6}
+              placeholder="One statistic per line..."
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+            />
+          </div>
+
+          {/* Recent Trends */}
+          <div className="bg-white rounded-xl border border-gray-200 p-4">
+            <label className="text-sm font-semibold text-gray-700 block mb-2">Recent Trends</label>
+            <textarea
+              value={editedResearch.recentTrends.join('\n')}
+              onChange={(e) => setEditedResearch({ ...editedResearch, recentTrends: e.target.value.split('\n').filter(t => t.trim()) })}
+              rows={4}
+              placeholder="One trend per line..."
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+            />
+          </div>
+
+          {/* Sources */}
+          <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl border border-blue-200 p-4">
+            <label className="text-sm font-semibold text-blue-800 block mb-2">Sources Found</label>
+            <div className="space-y-2 max-h-40 overflow-y-auto">
+              {editedResearch.sources.map((source, i) => (
+                <div key={i} className="flex items-start gap-2 text-sm">
+                  <ExternalLink className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+                  <a 
+                    href={source.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:text-blue-800 hover:underline truncate"
+                  >
+                    {source.title || source.url}
+                  </a>
+                </div>
+              ))}
+              {editedResearch.sources.length === 0 && (
+                <p className="text-blue-600 text-sm italic">No sources found</p>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Complete - Show Generated Article
+  if (step === 'complete' && generatedArticle) {
     return (
       <div className="space-y-6">
         <div className="flex items-center justify-between">
@@ -160,7 +462,7 @@ export default function AIArticleGenerator({ onGenerated, onCancel }: AIArticleG
           </div>
           <div className="flex gap-3">
             <button
-              onClick={() => setGeneratedArticle(null)}
+              onClick={handleStartOver}
               className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
             >
               Start Over
@@ -177,6 +479,29 @@ export default function AIArticleGenerator({ onGenerated, onCancel }: AIArticleG
 
         <div className="grid grid-cols-2 gap-6">
           <div className="space-y-4">
+            {/* Featured Image */}
+            {generatedArticle.image && (
+              <div className="bg-white rounded-xl border border-gray-200 p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <label className="text-sm font-semibold text-gray-700">AI-Generated Featured Image</label>
+                  <button
+                    onClick={handleRegenerateImage}
+                    disabled={generatingImage}
+                    className="flex items-center gap-1 text-sm text-amber-600 hover:text-amber-700"
+                  >
+                    {generatingImage ? <Loader2 className="w-4 h-4 animate-spin" /> : <RefreshCw className="w-4 h-4" />}
+                    Regenerate
+                  </button>
+                </div>
+                <img
+                  src={generatedArticle.image}
+                  alt="AI-generated featured image"
+                  className="w-full h-48 object-cover rounded-lg"
+                />
+                <p className="text-xs text-gray-500 mt-2">You can replace this with your own image in the editor</p>
+              </div>
+            )}
+
             <div className="bg-white rounded-xl border border-gray-200 p-4">
               <div className="flex items-center justify-between mb-2">
                 <label className="text-sm font-semibold text-gray-700">Title</label>
@@ -243,7 +568,7 @@ export default function AIArticleGenerator({ onGenerated, onCancel }: AIArticleG
               <ul className="space-y-2">
                 {generatedArticle.dataSuggestions.map((suggestion, i) => (
                   <li key={i} className="flex items-start gap-2 text-sm text-blue-700">
-                    <span className="text-blue-400 mt-0.5">*</span>
+                    <span className="text-blue-400 mt-0.5">•</span>
                     {suggestion}
                   </li>
                 ))}
@@ -262,7 +587,7 @@ export default function AIArticleGenerator({ onGenerated, onCancel }: AIArticleG
               </button>
             </div>
             <div
-              className="prose prose-sm max-w-none max-h-[600px] overflow-y-auto"
+              className="prose prose-sm max-w-none max-h-[700px] overflow-y-auto"
               dangerouslySetInnerHTML={{ __html: generatedArticle.content }}
             />
           </div>
@@ -271,6 +596,36 @@ export default function AIArticleGenerator({ onGenerated, onCancel }: AIArticleG
     );
   }
 
+  // Loading States
+  if (step === 'researching' || step === 'writing' || step === 'generating-image') {
+    return (
+      <div className="text-center py-16">
+        <div className="inline-flex flex-col items-center gap-4">
+          <div className="w-16 h-16 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg">
+            {step === 'researching' && <Search className="w-8 h-8 text-white animate-pulse" />}
+            {step === 'writing' && <Sparkles className="w-8 h-8 text-white animate-pulse" />}
+            {step === 'generating-image' && <Image className="w-8 h-8 text-white animate-pulse" />}
+          </div>
+          <div>
+            <h3 className="text-xl font-bold text-gray-900 mb-2">
+              {step === 'researching' && 'Researching...'}
+              {step === 'writing' && 'Writing Article...'}
+              {step === 'generating-image' && 'Generating Featured Image...'}
+            </h3>
+            <p className="text-gray-600">
+              {step === 'researching' && 'Gathering current data, statistics, and sources with Perplexity'}
+              {step === 'writing' && 'Creating your original article with GPT-5.2'}
+              {step === 'generating-image' && 'Creating a custom featured image with DALL-E 3'}
+            </p>
+          </div>
+          <Loader2 className="w-8 h-8 text-amber-500 animate-spin mt-4" />
+          <p className="text-sm text-gray-500">This may take 30-60 seconds</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Input State
   return (
     <div className="space-y-6">
       <div className="text-center py-6">
@@ -279,28 +634,63 @@ export default function AIArticleGenerator({ onGenerated, onCancel }: AIArticleG
         </div>
         <h3 className="text-2xl font-bold text-gray-900 mb-2">AI Article Generator</h3>
         <p className="text-gray-600 max-w-xl mx-auto">
-          Paste your raw content below and let AI transform it into a complete, SEO-optimized blog article
-          with title, description, tags, and fully formatted content.
+          Paste your topic, notes, or inspiration content below. The AI will research current data,
+          write an original article, and generate a featured image.
         </p>
+      </div>
+
+      {/* Mode Toggle */}
+      <div className="flex justify-center gap-2">
+        <button
+          onClick={() => setMode('quick')}
+          className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ${
+            mode === 'quick'
+              ? 'bg-amber-500 text-white shadow-md'
+              : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+          }`}
+        >
+          <Zap className="w-4 h-4" />
+          Quick Mode
+        </button>
+        <button
+          onClick={() => setMode('advanced')}
+          className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ${
+            mode === 'advanced'
+              ? 'bg-amber-500 text-white shadow-md'
+              : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+          }`}
+        >
+          <Settings className="w-4 h-4" />
+          Advanced Mode
+        </button>
+      </div>
+
+      <div className="text-center text-sm text-gray-500">
+        {mode === 'quick' 
+          ? 'Research → Write → Image in one click'
+          : 'Review and edit research before writing'
+        }
       </div>
 
       <div className="bg-white rounded-xl border border-gray-200 p-6">
         <label className="block text-sm font-semibold text-gray-700 mb-2">
-          Raw Content Input
+          Topic or Inspiration Content
         </label>
         <textarea
           value={rawContent}
           onChange={(e) => setRawContent(e.target.value)}
-          placeholder="Paste your raw content, notes, or topic outline here...
+          placeholder={`Paste your content here...
 
-Examples of what you can paste:
-- Rough draft of an article
-- Meeting notes or interview transcripts
-- Bullet points on a topic
-- Research findings or data summaries
-- Topic ideas with key points to cover
+Examples:
+• A topic you want to write about
+• Notes from a meeting or research
+• An article or tweet that inspired you (we'll write something original)
+• Bullet points or an outline
 
-The AI will transform this into a fully formatted, SEO-optimized blog article."
+The AI will:
+1. Research current statistics and trends
+2. Write an original, well-cited article
+3. Generate a professional featured image`}
           rows={12}
           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 text-gray-900 placeholder-gray-400"
         />
@@ -309,7 +699,7 @@ The AI will transform this into a fully formatted, SEO-optimized blog article."
             {rawContent.length} characters
           </p>
           <p className="text-sm text-gray-500">
-            Minimum 100 characters recommended
+            Minimum {mode === 'quick' ? '100' : '50'} characters
           </p>
         </div>
       </div>
@@ -318,7 +708,7 @@ The AI will transform this into a fully formatted, SEO-optimized blog article."
         <div className="flex items-start gap-3 bg-red-50 border border-red-200 rounded-xl p-4">
           <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
           <div>
-            <p className="text-red-800 font-medium">Generation Failed</p>
+            <p className="text-red-800 font-medium">Error</p>
             <p className="text-red-600 text-sm mt-1">{error}</p>
           </div>
         </div>
@@ -332,31 +722,27 @@ The AI will transform this into a fully formatted, SEO-optimized blog article."
         <div className="grid grid-cols-2 gap-4 text-sm">
           <div className="flex items-center gap-2 text-gray-700">
             <Check className="w-4 h-4 text-emerald-500" />
-            SEO-optimized title (50-60 chars)
+            Original, research-backed content
           </div>
           <div className="flex items-center gap-2 text-gray-700">
             <Check className="w-4 h-4 text-emerald-500" />
-            Clean URL slug
+            Hyperlinked source citations
           </div>
           <div className="flex items-center gap-2 text-gray-700">
             <Check className="w-4 h-4 text-emerald-500" />
-            Meta description (150-160 chars)
+            SEO-optimized title & description
           </div>
           <div className="flex items-center gap-2 text-gray-700">
             <Check className="w-4 h-4 text-emerald-500" />
-            Category recommendation
+            AI-generated featured image
           </div>
           <div className="flex items-center gap-2 text-gray-700">
             <Check className="w-4 h-4 text-emerald-500" />
-            Full HTML content (1,500-2,500 words)
+            Current statistics & trends
           </div>
           <div className="flex items-center gap-2 text-gray-700">
             <Check className="w-4 h-4 text-emerald-500" />
-            5-8 relevant tags
-          </div>
-          <div className="flex items-center gap-2 text-gray-700 col-span-2">
-            <Check className="w-4 h-4 text-emerald-500" />
-            External data integration suggestions for enhanced credibility
+            Sources section with URLs
           </div>
         </div>
       </div>
@@ -368,35 +754,27 @@ The AI will transform this into a fully formatted, SEO-optimized blog article."
         >
           Cancel
         </button>
-        <button
-          onClick={generateArticle}
-          disabled={loading || rawContent.trim().length < 100}
-          className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-lg font-semibold hover:from-amber-600 hover:to-orange-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
-        >
-          {loading ? (
-            <>
-              <Loader2 className="w-5 h-5 animate-spin" />
-              Generating Article...
-            </>
-          ) : (
-            <>
-              <Sparkles className="w-5 h-5" />
-              Generate Complete Article
-            </>
-          )}
-        </button>
+        
+        {mode === 'quick' ? (
+          <button
+            onClick={handleQuickGenerate}
+            disabled={rawContent.trim().length < 100}
+            className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-lg font-semibold hover:from-amber-600 hover:to-orange-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+          >
+            <Zap className="w-5 h-5" />
+            Generate Complete Article
+          </button>
+        ) : (
+          <button
+            onClick={handleAdvancedResearch}
+            disabled={rawContent.trim().length < 50}
+            className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-lg font-semibold hover:from-blue-600 hover:to-cyan-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+          >
+            <Search className="w-5 h-5" />
+            Research First
+          </button>
+        )}
       </div>
-
-      {loading && (
-        <div className="text-center py-8">
-          <div className="inline-flex items-center gap-3 px-6 py-3 bg-amber-50 rounded-full">
-            <Loader2 className="w-5 h-5 text-amber-600 animate-spin" />
-            <span className="text-amber-800 font-medium">
-              Generating your article... This may take 20-40 seconds
-            </span>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

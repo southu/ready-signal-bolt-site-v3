@@ -155,6 +155,7 @@ export default function ArticleEditor({
     category: string;
     tags: string[];
     dataSuggestions: string[];
+    image?: string;
   }) => {
     setFormData(prev => ({
       ...prev,
@@ -164,6 +165,7 @@ export default function ArticleEditor({
       content: generated.content,
       category: generated.category,
       tags: generated.tags,
+      image: generated.image || prev.image,
     }));
     setDataSuggestions(generated.dataSuggestions);
     setActiveTab('edit');
