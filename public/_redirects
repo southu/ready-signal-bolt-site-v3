@@ -1,1 +1,55 @@
+# Legacy URL Redirects for SEO preservation
+# These redirects ensure search traffic continues to reach the right pages
+
+# ===== AUTH PAGES → App =====
+/auth/sign-up https://app.readysignal.com/auth/sign-up 301
+/auth/login https://app.readysignal.com/auth/login 301
+/auth/forgot-password https://app.readysignal.com/auth/forgot-password 301
+/auth/google/callback https://app.readysignal.com/auth/google/callback 301
+
+# ===== AUTHOR PAGES → Blog =====
+/author/* /blog/ 301
+
+# ===== CATEGORY & TAG PAGES → Blog =====
+/category/* /blog/ 301
+/tag/* /blog/ 301
+
+# ===== LEGACY LANDING PAGES =====
+/smb/ /solutions/ 301
+/agency/ /solutions/ 301
+/marketing/ /solutions/ 301
+/ypo/ /about/ 301
+/datacated/ /blog/ 301
+/domo/ /integrations/ 301
+/erp-integrations/ /integrations/ 301
+/landing-page-matt-schaefer/ / 301
+
+# ===== LEGACY DATA & PLATFORM PAGES =====
+/data-full/ /data-sources/ 301
+/data-info/ /data-sources/ 301
+/data-pipeline/ /platform/ 301
+/data-scientists/ /solutions/ 301
+/data-covid-19/ /data-sources/ 301
+/business-intelligence/ /platform/ 301
+/business-intelligence-software/ /platform/ 301
+/analytics-consulting/ /ai-bi-consulting/ 301
+/data-transformation-etl/ /platform/ 301
+/improve-forecast-accuracy/ /forecasting-engine/ 301
+/etl-integrations/ /integrations/ 301
+
+# ===== LEGACY PRODUCT PAGES =====
+/on-demand-demographic-control-data-sets/ /data-demographic/ 301
+/on-demand-economic-control-data-sets/ /data-economic/ 301
+/on-demand-weather-control-data-sets/ /data-weather/ 301
+/on-demand-covid-19-control-data-sets/ /data-sources/ 301
+
+# ===== BLOG URL VARIATIONS (trailing slash normalization) =====
+/blog-and-resources /blog/ 301
+
+# ===== CATCH-ALL FOR UNKNOWN /data/* URLs =====
+# This should come after specific data routes are handled by the app
+# Any /data/* that doesn't match a known feature goes to data-sources
+/data/ /data-sources/ 302
+
+# ===== SPA CATCH-ALL (must be last) =====
 /* /index.html 200
