@@ -17,7 +17,5 @@ enabled = true
 site_url = "http://localhost:5173"
 jwt_expiry = 3600
 
-[functions]
-# Edge functions directory
-dir = "./functions"
+# Edge functions are in ./functions directory (default)
 
