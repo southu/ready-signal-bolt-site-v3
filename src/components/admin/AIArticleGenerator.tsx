@@ -204,11 +204,47 @@ No text or words in the image. Suitable for a data analytics company blog.`;
     }
 
     const data = await response.json();
-    // Responses API returns output_text directly
-    const content = data.output_text?.trim() || data.output?.[0]?.content?.[0]?.text?.trim();
+    
+    // Debug: Log the full response structure to understand the format
+    console.log('GPT-5.2 Response structure:', JSON.stringify(data, null, 2).substring(0, 2000));
+    
+    // Try multiple ways to extract content from Responses API
+    let content = '';
+    
+    // Method 1: Direct output_text (documented format)
+    if (data.output_text) {
+      content = data.output_text.trim();
+      console.log('Found content via output_text');
+    }
+    // Method 2: output array with content blocks
+    else if (data.output && Array.isArray(data.output)) {
+      for (const item of data.output) {
+        if (item.type === 'message' && item.content) {
+          for (const block of item.content) {
+            if (block.type === 'text' && block.text) {
+              content = block.text.trim();
+              console.log('Found content via output[].content[].text');
+              break;
+            }
+          }
+        }
+        if (content) break;
+      }
+    }
+    // Method 3: choices array (Chat Completions format fallback)
+    else if (data.choices && data.choices[0]?.message?.content) {
+      content = data.choices[0].message.content.trim();
+      console.log('Found content via choices (fallback format)');
+    }
+    // Method 4: Direct text property
+    else if (data.text) {
+      content = data.text.trim();
+      console.log('Found content via text property');
+    }
 
     if (!content) {
-      throw new Error('No content returned from AI');
+      console.error('No content found in response. Full response:', JSON.stringify(data));
+      throw new Error('No content returned from AI. Check browser console for response details.');
     }
 
     const jsonMatch = content.match(/\{[\s\S]*\}/);

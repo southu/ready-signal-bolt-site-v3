@@ -60,8 +60,41 @@ async function callGPT(systemPrompt: string, userPrompt: string, maxTokens: numb
   }
 
   const data = await response.json();
-  // Responses API returns output_text directly
-  return data.output_text?.trim() || data.output?.[0]?.content?.[0]?.text?.trim() || '';
+  
+  // Debug: Log response structure
+  console.log('GPT-5.2 Response keys:', Object.keys(data));
+  
+  // Try multiple ways to extract content from Responses API
+  let content = '';
+  
+  // Method 1: Direct output_text
+  if (data.output_text) {
+    content = data.output_text.trim();
+  }
+  // Method 2: output array with content blocks
+  else if (data.output && Array.isArray(data.output)) {
+    for (const item of data.output) {
+      if (item.type === 'message' && item.content) {
+        for (const block of item.content) {
+          if (block.type === 'text' && block.text) {
+            content = block.text.trim();
+            break;
+          }
+        }
+      }
+      if (content) break;
+    }
+  }
+  // Method 3: choices array (fallback)
+  else if (data.choices && data.choices[0]?.message?.content) {
+    content = data.choices[0].message.content.trim();
+  }
+  
+  if (!content) {
+    console.error('No content in response:', JSON.stringify(data).substring(0, 1000));
+  }
+  
+  return content;
 }
 
 async function enhanceTitle(title: string): Promise<string> {
