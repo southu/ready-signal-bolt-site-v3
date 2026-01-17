@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import { AlertCircle, TrendingDown, Clock } from 'lucide-react';
-import warRoomImg from '../../assets/images/the_war_room.jpeg';
 
 const OriginStory = () => {
   return (
@@ -30,7 +29,7 @@ const OriginStory = () => {
         >
           <div className="mb-8 rounded-xl overflow-hidden shadow-lg">
             <img
-              src={warRoomImg}
+              src="/the_war_room.jpeg"
               alt="The War Room - Monday Morning Problem"
               className="w-full h-72 object-cover"
               loading="eager"
