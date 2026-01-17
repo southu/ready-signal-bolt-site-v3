@@ -75,7 +75,7 @@ Respond in valid JSON format:
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      model: 'sonar-pro',
+      model: 'sonar-pro',  // Best model with citations and search
       messages: [
         { role: 'system', content: systemPrompt },
         { role: 'user', content: userPrompt },
