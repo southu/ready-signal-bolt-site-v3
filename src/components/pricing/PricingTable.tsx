@@ -49,7 +49,7 @@ const PricingTable = () => {
       signalLibrary: 'Shared Signal Library',
       support: 'Dedicated Customer Success',
       ctaText: 'Contact Sales',
-      ctaLink: '/contact-us/',
+      ctaLink: '/contact-us/#contact-form',
       highlighted: false,
     },
     {
@@ -67,7 +67,7 @@ const PricingTable = () => {
       signalLibrary: 'Curated & Validated by Experts',
       support: 'Dedicated Data Scientist',
       ctaText: 'Book Consultation',
-      ctaLink: '/contact-us/',
+      ctaLink: '/contact-us/#contact-form',
       highlighted: false,
     },
   ];
