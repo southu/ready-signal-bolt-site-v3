@@ -303,12 +303,12 @@ export default function BlogArticle() {
               Discover how Ready Signal can help you harness the power of external data for more accurate predictions.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                to="/contact-us/"
+              <a
+                href="https://app.readysignal.com/auth/sign-up"
                 className="inline-block bg-white text-amber-600 px-8 py-3 rounded-lg font-semibold hover:bg-amber-50 transition-all shadow-md"
               >
                 Get Started Free
-              </Link>
+              </a>
               <a
                 href="https://app.readysignal.com"
                 target="_blank"

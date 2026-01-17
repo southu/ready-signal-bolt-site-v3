@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, Terminal, FileCode } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const PlatformHero = () => {
   return (
@@ -43,17 +44,13 @@ const PlatformHero = () => {
                 <ArrowRight className="w-5 h-5" />
               </motion.a>
 
-              <motion.a
-                href="https://www.readysignal.com/overview-of-data-science-treatments/"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+              <Link
+                to="/overview-of-data-science-treatments/"
                 className="bg-white bg-opacity-10 backdrop-blur-sm text-white hover:bg-opacity-20 transition-all font-semibold px-8 py-4 rounded-lg inline-flex items-center justify-center space-x-2 border border-white border-opacity-20"
               >
                 <FileCode className="w-5 h-5" />
                 <span>Read Documentation</span>
-              </motion.a>
+              </Link>
             </div>
 
             <p className="text-sm text-gray-400">
