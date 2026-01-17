@@ -79,12 +79,13 @@ async function callGPT(systemPrompt: string, userPrompt: string, maxTokens: numb
   if (data.output_text) {
     content = data.output_text.trim();
   }
-  // Method 2: output array with content blocks
+  // Method 2: output array with content blocks (GPT-5.2 actual format)
   else if (data.output && Array.isArray(data.output)) {
     for (const item of data.output) {
       if (item.type === 'message' && item.content) {
         for (const block of item.content) {
-          if (block.type === 'text' && block.text) {
+          // GPT-5.2 uses "output_text" as the block type, not "text"
+          if ((block.type === 'output_text' || block.type === 'text') && block.text) {
             content = block.text.trim();
             break;
           }
