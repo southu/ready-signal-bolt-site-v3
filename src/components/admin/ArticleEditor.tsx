@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { ArrowLeft, Save, Eye, Send, FileText, X, Sparkles } from 'lucide-react';
+import { ArrowLeft, Save, Eye, Send, FileText, X, Sparkles, RefreshCw, Loader2, Image } from 'lucide-react';
 import { Article, generateSlug, isSlugUnique } from '../../lib/supabaseArticles';
 import RichTextEditor from './RichTextEditor';
 import AIEnhanceButton from './AIEnhanceButton';
@@ -45,6 +45,50 @@ export default function ArticleEditor({
   const [activeTab, setActiveTab] = useState<'generate' | 'edit' | 'preview' | 'seo'>(isEditing ? 'edit' : 'generate');
   const [tagInput, setTagInput] = useState('');
   const [dataSuggestions, setDataSuggestions] = useState<string[]>([]);
+  const [regeneratingImage, setRegeneratingImage] = useState(false);
+
+  // Get Supabase URL for edge functions
+  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+
+  // Regenerate featured image using DALL-E
+  const handleRegenerateImage = async () => {
+    if (!formData.title.trim()) {
+      alert('Please enter a title first');
+      return;
+    }
+
+    setRegeneratingImage(true);
+    try {
+      const response = await fetch(`${supabaseUrl}/functions/v1/generate-article`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          action: 'generate-image',
+          imageTitle: formData.title,
+          imageTopic: formData.description || formData.title,
+        }),
+      });
+
+      if (!response.ok) {
+        const error = await response.json().catch(() => ({}));
+        throw new Error(error.error || 'Image generation failed');
+      }
+
+      const data = await response.json();
+      if (data.url) {
+        setFormData(prev => ({ ...prev, image: data.url }));
+      } else {
+        throw new Error('No image URL returned');
+      }
+    } catch (err) {
+      console.error('Image regeneration error:', err);
+      alert(err instanceof Error ? err.message : 'Failed to regenerate image');
+    } finally {
+      setRegeneratingImage(false);
+    }
+  };
 
   // Update form data when article prop changes
   useEffect(() => {
@@ -501,18 +545,42 @@ export default function ArticleEditor({
 
             {/* Featured Image */}
             <div className="bg-white rounded-xl border border-gray-200 p-6">
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Featured Image URL
-              </label>
+              <div className="flex items-center justify-between mb-2">
+                <label className="block text-sm font-semibold text-gray-700">
+                  Featured Image URL
+                </label>
+                <button
+                  type="button"
+                  onClick={handleRegenerateImage}
+                  disabled={regeneratingImage || !formData.title.trim()}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg transition-all ${
+                    regeneratingImage
+                      ? 'bg-purple-100 text-purple-600 cursor-wait'
+                      : 'bg-purple-50 text-purple-700 hover:bg-purple-100 border border-purple-200'
+                  } disabled:opacity-50 disabled:cursor-not-allowed`}
+                >
+                  {regeneratingImage ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      Generating...
+                    </>
+                  ) : (
+                    <>
+                      <Image className="w-4 h-4" />
+                      Generate Image
+                    </>
+                  )}
+                </button>
+              </div>
               <input
                 type="text"
                 value={formData.image}
                 onChange={(e) => setFormData(prev => ({ ...prev, image: e.target.value }))}
-                placeholder="/blog-images/slug/image.png"
+                placeholder="https://... or will be auto-generated"
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm font-mono"
               />
               {formData.image && (
-                <div className="mt-3">
+                <div className="mt-3 relative">
                   <img
                     src={formData.image}
                     alt="Preview"
@@ -521,6 +589,13 @@ export default function ArticleEditor({
                       (e.target as HTMLImageElement).style.display = 'none';
                     }}
                   />
+                  {formData.image.includes('oaidalleapiprodscus') && (
+                    <div className="absolute inset-0 bg-red-500/80 rounded-lg flex items-center justify-center">
+                      <p className="text-white text-xs text-center px-2">
+                        ⚠️ Expired DALL-E URL<br/>Click "Generate Image" to fix
+                      </p>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
