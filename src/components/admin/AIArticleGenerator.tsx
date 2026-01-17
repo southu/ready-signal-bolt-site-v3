@@ -104,162 +104,54 @@ export default function AIArticleGenerator({ onGenerated, onCancel }: AIArticleG
   };
 
   const generateImage = async (title: string, topic: string): Promise<string> => {
-    const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
-    if (!apiKey) {
-      console.warn('OpenAI API key not configured for image generation');
-      return '';
-    }
-
-    const imagePrompt = `Professional, modern B2B business illustration for a blog article titled "${title}". 
-Topic: ${topic}
-Style: Clean, corporate, data-driven aesthetic with abstract geometric shapes, charts, or professional business imagery. 
-Colors: Professional blues, teals, and amber accents on a clean background.
-No text or words in the image. Suitable for a data analytics company blog.`;
-
-    const response = await fetch('https://api.openai.com/v1/images/generations', {
+    const response = await fetch(`${supabaseUrl}/functions/v1/generate-article`, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'dall-e-3',
-        prompt: imagePrompt,
-        n: 1,
-        size: '1792x1024',
-        quality: 'standard',
+        action: 'generate-image',
+        imageTitle: title,
+        imageTopic: topic,
       }),
     });
 
     if (!response.ok) {
-      console.error('DALL-E API error:', await response.text());
+      console.error('Image generation error:', await response.text());
       return '';
     }
 
     const data = await response.json();
-    return data.data[0]?.url || '';
+    return data.url || '';
   };
 
   const generateArticle = async (researchData?: ResearchResult) => {
-    const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
-
-    if (!apiKey) {
-      throw new Error('OpenAI API key not configured. Please add VITE_OPENAI_API_KEY to your environment.');
-    }
-
-    // Build the user prompt with research data
-    let userPrompt = `Transform this into a complete, ORIGINAL blog article:\n\n${rawContent}`;
-    
-    if (researchData) {
-      userPrompt += `\n\n--- RESEARCH DATA (incorporate with citations) ---\n`;
-      userPrompt += `\nSummary: ${researchData.summary}`;
-      
-      if (researchData.keyFindings.length > 0) {
-        userPrompt += `\n\nKey Findings:\n${researchData.keyFindings.map(f => `- ${f}`).join('\n')}`;
-      }
-      
-      if (researchData.statistics.length > 0) {
-        userPrompt += `\n\nStatistics to cite:\n${researchData.statistics.map(s => `- ${s}`).join('\n')}`;
-      }
-      
-      if (researchData.recentTrends.length > 0) {
-        userPrompt += `\n\nRecent Trends:\n${researchData.recentTrends.map(t => `- ${t}`).join('\n')}`;
-      }
-      
-      if (researchData.sources.length > 0) {
-        userPrompt += `\n\nSources (use these URLs in citations):\n${researchData.sources.map(s => `- ${s.title}: ${s.url}`).join('\n')}`;
-      }
-    }
-
-    // Use GPT-5.2 with the Responses API for best results
-    const response = await fetch('https://api.openai.com/v1/responses', {
+    // Call Supabase edge function (API key is stored server-side)
+    const response = await fetch(`${supabaseUrl}/functions/v1/generate-article`, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-5.2',
-        input: `${SYSTEM_PROMPT}\n\n---\n\n${userPrompt}`,
-        reasoning: {
-          effort: 'medium',  // Good balance of quality and speed
-        },
-        text: {
-          verbosity: 'high',  // We want thorough article content
-        },
-        max_output_tokens: 8000,
+        action: 'generate-article',
+        rawContent,
+        research: researchData,
       }),
     });
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      console.error('OpenAI API error:', errorData);
-
-      if (response.status === 401) {
-        throw new Error('Invalid API key');
-      } else if (response.status === 429) {
-        throw new Error('Rate limit exceeded. Please wait a moment and try again.');
-      }
-      throw new Error(`API error: ${response.status}`);
+      console.error('Article generation error:', errorData);
+      throw new Error(errorData.error || `Generation failed: ${response.status}`);
     }
 
-    const data = await response.json();
-    
-    // Debug: Log the full response structure to understand the format
-    console.log('GPT-5.2 Response structure:', JSON.stringify(data, null, 2).substring(0, 2000));
-    
-    // Try multiple ways to extract content from Responses API
-    let content = '';
-    
-    // Method 1: Direct output_text (documented format)
-    if (data.output_text) {
-      content = data.output_text.trim();
-      console.log('Found content via output_text');
-    }
-    // Method 2: output array with content blocks (GPT-5.2 actual format)
-    else if (data.output && Array.isArray(data.output)) {
-      for (const item of data.output) {
-        if (item.type === 'message' && item.content) {
-          for (const block of item.content) {
-            // GPT-5.2 uses "output_text" as the block type, not "text"
-            if ((block.type === 'output_text' || block.type === 'text') && block.text) {
-              content = block.text.trim();
-              console.log('Found content via output[].content[].text, block type:', block.type);
-              break;
-            }
-          }
-        }
-        if (content) break;
-      }
-    }
-    // Method 3: choices array (Chat Completions format fallback)
-    else if (data.choices && data.choices[0]?.message?.content) {
-      content = data.choices[0].message.content.trim();
-      console.log('Found content via choices (fallback format)');
-    }
-    // Method 4: Direct text property
-    else if (data.text) {
-      content = data.text.trim();
-      console.log('Found content via text property');
-    }
+    const article = await response.json() as GeneratedArticle;
 
-    if (!content) {
-      console.error('No content found in response. Full response:', JSON.stringify(data));
-      throw new Error('No content returned from AI. Check browser console for response details.');
-    }
-
-    const jsonMatch = content.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) {
-      throw new Error('Invalid response format from AI');
-    }
-
-    const parsed = JSON.parse(jsonMatch[0]) as GeneratedArticle;
-
-    if (!parsed.title || !parsed.content) {
+    if (!article.title || !article.content) {
       throw new Error('Generated content is missing required fields');
     }
 
-    return parsed;
+    return article;
   };
 
   const handleQuickGenerate = async () => {
