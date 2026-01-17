@@ -1,8 +1,23 @@
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
 
 export default function TermsOfService() {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash) {
+      const element = document.querySelector(location.hash);
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+      }
+    }
+  }, [location.hash]);
+
   return (
     <>
       <SEO
@@ -130,9 +145,37 @@ export default function TermsOfService() {
                 Any disputes arising from these Terms or your use of the Services shall be resolved through binding arbitration in accordance with the rules of the American Arbitration Association, unless prohibited by applicable law.
               </p>
 
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">16. Contact Us</h2>
+              <h2 id="cookies" className="text-2xl font-bold text-gray-900 mb-4">16. Cookies Policy</h2>
               <p className="text-gray-600 mb-4">
-                If you have any questions about these Terms, please contact:
+                Ready Signal uses cookies and similar tracking technologies to enhance your experience on our platform.
+              </p>
+              
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">What Are Cookies</h3>
+              <p className="text-gray-600 mb-4">
+                Cookies are small text files stored on your device when you visit our website. They help us remember your preferences, understand how you use our Services, and improve your experience.
+              </p>
+
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">Types of Cookies We Use</h3>
+              <ul className="list-disc pl-6 text-gray-600 mb-4 space-y-2">
+                <li><strong>Essential Cookies:</strong> Required for the platform to function properly, including authentication and security features</li>
+                <li><strong>Analytics Cookies:</strong> Help us understand how visitors interact with our website to improve performance and user experience</li>
+                <li><strong>Functional Cookies:</strong> Remember your preferences and settings to provide a personalized experience</li>
+                <li><strong>Marketing Cookies:</strong> Used to deliver relevant advertisements and track marketing campaign effectiveness</li>
+              </ul>
+
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">Managing Cookies</h3>
+              <p className="text-gray-600 mb-4">
+                You can control cookies through your browser settings. Most browsers allow you to block or delete cookies. However, disabling certain cookies may affect the functionality of our Services.
+              </p>
+
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">Third-Party Cookies</h3>
+              <p className="text-gray-600 mb-8">
+                We use third-party services (such as Google Analytics, HubSpot, and Supabase) that may set their own cookies. These cookies are governed by the respective third party's privacy policy.
+              </p>
+
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">17. Contact Us</h2>
+              <p className="text-gray-600 mb-4">
+                If you have any questions about these Terms or our Cookies Policy, please contact:
               </p>
               <div className="bg-gray-50 p-6 rounded-lg">
                 <p className="text-gray-900 font-semibold mb-2">Ready Signal – Legal Team</p>
