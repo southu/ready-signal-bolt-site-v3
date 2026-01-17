@@ -1,6 +1,9 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.42.0';
 
 const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
+const SUPABASE_URL = Deno.env.get('SUPABASE_URL');
+const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -145,6 +148,7 @@ Style: Clean, corporate, data-driven aesthetic with abstract geometric shapes, c
 Colors: Professional blues, teals, and amber accents on a clean background.
 No text or words in the image. Suitable for a data analytics company blog.`;
 
+  // Generate image with DALL-E
   const response = await fetch('https://api.openai.com/v1/images/generations', {
     method: 'POST',
     headers: {
@@ -167,7 +171,65 @@ No text or words in the image. Suitable for a data analytics company blog.`;
   }
 
   const data = await response.json();
-  return { url: data.data[0]?.url || '' };
+  const tempUrl = data.data[0]?.url;
+  
+  if (!tempUrl) {
+    return { url: '' };
+  }
+
+  // DALL-E URLs expire after ~1 hour, so we need to download and store permanently
+  try {
+    // Download the image
+    const imageResponse = await fetch(tempUrl);
+    if (!imageResponse.ok) {
+      console.error('Failed to download DALL-E image');
+      return { url: '' };
+    }
+    
+    const imageBlob = await imageResponse.blob();
+    const imageBuffer = await imageBlob.arrayBuffer();
+    
+    // Create Supabase client with service role key for storage access
+    if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
+      console.warn('Supabase not configured for storage, returning temp URL');
+      return { url: tempUrl };
+    }
+    
+    const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
+      auth: { persistSession: false }
+    });
+    
+    // Generate unique filename
+    const timestamp = Date.now();
+    const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 50);
+    const filename = `blog-images/${slug}-${timestamp}.png`;
+    
+    // Upload to Supabase Storage
+    const { data: uploadData, error: uploadError } = await supabase.storage
+      .from('public')
+      .upload(filename, imageBuffer, {
+        contentType: 'image/png',
+        upsert: true,
+      });
+    
+    if (uploadError) {
+      console.error('Failed to upload to Supabase Storage:', uploadError);
+      // Return empty - don't use temp URL as it will expire
+      return { url: '' };
+    }
+    
+    // Get public URL
+    const { data: publicUrlData } = supabase.storage
+      .from('public')
+      .getPublicUrl(filename);
+    
+    console.log('Image uploaded successfully:', publicUrlData.publicUrl);
+    return { url: publicUrlData.publicUrl };
+    
+  } catch (err) {
+    console.error('Error saving image to storage:', err);
+    return { url: '' };
+  }
 }
 
 Deno.serve(async (req: Request) => {

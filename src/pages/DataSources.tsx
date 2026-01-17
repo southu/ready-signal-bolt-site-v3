@@ -62,7 +62,6 @@ export default function DataSources() {
     return sources;
   }, [selectedCategory, searchQuery]);
 
-  const totalFeatures = dataSources.reduce((acc, s) => acc + s.featureCount, 0);
   const categories = getAllCategories();
 
   return (
@@ -155,13 +154,10 @@ export default function DataSources() {
                     key={source.id}
                     className={`bg-gradient-to-br ${colors.bg} p-6 rounded-2xl border-2 ${colors.border} transition-all hover:shadow-lg group`}
                   >
-                    <div className="flex items-start justify-between mb-4">
+                    <div className="flex items-start mb-4">
                       <div className={`w-12 h-12 ${colors.icon} rounded-xl flex items-center justify-center`}>
                         <Building2 className="w-6 h-6 text-white" />
                       </div>
-                      <span className={`text-xs font-semibold ${colors.text} bg-white/60 px-3 py-1 rounded-full`}>
-                        {source.featureCount}+ features
-                      </span>
                     </div>
                     
                     <h3 className="text-xl font-bold mb-2 text-gray-900">{source.name}</h3>
