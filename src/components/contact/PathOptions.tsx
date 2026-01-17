@@ -47,14 +47,15 @@ const PathOptions = () => {
                 </ul>
               </div>
 
-              <motion.button
+              <motion.a
+                href="https://app.readysignal.com/auth/sign-up"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 className="w-full bg-rs-cyan text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-opacity-90 transition-all shadow-lg inline-flex items-center justify-center space-x-2"
               >
                 <span>Create Free Account</span>
                 <ArrowRight className="w-5 h-5" />
-              </motion.button>
+              </motion.a>
             </div>
           </motion.div>
 
@@ -102,14 +103,15 @@ const PathOptions = () => {
                 </ul>
               </div>
 
-              <motion.button
+              <motion.a
+                href="#contact-form"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 className="w-full bg-rs-yellow text-rs-dark px-8 py-4 rounded-lg font-bold text-lg hover:bg-opacity-90 transition-all shadow-lg inline-flex items-center justify-center space-x-2"
               >
                 <span>Book a Strategy Call</span>
                 <ArrowRight className="w-5 h-5" />
-              </motion.button>
+              </motion.a>
             </div>
           </motion.div>
         </div>
@@ -123,7 +125,7 @@ const PathOptions = () => {
         >
           <p className="text-lg text-rs-dark opacity-75">
             Not sure which option is right for you?{' '}
-            <a href="#" className="text-rs-cyan font-bold hover:underline">
+            <a href="#contact-form" className="text-rs-cyan font-bold hover:underline">
               Chat with our team
             </a>
           </p>

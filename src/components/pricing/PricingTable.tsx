@@ -17,6 +17,7 @@ const PricingTable = () => {
       signalLibrary: 'Full Access (3M+ Features)',
       support: 'Standard',
       ctaText: 'Start Free Trial',
+      ctaLink: 'https://app.readysignal.com/auth/sign-up',
       highlighted: false,
     },
     {
@@ -32,6 +33,7 @@ const PricingTable = () => {
       signalLibrary: 'Full Access (3M+ Features)',
       support: 'Standard',
       ctaText: 'Start Free Trial',
+      ctaLink: 'https://app.readysignal.com/auth/sign-up',
       highlighted: true,
     },
     {
@@ -47,6 +49,7 @@ const PricingTable = () => {
       signalLibrary: 'Shared Signal Library',
       support: 'Dedicated Customer Success',
       ctaText: 'Contact Sales',
+      ctaLink: '/contact-us/',
       highlighted: false,
     },
     {
@@ -64,6 +67,7 @@ const PricingTable = () => {
       signalLibrary: 'Curated & Validated by Experts',
       support: 'Dedicated Data Scientist',
       ctaText: 'Book Consultation',
+      ctaLink: '/contact-us/',
       highlighted: false,
     },
   ];
@@ -142,7 +146,8 @@ const PricingTable = () => {
                   </div>
                 </div>
 
-                <motion.button
+                <motion.a
+                  href={plan.ctaLink}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   className={`w-full py-3 px-6 rounded-lg font-bold inline-flex items-center justify-center space-x-2 transition-all ${
@@ -153,7 +158,7 @@ const PricingTable = () => {
                 >
                   <span>{plan.ctaText}</span>
                   <ArrowRight className="w-4 h-4" />
-                </motion.button>
+                </motion.a>
               </div>
             </motion.div>
           ))}

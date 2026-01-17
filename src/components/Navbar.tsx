@@ -156,9 +156,9 @@ const Navbar = () => {
             <a href="https://app.readysignal.com/" target="_blank" rel="noopener noreferrer" className="text-rs-dark hover:text-rs-cyan transition-colors font-medium px-4 py-2">
               Log In
             </a>
-            <Link to="/contact-us/" className="bg-rs-yellow text-rs-dark hover:bg-yellow-400 transition-colors font-semibold px-6 py-2 rounded-lg shadow-sm hover:shadow-md">
+            <a href="https://app.readysignal.com/auth/sign-up" className="bg-rs-yellow text-rs-dark hover:bg-yellow-400 transition-colors font-semibold px-6 py-2 rounded-lg shadow-sm hover:shadow-md">
               Start Free Trial
-            </Link>
+            </a>
           </div>
 
           <button
@@ -225,9 +225,9 @@ const Navbar = () => {
               <a href="https://app.readysignal.com/" target="_blank" rel="noopener noreferrer" className="block w-full text-rs-dark hover:text-rs-cyan transition-colors font-medium px-4 py-2 border border-gray-300 rounded-lg text-center">
                 Log In
               </a>
-              <Link to="/contact-us/" className="block w-full bg-rs-yellow text-rs-dark hover:bg-yellow-400 transition-colors font-semibold px-6 py-2 rounded-lg shadow-sm text-center">
+              <a href="https://app.readysignal.com/auth/sign-up" className="block w-full bg-rs-yellow text-rs-dark hover:bg-yellow-400 transition-colors font-semibold px-6 py-2 rounded-lg shadow-sm text-center">
                 Start Free Trial
-              </Link>
+              </a>
             </div>
           </div>
         </motion.div>

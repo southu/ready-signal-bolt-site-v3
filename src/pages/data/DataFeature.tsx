@@ -382,13 +382,13 @@ export default function DataFeature() {
               Get instant access to {feature.shortName || feature.name} and thousands of other data features
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                to="/contact-us/"
+              <a
+                href="https://app.readysignal.com/auth/sign-up"
                 className="inline-flex items-center gap-2 bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-all shadow-lg"
               >
                 Start Free Trial
                 <ArrowRight className="w-5 h-5" />
-              </Link>
+              </a>
               <Link
                 to="/plans/"
                 className="inline-flex items-center gap-2 bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-800 transition-all border-2 border-white"

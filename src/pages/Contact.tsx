@@ -3,6 +3,7 @@ import Footer from '../components/Footer';
 import SEO from '../components/SEO';
 import ContactHero from '../components/contact/ContactHero';
 import PathOptions from '../components/contact/PathOptions';
+import HubSpotForm from '../components/contact/HubSpotForm';
 
 function Contact() {
   return (
@@ -16,6 +17,24 @@ function Contact() {
       <main>
         <ContactHero />
         <PathOptions />
+        
+        {/* Contact Form Section */}
+        <section id="contact-form" className="py-20 bg-white">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-rs-dark mb-4">
+                Get in Touch
+              </h2>
+              <p className="text-lg text-gray-600">
+                Fill out the form below and our team will reach out within 24 hours.
+              </p>
+            </div>
+            
+            <div className="bg-gray-50 rounded-2xl p-8 shadow-lg">
+              <HubSpotForm />
+            </div>
+          </div>
+        </section>
       </main>
 
       <Footer />
