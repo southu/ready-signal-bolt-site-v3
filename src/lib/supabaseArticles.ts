@@ -11,11 +11,11 @@ export interface DBArticle {
   modified_date: string | null;
   category: string;
   tags: string[];
-  featured_image: string | null;
+  image: string | null;  // Column is 'image', not 'featured_image'
   content: string;
-  excerpt: string | null;
-  is_published: boolean;
+  status: 'draft' | 'published';  // Column is 'status', not 'is_published'
   created_at: string;
+  updated_at: string;
 }
 
 // Frontend article type (for compatibility with existing components)
@@ -46,9 +46,9 @@ export function dbToFrontend(dbArticle: DBArticle): Article {
     modifiedDate: dbArticle.modified_date ? dbArticle.modified_date.split('T')[0] : undefined,
     category: dbArticle.category,
     tags: dbArticle.tags || [],
-    image: dbArticle.featured_image || undefined,
+    image: dbArticle.image || undefined,
     content: dbArticle.content,
-    status: dbArticle.is_published ? 'published' : 'draft',
+    status: dbArticle.status || 'draft',
   };
 }
 
@@ -64,9 +64,9 @@ export function frontendToDb(article: Partial<Article>): Partial<DBArticle> {
   if (article.modifiedDate !== undefined) dbArticle.modified_date = article.modifiedDate;
   if (article.category !== undefined) dbArticle.category = article.category;
   if (article.tags !== undefined) dbArticle.tags = article.tags;
-  if (article.image !== undefined) dbArticle.featured_image = article.image || null;
+  if (article.image !== undefined) dbArticle.image = article.image || null;
   if (article.content !== undefined) dbArticle.content = article.content;
-  if (article.status !== undefined) dbArticle.is_published = article.status === 'published';
+  if (article.status !== undefined) dbArticle.status = article.status;
 
   return dbArticle;
 }
@@ -87,7 +87,7 @@ export async function fetchPublishedArticles(): Promise<Article[]> {
   const { data, error } = await supabase
     .from('blog_articles')
     .select('*')
-    .eq('is_published', true)
+    .eq('status', 'published')
     .order('published_date', { ascending: false });
 
   if (error) {
