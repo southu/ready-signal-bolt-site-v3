@@ -28,11 +28,12 @@ const OriginStory = () => {
           transition={{ duration: 0.6 }}
           className="bg-rs-light-gray rounded-xl p-8 lg:p-12 mb-12"
         >
-          <div className="mb-8 rounded-lg overflow-hidden">
+          <div className="mb-8 rounded-xl overflow-hidden shadow-lg">
             <img
               src={warRoomImg}
-              alt="The War Room"
-              className="w-full h-64 object-cover"
+              alt="The War Room - Monday Morning Problem"
+              className="w-full h-72 object-cover"
+              loading="eager"
             />
           </div>
           <p className="text-lg text-rs-dark opacity-75 mb-8">
