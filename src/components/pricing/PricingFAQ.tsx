@@ -68,13 +68,14 @@ const PricingFAQ = () => {
           <p className="text-lg text-rs-dark mb-4">
             Have more questions?
           </p>
-          <motion.button
+          <motion.a
+            href="/contact-us/#contact-form"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="bg-rs-cyan text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-opacity-90 transition-all shadow-lg"
+            className="inline-block bg-rs-cyan text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-opacity-90 transition-all shadow-lg"
           >
             Contact Our Team
-          </motion.button>
+          </motion.a>
         </motion.div>
       </div>
     </section>

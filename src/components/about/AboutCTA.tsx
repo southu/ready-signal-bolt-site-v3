@@ -20,17 +20,19 @@ const AboutCTA = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-            <motion.button
+            <motion.a
+              href="/contact-us/#contact-form"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="inline-flex items-center space-x-2 bg-rs-cyan text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-opacity-90 transition-all shadow-lg"
             >
               <Briefcase className="w-5 h-5" />
-              <span>View Open Positions</span>
+              <span>Work With Us</span>
               <ArrowRight className="w-5 h-5" />
-            </motion.button>
+            </motion.a>
 
-            <motion.button
+            <motion.a
+              href="/contact-us/#contact-form"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="inline-flex items-center space-x-2 bg-white text-rs-dark px-8 py-4 rounded-lg font-bold text-lg hover:bg-gray-100 transition-all shadow-lg"
@@ -38,7 +40,7 @@ const AboutCTA = () => {
               <Mail className="w-5 h-5" />
               <span>Contact Us</span>
               <ArrowRight className="w-5 h-5" />
-            </motion.button>
+            </motion.a>
           </div>
         </motion.div>
       </div>

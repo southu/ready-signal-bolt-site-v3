@@ -29,14 +29,15 @@ const FinalCTASection = () => {
             <span className="text-rs-yellow">Start Predicting.</span>
           </h2>
 
-          <motion.button
+          <motion.a
+            href="https://app.readysignal.com/auth/sign-up"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="bg-rs-yellow text-rs-dark hover:bg-yellow-400 transition-all font-semibold px-10 py-4 rounded-lg shadow-lg hover:shadow-xl inline-flex items-center space-x-2"
           >
             <span>Create Free Account</span>
             <ArrowRight className="w-5 h-5" />
-          </motion.button>
+          </motion.a>
 
           <p className="text-gray-300 text-lg">
             Join data teams from the world's leading brands.

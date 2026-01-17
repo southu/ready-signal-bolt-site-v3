@@ -47,14 +47,15 @@ const HeroSection = () => {
                 <ArrowRight className="w-5 h-5" />
               </motion.a>
 
-              <motion.button
+              <motion.a
+                href="/contact-us/#contact-form"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="bg-white text-rs-dark hover:bg-rs-light-gray transition-all font-semibold px-8 py-4 rounded-lg border-2 border-rs-dark flex items-center justify-center space-x-2"
               >
                 <Play className="w-5 h-5" />
-                <span>Watch Demo</span>
-              </motion.button>
+                <span>Request Demo</span>
+              </motion.a>
             </div>
 
             <div className="flex items-center space-x-8 pt-4">
@@ -157,19 +158,66 @@ const HeroSection = () => {
                 <div className="w-40 h-40 bg-rs-cyan rounded-full blur-3xl" />
               </motion.div>
 
+              {/* Flowing data particles */}
+              {[0, 1, 2, 3, 4, 5].map((i) => {
+                const angles = [-90, -30, 30, 90, 150, 210];
+                const angle = angles[i];
+                const angleRad = (angle * Math.PI) / 180;
+                const startRadius = 160;
+                const endRadius = 40;
+                const startX = Math.cos(angleRad) * startRadius;
+                const startY = Math.sin(angleRad) * startRadius;
+                const endX = Math.cos(angleRad) * endRadius;
+                const endY = Math.sin(angleRad) * endRadius;
+                
+                return (
+                  <motion.div
+                    key={`particle-${i}`}
+                    className="absolute w-2 h-2 rounded-full z-30 pointer-events-none"
+                    style={{
+                      left: '50%',
+                      top: '50%',
+                      background: i % 2 === 0 ? '#3B82F6' : '#F59E0B',
+                      boxShadow: i % 2 === 0 ? '0 0 8px #3B82F6' : '0 0 8px #F59E0B',
+                    }}
+                    animate={{
+                      x: [startX, endX],
+                      y: [startY, endY],
+                      opacity: [0, 1, 1, 0],
+                      scale: [0.5, 1, 1, 0.5],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      delay: i * 0.4,
+                      ease: "easeInOut",
+                    }}
+                  />
+                );
+              })}
+
               {/* Accent dots */}
               <motion.div
-                animate={{ opacity: [0.5, 1, 0.5] }}
+                animate={{ 
+                  opacity: [0.5, 1, 0.5],
+                  scale: [1, 1.2, 1],
+                }}
                 transition={{ duration: 2, repeat: Infinity }}
                 className="absolute top-16 right-20 w-3 h-3 bg-rs-yellow rounded-full"
               />
               <motion.div
-                animate={{ opacity: [0.5, 1, 0.5] }}
+                animate={{ 
+                  opacity: [0.5, 1, 0.5],
+                  scale: [1, 1.2, 1],
+                }}
                 transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
                 className="absolute bottom-20 left-16 w-2 h-2 bg-rs-cyan rounded-full"
               />
               <motion.div
-                animate={{ opacity: [0.5, 1, 0.5] }}
+                animate={{ 
+                  opacity: [0.5, 1, 0.5],
+                  scale: [1, 1.2, 1],
+                }}
                 transition={{ duration: 2, repeat: Infinity, delay: 1 }}
                 className="absolute top-1/3 left-12 w-2 h-2 bg-rs-yellow rounded-full"
               />

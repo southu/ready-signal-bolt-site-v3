@@ -32,14 +32,15 @@ const SolutionsHero = () => {
               We don't just deliver data. We deliver the "Human-in-the-Loop" confidence your strategy requires.
             </p>
 
-            <motion.button
+            <motion.a
+              href="/contact-us/#contact-form"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="bg-rs-yellow text-rs-dark hover:bg-yellow-400 transition-all font-semibold px-8 py-4 rounded-lg shadow-lg hover:shadow-xl inline-flex items-center space-x-2"
             >
               <Calendar className="w-5 h-5" />
               <span>Schedule Consultation</span>
-            </motion.button>
+            </motion.a>
           </motion.div>
 
           <motion.div

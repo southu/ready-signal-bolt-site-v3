@@ -39,14 +39,15 @@ const IntegrationsCTA = () => {
               Your time is too valuable to waste on data plumbing. Get instant access to production-ready signals and focus on what matters: building better predictions.
             </p>
 
-            <motion.button
+            <motion.a
+              href="https://app.readysignal.com/auth/sign-up"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="bg-rs-yellow text-rs-dark px-10 py-5 rounded-xl font-bold text-xl hover:bg-opacity-90 transition-all shadow-2xl inline-flex items-center space-x-3"
             >
               <span>Get Your API Key</span>
               <ArrowRight className="w-6 h-6" />
-            </motion.button>
+            </motion.a>
 
             <div className="mt-8 flex items-center justify-center space-x-8 text-gray-400">
               <div className="flex items-center space-x-2">

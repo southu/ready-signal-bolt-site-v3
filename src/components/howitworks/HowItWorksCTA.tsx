@@ -21,14 +21,15 @@ const HowItWorksCTA = () => {
             Upload one target variable. See what drives it in minutes.
           </p>
 
-          <motion.button
+          <motion.a
+            href="https://app.readysignal.com/auth/sign-up"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="inline-flex items-center space-x-2 bg-rs-yellow text-rs-dark px-8 py-4 rounded-lg font-bold text-lg hover:bg-opacity-90 transition-all shadow-lg"
           >
             <span>Run a Free Discovery Test</span>
             <ArrowRight className="w-5 h-5" />
-          </motion.button>
+          </motion.a>
         </motion.div>
       </div>
     </section>
