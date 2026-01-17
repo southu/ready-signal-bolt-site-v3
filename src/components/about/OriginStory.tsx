@@ -27,14 +27,6 @@ const OriginStory = () => {
           transition={{ duration: 0.6 }}
           className="bg-rs-light-gray rounded-xl p-8 lg:p-12 mb-12"
         >
-          <div className="mb-8 rounded-xl overflow-hidden shadow-lg">
-            <img
-              src="/the_war_room.jpeg"
-              alt="The War Room - Monday Morning Problem"
-              className="w-full h-72 object-cover"
-              loading="eager"
-            />
-          </div>
           <p className="text-lg text-rs-dark opacity-75 mb-8">
             For years, I worked as an enterprise data scientist for major logistics and retail
             brands. And every Monday morning, I faced the same scene:
