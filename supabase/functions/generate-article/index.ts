@@ -138,7 +138,13 @@ async function generateArticle(rawContent: string, research?: GenerateRequest['r
 }
 
 async function generateImage(title: string, topic: string) {
+  console.log('=== IMAGE GENERATION START ===');
+  console.log('Title:', title);
+  console.log('Topic:', topic?.substring(0, 100));
+  console.log('OpenAI key configured:', !!OPENAI_API_KEY);
+  
   if (!OPENAI_API_KEY) {
+    console.error('OpenAI API key not configured');
     throw new Error('OpenAI API key not configured');
   }
 
@@ -167,14 +173,17 @@ No text or words in the image. Suitable for a data analytics company blog.`;
   if (!response.ok) {
     const errorText = await response.text();
     console.error('DALL-E API error:', response.status, errorText);
-    throw new Error(`Image generation failed: ${response.status}`);
+    throw new Error(`DALL-E API error ${response.status}: ${errorText.substring(0, 200)}`);
   }
 
+  console.log('DALL-E API call successful');
   const data = await response.json();
   const tempUrl = data.data[0]?.url;
+  console.log('DALL-E temp URL received:', !!tempUrl);
   
   if (!tempUrl) {
-    return { url: '' };
+    console.error('No URL in DALL-E response');
+    throw new Error('No image URL returned from DALL-E');
   }
 
   // DALL-E URLs expire after ~1 hour, so we need to download and store permanently
@@ -199,10 +208,12 @@ No text or words in the image. Suitable for a data analytics company blog.`;
       auth: { persistSession: false }
     });
     
-    // Generate unique filename
+    // Generate unique filename (just the filename, bucket is already 'blog-images')
     const timestamp = Date.now();
     const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 50);
-    const filename = `blog-images/${slug}-${timestamp}.png`;
+    const filename = `${slug}-${timestamp}.png`;
+    
+    console.log('Uploading image to Supabase Storage:', filename);
     
     // Upload to Supabase Storage
     const { data: uploadData, error: uploadError } = await supabase.storage
@@ -213,9 +224,12 @@ No text or words in the image. Suitable for a data analytics company blog.`;
       });
     
     if (uploadError) {
-      console.error('Failed to upload to Supabase Storage:', uploadError);
-      // Return empty - don't use temp URL as it will expire
-      return { url: '' };
+      console.error('Failed to upload to Supabase Storage:', JSON.stringify(uploadError));
+      // If bucket doesn't exist, throw a clearer error
+      if (uploadError.message?.includes('not found') || uploadError.message?.includes('Bucket')) {
+        throw new Error('Storage bucket "blog-images" not found. Please create it in Supabase Dashboard.');
+      }
+      throw new Error(`Storage upload failed: ${uploadError.message}`);
     }
     
     // Get public URL
@@ -239,6 +253,7 @@ Deno.serve(async (req: Request) => {
     }
 
     const { action, rawContent, research, imageTitle, imageTopic } = await req.json() as GenerateRequest;
+    console.log('Received action:', action);
 
     if (action === 'generate-article') {
       if (!rawContent) {
