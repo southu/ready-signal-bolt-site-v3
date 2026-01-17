@@ -177,6 +177,9 @@ Deno.serve(async (req: Request) => {
 
     const research = await performResearch(topic, context);
     log.info('Research completed successfully');
+    
+    // Flush logs before returning
+    await log.flush();
 
     return new Response(
       JSON.stringify(research),
@@ -184,6 +187,10 @@ Deno.serve(async (req: Request) => {
     );
   } catch (err) {
     log.error('Research failed', { error: err.message, stack: err.stack });
+    
+    // Flush logs before returning
+    await log.flush();
+    
     return new Response(
       JSON.stringify({ error: err.message || 'Research failed' }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }

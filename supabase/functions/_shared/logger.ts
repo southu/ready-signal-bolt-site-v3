@@ -1,8 +1,13 @@
 // Shared logger for Supabase Edge Functions
 // Writes to both console and the function_logs table
 
+// Get the Supabase URL from environment - edge functions have this built in
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL') || '';
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || '';
+
+// Debug: Log what we have access to
+console.log('[Logger Init] SUPABASE_URL available:', !!SUPABASE_URL, SUPABASE_URL ? SUPABASE_URL.substring(0, 30) + '...' : 'none');
+console.log('[Logger Init] SERVICE_ROLE_KEY available:', !!SUPABASE_SERVICE_ROLE_KEY);
 
 type LogLevel = 'debug' | 'info' | 'warn' | 'error';
 
@@ -15,12 +20,18 @@ interface LogEntry {
 
 async function writeToDb(entry: LogEntry): Promise<void> {
   if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
-    console.warn('Logger: Supabase credentials not available, skipping DB write');
+    console.warn('[Logger] Supabase credentials not available:', {
+      hasUrl: !!SUPABASE_URL,
+      hasKey: !!SUPABASE_SERVICE_ROLE_KEY
+    });
     return;
   }
 
   try {
-    const response = await fetch(`${SUPABASE_URL}/rest/v1/function_logs`, {
+    const url = `${SUPABASE_URL}/rest/v1/function_logs`;
+    console.log('[Logger] Writing to:', url);
+    
+    const response = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -37,14 +48,20 @@ async function writeToDb(entry: LogEntry): Promise<void> {
     });
 
     if (!response.ok) {
-      console.error('Logger: Failed to write to DB:', response.status);
+      const errorText = await response.text();
+      console.error('[Logger] Failed to write to DB:', response.status, errorText);
+    } else {
+      console.log('[Logger] Successfully wrote log entry');
     }
   } catch (err) {
-    console.error('Logger: Error writing to DB:', err);
+    console.error('[Logger] Error writing to DB:', err);
   }
 }
 
 export function createLogger(functionName: string) {
+  // Queue of pending log writes
+  const pendingWrites: Promise<void>[] = [];
+  
   const log = (level: LogLevel, message: string, data?: Record<string, unknown>) => {
     // Always log to console
     const timestamp = new Date().toISOString();
@@ -65,8 +82,9 @@ export function createLogger(functionName: string) {
         break;
     }
 
-    // Also write to database (non-blocking)
-    writeToDb({ function_name: functionName, level, message, data }).catch(() => {});
+    // Also write to database
+    const writePromise = writeToDb({ function_name: functionName, level, message, data });
+    pendingWrites.push(writePromise);
   };
 
   return {
@@ -74,5 +92,10 @@ export function createLogger(functionName: string) {
     info: (message: string, data?: Record<string, unknown>) => log('info', message, data),
     warn: (message: string, data?: Record<string, unknown>) => log('warn', message, data),
     error: (message: string, data?: Record<string, unknown>) => log('error', message, data),
+    // Flush all pending writes - call before returning response
+    flush: async () => {
+      await Promise.all(pendingWrites);
+      pendingWrites.length = 0;
+    },
   };
 }
