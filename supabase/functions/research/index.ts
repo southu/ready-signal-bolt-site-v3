@@ -7,8 +7,10 @@
 // - Source URLs for citations
 
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
+import { createLogger } from "../_shared/logger.ts";
 
 const PERPLEXITY_API_KEY = Deno.env.get('PERPLEXITY_API_KEY');
+const log = createLogger('research');
 
 // CORS headers for browser requests
 const corsHeaders = {
@@ -89,11 +91,16 @@ Respond in valid JSON format:
 
   if (!response.ok) {
     const error = await response.text();
-    console.error('Perplexity API error:', error);
+    log.error('Perplexity API error', { status: response.status, error });
     throw new Error(`Perplexity API error: ${response.status}`);
   }
 
   const data = await response.json();
+  log.info('Perplexity response received', { 
+    hasChoices: !!data.choices,
+    citationsCount: data.citations?.length || 0 
+  });
+  
   const content = data.choices[0]?.message?.content || '';
   
   // Extract citations if provided by Perplexity
@@ -114,11 +121,20 @@ Respond in valid JSON format:
         }));
       }
       
+      log.info('Research parsed successfully', {
+        summaryLength: parsed.summary?.length || 0,
+        keyFindingsCount: parsed.keyFindings?.length || 0,
+        sourcesCount: parsed.sources?.length || 0
+      });
+      
       return parsed;
     }
     throw new Error('No valid JSON found in response');
   } catch (err) {
-    console.error('Failed to parse research response:', err);
+    log.error('Failed to parse research response', { 
+      error: err.message,
+      contentPreview: content.substring(0, 500)
+    });
     
     // Return a basic structure with the raw content
     return {
@@ -146,8 +162,13 @@ Deno.serve(async (req: Request) => {
     }
 
     const { topic, context } = await req.json() as ResearchRequest;
+    log.info('Research request received', { 
+      topicLength: topic?.length || 0,
+      hasContext: !!context 
+    });
 
     if (!topic || topic.trim().length === 0) {
+      log.warn('Missing or empty topic');
       return new Response(
         JSON.stringify({ error: 'Missing or empty topic' }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -155,13 +176,14 @@ Deno.serve(async (req: Request) => {
     }
 
     const research = await performResearch(topic, context);
+    log.info('Research completed successfully');
 
     return new Response(
       JSON.stringify(research),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (err) {
-    console.error('Research error:', err);
+    log.error('Research failed', { error: err.message, stack: err.stack });
     return new Response(
       JSON.stringify({ error: err.message || 'Research failed' }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }

@@ -8,8 +8,10 @@
 // - SEO optimization and analysis
 
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
+import { createLogger } from "../_shared/logger.ts";
 
 const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
+const log = createLogger('ai-enhance');
 
 // CORS headers for browser requests
 const corsHeaders = {
@@ -55,14 +57,20 @@ async function callGPT(systemPrompt: string, userPrompt: string, maxTokens: numb
 
   if (!response.ok) {
     const error = await response.text();
-    console.error('OpenAI API error:', error);
+    log.error('OpenAI API error', { status: response.status, error: error.substring(0, 500) });
     throw new Error(`OpenAI API error: ${response.status}`);
   }
 
   const data = await response.json();
   
-  // Debug: Log response structure
-  console.log('GPT-5.2 Response keys:', Object.keys(data));
+  // Log response structure for debugging
+  log.info('GPT-5.2 Response received', { 
+    keys: Object.keys(data),
+    hasOutputText: !!data.output_text,
+    hasOutput: !!data.output,
+    hasChoices: !!data.choices,
+    responsePreview: JSON.stringify(data).substring(0, 500)
+  });
   
   // Try multiple ways to extract content from Responses API
   let content = '';
