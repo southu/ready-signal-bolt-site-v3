@@ -92,7 +92,7 @@ export default function DataSources() {
                 Trusted Data Sources
               </h1>
               <p className="text-xl md:text-2xl text-gray-300 mb-4">
-                {dataSources.length}+ authoritative sources with {totalFeatures.toLocaleString()}+ data features
+                40,000+ data sources generating 3 million+ features
               </p>
               <p className="text-lg text-gray-400 mb-12">
                 All data is normalized, cleaned, and ready for your predictive models
