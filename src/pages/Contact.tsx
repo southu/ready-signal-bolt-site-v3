@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
@@ -6,6 +8,20 @@ import PathOptions from '../components/contact/PathOptions';
 import HubSpotForm from '../components/contact/HubSpotForm';
 
 function Contact() {
+  const location = useLocation();
+
+  // Scroll to hash anchor on page load
+  useEffect(() => {
+    if (location.hash) {
+      const element = document.querySelector(location.hash);
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+      }
+    }
+  }, [location.hash]);
+
   return (
     <div className="min-h-screen bg-white">
       <SEO
