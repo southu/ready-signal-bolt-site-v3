@@ -206,7 +206,7 @@ No text or words in the image. Suitable for a data analytics company blog.`;
     
     // Upload to Supabase Storage
     const { data: uploadData, error: uploadError } = await supabase.storage
-      .from('public')
+      .from('blog-images')
       .upload(filename, imageBuffer, {
         contentType: 'image/png',
         upsert: true,
@@ -220,7 +220,7 @@ No text or words in the image. Suitable for a data analytics company blog.`;
     
     // Get public URL
     const { data: publicUrlData } = supabase.storage
-      .from('public')
+      .from('blog-images')
       .getPublicUrl(filename);
     
     console.log('Image uploaded successfully:', publicUrlData.publicUrl);
