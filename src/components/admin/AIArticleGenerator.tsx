@@ -171,20 +171,23 @@ No text or words in the image. Suitable for a data analytics company blog.`;
       }
     }
 
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    // Use GPT-5.2 with the Responses API for best results
+    const response = await fetch('https://api.openai.com/v1/responses', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o',
-        messages: [
-          { role: 'system', content: SYSTEM_PROMPT },
-          { role: 'user', content: userPrompt },
-        ],
-        temperature: 0.7,
-        max_tokens: 8000,
+        model: 'gpt-5.2',
+        input: `${SYSTEM_PROMPT}\n\n---\n\n${userPrompt}`,
+        reasoning: {
+          effort: 'medium',  // Good balance of quality and speed
+        },
+        text: {
+          verbosity: 'high',  // We want thorough article content
+        },
+        max_output_tokens: 8000,
       }),
     });
 
@@ -201,7 +204,8 @@ No text or words in the image. Suitable for a data analytics company blog.`;
     }
 
     const data = await response.json();
-    const content = data.choices[0]?.message?.content?.trim();
+    // Responses API returns output_text directly
+    const content = data.output_text?.trim() || data.output?.[0]?.content?.[0]?.text?.trim();
 
     if (!content) {
       throw new Error('No content returned from AI');

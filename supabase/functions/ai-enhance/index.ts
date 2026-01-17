@@ -33,20 +33,23 @@ async function callGPT(systemPrompt: string, userPrompt: string, maxTokens: numb
     throw new Error('OpenAI API key not configured');
   }
 
-  const response = await fetch('https://api.openai.com/v1/chat/completions', {
+  // Use GPT-5.2 with the Responses API for best results
+  const response = await fetch('https://api.openai.com/v1/responses', {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${OPENAI_API_KEY}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      model: 'gpt-4o',
-      messages: [
-        { role: 'system', content: systemPrompt },
-        { role: 'user', content: userPrompt },
-      ],
-      temperature: 0.7,
-      max_tokens: maxTokens,
+      model: 'gpt-5.2',
+      input: `${systemPrompt}\n\n---\n\n${userPrompt}`,
+      reasoning: {
+        effort: 'low',  // Quick enhancements don't need heavy reasoning
+      },
+      text: {
+        verbosity: 'medium',
+      },
+      max_output_tokens: maxTokens,
     }),
   });
 
@@ -57,7 +60,8 @@ async function callGPT(systemPrompt: string, userPrompt: string, maxTokens: numb
   }
 
   const data = await response.json();
-  return data.choices[0]?.message?.content || '';
+  // Responses API returns output_text directly
+  return data.output_text?.trim() || data.output?.[0]?.content?.[0]?.text?.trim() || '';
 }
 
 async function enhanceTitle(title: string): Promise<string> {
