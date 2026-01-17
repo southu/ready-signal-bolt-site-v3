@@ -83,41 +83,46 @@ const HeroSection = () => {
             className="relative hidden lg:flex items-center justify-center"
           >
             {/* Data Flow Visualization */}
-            <div className="relative w-[450px] h-[450px]">
-              {/* Outer rotating ring */}
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-0 rounded-full border-2 border-dashed border-rs-cyan/20"
-              />
+            <div className="relative w-[500px] h-[500px]">
+              {/* Outer ring (static) */}
+              <div className="absolute inset-0 rounded-full border-2 border-dashed border-rs-cyan/30" />
               
               {/* Middle ring */}
-              <div className="absolute inset-8 rounded-full border border-gray-200" />
+              <div className="absolute inset-12 rounded-full border border-gray-200" />
               
               {/* Central Hub */}
               <div className="absolute inset-0 flex items-center justify-center">
                 <motion.div
                   animate={{ scale: [1, 1.05, 1] }}
                   transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                  className="w-32 h-32 bg-gradient-to-br from-rs-cyan to-blue-600 rounded-full flex items-center justify-center shadow-2xl z-10"
+                  className="w-28 h-28 bg-gradient-to-br from-rs-cyan to-blue-600 rounded-full flex items-center justify-center shadow-2xl z-10"
                 >
                   <div className="text-center text-white">
-                    <div className="text-3xl font-bold">RS</div>
-                    <div className="text-sm opacity-80">Engine</div>
+                    <div className="text-2xl font-bold">RS</div>
+                    <div className="text-xs opacity-80">Engine</div>
                   </div>
                 </motion.div>
               </div>
 
-              {/* Data Source Nodes - positioned in a circle */}
+              {/* Pulsing glow behind center */}
+              <motion.div
+                animate={{ scale: [1, 1.4, 1], opacity: [0.4, 0.15, 0.4] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute inset-0 flex items-center justify-center pointer-events-none"
+              >
+                <div className="w-36 h-36 bg-rs-cyan rounded-full blur-3xl" />
+              </motion.div>
+
+              {/* Data Source Labels - positioned around outer edge with more spacing */}
               {[
                 { label: 'Economic', icon: '📊', angle: -90 },
-                { label: 'Weather', icon: '🌤️', angle: -30 },
-                { label: 'Demographics', icon: '👥', angle: 30 },
-                { label: 'Health', icon: '🏥', angle: 90 },
-                { label: 'Market', icon: '📈', angle: 150 },
-                { label: 'Custom', icon: '⚡', angle: 210 },
+                { label: 'Weather', icon: '🌤️', angle: -20 },
+                { label: 'Health', icon: '🏥', angle: 50 },
+                { label: 'Demographics', icon: '👥', angle: 130 },
+                { label: 'Market', icon: '📈', angle: 200 },
+                { label: 'Custom', icon: '⚡', angle: 250 },
               ].map((node, i) => {
-                const radius = 175;
+                const radius = 210;
                 const angleRad = (node.angle * Math.PI) / 180;
                 const x = Math.cos(angleRad) * radius;
                 const y = Math.sin(angleRad) * radius;
@@ -136,91 +141,140 @@ const HeroSection = () => {
                     }}
                   >
                     <motion.div
-                      animate={{ y: [0, -4, 0] }}
-                      transition={{ duration: 2.5, repeat: Infinity, delay: i * 0.4 }}
-                      className="bg-white rounded-xl shadow-lg px-4 py-3 border border-gray-200 hover:border-rs-cyan hover:shadow-xl transition-all cursor-default"
+                      animate={{ y: [0, -3, 0] }}
+                      transition={{ duration: 3, repeat: Infinity, delay: i * 0.5 }}
+                      className="bg-white rounded-lg shadow-md px-3 py-2 border border-gray-100 hover:border-rs-cyan hover:shadow-lg transition-all cursor-default whitespace-nowrap"
                     >
-                      <div className="flex items-center gap-2">
-                        <span className="text-xl">{node.icon}</span>
-                        <span className="text-sm font-semibold text-rs-dark">{node.label}</span>
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-base">{node.icon}</span>
+                        <span className="text-xs font-semibold text-rs-dark">{node.label}</span>
                       </div>
                     </motion.div>
                   </motion.div>
                 );
               })}
 
-              {/* Pulsing glow behind center */}
-              <motion.div
-                animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.1, 0.3] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute inset-0 flex items-center justify-center pointer-events-none"
-              >
-                <div className="w-40 h-40 bg-rs-cyan rounded-full blur-3xl" />
-              </motion.div>
-
-              {/* Flowing data particles */}
-              {[0, 1, 2, 3, 4, 5].map((i) => {
-                const angles = [-90, -30, 30, 90, 150, 210];
-                const angle = angles[i];
-                const angleRad = (angle * Math.PI) / 180;
-                const startRadius = 160;
-                const endRadius = 40;
-                const startX = Math.cos(angleRad) * startRadius;
-                const startY = Math.sin(angleRad) * startRadius;
-                const endX = Math.cos(angleRad) * endRadius;
-                const endY = Math.sin(angleRad) * endRadius;
+              {/* Orbiting particles on the outer ring */}
+              {[0, 1, 2, 3].map((i) => {
+                const orbitRadius = 250;
+                const duration = 8 + i * 2;
+                const startAngle = i * 90;
                 
                 return (
                   <motion.div
-                    key={`particle-${i}`}
+                    key={`orbit-${i}`}
+                    className="absolute pointer-events-none"
+                    style={{
+                      left: '50%',
+                      top: '50%',
+                      width: orbitRadius * 2,
+                      height: orbitRadius * 2,
+                      marginLeft: -orbitRadius,
+                      marginTop: -orbitRadius,
+                    }}
+                    animate={{ rotate: 360 }}
+                    transition={{
+                      duration: duration,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
+                  >
+                    <motion.div
+                      className="absolute w-3 h-3 rounded-full"
+                      style={{
+                        left: '50%',
+                        top: 0,
+                        marginLeft: -6,
+                        marginTop: -6,
+                        background: i % 2 === 0 ? '#3B82F6' : '#F59E0B',
+                        boxShadow: i % 2 === 0 ? '0 0 12px #3B82F6' : '0 0 12px #F59E0B',
+                      }}
+                      animate={{ scale: [0.8, 1.2, 0.8] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    />
+                  </motion.div>
+                );
+              })}
+
+              {/* Particles flowing from ring to center */}
+              {[0, 1, 2].map((i) => {
+                const angles = [0, 120, 240];
+                const angle = angles[i];
+                const angleRad = (angle * Math.PI) / 180;
+                const outerRadius = 200;
+                const innerRadius = 50;
+                
+                return (
+                  <motion.div
+                    key={`inflow-${i}`}
                     className="absolute w-2 h-2 rounded-full z-30 pointer-events-none"
                     style={{
                       left: '50%',
                       top: '50%',
-                      background: i % 2 === 0 ? '#3B82F6' : '#F59E0B',
-                      boxShadow: i % 2 === 0 ? '0 0 8px #3B82F6' : '0 0 8px #F59E0B',
+                      background: '#3B82F6',
+                      boxShadow: '0 0 10px #3B82F6',
                     }}
                     animate={{
-                      x: [startX, endX],
-                      y: [startY, endY],
+                      x: [
+                        Math.cos(angleRad) * outerRadius,
+                        Math.cos(angleRad) * innerRadius,
+                      ],
+                      y: [
+                        Math.sin(angleRad) * outerRadius,
+                        Math.sin(angleRad) * innerRadius,
+                      ],
                       opacity: [0, 1, 1, 0],
-                      scale: [0.5, 1, 1, 0.5],
+                      scale: [0.5, 1, 1, 0.3],
                     }}
                     transition={{
-                      duration: 2,
+                      duration: 2.5,
                       repeat: Infinity,
-                      delay: i * 0.4,
+                      delay: i * 0.8,
                       ease: "easeInOut",
                     }}
                   />
                 );
               })}
 
-              {/* Accent dots */}
-              <motion.div
-                animate={{ 
-                  opacity: [0.5, 1, 0.5],
-                  scale: [1, 1.2, 1],
-                }}
-                transition={{ duration: 2, repeat: Infinity }}
-                className="absolute top-16 right-20 w-3 h-3 bg-rs-yellow rounded-full"
-              />
-              <motion.div
-                animate={{ 
-                  opacity: [0.5, 1, 0.5],
-                  scale: [1, 1.2, 1],
-                }}
-                transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
-                className="absolute bottom-20 left-16 w-2 h-2 bg-rs-cyan rounded-full"
-              />
-              <motion.div
-                animate={{ 
-                  opacity: [0.5, 1, 0.5],
-                  scale: [1, 1.2, 1],
-                }}
-                transition={{ duration: 2, repeat: Infinity, delay: 1 }}
-                className="absolute top-1/3 left-12 w-2 h-2 bg-rs-yellow rounded-full"
-              />
+              {/* Particles flowing from center to ring */}
+              {[0, 1, 2].map((i) => {
+                const angles = [60, 180, 300];
+                const angle = angles[i];
+                const angleRad = (angle * Math.PI) / 180;
+                const outerRadius = 200;
+                const innerRadius = 50;
+                
+                return (
+                  <motion.div
+                    key={`outflow-${i}`}
+                    className="absolute w-2 h-2 rounded-full z-30 pointer-events-none"
+                    style={{
+                      left: '50%',
+                      top: '50%',
+                      background: '#F59E0B',
+                      boxShadow: '0 0 10px #F59E0B',
+                    }}
+                    animate={{
+                      x: [
+                        Math.cos(angleRad) * innerRadius,
+                        Math.cos(angleRad) * outerRadius,
+                      ],
+                      y: [
+                        Math.sin(angleRad) * innerRadius,
+                        Math.sin(angleRad) * outerRadius,
+                      ],
+                      opacity: [0, 1, 1, 0],
+                      scale: [0.3, 1, 1, 0.5],
+                    }}
+                    transition={{
+                      duration: 2.5,
+                      repeat: Infinity,
+                      delay: i * 0.8 + 0.4,
+                      ease: "easeInOut",
+                    }}
+                  />
+                );
+              })}
             </div>
           </motion.div>
         </div>
