@@ -1,7 +1,10 @@
+import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ScrollToTop from './components/ScrollToTop';
+import RouteChangeTracker from './components/RouteChangeTracker';
 import ChatBot from './components/chat/ChatBot';
 import { ChatProvider } from './contexts/ChatContext';
+import { initGA } from './lib/analytics';
 import Home from './pages/Home';
 import Platform from './pages/Platform';
 import Solutions from './pages/Solutions';
@@ -41,10 +44,16 @@ import AdminBlog from './pages/AdminBlog';
 import BlogArticle from './pages/blog/BlogArticle';
 
 function App() {
+  // Initialize Google Analytics on app load
+  useEffect(() => {
+    initGA();
+  }, []);
+
   return (
     <Router>
       <ChatProvider>
         <ScrollToTop />
+        <RouteChangeTracker />
         <ChatBot />
         <Routes>
           {/* Core pages */}
