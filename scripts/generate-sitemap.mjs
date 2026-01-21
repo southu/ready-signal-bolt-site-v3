@@ -111,7 +111,7 @@ const STATIC_PAGES = [
 ];
 
 /**
- * Fetch published articles from Supabase
+ * Fetch published articles from Supabase (excludes future-dated scheduled posts)
  */
 async function fetchArticlesFromSupabase() {
   if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
@@ -120,7 +120,9 @@ async function fetchArticlesFromSupabase() {
   }
 
   try {
-    const url = `${SUPABASE_URL}/rest/v1/blog_articles?status=eq.published&select=slug,published_date,modified_date`;
+    const today = new Date().toISOString().split('T')[0];
+    // Only include published articles with publish_date <= today
+    const url = `${SUPABASE_URL}/rest/v1/blog_articles?status=eq.published&published_date=lte.${today}&select=slug,published_date,modified_date`;
     
     const response = await fetch(url, {
       headers: {

@@ -81,13 +81,23 @@ export function isSupabaseConfigured(): boolean {
 // ============ READ OPERATIONS ============
 
 /**
- * Fetch all published articles
+ * Get today's date in YYYY-MM-DD format for date comparisons
+ */
+function getTodayDate(): string {
+  return new Date().toISOString().split('T')[0];
+}
+
+/**
+ * Fetch all published articles (excludes future-dated scheduled posts)
  */
 export async function fetchPublishedArticles(): Promise<Article[]> {
+  const today = getTodayDate();
+  
   const { data, error } = await supabase
     .from('blog_articles')
     .select('*')
     .eq('status', 'published')
+    .lte('published_date', today) // Only show articles with publish date <= today
     .order('published_date', { ascending: false });
 
   if (error) {
@@ -116,18 +126,22 @@ export async function fetchAllArticles(): Promise<Article[]> {
 }
 
 /**
- * Fetch a single article by slug
+ * Fetch a single article by slug (only if published and not scheduled for future)
  */
 export async function fetchArticleBySlug(slug: string): Promise<Article | null> {
+  const today = getTodayDate();
+  
   const { data, error } = await supabase
     .from('blog_articles')
     .select('*')
     .eq('slug', slug)
+    .eq('status', 'published')
+    .lte('published_date', today) // Don't show scheduled future articles
     .single();
 
   if (error) {
     if (error.code === 'PGRST116') {
-      // No rows returned
+      // No rows returned (article doesn't exist or is scheduled/draft)
       return null;
     }
     console.error('Error fetching article:', error);
