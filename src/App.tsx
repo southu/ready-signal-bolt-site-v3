@@ -39,6 +39,7 @@ import SupplyChain from './pages/industries/SupplyChain';
 import B2BMarketing from './pages/industries/B2BMarketing';
 import B2CMarketing from './pages/industries/B2CMarketing';
 import AdminBlog from './pages/AdminBlog';
+import Demo from './pages/Demo';
 
 // Documentation pages
 import BriefIntroduction from './pages/docs/BriefIntroduction';
@@ -176,6 +177,10 @@ function App() {
           {/* DataRobot AI Accelerator */}
           <Route path="/datarobot" element={<DataRobot />} />
           <Route path="/datarobot/" element={<DataRobot />} />
+
+          {/* Interactive Demo */}
+          <Route path="/demo" element={<Demo />} />
+          <Route path="/demo/" element={<Demo />} />
 
           {/* Data category pages */}
           <Route path="/data-economic" element={<DataEconomic />} />
