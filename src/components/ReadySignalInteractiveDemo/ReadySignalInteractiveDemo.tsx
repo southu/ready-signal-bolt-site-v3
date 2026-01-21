@@ -166,6 +166,7 @@ export default function ReadySignalInteractiveDemo() {
                 <StepContainer
                   title="Open the spreadsheet"
                   subtitle="This is the starting point for most forecasting workflows."
+                  showContinue={false}
                 >
                   {!isLoading ? (
                     <div className="text-center py-12">
@@ -198,6 +199,7 @@ export default function ReadySignalInteractiveDemo() {
                 <StepContainer
                   title="What you have today (internal-only)"
                   subtitle="A typical dataset: sales plus a couple controllable levers."
+                  onContinue={completeAndAdvance}
                 >
                   <div className="mb-4 p-4 bg-amber-50 border border-amber-200 rounded-xl">
                     <p className="text-sm text-amber-800">
@@ -212,9 +214,6 @@ export default function ReadySignalInteractiveDemo() {
                   <p className="text-xs text-slate-400 mt-4 text-center italic">
                     This demo uses simulated data, but the workflow mirrors real projects.
                   </p>
-                  <div className="mt-6 flex justify-end">
-                    <NextButton onClick={completeAndAdvance} />
-                  </div>
                 </StepContainer>
               )}
 
@@ -223,6 +222,7 @@ export default function ReadySignalInteractiveDemo() {
                 <StepContainer
                   title="Baseline model (internal-only)"
                   subtitle="A quick regression—what most teams can do in Excel."
+                  onContinue={completeAndAdvance}
                 >
                   <ModelStatsPanel 
                     stats={internalOnlyOutput.stats}
@@ -236,9 +236,6 @@ export default function ReadySignalInteractiveDemo() {
                       <li>• Strong signals exist—but they're missing from the dataset.</li>
                     </ul>
                   </div>
-                  <div className="mt-6 flex justify-end">
-                    <NextButton onClick={completeAndAdvance} />
-                  </div>
                 </StepContainer>
               )}
 
@@ -247,6 +244,8 @@ export default function ReadySignalInteractiveDemo() {
                 <StepContainer
                   title="What the baseline is missing"
                   subtitle="The residual patterns suggest unmodeled drivers."
+                  onContinue={completeAndAdvance}
+                  continueLabel="Enhance with Ready Signal"
                 >
                   <div className="space-y-4">
                     <IssueCard 
@@ -270,9 +269,6 @@ export default function ReadySignalInteractiveDemo() {
                       This is the moment Ready Signal steps in—automatically.
                     </p>
                   </div>
-                  <div className="mt-6 flex justify-end">
-                    <NextButton onClick={completeAndAdvance} label="Enhance with Ready Signal" />
-                  </div>
                 </StepContainer>
               )}
 
@@ -281,6 +277,7 @@ export default function ReadySignalInteractiveDemo() {
                 <StepContainer
                   title=""
                   subtitle=""
+                  showContinue={false}
                 >
                   <PipelineRunner 
                     onComplete={completeAndAdvance}
@@ -294,6 +291,7 @@ export default function ReadySignalInteractiveDemo() {
                 <StepContainer
                   title="Enhanced dataset (Ready Signal)"
                   subtitle="The same base data—now enriched with predictive external drivers."
+                  onContinue={completeAndAdvance}
                 >
                   <div className="mb-4 p-4 bg-teal-50 border border-teal-200 rounded-xl">
                     <p className="text-sm text-teal-800">
@@ -306,9 +304,6 @@ export default function ReadySignalInteractiveDemo() {
                     showExternalBadges
                     highlightTarget
                   />
-                  <div className="mt-6 flex justify-end">
-                    <NextButton onClick={completeAndAdvance} />
-                  </div>
                 </StepContainer>
               )}
 
@@ -317,6 +312,8 @@ export default function ReadySignalInteractiveDemo() {
                 <StepContainer
                   title="Model results (with Ready Signal)"
                   subtitle="Same workflow—better inputs."
+                  onContinue={completeAndAdvance}
+                  continueLabel="Compare before vs after"
                 >
                   <ModelStatsPanel 
                     stats={withExternalOutput.stats}
@@ -330,9 +327,6 @@ export default function ReadySignalInteractiveDemo() {
                       <li>• Most of the improvement comes from external drivers + lag structure.</li>
                     </ul>
                   </div>
-                  <div className="mt-6 flex justify-end">
-                    <NextButton onClick={completeAndAdvance} label="Compare before vs after" />
-                  </div>
                 </StepContainer>
               )}
 
@@ -341,6 +335,7 @@ export default function ReadySignalInteractiveDemo() {
                 <StepContainer
                   title="Before vs After"
                   subtitle="Same analysis. Different outcome."
+                  onContinue={completeAndAdvance}
                 >
                   <div className="grid md:grid-cols-3 gap-4 mb-6">
                     <ComparisonTile 
@@ -370,9 +365,6 @@ export default function ReadySignalInteractiveDemo() {
                     <HubSpotCTA variant="primary" />
                     <HubSpotCTA variant="secondary" label="Talk to an expert" />
                   </div>
-                  <div className="mt-4 flex justify-end">
-                    <NextButton onClick={completeAndAdvance} />
-                  </div>
                 </StepContainer>
               )}
 
@@ -381,6 +373,7 @@ export default function ReadySignalInteractiveDemo() {
                 <StepContainer
                   title="What drives Unit Sales"
                   subtitle="Ranked drivers based on statistical contribution (demo)."
+                  onContinue={completeAndAdvance}
                 >
                   <div className="mb-4 flex items-center gap-4">
                     <label className="flex items-center gap-2 text-sm text-slate-600 cursor-pointer">
@@ -400,9 +393,6 @@ export default function ReadySignalInteractiveDemo() {
                   <p className="text-sm text-slate-500 mt-4 text-center">
                     Ready Signal-added drivers account for most of the lift.
                   </p>
-                  <div className="mt-6 flex justify-end">
-                    <NextButton onClick={completeAndAdvance} />
-                  </div>
                 </StepContainer>
               )}
 
@@ -411,6 +401,7 @@ export default function ReadySignalInteractiveDemo() {
                 <StepContainer
                   title="AI analysis"
                   subtitle="Executive narrative + predictive lead/lag relationships."
+                  showContinue={false}
                 >
                   {/* AI Narrative */}
                   <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl p-6 mb-6">
@@ -491,40 +482,39 @@ export default function ReadySignalInteractiveDemo() {
 function StepContainer({ 
   title, 
   subtitle, 
-  children 
+  children,
+  onContinue,
+  continueLabel = 'Continue',
+  showContinue = true,
 }: { 
   title: string; 
   subtitle: string; 
   children: React.ReactNode;
+  onContinue?: () => void;
+  continueLabel?: string;
+  showContinue?: boolean;
 }) {
   return (
     <div>
       {title && (
-        <div className="mb-6">
-          <h3 className="text-xl font-bold text-slate-800">{title}</h3>
-          {subtitle && <p className="text-slate-500 mt-1">{subtitle}</p>}
+        <div className="mb-6 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+          <div>
+            <h3 className="text-xl font-bold text-slate-800">{title}</h3>
+            {subtitle && <p className="text-slate-500 mt-1">{subtitle}</p>}
+          </div>
+          {showContinue && onContinue && (
+            <button
+              onClick={onContinue}
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-teal-600 text-white rounded-xl font-medium hover:bg-teal-700 transition-colors shrink-0"
+            >
+              {continueLabel}
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          )}
         </div>
       )}
       {children}
     </div>
-  );
-}
-
-function NextButton({ 
-  onClick, 
-  label = 'Continue' 
-}: { 
-  onClick: () => void; 
-  label?: string;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className="inline-flex items-center gap-2 px-5 py-2.5 bg-teal-600 text-white rounded-xl font-medium hover:bg-teal-700 transition-colors"
-    >
-      {label}
-      <ChevronRight className="w-4 h-4" />
-    </button>
   );
 }
 
