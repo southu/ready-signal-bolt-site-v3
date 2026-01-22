@@ -181,9 +181,6 @@ export default function ReadySignalInteractiveDemo() {
                       >
                         Load demo spreadsheet
                       </button>
-                      <p className="text-sm text-slate-400 mt-4">
-                        Or <button onClick={() => goToStep(2)} className="text-teal-600 hover:underline">skip to results</button>
-                      </p>
                     </div>
                   ) : (
                     <LoadingState messages={[
