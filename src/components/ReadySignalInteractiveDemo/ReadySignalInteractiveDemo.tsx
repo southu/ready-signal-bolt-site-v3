@@ -52,7 +52,7 @@ const WIZARD_STEPS: WizardStep[] = [
   { id: 'enhanced-results', title: 'Enhanced results', icon: <TrendingUp className="w-4 h-4" /> },
   { id: 'compare', title: 'Compare', icon: <GitCompare className="w-4 h-4" /> },
   { id: 'importance', title: 'Feature importance', icon: <Activity className="w-4 h-4" /> },
-  { id: 'analysis', title: 'AI analysis', icon: <Brain className="w-4 h-4" /> },
+  { id: 'analysis', title: 'Analysis', icon: <Brain className="w-4 h-4" /> },
 ];
 
 // ============ MAIN COMPONENT ============
@@ -402,7 +402,7 @@ export default function ReadySignalInteractiveDemo() {
                   title="What drives Unit Sales"
                   subtitle="Ranked drivers based on statistical contribution (demo)."
                   onContinue={completeAndAdvance}
-                  continueLabel="View AI analysis"
+                  continueLabel="View analysis"
                 >
                   <div className="mb-4 flex items-center gap-4">
                     <label className="flex items-center gap-2 text-sm text-slate-600 cursor-pointer">
@@ -425,29 +425,26 @@ export default function ReadySignalInteractiveDemo() {
                 </StepContainer>
               )}
 
-              {/* Step 9: AI Analysis + Granger */}
+              {/* Step 9: Analysis */}
               {currentStep === 9 && (
                 <StepContainer
-                  title="AI analysis"
+                  title="Analysis"
                   subtitle="Executive narrative + predictive lead/lag relationships."
                   showContinue={false}
                 >
-                  {/* AI Narrative */}
+                  {/* Narrative */}
                   <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl p-6 mb-6">
                     <div className="flex items-center gap-2 text-teal-400 mb-4">
                       <Brain className="w-5 h-5" />
-                      <span className="font-semibold">AI Analyst</span>
+                      <span className="font-semibold">Analyst Summary</span>
                     </div>
                     <TypedNarrative />
                   </div>
 
-                  {/* Granger Table */}
+                  {/* Predictive Power Table */}
                   <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
                     <div className="px-4 py-3 bg-slate-50 border-b border-slate-200">
-                      <h4 className="font-semibold text-slate-800">Predictive lead/lag signals (Granger)</h4>
-                      <p className="text-xs text-slate-500 mt-1">
-                        Granger tests whether past values of a signal help predict future sales. It suggests predictiveness, not true causation.
-                      </p>
+                      <h4 className="font-semibold text-slate-800">Predictive power</h4>
                     </div>
                     <div className="overflow-x-auto">
                       <table className="w-full text-sm">
@@ -489,12 +486,12 @@ export default function ReadySignalInteractiveDemo() {
                   </div>
 
                   {/* Final CTA */}
-                  <div className="mt-8 bg-gradient-to-r from-amber-500 to-amber-600 rounded-xl p-8 text-center text-white">
+                  <div className="mt-8 bg-gradient-to-r from-teal-600 to-emerald-600 rounded-xl p-8 text-center text-white">
                     <h3 className="text-2xl font-bold mb-2">Ready to improve your forecasts?</h3>
-                    <p className="text-amber-100 mb-6">
+                    <p className="text-teal-100 mb-6">
                       Upload a sample or connect a source. We'll show you the lift in under a week.
                     </p>
-                    <HubSpotCTA variant="primary" label="Run this on my data" className="!bg-white !text-amber-600 hover:!bg-amber-50" />
+                    <HubSpotCTA variant="primary" label="Run this on my data" className="!bg-white !text-teal-700 hover:!bg-teal-50" />
                   </div>
                 </StepContainer>
               )}
