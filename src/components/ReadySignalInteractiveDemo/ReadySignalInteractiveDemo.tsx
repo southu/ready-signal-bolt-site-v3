@@ -453,11 +453,45 @@ export default function ReadySignalInteractiveDemo() {
                     />
                   </div>
                   <ComparisonChart data={withExternalData.rows} />
-                  <div className="mt-6 p-4 bg-slate-50 rounded-xl border border-slate-200">
-                    <h4 className="font-semibold text-slate-800 mb-2">What this means for your business</h4>
-                    <p className="text-sm text-slate-600">
-                      More accurate forecasts reduce stockouts, overproduction, and last-minute labor adjustments.
-                    </p>
+                  <div className="mt-6 p-5 bg-slate-50 rounded-xl border border-slate-200">
+                    <h4 className="font-semibold text-slate-800 mb-4">What changed</h4>
+                    <div className="space-y-3 text-sm">
+                      <div className="flex gap-3">
+                        <span className="text-teal-500 mt-0.5">⟳</span>
+                        <div>
+                          <span className="font-medium text-slate-700">Same analysis, better inputs.</span>
+                          <span className="text-slate-600"> The modeling approach didn't change—only the data going in.</span>
+                        </div>
+                      </div>
+                      <div className="flex gap-3">
+                        <span className="text-emerald-500 mt-0.5">↑</span>
+                        <div>
+                          <span className="font-medium text-slate-700">Accuracy improves materially.</span>
+                          <span className="text-slate-600"> Explained variance increases from ~24% to ~79%, while prediction error is nearly cut in half.</span>
+                        </div>
+                      </div>
+                      <div className="flex gap-3">
+                        <span className="text-teal-500 mt-0.5">🌍</span>
+                        <div>
+                          <span className="font-medium text-slate-700">External drivers explain demand swings.</span>
+                          <span className="text-slate-600"> Ready Signal captures market forces that internal data alone can't see.</span>
+                        </div>
+                      </div>
+                      <div className="flex gap-3">
+                        <span className="text-teal-500 mt-0.5">✓</span>
+                        <div>
+                          <span className="font-medium text-slate-700">Noise is reduced, signal is clarified.</span>
+                          <span className="text-slate-600"> Internal variables stop absorbing effects they don't actually control.</span>
+                        </div>
+                      </div>
+                      <div className="flex gap-3">
+                        <span className="text-emerald-500 mt-0.5">★</span>
+                        <div>
+                          <span className="font-medium text-slate-700">The model becomes decision-grade.</span>
+                          <span className="text-slate-600"> Results are more stable, interpretable, and reliable for planning.</span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   <div className="mt-6 flex flex-wrap gap-4 justify-center">
                     <HubSpotCTA variant="primary" />
