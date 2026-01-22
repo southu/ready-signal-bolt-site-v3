@@ -492,9 +492,48 @@ export default function ReadySignalInteractiveDemo() {
                     features={featureImportance}
                     showOnlyExternal={showExternalOnly}
                   />
-                  <p className="text-sm text-slate-500 mt-4 text-center">
-                    Ready Signal-added drivers account for most of the lift.
-                  </p>
+                  
+                  {/* How to read this chart */}
+                  <div className="mt-6 p-5 bg-slate-50 rounded-xl border border-slate-200">
+                    <h4 className="font-semibold text-slate-800 mb-4">How to read this chart</h4>
+                    <div className="space-y-3 text-sm">
+                      <div className="flex gap-3">
+                        <span className="text-teal-500 mt-0.5">📊</span>
+                        <div>
+                          <span className="font-medium text-slate-700">Feature importance reflects predictiveness, not business impact.</span>
+                          <span className="text-slate-600"> It shows which variables best explain changes in unit sales over time.</span>
+                        </div>
+                      </div>
+                      <div className="flex gap-3">
+                        <span className="text-teal-500 mt-0.5">💰</span>
+                        <div>
+                          <span className="font-medium text-slate-700">Price remains a powerful lever.</span>
+                          <span className="text-slate-600"> However, price tends to be managed tightly and changes infrequently, limiting its ability to explain short-term demand swings.</span>
+                        </div>
+                      </div>
+                      <div className="flex gap-3">
+                        <span className="text-teal-500 mt-0.5">📈</span>
+                        <div>
+                          <span className="font-medium text-slate-700">More variability = more predictive power.</span>
+                          <span className="text-slate-600"> External factors fluctuate more than internal controls, making them stronger predictors of month-to-month changes in sales.</span>
+                        </div>
+                      </div>
+                      <div className="flex gap-3">
+                        <span className="text-teal-500 mt-0.5">⚖️</span>
+                        <div>
+                          <span className="font-medium text-slate-700">Internal metrics are often stable by design.</span>
+                          <span className="text-slate-600"> Variables like price and marketing are intentionally smoothed, which reduces their statistical contribution to forecasting variation.</span>
+                        </div>
+                      </div>
+                      <div className="flex gap-3">
+                        <span className="text-emerald-500 mt-0.5">✨</span>
+                        <div>
+                          <span className="font-medium text-slate-700">Ready Signal-added drivers capture the moving environment.</span>
+                          <span className="text-slate-600"> External signals explain demand shifts that internal data alone cannot detect.</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </StepContainer>
               )}
 
