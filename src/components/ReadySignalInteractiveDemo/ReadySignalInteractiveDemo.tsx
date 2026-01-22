@@ -242,12 +242,45 @@ export default function ReadySignalInteractiveDemo() {
                         coefficients={internalOnlyOutput.coefficients}
                         variant="baseline"
                       />
-                      <div className="mt-6 p-4 bg-slate-50 rounded-xl border border-slate-200">
-                        <h4 className="font-semibold text-slate-800 mb-2">Interpretation</h4>
-                        <ul className="text-sm text-slate-600 space-y-1">
-                          <li>• This model explains ~24% of the variation after adjustment.</li>
-                          <li>• Strong signals exist—but they're missing from the dataset.</li>
-                        </ul>
+                      <div className="mt-6 p-5 bg-slate-50 rounded-xl border border-slate-200">
+                        <h4 className="font-semibold text-slate-800 mb-4">What this model is telling us</h4>
+                        <div className="space-y-3 text-sm">
+                          <div className="flex gap-3">
+                            <span className="text-emerald-500 mt-0.5">✓</span>
+                            <div>
+                              <span className="font-medium text-slate-700">A solid baseline:</span>
+                              <span className="text-slate-600"> This is a typical internal-only model—directionally correct and useful, but incomplete.</span>
+                            </div>
+                          </div>
+                          <div className="flex gap-3">
+                            <span className="text-emerald-500 mt-0.5">✓</span>
+                            <div>
+                              <span className="font-medium text-slate-700">Price per Unit dominates:</span>
+                              <span className="text-slate-600"> Price shows a strong, highly significant negative relationship with unit sales, confirming the model is capturing real behavior.</span>
+                            </div>
+                          </div>
+                          <div className="flex gap-3">
+                            <span className="text-emerald-500 mt-0.5">✓</span>
+                            <div>
+                              <span className="font-medium text-slate-700">Marketing appears very strong:</span>
+                              <span className="text-slate-600"> Marketing spend is positive and statistically significant, suggesting it plays an important role—at least in this limited view.</span>
+                            </div>
+                          </div>
+                          <div className="flex gap-3">
+                            <span className="text-amber-500 mt-0.5">⚠</span>
+                            <div>
+                              <span className="font-medium text-slate-700">Signals are overloaded:</span>
+                              <span className="text-slate-600"> When internal-only models show a few variables doing most of the work, it often indicates missing external drivers.</span>
+                            </div>
+                          </div>
+                          <div className="flex gap-3">
+                            <span className="text-amber-500 mt-0.5">⚠</span>
+                            <div>
+                              <span className="font-medium text-slate-700">Low adjusted R² (~24%):</span>
+                              <span className="text-slate-600"> The model explains some variation, but most demand movement remains unexplained—pointing to factors outside this dataset.</span>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </>
                   )}
