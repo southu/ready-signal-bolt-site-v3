@@ -94,7 +94,7 @@ export default function ReadySignalInteractiveDemo() {
   return (
     <div 
       ref={containerRef}
-      className="bg-gradient-to-br from-slate-50 via-white to-slate-50 rounded-2xl border border-slate-200 shadow-xl overflow-hidden"
+      className="bg-gradient-to-br from-slate-50 via-white to-slate-50 rounded-2xl border border-slate-200 shadow-xl"
     >
       {/* Header */}
       <div className="bg-gradient-to-r from-slate-900 to-slate-800 px-6 py-8 text-white">
@@ -202,6 +202,7 @@ export default function ReadySignalInteractiveDemo() {
                   title="What you have today (internal-only)"
                   subtitle="A typical dataset: sales plus a couple controllable levers."
                   onContinue={completeAndAdvance}
+                  continueLabel="Run baseline model"
                 >
                   <div className="mb-4 p-4 bg-amber-50 border border-amber-200 rounded-xl">
                     <p className="text-sm text-amber-800">
@@ -226,6 +227,7 @@ export default function ReadySignalInteractiveDemo() {
                   subtitle={baselineRegressionDone ? "A quick regression—what most teams can do in Excel." : ""}
                   onContinue={completeAndAdvance}
                   showContinue={baselineRegressionDone}
+                  continueLabel="See what's missing"
                 >
                   {!baselineRegressionDone ? (
                     <RegressionRunner 
@@ -305,6 +307,7 @@ export default function ReadySignalInteractiveDemo() {
                   title="Enhanced dataset (Ready Signal)"
                   subtitle="The same base data—now enriched with predictive external drivers."
                   onContinue={completeAndAdvance}
+                  continueLabel="Run enhanced model"
                 >
                   <div className="mb-4 p-4 bg-teal-50 border border-teal-200 rounded-xl">
                     <p className="text-sm text-teal-800">
@@ -360,6 +363,7 @@ export default function ReadySignalInteractiveDemo() {
                   title="Before vs After"
                   subtitle="Same analysis. Different outcome."
                   onContinue={completeAndAdvance}
+                  continueLabel="See what's driving results"
                 >
                   <div className="grid md:grid-cols-3 gap-4 mb-6">
                     <ComparisonTile 
@@ -398,6 +402,7 @@ export default function ReadySignalInteractiveDemo() {
                   title="What drives Unit Sales"
                   subtitle="Ranked drivers based on statistical contribution (demo)."
                   onContinue={completeAndAdvance}
+                  continueLabel="View AI analysis"
                 >
                   <div className="mb-4 flex items-center gap-4">
                     <label className="flex items-center gap-2 text-sm text-slate-600 cursor-pointer">
@@ -520,16 +525,15 @@ function StepContainer({
 }) {
   return (
     <div>
-      {/* Action bar - always at top */}
+      {/* Action button - LEFT side, top */}
       {showContinue && onContinue && (
-        <div className="mb-6 p-4 bg-gradient-to-r from-teal-50 to-emerald-50 border border-teal-200 rounded-xl flex items-center justify-between">
-          <span className="text-teal-800 font-medium">Ready to continue?</span>
+        <div className="mb-6">
           <button
             onClick={onContinue}
-            className="inline-flex items-center gap-2 px-6 py-2.5 bg-teal-600 text-white rounded-xl font-semibold hover:bg-teal-700 transition-colors shadow-lg shadow-teal-500/25"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-teal-600 text-white rounded-xl font-semibold hover:bg-teal-700 transition-colors shadow-lg shadow-teal-500/25"
           >
             {continueLabel}
-            <ChevronRight className="w-4 h-4" />
+            <ChevronRight className="w-5 h-5" />
           </button>
         </div>
       )}
