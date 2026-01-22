@@ -29,7 +29,7 @@ import grangerResults from './grangerResults.json';
 import DataTable from './ui/DataTable';
 import ModelStatsPanel from './ui/ModelStatsPanel';
 import { FeatureImportanceChart, ComparisonChart } from './ui/Charts';
-import PipelineRunner from './ui/PipelineRunner';
+import PipelineRunner, { RegressionRunner } from './ui/PipelineRunner';
 import HubSpotCTA, { SecondaryCTA } from './ui/HubSpotCTA';
 
 // ============ TYPES ============
@@ -62,6 +62,8 @@ export default function ReadySignalInteractiveDemo() {
   const [completedSteps, setCompletedSteps] = useState<Set<number>>(new Set());
   const [isLoading, setIsLoading] = useState(false);
   const [showExternalOnly, setShowExternalOnly] = useState(false);
+  const [baselineRegressionDone, setBaselineRegressionDone] = useState(false);
+  const [enhancedRegressionDone, setEnhancedRegressionDone] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const goToStep = (step: number) => {
@@ -220,22 +222,33 @@ export default function ReadySignalInteractiveDemo() {
               {/* Step 2: Baseline Results */}
               {currentStep === 2 && (
                 <StepContainer
-                  title="Baseline model (internal-only)"
-                  subtitle="A quick regression—what most teams can do in Excel."
+                  title={baselineRegressionDone ? "Baseline model (internal-only)" : ""}
+                  subtitle={baselineRegressionDone ? "A quick regression—what most teams can do in Excel." : ""}
                   onContinue={completeAndAdvance}
+                  showContinue={baselineRegressionDone}
                 >
-                  <ModelStatsPanel 
-                    stats={internalOnlyOutput.stats}
-                    coefficients={internalOnlyOutput.coefficients}
-                    variant="baseline"
-                  />
-                  <div className="mt-6 p-4 bg-slate-50 rounded-xl border border-slate-200">
-                    <h4 className="font-semibold text-slate-800 mb-2">Interpretation</h4>
-                    <ul className="text-sm text-slate-600 space-y-1">
-                      <li>• This model explains ~24% of the variation after adjustment.</li>
-                      <li>• Strong signals exist—but they're missing from the dataset.</li>
-                    </ul>
-                  </div>
+                  {!baselineRegressionDone ? (
+                    <RegressionRunner 
+                      variant="baseline"
+                      onComplete={() => setBaselineRegressionDone(true)}
+                      autoStart={true}
+                    />
+                  ) : (
+                    <>
+                      <ModelStatsPanel 
+                        stats={internalOnlyOutput.stats}
+                        coefficients={internalOnlyOutput.coefficients}
+                        variant="baseline"
+                      />
+                      <div className="mt-6 p-4 bg-slate-50 rounded-xl border border-slate-200">
+                        <h4 className="font-semibold text-slate-800 mb-2">Interpretation</h4>
+                        <ul className="text-sm text-slate-600 space-y-1">
+                          <li>• This model explains ~24% of the variation after adjustment.</li>
+                          <li>• Strong signals exist—but they're missing from the dataset.</li>
+                        </ul>
+                      </div>
+                    </>
+                  )}
                 </StepContainer>
               )}
 
@@ -310,23 +323,34 @@ export default function ReadySignalInteractiveDemo() {
               {/* Step 6: Enhanced Results */}
               {currentStep === 6 && (
                 <StepContainer
-                  title="Model results (with Ready Signal)"
-                  subtitle="Same workflow—better inputs."
+                  title={enhancedRegressionDone ? "Model results (with Ready Signal)" : ""}
+                  subtitle={enhancedRegressionDone ? "Same workflow—better inputs." : ""}
                   onContinue={completeAndAdvance}
                   continueLabel="Compare before vs after"
+                  showContinue={enhancedRegressionDone}
                 >
-                  <ModelStatsPanel 
-                    stats={withExternalOutput.stats}
-                    coefficients={withExternalOutput.coefficients}
-                    variant="enhanced"
-                  />
-                  <div className="mt-6 p-4 bg-emerald-50 rounded-xl border border-emerald-200">
-                    <h4 className="font-semibold text-emerald-800 mb-2">Interpretation</h4>
-                    <ul className="text-sm text-emerald-700 space-y-1">
-                      <li>• Explained variance jumps from ~24% → ~79% (adjusted).</li>
-                      <li>• Most of the improvement comes from external drivers + lag structure.</li>
-                    </ul>
-                  </div>
+                  {!enhancedRegressionDone ? (
+                    <RegressionRunner 
+                      variant="enhanced"
+                      onComplete={() => setEnhancedRegressionDone(true)}
+                      autoStart={true}
+                    />
+                  ) : (
+                    <>
+                      <ModelStatsPanel 
+                        stats={withExternalOutput.stats}
+                        coefficients={withExternalOutput.coefficients}
+                        variant="enhanced"
+                      />
+                      <div className="mt-6 p-4 bg-emerald-50 rounded-xl border border-emerald-200">
+                        <h4 className="font-semibold text-emerald-800 mb-2">Interpretation</h4>
+                        <ul className="text-sm text-emerald-700 space-y-1">
+                          <li>• Explained variance jumps from ~24% → ~79% (adjusted).</li>
+                          <li>• Most of the improvement comes from external drivers + lag structure.</li>
+                        </ul>
+                      </div>
+                    </>
+                  )}
                 </StepContainer>
               )}
 
