@@ -378,12 +378,52 @@ export default function ReadySignalInteractiveDemo() {
                         coefficients={withExternalOutput.coefficients}
                         variant="enhanced"
                       />
-                      <div className="mt-6 p-4 bg-emerald-50 rounded-xl border border-emerald-200">
-                        <h4 className="font-semibold text-emerald-800 mb-2">Interpretation</h4>
-                        <ul className="text-sm text-emerald-700 space-y-1">
-                          <li>• Explained variance jumps from ~24% → ~79% (adjusted).</li>
-                          <li>• Most of the improvement comes from external drivers + lag structure.</li>
-                        </ul>
+                      <div className="mt-6 p-5 bg-emerald-50 rounded-xl border border-emerald-200">
+                        <h4 className="font-semibold text-emerald-800 mb-4">What this model is telling us</h4>
+                        <div className="space-y-3 text-sm">
+                          <div className="flex gap-3">
+                            <span className="text-emerald-600 mt-0.5">↑</span>
+                            <div>
+                              <span className="font-medium text-emerald-800">Explained variance jumps dramatically:</span>
+                              <span className="text-emerald-700"> Adjusted R² increases from ~24% to ~79%, indicating the model now captures most of the demand variation.</span>
+                            </div>
+                          </div>
+                          <div className="flex gap-3">
+                            <span className="text-emerald-600 mt-0.5">★</span>
+                            <div>
+                              <span className="font-medium text-emerald-800">External drivers take over:</span>
+                              <span className="text-emerald-700"> Ready Signal–added variables emerge as the strongest predictors, accounting for most of the improvement.</span>
+                            </div>
+                          </div>
+                          <div className="flex gap-3">
+                            <span className="text-emerald-600 mt-0.5">⟳</span>
+                            <div>
+                              <span className="font-medium text-emerald-800">Price influence normalizes:</span>
+                              <span className="text-emerald-700"> Price per Unit becomes less dominant, suggesting it was previously absorbing missing external effects.</span>
+                            </div>
+                          </div>
+                          <div className="flex gap-3">
+                            <span className="text-emerald-600 mt-0.5">⟳</span>
+                            <div>
+                              <span className="font-medium text-emerald-800">Marketing impact fades:</span>
+                              <span className="text-emerald-700"> Marketing Spend loses significance once broader demand drivers are included.</span>
+                            </div>
+                          </div>
+                          <div className="flex gap-3">
+                            <span className="text-emerald-600 mt-0.5">⏱</span>
+                            <div>
+                              <span className="font-medium text-emerald-800">Lag effects matter:</span>
+                              <span className="text-emerald-700"> Several drivers show delayed impact, confirming demand responds over time—not instantly.</span>
+                            </div>
+                          </div>
+                          <div className="flex gap-3">
+                            <span className="text-emerald-600 mt-0.5">↓</span>
+                            <div>
+                              <span className="font-medium text-emerald-800">Lower error, greater stability:</span>
+                              <span className="text-emerald-700"> Prediction error is cut nearly in half, reflecting a more reliable and resilient model.</span>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </>
                   )}
