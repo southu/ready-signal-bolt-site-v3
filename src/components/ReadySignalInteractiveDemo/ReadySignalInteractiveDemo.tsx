@@ -496,23 +496,28 @@ function StepContainer({
 }) {
   return (
     <div>
-      {title && (
-        <div className="mb-6 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-          <div>
-            <h3 className="text-xl font-bold text-slate-800">{title}</h3>
-            {subtitle && <p className="text-slate-500 mt-1">{subtitle}</p>}
-          </div>
-          {showContinue && onContinue && (
-            <button
-              onClick={onContinue}
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-teal-600 text-white rounded-xl font-medium hover:bg-teal-700 transition-colors shrink-0"
-            >
-              {continueLabel}
-              <ChevronRight className="w-4 h-4" />
-            </button>
-          )}
+      {/* Action bar - always at top */}
+      {showContinue && onContinue && (
+        <div className="mb-6 p-4 bg-gradient-to-r from-teal-50 to-emerald-50 border border-teal-200 rounded-xl flex items-center justify-between">
+          <span className="text-teal-800 font-medium">Ready to continue?</span>
+          <button
+            onClick={onContinue}
+            className="inline-flex items-center gap-2 px-6 py-2.5 bg-teal-600 text-white rounded-xl font-semibold hover:bg-teal-700 transition-colors shadow-lg shadow-teal-500/25"
+          >
+            {continueLabel}
+            <ChevronRight className="w-4 h-4" />
+          </button>
         </div>
       )}
+      
+      {/* Title section */}
+      {title && (
+        <div className="mb-6">
+          <h3 className="text-xl font-bold text-slate-800">{title}</h3>
+          {subtitle && <p className="text-slate-500 mt-1">{subtitle}</p>}
+        </div>
+      )}
+      
       {children}
     </div>
   );
