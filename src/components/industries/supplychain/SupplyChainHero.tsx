@@ -1,6 +1,13 @@
 import { motion } from 'framer-motion';
-import { Truck } from 'lucide-react';
+import { Truck, AlertCircle } from 'lucide-react';
 import supplyChainImg from '../../../assets/images/supply_chain_&_logistics.jpeg';
+
+const painPoints = [
+  'Reactive buying when demand unexpectedly surges',
+  'Excess inventory when conditions soften without warning',
+  'Stockouts when an inflection point isn\'t visible in internal history',
+  'Planning cycles dominated by debates over numbers no one trusts',
+];
 
 const SupplyChainHero = () => {
   return (
@@ -23,17 +30,35 @@ const SupplyChainHero = () => {
               <span className="text-sm font-medium">Supply Chain & Logistics</span>
             </div>
 
-            <h1 className="text-5xl lg:text-6xl font-bold leading-tight">
-              Don't Just React to
-              <br />
-              <span className="text-rs-yellow">Disruption.</span>
-              <br />
-              <span className="text-rs-cyan">Anticipate It.</span>
+            <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight">
+              Supply Chain Forecasting That Explains{' '}
+              <span className="text-rs-yellow">What Changed</span>
+              —and{' '}
+              <span className="text-rs-cyan">Why</span>
             </h1>
 
-            <p className="text-xl text-gray-300">
-              From raw material costs to freight indices, we turn global volatility into a leading indicator.
+            <p className="text-xl text-gray-300 leading-relaxed">
+              Supply chain leaders rarely struggle because they lack forecasts. They struggle because too many forecasts are historical, internal, and silent about causality.
             </p>
+
+            <p className="text-lg text-gray-400 leading-relaxed">
+              Ready Signal closes the gap between <em>what the forecast says</em> and <em>why it moved</em>—by discovering the external signals that drive demand, pricing, and material needs, and delivering forecasts that teams can validate and operationalize.
+            </p>
+
+            <ul className="space-y-3">
+              {painPoints.map((point, i) => (
+                <motion.li
+                  key={i}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.4 + i * 0.1 }}
+                  className="flex items-start space-x-3"
+                >
+                  <AlertCircle className="w-5 h-5 text-rs-yellow mt-0.5 flex-shrink-0" />
+                  <span className="text-gray-300">{point}</span>
+                </motion.li>
+              ))}
+            </ul>
           </motion.div>
 
           <motion.div
@@ -45,7 +70,7 @@ const SupplyChainHero = () => {
             <div className="rounded-2xl overflow-hidden shadow-2xl">
               <img
                 src={supplyChainImg}
-                alt="Supply Chain & Logistics"
+                alt="Supply chain forecasting with external signal intelligence"
                 className="w-full h-auto object-cover"
               />
             </div>

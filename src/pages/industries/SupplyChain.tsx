@@ -5,29 +5,18 @@ import SupplyChainHero from '../../components/industries/supplychain/SupplyChain
 import SupplyChainProblem from '../../components/industries/supplychain/SupplyChainProblem';
 import SupplyChainSolution from '../../components/industries/supplychain/SupplyChainSolution';
 import SupplyChainIndices from '../../components/industries/supplychain/SupplyChainIndices';
-
-const SupplyChainFAQ = () => (
-  <section className="bg-rs-light-gray py-12">
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="bg-white p-6 rounded-lg shadow-sm">
-        <h3 className="text-lg font-semibold text-rs-dark mb-2">
-          How does Ready Signal help with commodity price forecasting?
-        </h3>
-        <p className="text-rs-dark opacity-75 leading-relaxed">
-          Ready Signal helps procurement teams hedge against inflation by validating leading indicators for Global
-          Commodity Indices (Steel, Resin, Grain) up to 3 months in advance.
-        </p>
-      </div>
-    </div>
-  </section>
-);
+import SupplyChainDifferentiation from '../../components/industries/supplychain/SupplyChainDifferentiation';
+import SupplyChainUseCases from '../../components/industries/supplychain/SupplyChainUseCases';
+import SupplyChainDecisions from '../../components/industries/supplychain/SupplyChainDecisions';
+import SupplyChainOnboarding from '../../components/industries/supplychain/SupplyChainOnboarding';
+import SupplyChainFAQ from '../../components/industries/supplychain/SupplyChainFAQ';
 
 function SupplyChain() {
   return (
     <div className="min-h-screen bg-white">
       <SEO
-        title="Commodity Price Forecasting | Raw Material Cost Prediction Software"
-        description="Hedge against inflation with leading indicators for Global Commodity Indices. Predict Steel, Resin, and Grain prices up to 3 months in advance."
+        title="Supply Chain Forecasting That Explains What Changed—and Why | Ready Signal"
+        description="Supply chain forecasting that explains what changed—and why—by using external drivers to produce explainable forecasts your teams can trust and act on."
         canonical="https://readysignal.com/industries/supply-chain"
       />
       <Navbar />
@@ -37,6 +26,10 @@ function SupplyChain() {
         <SupplyChainProblem />
         <SupplyChainSolution />
         <SupplyChainIndices />
+        <SupplyChainDifferentiation />
+        <SupplyChainUseCases />
+        <SupplyChainDecisions />
+        <SupplyChainOnboarding />
         <SupplyChainFAQ />
       </main>
 
