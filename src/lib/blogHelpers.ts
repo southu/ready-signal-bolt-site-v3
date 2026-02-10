@@ -43,10 +43,15 @@ export const industryPostMapping: Record<string, string[]> = {
 
 /**
  * Get the N most recently published articles.
+ * Excludes help/docs articles and future-dated posts (used for scheduled publishing).
  */
 export function getLatestPosts(articles: Article[], count: number = 3): Article[] {
+  const now = new Date();
+  now.setHours(23, 59, 59, 999); // Include anything published "today"
+
   return [...articles]
     .filter(a => a.category !== 'Help') // Exclude help/docs articles
+    .filter(a => new Date(a.publishedDate + 'T00:00:00') <= now) // Exclude future-dated posts
     .sort((a, b) => new Date(b.publishedDate).getTime() - new Date(a.publishedDate).getTime())
     .slice(0, count);
 }
