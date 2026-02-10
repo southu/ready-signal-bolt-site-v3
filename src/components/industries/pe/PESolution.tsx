@@ -1,5 +1,49 @@
 import { motion } from 'framer-motion';
-import { Zap, PieChart, TrendingUp } from 'lucide-react';
+import { Search, Layers, Eye, GitMerge } from 'lucide-react';
+
+const steps = [
+  {
+    icon: Search,
+    number: '1',
+    title: 'External Signal Discovery, Grounded in Evidence',
+    description: 'Rather than debating which series "might matter," Ready Signal evaluates a broad library of external indicators—spanning economic activity, labor markets, trade and logistics, commodity and input pricing, and manufacturing measures.',
+    detail: 'The system identifies which signals empirically lead and explain a given company\'s performance, and which are noise.',
+  },
+  {
+    icon: Layers,
+    number: '2',
+    title: 'Tailored Models for Each Portfolio Company',
+    description: 'PE portfolios do not behave like a single business—and Ready Signal does not treat them like one.',
+    bullets: [
+      'Each company receives a model aligned to its demand and cost drivers',
+      'No forced template that erases differences across business models',
+      'Methodology is consistent across holdings, supporting comparability without sacrificing fit',
+    ],
+  },
+  {
+    icon: Eye,
+    number: '3',
+    title: 'Explainable Forecasts with Driver Attribution',
+    description: 'Ready Signal connects forecast changes to observable inputs:',
+    bullets: [
+      'What signals are moving',
+      'How they have historically related to company performance',
+      'Which factors are contributing most to the updated outlook',
+    ],
+    detail: 'This is the difference between "the forecast changed" and "the forecast changed because these drivers are turning."',
+  },
+  {
+    icon: GitMerge,
+    number: '4',
+    title: 'Portfolio Alignment That Preserves Company-Level Fidelity',
+    description: 'Ready Signal supports both levels simultaneously:',
+    bullets: [
+      'Company-level forecasts designed for operating decisions',
+      'Portfolio roll-ups designed for sponsor visibility',
+    ],
+    detail: 'Portfolio-level aggregation error can often be kept low when the underlying company models are well specified.',
+  },
+];
 
 const PESolution = () => {
   return (
@@ -10,53 +54,57 @@ const PESolution = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-6"
         >
           <h2 className="text-4xl font-bold text-rs-dark mb-4">
-            The Solution
+            Ready Signal's Approach
           </h2>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="bg-white rounded-xl p-10 space-y-8"
-        >
-          <div className="flex items-center space-x-3 mb-6">
-            <div className="w-12 h-12 rounded-lg bg-rs-cyan bg-opacity-10 flex items-center justify-center">
-              <Zap className="w-6 h-6 text-rs-cyan" />
-            </div>
-            <h3 className="text-2xl font-bold text-rs-dark">Standardized Signal Discovery</h3>
-          </div>
-
-          <p className="text-lg text-rs-dark opacity-75">
-            Ready Signal deploys a standardized "Signal Discovery" layer across your portfolio. We map the specific sensitivities of each company to the same global macro-economic baseline.
+          <p className="text-xl text-rs-dark opacity-75 max-w-3xl mx-auto">
+            Macro-economic forecasting for private equity, grounded in driver attribution. Externally enriched forecasting with an emphasis on repeatability, comparability, and driver-level clarity.
           </p>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-rs-light-gray rounded-lg p-6 space-y-3">
-              <div className="flex items-center space-x-3">
-                <PieChart className="w-6 h-6 text-rs-cyan" />
-                <h4 className="font-bold text-rs-dark">Driver Decomposition</h4>
-              </div>
-              <p className="text-sm text-rs-dark opacity-75">
-                We tell you: "Revenue is up $850k. 48% is Seasonality, 9% is Trend, but 21% is CPI-Related Demand." This distinguishes temporary cyclical bumps from structural growth.
-              </p>
-            </div>
-
-            <div className="bg-rs-light-gray rounded-lg p-6 space-y-3">
-              <div className="flex items-center space-x-3">
-                <TrendingUp className="w-6 h-6 text-rs-cyan" />
-                <h4 className="font-bold text-rs-dark">Shared Intelligence</h4>
-              </div>
-              <p className="text-sm text-rs-dark opacity-75">
-                See how a single factor (e.g., "Housing Starts") creates a tailwind for your Construction holding but a headwind for your Home Goods holding.
-              </p>
-            </div>
-          </div>
         </motion.div>
+
+        <div className="grid md:grid-cols-2 gap-8 mt-12">
+          {steps.map((step, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: i * 0.1 }}
+              className="bg-white rounded-xl p-8"
+            >
+              <div className="flex items-start space-x-4 mb-4">
+                <div className="flex-shrink-0">
+                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-rs-cyan to-blue-600 flex items-center justify-center">
+                    <step.icon className="w-7 h-7 text-white" />
+                  </div>
+                </div>
+                <div>
+                  <div className="text-sm font-bold text-rs-cyan mb-1">Step {step.number}</div>
+                  <h3 className="text-xl font-bold text-rs-dark">{step.title}</h3>
+                </div>
+              </div>
+
+              <p className="text-rs-dark opacity-75 leading-relaxed mb-4">{step.description}</p>
+
+              {step.bullets && (
+                <ul className="space-y-2 mb-4">
+                  {step.bullets.map((bullet, j) => (
+                    <li key={j} className="flex items-start space-x-3">
+                      <div className="w-1.5 h-1.5 rounded-full bg-rs-cyan mt-2.5 flex-shrink-0"></div>
+                      <p className="text-rs-dark opacity-75 text-sm">{bullet}</p>
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              {step.detail && (
+                <p className="text-rs-dark opacity-60 text-sm italic">{step.detail}</p>
+              )}
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );
