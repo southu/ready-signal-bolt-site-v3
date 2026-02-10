@@ -21,7 +21,7 @@ const Navbar = () => {
   const handleIndustriesMouseLeave = () => {
     industriesTimeoutRef.current = setTimeout(() => {
       setIsIndustriesOpen(false);
-    }, 500);
+    }, 800);
   };
 
   const handleHowItWorksMouseEnter = () => {
@@ -34,7 +34,7 @@ const Navbar = () => {
   const handleHowItWorksMouseLeave = () => {
     howItWorksTimeoutRef.current = setTimeout(() => {
       setIsHowItWorksOpen(false);
-    }, 500);
+    }, 800);
   };
 
   const industries = [
@@ -91,7 +91,7 @@ const Navbar = () => {
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
-                  className="absolute top-full left-0 pt-2 w-56"
+                  className="absolute top-full -left-4 pt-3 w-64 px-4"
                   onMouseEnter={handleIndustriesMouseEnter}
                   onMouseLeave={handleIndustriesMouseLeave}
                 >
@@ -125,7 +125,7 @@ const Navbar = () => {
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
-                  className="absolute top-full left-0 pt-2 w-56"
+                  className="absolute top-full -left-4 pt-3 w-64 px-4"
                   onMouseEnter={handleHowItWorksMouseEnter}
                   onMouseLeave={handleHowItWorksMouseLeave}
                 >
