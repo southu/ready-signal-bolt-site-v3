@@ -10,8 +10,13 @@ import SupplyChainUseCases from '../../components/industries/supplychain/SupplyC
 import SupplyChainDecisions from '../../components/industries/supplychain/SupplyChainDecisions';
 import SupplyChainOnboarding from '../../components/industries/supplychain/SupplyChainOnboarding';
 import SupplyChainFAQ from '../../components/industries/supplychain/SupplyChainFAQ';
+import InsightsTeaserList from '../../components/InsightsTeaserList';
+import { usePublishedArticles } from '../../hooks/useArticles';
+import { getRelatedPosts } from '../../lib/blogHelpers';
 
 function SupplyChain() {
+  const { articles } = usePublishedArticles();
+  const relatedPosts = getRelatedPosts(articles, 'supply-chain', 3);
   return (
     <div className="min-h-screen bg-white">
       <SEO
@@ -30,6 +35,15 @@ function SupplyChain() {
         <SupplyChainUseCases />
         <SupplyChainDecisions />
         <SupplyChainOnboarding />
+        {relatedPosts.length > 0 && (
+          <InsightsTeaserList
+            title="Related Insights"
+            posts={relatedPosts}
+            maxItems={3}
+            showViewAllLink
+            bg="white"
+          />
+        )}
         <SupplyChainFAQ />
       </main>
 

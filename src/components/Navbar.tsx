@@ -50,9 +50,10 @@ const Navbar = () => {
     { name: 'How It Works', path: '/how-it-works/' },
     { name: 'Data Sources', path: '/data-sources/' },
     { name: 'Integrations', path: '/integrations/' },
+    { name: 'Pricing', path: '/plans/' },
     { name: 'Help Center', path: '/help-center/' },
     { name: 'API Documentation', path: '/ready-signal-api-documentation/' },
-    { name: 'Blog & Resources', path: '/blog/' },
+    { name: 'Resources', path: '/blog/' },
   ];
 
   return (
@@ -144,8 +145,8 @@ const Navbar = () => {
               )}
             </div>
 
-            <Link to="/plans/" className="text-rs-dark hover:text-rs-cyan transition-colors font-medium">
-              Pricing
+            <Link to="/blog/" className="text-rs-dark hover:text-rs-cyan transition-colors font-medium">
+              Insights
             </Link>
             <Link to="/about/" className="text-rs-dark hover:text-rs-cyan transition-colors font-medium">
               About Us
@@ -215,8 +216,8 @@ const Navbar = () => {
                 ))}
               </div>
             </div>
-            <Link to="/plans/" className="block text-rs-dark hover:text-rs-cyan transition-colors font-medium py-2">
-              Pricing
+            <Link to="/blog/" className="block text-rs-dark hover:text-rs-cyan transition-colors font-medium py-2">
+              Insights
             </Link>
             <Link to="/about/" className="block text-rs-dark hover:text-rs-cyan transition-colors font-medium py-2">
               About Us

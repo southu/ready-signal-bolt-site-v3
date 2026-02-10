@@ -11,8 +11,14 @@ import DifferentiationSection from '../components/DifferentiationSection';
 import ProvenPrecisionSection from '../components/ProvenPrecisionSection';
 import FinalCTASection from '../components/FinalCTASection';
 import GeminiHookFAQ from '../components/GeminiHookFAQ';
+import InsightsTeaserList from '../components/InsightsTeaserList';
+import { usePublishedArticles } from '../hooks/useArticles';
+import { getLatestPosts } from '../lib/blogHelpers';
 
 function Home() {
+  const { articles } = usePublishedArticles();
+  const latestPosts = getLatestPosts(articles, 3);
+
   return (
     <div className="min-h-screen bg-white">
       <SEO
@@ -30,6 +36,15 @@ function Home() {
         <ComparisonTable />
         <DifferentiationSection />
         <ProvenPrecisionSection />
+        {latestPosts.length > 0 && (
+          <InsightsTeaserList
+            title="Latest Thinking"
+            posts={latestPosts}
+            maxItems={3}
+            showViewAllLink
+            bg="gray"
+          />
+        )}
         <FinalCTASection />
         <GeminiHookFAQ />
       </main>

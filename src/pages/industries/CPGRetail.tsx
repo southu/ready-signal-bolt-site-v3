@@ -5,6 +5,9 @@ import CPGHero from '../../components/industries/cpg/CPGHero';
 import CPGProblem from '../../components/industries/cpg/CPGProblem';
 import CPGSolution from '../../components/industries/cpg/CPGSolution';
 import CPGCustomerStory from '../../components/industries/cpg/CPGCustomerStory';
+import InsightsTeaserList from '../../components/InsightsTeaserList';
+import { usePublishedArticles } from '../../hooks/useArticles';
+import { getRelatedPosts } from '../../lib/blogHelpers';
 
 const CPGFAQ = () => (
   <section className="bg-rs-light-gray py-12">
@@ -23,6 +26,9 @@ const CPGFAQ = () => (
 );
 
 function CPGRetail() {
+  const { articles } = usePublishedArticles();
+  const relatedPosts = getRelatedPosts(articles, 'cpg-retail', 3);
+
   return (
     <div className="min-h-screen bg-white">
       <SEO
@@ -37,6 +43,15 @@ function CPGRetail() {
         <CPGProblem />
         <CPGSolution />
         <CPGCustomerStory />
+        {relatedPosts.length > 0 && (
+          <InsightsTeaserList
+            title="Related Insights"
+            posts={relatedPosts}
+            maxItems={3}
+            showViewAllLink
+            bg="white"
+          />
+        )}
         <CPGFAQ />
       </main>
 
