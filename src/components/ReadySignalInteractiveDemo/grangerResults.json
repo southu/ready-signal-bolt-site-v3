@@ -1,0 +1,37 @@
+{
+  "generatedAt": "2026-01-21T00:00:00.000Z",
+  "target": "Unit Sales",
+  "maxLag": 6,
+  "results": [
+    {
+      "feature": "actual-minimum-temperature_Lag4",
+      "bestLag": 4,
+      "pValue": 0.0016,
+      "interpretation": "Strong predictive signal"
+    },
+    {
+      "feature": "other-separations-state-and-local_Lag4",
+      "bestLag": 4,
+      "pValue": 0.0006,
+      "interpretation": "Strong predictive signal"
+    },
+    {
+      "feature": "ppi-by-commodity-farm-products-strawberries",
+      "bestLag": 2,
+      "pValue": 0.0373,
+      "interpretation": "Predictive signal"
+    },
+    {
+      "feature": "housing-inventory-average-listing-price-month-over-month_Lag4",
+      "bestLag": 4,
+      "pValue": 0.0913,
+      "interpretation": "Directional / borderline"
+    },
+    {
+      "feature": "total-consumer-credit-owned-by-nonfinancial-business_Lag6",
+      "bestLag": 6,
+      "pValue": 0.2320,
+      "interpretation": "Weak evidence"
+    }
+  ]
+}
