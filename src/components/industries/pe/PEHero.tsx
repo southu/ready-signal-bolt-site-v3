@@ -23,18 +23,22 @@ const PEHero = () => {
               <span className="text-sm font-medium">Private Equity</span>
             </div>
 
-            <h1 className="text-5xl lg:text-6xl font-bold leading-tight">
-              One Standard for
-              <br />
-              <span className="text-rs-yellow">Forecasting</span>
-              <br />
-              Across Your
-              <br />
-              <span className="text-rs-cyan">Entire Portfolio.</span>
+            <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight">
+              Explainable Forecasting for{' '}
+              <span className="text-rs-yellow">Private Equity</span>{' '}
+              <span className="text-rs-cyan">Portfolios</span>
             </h1>
 
-            <p className="text-xl text-gray-300">
-              Stop accepting "The market was tough" as an excuse. Know exactly which macro-winds are hitting your diverse holdings.
+            <p className="text-xl text-gray-300 leading-relaxed">
+              Private equity firms don't manage a single P&L—they manage a portfolio of operating companies with different demand engines, cost structures, and macro sensitivities.
+            </p>
+
+            <p className="text-lg text-gray-400 leading-relaxed">
+              The problem isn't that forecasting is impossible. It's that forecasting becomes <em>non-comparable</em>: each holding develops its own model, its own definitions, and its own narrative. By the time forecasts reach the board or investment committee, leaders are debating the <em>inputs and methodology</em> instead of the <em>decision</em>.
+            </p>
+
+            <p className="text-lg text-gray-300 leading-relaxed">
+              Ready Signal delivers externally enriched, driver-level forecasting that scales across a portfolio without forcing a one-size-fits-all model.
             </p>
           </motion.div>
 
@@ -47,7 +51,7 @@ const PEHero = () => {
             <div className="rounded-2xl overflow-hidden shadow-2xl">
               <img
                 src={privateEquityImg}
-                alt="Private Equity"
+                alt="Explainable forecasting for private equity portfolios"
                 className="w-full h-auto object-cover"
               />
             </div>
