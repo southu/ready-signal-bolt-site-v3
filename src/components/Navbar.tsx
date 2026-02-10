@@ -21,7 +21,7 @@ const Navbar = () => {
   const handleIndustriesMouseLeave = () => {
     industriesTimeoutRef.current = setTimeout(() => {
       setIsIndustriesOpen(false);
-    }, 500);
+    }, 800);
   };
 
   const handleHowItWorksMouseEnter = () => {
@@ -34,7 +34,7 @@ const Navbar = () => {
   const handleHowItWorksMouseLeave = () => {
     howItWorksTimeoutRef.current = setTimeout(() => {
       setIsHowItWorksOpen(false);
-    }, 500);
+    }, 800);
   };
 
   const industries = [
@@ -50,9 +50,10 @@ const Navbar = () => {
     { name: 'How It Works', path: '/how-it-works/' },
     { name: 'Data Sources', path: '/data-sources/' },
     { name: 'Integrations', path: '/integrations/' },
+    { name: 'Pricing', path: '/plans/' },
     { name: 'Help Center', path: '/help-center/' },
     { name: 'API Documentation', path: '/ready-signal-api-documentation/' },
-    { name: 'Blog & Resources', path: '/blog/' },
+    { name: 'Resources', path: '/blog/' },
   ];
 
   return (
@@ -91,7 +92,7 @@ const Navbar = () => {
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
-                  className="absolute top-full left-0 pt-2 w-56"
+                  className="absolute top-full -left-4 pt-3 w-64 px-4"
                   onMouseEnter={handleIndustriesMouseEnter}
                   onMouseLeave={handleIndustriesMouseLeave}
                 >
@@ -125,7 +126,7 @@ const Navbar = () => {
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
-                  className="absolute top-full left-0 pt-2 w-56"
+                  className="absolute top-full -left-4 pt-3 w-64 px-4"
                   onMouseEnter={handleHowItWorksMouseEnter}
                   onMouseLeave={handleHowItWorksMouseLeave}
                 >
@@ -144,8 +145,8 @@ const Navbar = () => {
               )}
             </div>
 
-            <Link to="/plans/" className="text-rs-dark hover:text-rs-cyan transition-colors font-medium">
-              Pricing
+            <Link to="/blog/" className="text-rs-dark hover:text-rs-cyan transition-colors font-medium">
+              Insights
             </Link>
             <Link to="/about/" className="text-rs-dark hover:text-rs-cyan transition-colors font-medium">
               About Us
@@ -215,8 +216,8 @@ const Navbar = () => {
                 ))}
               </div>
             </div>
-            <Link to="/plans/" className="block text-rs-dark hover:text-rs-cyan transition-colors font-medium py-2">
-              Pricing
+            <Link to="/blog/" className="block text-rs-dark hover:text-rs-cyan transition-colors font-medium py-2">
+              Insights
             </Link>
             <Link to="/about/" className="block text-rs-dark hover:text-rs-cyan transition-colors font-medium py-2">
               About Us

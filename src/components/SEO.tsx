@@ -9,7 +9,7 @@ interface SEOProps {
 }
 
 const DEFAULT_OG_IMAGE = '/og-image.png';
-const SITE_URL = 'https://ready-signal-bolt-site-v3.pages.dev';
+const SITE_URL = 'https://www.readysignal.com';
 
 export default function SEO({ 
   title, 

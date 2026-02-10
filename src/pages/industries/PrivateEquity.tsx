@@ -9,8 +9,13 @@ import PEDifferentiation from '../../components/industries/pe/PEDifferentiation'
 import PECaseStudy from '../../components/industries/pe/PECaseStudy';
 import PEDecisions from '../../components/industries/pe/PEDecisions';
 import PEFAQ from '../../components/industries/pe/PEFAQ';
+import InsightsTeaserList from '../../components/InsightsTeaserList';
+import { usePublishedArticles } from '../../hooks/useArticles';
+import { getRelatedPosts } from '../../lib/blogHelpers';
 
 function PrivateEquity() {
+  const { articles } = usePublishedArticles();
+  const relatedPosts = getRelatedPosts(articles, 'private-equity', 3);
   return (
     <div className="min-h-screen bg-white">
       <SEO
@@ -28,6 +33,15 @@ function PrivateEquity() {
         <PEDifferentiation />
         <PECaseStudy />
         <PEDecisions />
+        {relatedPosts.length > 0 && (
+          <InsightsTeaserList
+            title="Related Insights"
+            posts={relatedPosts}
+            maxItems={3}
+            showViewAllLink
+            bg="white"
+          />
+        )}
         <PEFAQ />
       </main>
 
