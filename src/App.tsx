@@ -65,6 +65,9 @@ import SeasonalAdjustment from './pages/docs/SeasonalAdjustment';
 import AdvertisingAdstock from './pages/docs/AdvertisingAdstock';
 import RVideoExample from './pages/docs/RVideoExample';
 
+// Forecasting Fundamentals (dynamic, markdown-rendered)
+import ForecastingArticle from './pages/docs/forecasting/ForecastingArticle';
+
 // Blog system - data-driven articles
 import BlogArticle from './pages/blog/BlogArticle';
 
@@ -165,6 +168,28 @@ function App() {
           <Route path="/ready-signal-api-documentation/" element={<APIDocs />} />
           <Route path="/ready-signal-api-documentation-python-sdk" element={<APIDocsPython />} />
           <Route path="/ready-signal-api-documentation-python-sdk/" element={<APIDocsPython />} />
+
+          {/* Forecasting Fundamentals articles */}
+          <Route path="/what-is-forecasting-definition-distinctions-misconceptions" element={<ForecastingArticle />} />
+          <Route path="/what-is-forecasting-definition-distinctions-misconceptions/" element={<ForecastingArticle />} />
+          <Route path="/end-to-end-forecasting-process-decision-driven" element={<ForecastingArticle />} />
+          <Route path="/end-to-end-forecasting-process-decision-driven/" element={<ForecastingArticle />} />
+          <Route path="/choosing-forecast-target-variables" element={<ForecastingArticle />} />
+          <Route path="/choosing-forecast-target-variables/" element={<ForecastingArticle />} />
+          <Route path="/forecasting-data-requirements-signal-noise-external-data" element={<ForecastingArticle />} />
+          <Route path="/forecasting-data-requirements-signal-noise-external-data/" element={<ForecastingArticle />} />
+          <Route path="/managing-missing-data-time-series-forecasting" element={<ForecastingArticle />} />
+          <Route path="/managing-missing-data-time-series-forecasting/" element={<ForecastingArticle />} />
+          <Route path="/forecasting-model-classes-model-selection-guide" element={<ForecastingArticle />} />
+          <Route path="/forecasting-model-classes-model-selection-guide/" element={<ForecastingArticle />} />
+          <Route path="/evaluate-forecast-quality-metrics-backtesting-decision-weighted" element={<ForecastingArticle />} />
+          <Route path="/evaluate-forecast-quality-metrics-backtesting-decision-weighted/" element={<ForecastingArticle />} />
+          <Route path="/scenario-forecasting-decision-making-under-uncertainty" element={<ForecastingArticle />} />
+          <Route path="/scenario-forecasting-decision-making-under-uncertainty/" element={<ForecastingArticle />} />
+          <Route path="/forecast-failures-regime-shifts-detection-governance-learning" element={<ForecastingArticle />} />
+          <Route path="/forecast-failures-regime-shifts-detection-governance-learning/" element={<ForecastingArticle />} />
+          <Route path="/integrating-forecasts-into-business-processes-continuous-improvement" element={<ForecastingArticle />} />
+          <Route path="/integrating-forecasts-into-business-processes-continuous-improvement/" element={<ForecastingArticle />} />
 
           {/* Legal pages */}
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />

@@ -8,7 +8,7 @@ import SearchAutocomplete from '../components/help/SearchAutocomplete';
 import { searchArticles, getSearchSuggestions, trackClickedResult, SearchResult, SearchSuggestion } from '../services/searchService';
 import {
   BookOpen, Code, Terminal, PlayCircle, Settings, Database,
-  TrendingUp, Calendar, Download, Layers, ChevronRight, Search
+  TrendingUp, Calendar, Download, Layers, ChevronRight, Search, BarChart3
 } from 'lucide-react';
 
 const CategoryCard = ({
@@ -132,6 +132,24 @@ export default function HelpCenter() {
   };
 
   const categories = [
+    {
+      title: 'Forecasting Fundamentals',
+      description: 'Conceptual guides to forecasting best practices',
+      icon: BarChart3,
+      color: 'bg-indigo-500',
+      links: [
+        { title: 'What Forecasting Is (and Is Not)', href: '/what-is-forecasting-definition-distinctions-misconceptions/' },
+        { title: 'The Forecasting Process: From Question to Decision', href: '/end-to-end-forecasting-process-decision-driven/' },
+        { title: 'Choosing the Right Target Variable for a Forecast', href: '/choosing-forecast-target-variables/' },
+        { title: 'Data Requirements for Forecasting (and How to Relax Them)', href: '/forecasting-data-requirements-signal-noise-external-data/' },
+        { title: 'Handling Missing, Noisy, and Incomplete Time Series', href: '/managing-missing-data-time-series-forecasting/' },
+        { title: 'Model Classes for Forecasting and When to Use Them', href: '/forecasting-model-classes-model-selection-guide/' },
+        { title: 'Evaluating Forecasts: Accuracy, Stability, and Usefulness', href: '/evaluate-forecast-quality-metrics-backtesting-decision-weighted/' },
+        { title: 'Scenario Forecasting and Structured Uncertainty', href: '/scenario-forecasting-decision-making-under-uncertainty/' },
+        { title: 'When Forecasts Fail: Detection and Response', href: '/forecast-failures-regime-shifts-detection-governance-learning/' },
+        { title: 'Operationalizing Forecasts for Ongoing Decision Making', href: '/integrating-forecasts-into-business-processes-continuous-improvement/' },
+      ]
+    },
     {
       title: 'Getting Started',
       description: 'New to Ready Signal? Start here',

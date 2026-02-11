@@ -105,6 +105,18 @@ const STATIC_PAGES = [
   { path: '/ready-signal-api-documentation-python-sdk/', priority: '0.6', changefreq: 'monthly' },
   { path: '/ready-signal-api-documentation-r-3-6/', priority: '0.6', changefreq: 'monthly' },
   
+  // Forecasting Fundamentals articles
+  { path: '/what-is-forecasting-definition-distinctions-misconceptions/', priority: '0.7', changefreq: 'monthly' },
+  { path: '/end-to-end-forecasting-process-decision-driven/', priority: '0.7', changefreq: 'monthly' },
+  { path: '/choosing-forecast-target-variables/', priority: '0.7', changefreq: 'monthly' },
+  { path: '/forecasting-data-requirements-signal-noise-external-data/', priority: '0.7', changefreq: 'monthly' },
+  { path: '/managing-missing-data-time-series-forecasting/', priority: '0.7', changefreq: 'monthly' },
+  { path: '/forecasting-model-classes-model-selection-guide/', priority: '0.7', changefreq: 'monthly' },
+  { path: '/evaluate-forecast-quality-metrics-backtesting-decision-weighted/', priority: '0.7', changefreq: 'monthly' },
+  { path: '/scenario-forecasting-decision-making-under-uncertainty/', priority: '0.7', changefreq: 'monthly' },
+  { path: '/forecast-failures-regime-shifts-detection-governance-learning/', priority: '0.7', changefreq: 'monthly' },
+  { path: '/integrating-forecasts-into-business-processes-continuous-improvement/', priority: '0.7', changefreq: 'monthly' },
+
   // Legal pages
   { path: '/privacy-policy/', priority: '0.3', changefreq: 'yearly' },
   { path: '/terms-of-use/', priority: '0.3', changefreq: 'yearly' },

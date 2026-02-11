@@ -1,5 +1,85 @@
 export const helpArticlesData = [
   {
+    title: 'What Forecasting Is (and Is Not)',
+    description: 'A formal definition of business forecasting, how it differs from planning and budgeting, and common misconceptions.',
+    content: 'Forecasting is the practice of producing evidence-based estimates about future outcomes using historical data, current information, domain knowledge, and explicit assumptions. This resource defines forecasting, clarifies what it is for, and addresses common misconceptions.',
+    url: '/what-is-forecasting-definition-distinctions-misconceptions/',
+    category: 'Forecasting Fundamentals',
+    tags: ['forecasting', 'definition', 'planning', 'budgeting', 'fundamentals']
+  },
+  {
+    title: 'The Forecasting Process: From Question to Decision',
+    description: 'A decision-driven guide to the end-to-end forecasting process from scoping decisions to deploying forecasts.',
+    content: 'An end-to-end forecasting process organized around decision-making. Covers decision-first forecasting, translating business questions into targets, data preparation, model selection, validation, deployment, and communicating uncertainty.',
+    url: '/end-to-end-forecasting-process-decision-driven/',
+    category: 'Forecasting Fundamentals',
+    tags: ['forecasting process', 'decision-making', 'model selection', 'data preparation', 'fundamentals']
+  },
+  {
+    title: 'Choosing the Right Target Variable for a Forecast',
+    description: 'How to select forecasting target variables that are observable, decision-relevant, and modelable.',
+    content: 'A framework for selecting forecast targets that support decision-making. Covers observable vs latent variables, characteristics of good targets, stakeholder collaboration, common pitfalls, and practical examples.',
+    url: '/choosing-forecast-target-variables/',
+    category: 'Forecasting Fundamentals',
+    tags: ['target variable', 'forecast target', 'observable variables', 'decision-relevant', 'fundamentals']
+  },
+  {
+    title: 'Data Requirements for Forecasting (and How to Relax Them)',
+    description: 'What data forecasting truly needs—myths, signal-to-noise tradeoffs, and strategies for real-world limitations.',
+    content: 'A practical guide to forecasting data requirements covering data quality, common myths, forecasting with limited data, feature engineering, external data, and data governance frameworks.',
+    url: '/forecasting-data-requirements-signal-noise-external-data/',
+    category: 'Forecasting Fundamentals',
+    tags: ['data requirements', 'data quality', 'signal-to-noise', 'external data', 'fundamentals']
+  },
+  {
+    title: 'Handling Missing, Noisy, and Incomplete Time Series',
+    description: 'Learn how missingness affects forecasts, which imputation methods to use, and how to reduce bias.',
+    content: 'Managing missing data in time series forecasting. Covers MCAR, MAR, NMAR missingness types, interpolation and imputation methods, validation via masking, governance, and decision risks from imputation.',
+    url: '/managing-missing-data-time-series-forecasting/',
+    category: 'Forecasting Fundamentals',
+    tags: ['missing data', 'imputation', 'time series', 'data quality', 'MCAR', 'MAR', 'NMAR', 'fundamentals']
+  },
+  {
+    title: 'Model Classes for Forecasting and When to Use Them',
+    description: 'A guide to forecasting model classes—qualitative, time series, causal, and hybrid—with selection criteria.',
+    content: 'Forecasting model classes and practical guide to choosing the right approach. Covers qualitative, time series, causal, heuristic, ML/AI, and hybrid methods with assumptions, strengths, risks, and decision-first selection framework.',
+    url: '/forecasting-model-classes-model-selection-guide/',
+    category: 'Forecasting Fundamentals',
+    tags: ['model classes', 'model selection', 'time series', 'regression', 'machine learning', 'fundamentals']
+  },
+  {
+    title: 'Evaluating Forecasts: Accuracy, Stability, and Usefulness',
+    description: 'How to evaluate forecast quality using metrics, backtesting, and decision-weighted performance measures.',
+    content: 'Evaluate forecast quality with accuracy metrics (MAE, RMSE, MAPE), scaled metrics (MASE), probabilistic forecast evaluation, backtesting strategies, and decision-weighted metrics that reflect business consequences.',
+    url: '/evaluate-forecast-quality-metrics-backtesting-decision-weighted/',
+    category: 'Forecasting Fundamentals',
+    tags: ['forecast evaluation', 'accuracy metrics', 'MAE', 'RMSE', 'MAPE', 'backtesting', 'fundamentals']
+  },
+  {
+    title: 'Scenario Forecasting and Structured Uncertainty',
+    description: 'A practical framework for scenario forecasting, baseline vs conditional forecasts, and communicating uncertainty.',
+    content: 'Scenario forecasting as a decision tool. Covers baseline vs conditional forecasts, integrating models with scenarios, narratives, communicating uncertainty, and a 6-step practical workflow.',
+    url: '/scenario-forecasting-decision-making-under-uncertainty/',
+    category: 'Forecasting Fundamentals',
+    tags: ['scenario forecasting', 'uncertainty', 'baseline forecast', 'conditional forecast', 'fundamentals']
+  },
+  {
+    title: 'When Forecasts Fail: Detection and Response',
+    description: 'Detect forecast failures, manage overrides, and adapt to regime shifts with governance and post-mortems.',
+    content: 'Framework for detecting forecast failures and regime shifts using structural break detection, model drift monitoring, override governance, post-mortems, and recovery strategies.',
+    url: '/forecast-failures-regime-shifts-detection-governance-learning/',
+    category: 'Forecasting Fundamentals',
+    tags: ['forecast failure', 'regime shift', 'model drift', 'governance', 'override', 'fundamentals']
+  },
+  {
+    title: 'Operationalizing Forecasts for Ongoing Decision Making',
+    description: 'How to integrate forecasting into planning with feedback loops, governance, and continuous improvement.',
+    content: 'Integrating forecasts into business processes. Covers forecast-to-decision contracts, S&OP integration, FP&A forecasting, override governance, backtesting, monitoring, maturity model, and implementation sequence.',
+    url: '/integrating-forecasts-into-business-processes-continuous-improvement/',
+    category: 'Forecasting Fundamentals',
+    tags: ['operationalizing forecasts', 'governance', 'S&OP', 'FP&A', 'continuous improvement', 'fundamentals']
+  },
+  {
     title: 'Ready Signal - A Brief Introduction',
     description: 'Get started with Ready Signal - learn how to find external data that improves your forecasts.',
     content: 'Ready Signal external data platform helps you find, prepare, and integrate third-party data into your forecasting and analytical models. Instead of spending weeks or months sourcing and cleaning external data, Ready Signal gives you instant access to thousands of curated, model-ready features from trusted sources.',
