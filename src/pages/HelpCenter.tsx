@@ -151,36 +151,6 @@ export default function HelpCenter() {
       ]
     },
     {
-      title: 'Getting Started',
-      description: 'New to Ready Signal? Start here',
-      icon: PlayCircle,
-      color: 'bg-green-500',
-      links: [
-        { title: 'Ready Signal - A Brief Introduction', href: '/ready-signal-a-brief-introduction/' },
-        { title: 'How to Create a Signal - Video Version', href: '/how-to-create-a-signal-video-version/' },
-        { title: 'How to Create a Signal', href: '/how-to-create-a-signal/' },
-      ]
-    },
-    {
-      title: 'Signals and Features',
-      description: 'Managing your signals',
-      icon: Layers,
-      color: 'bg-blue-500',
-      links: [
-        { title: 'How to Reduce the Size of Your Signal', href: '/how-to-reduce-the-size-of-your-signal/' },
-        { title: 'Overview of Feature Details Page', href: '/overview-of-feature-details-page/' },
-      ]
-    },
-    {
-      title: 'Geographic and Time Grains',
-      description: 'Understanding data granularity',
-      icon: Calendar,
-      color: 'bg-cyan-500',
-      links: [
-        { title: 'Data Grains Explained', href: '/data-grains-explained/' },
-      ]
-    },
-    {
       title: 'Data Science Treatments',
       description: 'Transform and optimize your data',
       icon: TrendingUp,
@@ -208,6 +178,36 @@ export default function HelpCenter() {
         { title: 'How to Export Your Processed Data', href: '/how-to-export-your-processed-control-data-signal/' },
         { title: 'Domo Data Connector', href: '/domo-data-connector/' },
         { title: 'Ready Signal and Domo - Case Study', href: '/ready-signal-and-domo-case-study/' },
+      ]
+    },
+    {
+      title: 'Getting Started',
+      description: 'New to Ready Signal? Start here',
+      icon: PlayCircle,
+      color: 'bg-green-500',
+      links: [
+        { title: 'Ready Signal - A Brief Introduction', href: '/ready-signal-a-brief-introduction/' },
+        { title: 'How to Create a Signal - Video Version', href: '/how-to-create-a-signal-video-version/' },
+        { title: 'How to Create a Signal', href: '/how-to-create-a-signal/' },
+      ]
+    },
+    {
+      title: 'Signals and Features',
+      description: 'Managing your signals',
+      icon: Layers,
+      color: 'bg-blue-500',
+      links: [
+        { title: 'How to Reduce the Size of Your Signal', href: '/how-to-reduce-the-size-of-your-signal/' },
+        { title: 'Overview of Feature Details Page', href: '/overview-of-feature-details-page/' },
+      ]
+    },
+    {
+      title: 'Geographic and Time Grains',
+      description: 'Understanding data granularity',
+      icon: Calendar,
+      color: 'bg-cyan-500',
+      links: [
+        { title: 'Data Grains Explained', href: '/data-grains-explained/' },
       ]
     },
     {
