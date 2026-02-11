@@ -8,7 +8,7 @@ import SearchAutocomplete from '../components/help/SearchAutocomplete';
 import { searchArticles, getSearchSuggestions, trackClickedResult, SearchResult, SearchSuggestion } from '../services/searchService';
 import {
   BookOpen, Code, Terminal, PlayCircle, Settings, Database,
-  TrendingUp, Calendar, Download, Layers, ChevronRight, Search
+  TrendingUp, Calendar, Download, Layers, ChevronRight, Search, BarChart3
 } from 'lucide-react';
 
 const CategoryCard = ({
@@ -133,33 +133,21 @@ export default function HelpCenter() {
 
   const categories = [
     {
-      title: 'Getting Started',
-      description: 'New to Ready Signal? Start here',
-      icon: PlayCircle,
-      color: 'bg-green-500',
+      title: 'Forecasting Fundamentals',
+      description: 'Conceptual guides to forecasting best practices',
+      icon: BarChart3,
+      color: 'bg-indigo-500',
       links: [
-        { title: 'Ready Signal - A Brief Introduction', href: '/ready-signal-a-brief-introduction/' },
-        { title: 'How to Create a Signal - Video Version', href: '/how-to-create-a-signal-video-version/' },
-        { title: 'How to Create a Signal', href: '/how-to-create-a-signal/' },
-      ]
-    },
-    {
-      title: 'Signals and Features',
-      description: 'Managing your signals',
-      icon: Layers,
-      color: 'bg-blue-500',
-      links: [
-        { title: 'How to Reduce the Size of Your Signal', href: '/how-to-reduce-the-size-of-your-signal/' },
-        { title: 'Overview of Feature Details Page', href: '/overview-of-feature-details-page/' },
-      ]
-    },
-    {
-      title: 'Geographic and Time Grains',
-      description: 'Understanding data granularity',
-      icon: Calendar,
-      color: 'bg-cyan-500',
-      links: [
-        { title: 'Data Grains Explained', href: '/data-grains-explained/' },
+        { title: 'What Forecasting Is (and Is Not)', href: '/what-is-forecasting-definition-distinctions-misconceptions/' },
+        { title: 'The Forecasting Process: From Question to Decision', href: '/end-to-end-forecasting-process-decision-driven/' },
+        { title: 'Choosing the Right Target Variable for a Forecast', href: '/choosing-forecast-target-variables/' },
+        { title: 'Data Requirements for Forecasting (and How to Relax Them)', href: '/forecasting-data-requirements-signal-noise-external-data/' },
+        { title: 'Handling Missing, Noisy, and Incomplete Time Series', href: '/managing-missing-data-time-series-forecasting/' },
+        { title: 'Model Classes for Forecasting and When to Use Them', href: '/forecasting-model-classes-model-selection-guide/' },
+        { title: 'Evaluating Forecasts: Accuracy, Stability, and Usefulness', href: '/evaluate-forecast-quality-metrics-backtesting-decision-weighted/' },
+        { title: 'Scenario Forecasting and Structured Uncertainty', href: '/scenario-forecasting-decision-making-under-uncertainty/' },
+        { title: 'When Forecasts Fail: Detection and Response', href: '/forecast-failures-regime-shifts-detection-governance-learning/' },
+        { title: 'Operationalizing Forecasts for Ongoing Decision Making', href: '/integrating-forecasts-into-business-processes-continuous-improvement/' },
       ]
     },
     {
@@ -190,6 +178,36 @@ export default function HelpCenter() {
         { title: 'How to Export Your Processed Data', href: '/how-to-export-your-processed-control-data-signal/' },
         { title: 'Domo Data Connector', href: '/domo-data-connector/' },
         { title: 'Ready Signal and Domo - Case Study', href: '/ready-signal-and-domo-case-study/' },
+      ]
+    },
+    {
+      title: 'Getting Started',
+      description: 'New to Ready Signal? Start here',
+      icon: PlayCircle,
+      color: 'bg-green-500',
+      links: [
+        { title: 'Ready Signal - A Brief Introduction', href: '/ready-signal-a-brief-introduction/' },
+        { title: 'How to Create a Signal - Video Version', href: '/how-to-create-a-signal-video-version/' },
+        { title: 'How to Create a Signal', href: '/how-to-create-a-signal/' },
+      ]
+    },
+    {
+      title: 'Signals and Features',
+      description: 'Managing your signals',
+      icon: Layers,
+      color: 'bg-blue-500',
+      links: [
+        { title: 'How to Reduce the Size of Your Signal', href: '/how-to-reduce-the-size-of-your-signal/' },
+        { title: 'Overview of Feature Details Page', href: '/overview-of-feature-details-page/' },
+      ]
+    },
+    {
+      title: 'Geographic and Time Grains',
+      description: 'Understanding data granularity',
+      icon: Calendar,
+      color: 'bg-cyan-500',
+      links: [
+        { title: 'Data Grains Explained', href: '/data-grains-explained/' },
       ]
     },
     {
