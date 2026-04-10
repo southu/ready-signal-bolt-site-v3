@@ -4,7 +4,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
 import { Lock, Unlock, AlertTriangle } from 'lucide-react';
-import { Article, fetchCategories, fetchTags, isSupabaseConfigured } from '../lib/supabaseArticles';
+import { Article, fetchCategories, fetchTags, isSupabaseConfigured, generateAudioForArticle } from '../lib/supabaseArticles';
 import { useAllArticles, useArticleOperations } from '../hooks/useArticles';
 import ArticleList from '../components/admin/ArticleList';
 import ArticleEditor from '../components/admin/ArticleEditor';
@@ -102,6 +102,18 @@ export default function AdminBlog() {
     } catch (err) {
       console.error('Save failed:', err);
       alert('Failed to save article. Please try again.');
+    }
+  };
+
+  const handleGenerateAudio = async (article: Article, voice: string) => {
+    if (!article.id) return;
+    try {
+      await generateAudioForArticle(article.id, voice);
+      await refresh();
+    } catch (err) {
+      console.error('Audio generation failed:', err);
+      alert('Failed to generate audio. Please try again.');
+      await refresh();
     }
   };
 
@@ -211,6 +223,7 @@ export default function AdminBlog() {
               onEdit={handleEditArticle}
               onDelete={handleDeleteArticle}
               onNew={handleNewArticle}
+              onGenerateAudio={handleGenerateAudio}
             />
           )}
 

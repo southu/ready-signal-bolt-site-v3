@@ -14,6 +14,10 @@ export interface DBArticle {
   image: string | null;  // Column is 'image', not 'featured_image'
   content: string;
   status: 'draft' | 'published';  // Column is 'status', not 'is_published'
+  audio_url: string | null;
+  audio_voice: string | null;
+  audio_status: 'none' | 'generating' | 'completed' | 'failed';
+  audio_duration_seconds: number | null;
   created_at: string;
   updated_at: string;
 }
@@ -32,6 +36,10 @@ export interface Article {
   image?: string;
   content: string;
   status?: 'draft' | 'published';
+  audioUrl?: string;
+  audioVoice?: string;
+  audioStatus?: 'none' | 'generating' | 'completed' | 'failed';
+  audioDurationSeconds?: number;
 }
 
 // Convert database format to frontend format
@@ -49,6 +57,10 @@ export function dbToFrontend(dbArticle: DBArticle): Article {
     image: dbArticle.image || undefined,
     content: dbArticle.content,
     status: dbArticle.status || 'draft',
+    audioUrl: dbArticle.audio_url || undefined,
+    audioVoice: dbArticle.audio_voice || undefined,
+    audioStatus: dbArticle.audio_status || 'none',
+    audioDurationSeconds: dbArticle.audio_duration_seconds || undefined,
   };
 }
 
@@ -67,6 +79,10 @@ export function frontendToDb(article: Partial<Article>): Partial<DBArticle> {
   if (article.image !== undefined) dbArticle.image = article.image || null;
   if (article.content !== undefined) dbArticle.content = article.content;
   if (article.status !== undefined) dbArticle.status = article.status;
+  if (article.audioUrl !== undefined) dbArticle.audio_url = article.audioUrl || null;
+  if (article.audioVoice !== undefined) dbArticle.audio_voice = article.audioVoice || null;
+  if (article.audioStatus !== undefined) dbArticle.audio_status = article.audioStatus;
+  if (article.audioDurationSeconds !== undefined) dbArticle.audio_duration_seconds = article.audioDurationSeconds || null;
 
   return dbArticle;
 }
@@ -287,6 +303,19 @@ export async function fetchCategories(): Promise<string[]> {
 
   const categories = new Set(data?.map(d => d.category) || []);
   return Array.from(categories);
+}
+
+/**
+ * Generate audio narration for an article via edge function
+ */
+export async function generateAudioForArticle(articleId: string, voice: string): Promise<{ audio_url: string; duration_seconds: number }> {
+  const { data, error } = await supabase.functions.invoke('generate-audio', {
+    body: { article_id: articleId, voice },
+  });
+
+  if (error) throw error;
+  if (data?.error) throw new Error(data.error);
+  return data;
 }
 
 /**
