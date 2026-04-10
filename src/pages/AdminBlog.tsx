@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
 import { Lock, Unlock, AlertTriangle } from 'lucide-react';
-import { Article, fetchCategories, fetchTags, isSupabaseConfigured } from '../lib/supabaseArticles';
+import { Article, fetchCategories, fetchTags, isSupabaseConfigured, generateAudioForArticle } from '../lib/supabaseArticles';
 import { useAllArticles, useArticleOperations } from '../hooks/useArticles';
 import ArticleList from '../components/admin/ArticleList';
 import ArticleEditor from '../components/admin/ArticleEditor';
@@ -103,6 +103,35 @@ export default function AdminBlog() {
       console.error('Save failed:', err);
       alert('Failed to save article. Please try again.');
     }
+  };
+
+  const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  // Stop polling when articles update with a non-generating status
+  useEffect(() => {
+    if (pollRef.current) {
+      const anyGenerating = articles.some(a => a.audioStatus === 'generating');
+      if (!anyGenerating) {
+        clearInterval(pollRef.current);
+        pollRef.current = null;
+      }
+    }
+  }, [articles]);
+
+  const handleGenerateAudio = async (article: Article, voice: string) => {
+    if (!article.id) return;
+    try {
+      await generateAudioForArticle(article.id, voice);
+    } catch (err) {
+      // Gateway timeout is expected for long articles — the function may still
+      // be running server-side. Don't alert, just let polling handle it.
+      console.log('Audio generation call returned (may still be processing):', err);
+    }
+    // Always refresh and start polling to catch completion
+    await refresh();
+    if (pollRef.current) clearInterval(pollRef.current);
+    pollRef.current = setInterval(() => refresh(), 5000);
+    setTimeout(() => { if (pollRef.current) { clearInterval(pollRef.current); pollRef.current = null; } }, 300000);
   };
 
   const handleCancelEdit = () => {
@@ -211,6 +240,7 @@ export default function AdminBlog() {
               onEdit={handleEditArticle}
               onDelete={handleDeleteArticle}
               onNew={handleNewArticle}
+              onGenerateAudio={handleGenerateAudio}
             />
           )}
 

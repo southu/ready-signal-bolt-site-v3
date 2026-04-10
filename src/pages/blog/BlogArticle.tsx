@@ -4,6 +4,7 @@ import Footer from '../../components/Footer';
 import SEO from '../../components/SEO';
 import { ArrowLeft, Calendar, User } from 'lucide-react';
 import { useArticleBySlug } from '../../hooks/useArticles';
+import AudioPlayer from '../../components/blog/AudioPlayer';
 
 // Custom styles for blog content elements
 const blogStyles = `
@@ -274,6 +275,17 @@ export default function BlogArticle() {
                 </div>
               </div>
             </header>
+
+            {/* Audio Player */}
+            {article.audioUrl && (
+              <div className="mb-8">
+                <AudioPlayer
+                  audioUrl={article.audioUrl}
+                  title={article.title}
+                  durationSeconds={article.audioDurationSeconds}
+                />
+              </div>
+            )}
 
             {/* Featured Image */}
             {article.image && (

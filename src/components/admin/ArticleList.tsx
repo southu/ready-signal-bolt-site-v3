@@ -1,6 +1,19 @@
-import { useState, useMemo } from 'react';
-import { Search, Edit2, Trash2, ExternalLink, Filter, Plus } from 'lucide-react';
+import { useState, useMemo, useRef, useEffect } from 'react';
+import { Search, Edit2, Trash2, ExternalLink, Filter, Plus, Volume2, Loader2, AlertCircle } from 'lucide-react';
 import { Article } from '../../lib/supabaseArticles';
+
+const VOICES = [
+  { id: 'nova', label: 'Nova', desc: 'Bright, energetic' },
+  { id: 'coral', label: 'Coral', desc: 'Professional' },
+  { id: 'onyx', label: 'Onyx', desc: 'Authoritative' },
+  { id: 'shimmer', label: 'Shimmer', desc: 'Upbeat' },
+  { id: 'ash', label: 'Ash', desc: 'Soft, steady' },
+  { id: 'ballad', label: 'Ballad', desc: 'Warm, melodic' },
+  { id: 'echo', label: 'Echo', desc: 'Neutral' },
+  { id: 'fable', label: 'Fable', desc: 'Storytelling' },
+  { id: 'sage', label: 'Sage', desc: 'Calm, wise' },
+  { id: 'alloy', label: 'Alloy', desc: 'Balanced' },
+];
 
 interface ArticleListProps {
   articles: Article[];
@@ -8,6 +21,7 @@ interface ArticleListProps {
   onEdit: (article: Article) => void;
   onDelete: (article: Article) => void;
   onNew: () => void;
+  onGenerateAudio: (article: Article, voice: string) => void;
 }
 
 export default function ArticleList({
@@ -16,10 +30,42 @@ export default function ArticleList({
   onEdit,
   onDelete,
   onNew,
+  onGenerateAudio,
 }: ArticleListProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'published' | 'draft'>('all');
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
+  const [audioMenuArticleId, setAudioMenuArticleId] = useState<string | null>(null);
+  const [selectedVoice, setSelectedVoice] = useState('nova');
+  const [generatingIds, setGeneratingIds] = useState<Set<string>>(new Set());
+  const audioMenuRef = useRef<HTMLDivElement>(null);
+
+  // Clear local generating state when articles refresh with updated status
+  useEffect(() => {
+    setGeneratingIds(prev => {
+      const updated = new Set(prev);
+      for (const id of prev) {
+        const article = articles.find(a => a.id === id);
+        if (article && article.audioStatus !== 'generating') {
+          updated.delete(id);
+        }
+      }
+      return updated.size !== prev.size ? updated : prev;
+    });
+  }, [articles]);
+
+  // Close voice dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (audioMenuRef.current && !audioMenuRef.current.contains(e.target as Node)) {
+        setAudioMenuArticleId(null);
+      }
+    }
+    if (audioMenuArticleId) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }
+  }, [audioMenuArticleId]);
 
   // Get unique categories from articles
   const categories = useMemo(() => {
@@ -32,18 +78,18 @@ export default function ArticleList({
     return articles.filter(article => {
       // Search filter
       const searchLower = searchTerm.toLowerCase();
-      const matchesSearch = !searchTerm || 
+      const matchesSearch = !searchTerm ||
         article.title.toLowerCase().includes(searchLower) ||
         article.slug.toLowerCase().includes(searchLower) ||
         article.author.toLowerCase().includes(searchLower) ||
         article.description.toLowerCase().includes(searchLower);
-      
+
       // Status filter
       const matchesStatus = statusFilter === 'all' || article.status === statusFilter;
-      
+
       // Category filter
       const matchesCategory = categoryFilter === 'all' || article.category === categoryFilter;
-      
+
       return matchesSearch && matchesStatus && matchesCategory;
     });
   }, [articles, searchTerm, statusFilter, categoryFilter]);
@@ -54,6 +100,73 @@ export default function ArticleList({
     const draft = articles.filter(a => a.status === 'draft').length;
     return { total: articles.length, published, draft };
   }, [articles]);
+
+  const handleAudioClick = (article: Article) => {
+    const isGenerating = generatingIds.has(article.id!) || (article.audioStatus === 'generating');
+    if (isGenerating) return;
+    setAudioMenuArticleId(audioMenuArticleId === article.id ? null : article.id!);
+    if (article.audioVoice) setSelectedVoice(article.audioVoice);
+  };
+
+  const handleGenerate = (article: Article) => {
+    setAudioMenuArticleId(null);
+    setGeneratingIds(prev => new Set(prev).add(article.id!));
+    onGenerateAudio(article, selectedVoice);
+  };
+
+  function getAudioButton(article: Article) {
+    const isGenerating = generatingIds.has(article.id!) || (article.audioStatus === 'generating');
+
+    if (isGenerating) {
+      return (
+        <button
+          disabled
+          className="p-2 text-amber-500 rounded-lg cursor-not-allowed"
+          title="Generating audio..."
+        >
+          <Loader2 className="w-4 h-4 animate-spin" />
+        </button>
+      );
+    }
+
+    const status = article.audioStatus || 'none';
+
+    if (status === 'completed') {
+      return (
+        <button
+          onClick={() => handleAudioClick(article)}
+          className="relative p-2 text-emerald-500 hover:text-emerald-700 hover:bg-emerald-50 rounded-lg transition-colors"
+          title={`Audio ready (${article.audioVoice || 'nova'})`}
+        >
+          <Volume2 className="w-4 h-4" />
+          <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-emerald-500 rounded-full" />
+        </button>
+      );
+    }
+
+    if (status === 'failed') {
+      return (
+        <button
+          onClick={() => handleAudioClick(article)}
+          className="relative p-2 text-red-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+          title="Audio generation failed — click to retry"
+        >
+          <AlertCircle className="w-4 h-4" />
+        </button>
+      );
+    }
+
+    // status === 'none'
+    return (
+      <button
+        onClick={() => handleAudioClick(article)}
+        className="p-2 text-gray-400 hover:text-cyan-600 hover:bg-cyan-50 rounded-lg transition-colors"
+        title="Generate audio narration"
+      >
+        <Volume2 className="w-4 h-4" />
+      </button>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -87,11 +200,11 @@ export default function ArticleList({
               className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
             />
           </div>
-          
+
           {/* Filters */}
           <div className="flex items-center gap-3">
             <Filter className="w-4 h-4 text-gray-400" />
-            
+
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value as 'all' | 'published' | 'draft')}
@@ -101,7 +214,7 @@ export default function ArticleList({
               <option value="published">Published</option>
               <option value="draft">Draft</option>
             </select>
-            
+
             <select
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
@@ -150,8 +263,10 @@ export default function ArticleList({
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
-                {filteredArticles.map((article) => (
-                  <tr key={article.id || article.slug} className="hover:bg-gray-50 transition-colors">
+                {filteredArticles.map((article) => {
+                  const isAudioGenerating = generatingIds.has(article.id!) || (article.audioStatus === 'generating');
+                  return (
+                  <tr key={article.id || article.slug} className={`transition-colors ${isAudioGenerating ? 'bg-cyan-50/50' : 'hover:bg-gray-50'}`}>
                     <td className="px-6 py-4">
                       <div className="flex flex-col">
                         <span className="font-medium text-gray-900 line-clamp-1">
@@ -160,6 +275,12 @@ export default function ArticleList({
                         <code className="text-xs text-gray-500 mt-1">
                           /{article.slug}/
                         </code>
+                        {isAudioGenerating && (
+                          <span className="inline-flex items-center gap-1.5 mt-1.5 text-xs text-cyan-700">
+                            <Loader2 className="w-3 h-3 animate-spin" />
+                            Generating audio narration...
+                          </span>
+                        )}
                       </div>
                     </td>
                     <td className="px-6 py-4">
@@ -183,7 +304,49 @@ export default function ArticleList({
                       {new Date(article.publishedDate).toLocaleDateString()}
                     </td>
                     <td className="px-6 py-4">
-                      <div className="flex items-center justify-end gap-2">
+                      <div className="flex items-center justify-end gap-2 relative">
+                        {/* Audio button */}
+                        {article.id && getAudioButton(article)}
+
+                        {/* Voice selector dropdown */}
+                        {audioMenuArticleId === article.id && (
+                          <div
+                            ref={audioMenuRef}
+                            className="absolute right-0 top-full mt-1 z-50 bg-white rounded-xl border border-gray-200 shadow-xl p-4 w-64"
+                          >
+                            <p className="text-sm font-semibold text-gray-900 mb-2">
+                              {article.audioStatus === 'completed' ? 'Regenerate Audio' : 'Generate Audio'}
+                            </p>
+                            <select
+                              value={selectedVoice}
+                              onChange={(e) => setSelectedVoice(e.target.value)}
+                              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm mb-3 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                            >
+                              {VOICES.map(v => (
+                                <option key={v.id} value={v.id}>
+                                  {v.label} — {v.desc}
+                                </option>
+                              ))}
+                            </select>
+                            <button
+                              onClick={() => handleGenerate(article)}
+                              className="w-full bg-rs-cyan text-white py-2 rounded-lg text-sm font-semibold hover:bg-rs-cyan/90 transition-colors"
+                            >
+                              Generate Audio
+                            </button>
+                            {article.audioStatus === 'completed' && article.audioUrl && (
+                              <a
+                                href={article.audioUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="block text-center text-xs text-gray-500 hover:text-gray-700 mt-2"
+                              >
+                                Preview current audio
+                              </a>
+                            )}
+                          </div>
+                        )}
+
                         <a
                           href={`/${article.slug}/`}
                           target="_blank"
@@ -210,7 +373,8 @@ export default function ArticleList({
                       </div>
                     </td>
                   </tr>
-                ))}
+                  );
+                })}
               </tbody>
             </table>
           </div>
@@ -226,4 +390,3 @@ export default function ArticleList({
     </div>
   );
 }
-
