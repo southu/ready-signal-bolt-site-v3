@@ -218,6 +218,21 @@ export default function BlogArticle() {
     });
   };
 
+  // Keep legacy video-example article pointing at the updated R docs page,
+  // regardless of whether article HTML is loaded from Supabase or static fallback.
+  const renderedContent =
+    article.slug === 'ready-signal-api-documentation-r-3-6-video-example'
+      ? article.content
+          .replace(
+            /https:\/\/help\.readysignal\.com\/ready-signal-api-documentation-r/g,
+            'https://www.readysignal.com/ready-signal-api-documentation-r-3-6/'
+          )
+          .replace(
+            /https:\/\/www\.readysignal\.com\/ready-signal-api-documentation-r-3-6-video-example\//g,
+            'https://www.readysignal.com/ready-signal-api-documentation-r-3-6/'
+          )
+      : article.content;
+
   return (
     <>
       <SEO
@@ -274,7 +289,7 @@ export default function BlogArticle() {
             {/* Article Content */}
             <div 
               className="blog-content"
-              dangerouslySetInnerHTML={{ __html: article.content }}
+              dangerouslySetInnerHTML={{ __html: renderedContent }}
             />
           </article>
 
