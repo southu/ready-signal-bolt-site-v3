@@ -263,8 +263,10 @@ export default function ArticleList({
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
-                {filteredArticles.map((article) => (
-                  <tr key={article.id || article.slug} className="hover:bg-gray-50 transition-colors">
+                {filteredArticles.map((article) => {
+                  const isAudioGenerating = generatingIds.has(article.id!) || (article.audioStatus === 'generating');
+                  return (
+                  <tr key={article.id || article.slug} className={`transition-colors ${isAudioGenerating ? 'bg-cyan-50/50' : 'hover:bg-gray-50'}`}>
                     <td className="px-6 py-4">
                       <div className="flex flex-col">
                         <span className="font-medium text-gray-900 line-clamp-1">
@@ -273,6 +275,12 @@ export default function ArticleList({
                         <code className="text-xs text-gray-500 mt-1">
                           /{article.slug}/
                         </code>
+                        {isAudioGenerating && (
+                          <span className="inline-flex items-center gap-1.5 mt-1.5 text-xs text-cyan-700">
+                            <Loader2 className="w-3 h-3 animate-spin" />
+                            Generating audio narration...
+                          </span>
+                        )}
                       </div>
                     </td>
                     <td className="px-6 py-4">
@@ -365,7 +373,8 @@ export default function ArticleList({
                       </div>
                     </td>
                   </tr>
-                ))}
+                  );
+                })}
               </tbody>
             </table>
           </div>
