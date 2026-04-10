@@ -37,7 +37,22 @@ export default function ArticleList({
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
   const [audioMenuArticleId, setAudioMenuArticleId] = useState<string | null>(null);
   const [selectedVoice, setSelectedVoice] = useState('nova');
+  const [generatingIds, setGeneratingIds] = useState<Set<string>>(new Set());
   const audioMenuRef = useRef<HTMLDivElement>(null);
+
+  // Clear local generating state when articles refresh with updated status
+  useEffect(() => {
+    setGeneratingIds(prev => {
+      const updated = new Set(prev);
+      for (const id of prev) {
+        const article = articles.find(a => a.id === id);
+        if (article && article.audioStatus !== 'generating') {
+          updated.delete(id);
+        }
+      }
+      return updated.size !== prev.size ? updated : prev;
+    });
+  }, [articles]);
 
   // Close voice dropdown when clicking outside
   useEffect(() => {
@@ -87,21 +102,22 @@ export default function ArticleList({
   }, [articles]);
 
   const handleAudioClick = (article: Article) => {
-    const status = article.audioStatus || 'none';
-    if (status === 'generating') return; // disabled while generating
+    const isGenerating = generatingIds.has(article.id!) || (article.audioStatus === 'generating');
+    if (isGenerating) return;
     setAudioMenuArticleId(audioMenuArticleId === article.id ? null : article.id!);
     if (article.audioVoice) setSelectedVoice(article.audioVoice);
   };
 
   const handleGenerate = (article: Article) => {
     setAudioMenuArticleId(null);
+    setGeneratingIds(prev => new Set(prev).add(article.id!));
     onGenerateAudio(article, selectedVoice);
   };
 
   function getAudioButton(article: Article) {
-    const status = article.audioStatus || 'none';
+    const isGenerating = generatingIds.has(article.id!) || (article.audioStatus === 'generating');
 
-    if (status === 'generating') {
+    if (isGenerating) {
       return (
         <button
           disabled
@@ -112,6 +128,8 @@ export default function ArticleList({
         </button>
       );
     }
+
+    const status = article.audioStatus || 'none';
 
     if (status === 'completed') {
       return (
