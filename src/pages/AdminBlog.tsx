@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -105,11 +105,28 @@ export default function AdminBlog() {
     }
   };
 
+  const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  // Stop polling when articles update with a non-generating status
+  useEffect(() => {
+    if (pollRef.current) {
+      const anyGenerating = articles.some(a => a.audioStatus === 'generating');
+      if (!anyGenerating) {
+        clearInterval(pollRef.current);
+        pollRef.current = null;
+      }
+    }
+  }, [articles]);
+
   const handleGenerateAudio = async (article: Article, voice: string) => {
     if (!article.id) return;
     try {
       await generateAudioForArticle(article.id, voice);
-      await refresh();
+      // Poll for completion — edge function processes in background
+      if (pollRef.current) clearInterval(pollRef.current);
+      pollRef.current = setInterval(() => refresh(), 5000);
+      // Safety net: stop after 5 min
+      setTimeout(() => { if (pollRef.current) { clearInterval(pollRef.current); pollRef.current = null; } }, 300000);
     } catch (err) {
       console.error('Audio generation failed:', err);
       alert('Failed to generate audio. Please try again.');

@@ -185,45 +185,19 @@ async function generateTTSChunk(text: string, voice: string): Promise<Uint8Array
   return new Uint8Array(arrayBuffer);
 }
 
-// ============ MAIN HANDLER ============
+// ============ BACKGROUND PROCESSING ============
 
-Deno.serve(async (req: Request) => {
+async function processAudio(articleId: string, voice: string) {
+  const supabase = createClient(SUPABASE_URL!, SUPABASE_SERVICE_ROLE_KEY!, {
+    auth: { persistSession: false }
+  });
+
   try {
-    if (req.method === 'OPTIONS') {
-      return new Response(null, { status: 200, headers: corsHeaders });
-    }
-
-    const { article_id, voice = 'nova' } = await req.json();
-
-    if (!article_id) {
-      return new Response(
-        JSON.stringify({ error: 'Missing article_id' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
-    }
-
-    if (!OPENAI_API_KEY) {
-      throw new Error('OPENAI_API_KEY not configured');
-    }
-    if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
-      throw new Error('Supabase environment variables not configured');
-    }
-
-    const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
-      auth: { persistSession: false }
-    });
-
-    // Set status to generating
-    await supabase
-      .from('blog_articles')
-      .update({ audio_status: 'generating', audio_voice: voice })
-      .eq('id', article_id);
-
     // Fetch article
     const { data: article, error: fetchError } = await supabase
       .from('blog_articles')
       .select('title, content, slug')
-      .eq('id', article_id)
+      .eq('id', articleId)
       .single();
 
     if (fetchError || !article) {
@@ -293,7 +267,7 @@ Deno.serve(async (req: Request) => {
         audio_status: 'completed',
         audio_duration_seconds: durationSeconds,
       })
-      .eq('id', article_id);
+      .eq('id', articleId);
 
     if (updateError) {
       console.error('Article update error:', JSON.stringify(updateError));
@@ -302,35 +276,65 @@ Deno.serve(async (req: Request) => {
 
     console.log(`Audio generation complete. Duration: ~${durationSeconds}s`);
 
+  } catch (err) {
+    console.error('Audio generation error:', err);
+    // Set failed status
+    try {
+      await supabase
+        .from('blog_articles')
+        .update({ audio_status: 'failed' })
+        .eq('id', articleId);
+    } catch (_) {
+      // Best effort
+    }
+  }
+}
+
+// ============ MAIN HANDLER ============
+
+Deno.serve(async (req: Request) => {
+  try {
+    if (req.method === 'OPTIONS') {
+      return new Response(null, { status: 200, headers: corsHeaders });
+    }
+
+    const { article_id, voice = 'nova' } = await req.json();
+
+    if (!article_id) {
+      return new Response(
+        JSON.stringify({ error: 'Missing article_id' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    if (!OPENAI_API_KEY) {
+      throw new Error('OPENAI_API_KEY not configured');
+    }
+    if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
+      throw new Error('Supabase environment variables not configured');
+    }
+
+    const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
+      auth: { persistSession: false }
+    });
+
+    // Set status to generating immediately
+    await supabase
+      .from('blog_articles')
+      .update({ audio_status: 'generating', audio_voice: voice })
+      .eq('id', article_id);
+
+    // Fire off processing in background — don't await
+    processAudio(article_id, voice);
+
+    // Return immediately so the client doesn't time out
     return new Response(
-      JSON.stringify({
-        success: true,
-        audio_url: audioUrl,
-        duration_seconds: durationSeconds,
-        voice: voice,
-      }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      JSON.stringify({ success: true, status: 'generating', article_id }),
+      { status: 202, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
 
   } catch (err) {
     console.error('Audio generation error:', err);
-
-    // Try to set failed status
-    try {
-      const { article_id } = await req.clone().json();
-      if (article_id && SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY) {
-        const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
-          auth: { persistSession: false }
-        });
-        await supabase
-          .from('blog_articles')
-          .update({ audio_status: 'failed' })
-          .eq('id', article_id);
-      }
-    } catch (_) {
-      // Best effort
-    }
-
     return new Response(
       JSON.stringify({ error: err.message || 'Audio generation failed' }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }

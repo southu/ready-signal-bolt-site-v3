@@ -306,16 +306,15 @@ export async function fetchCategories(): Promise<string[]> {
 }
 
 /**
- * Generate audio narration for an article via edge function
+ * Kick off audio narration generation via edge function (fire-and-forget).
+ * The function returns immediately with 202. Poll article status to track progress.
  */
-export async function generateAudioForArticle(articleId: string, voice: string): Promise<{ audio_url: string; duration_seconds: number }> {
-  const { data, error } = await supabase.functions.invoke('generate-audio', {
+export async function generateAudioForArticle(articleId: string, voice: string): Promise<void> {
+  const { error } = await supabase.functions.invoke('generate-audio', {
     body: { article_id: articleId, voice },
   });
 
   if (error) throw error;
-  if (data?.error) throw new Error(data.error);
-  return data;
 }
 
 /**
