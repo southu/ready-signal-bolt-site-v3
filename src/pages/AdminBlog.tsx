@@ -122,16 +122,16 @@ export default function AdminBlog() {
     if (!article.id) return;
     try {
       await generateAudioForArticle(article.id, voice);
-      // Poll for completion — edge function processes in background
-      if (pollRef.current) clearInterval(pollRef.current);
-      pollRef.current = setInterval(() => refresh(), 5000);
-      // Safety net: stop after 5 min
-      setTimeout(() => { if (pollRef.current) { clearInterval(pollRef.current); pollRef.current = null; } }, 300000);
     } catch (err) {
-      console.error('Audio generation failed:', err);
-      alert('Failed to generate audio. Please try again.');
-      await refresh();
+      // Gateway timeout is expected for long articles — the function may still
+      // be running server-side. Don't alert, just let polling handle it.
+      console.log('Audio generation call returned (may still be processing):', err);
     }
+    // Always refresh and start polling to catch completion
+    await refresh();
+    if (pollRef.current) clearInterval(pollRef.current);
+    pollRef.current = setInterval(() => refresh(), 5000);
+    setTimeout(() => { if (pollRef.current) { clearInterval(pollRef.current); pollRef.current = null; } }, 300000);
   };
 
   const handleCancelEdit = () => {

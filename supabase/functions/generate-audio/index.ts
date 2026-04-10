@@ -113,19 +113,19 @@ function concatUint8Arrays(arrays: Uint8Array[]): Uint8Array {
 // ============ API CALLS ============
 
 async function createAudioScript(title: string, plainText: string): Promise<string> {
-  const response = await fetch('https://api.openai.com/v1/responses', {
+  const response = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${OPENAI_API_KEY}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      model: 'gpt-5.2',
-      input: [
-        { role: 'developer', content: AUDIO_SCRIPT_SYSTEM_PROMPT },
+      model: 'gpt-4o-mini',
+      messages: [
+        { role: 'system', content: AUDIO_SCRIPT_SYSTEM_PROMPT },
         { role: 'user', content: `Article title: "${title}"\n\nArticle content:\n${plainText}` }
       ],
-      reasoning: { effort: 'low' },
+      max_tokens: 4000,
     }),
   });
 
@@ -136,22 +136,7 @@ async function createAudioScript(title: string, plainText: string): Promise<stri
   }
 
   const data = await response.json();
-
-  // Extract text from GPT response
-  let content = '';
-  if (data.output && Array.isArray(data.output)) {
-    for (const block of data.output) {
-      if (block.type === 'output_text' && block.text) {
-        content += block.text;
-      } else if (block.type === 'message' && block.content) {
-        for (const contentBlock of block.content) {
-          if (contentBlock.type === 'output_text' && contentBlock.text) {
-            content += contentBlock.text;
-          }
-        }
-      }
-    }
-  }
+  const content = data.choices?.[0]?.message?.content;
 
   if (!content) {
     throw new Error('No audio script returned from AI');
@@ -185,19 +170,45 @@ async function generateTTSChunk(text: string, voice: string): Promise<Uint8Array
   return new Uint8Array(arrayBuffer);
 }
 
-// ============ BACKGROUND PROCESSING ============
+// ============ MAIN HANDLER ============
 
-async function processAudio(articleId: string, voice: string) {
-  const supabase = createClient(SUPABASE_URL!, SUPABASE_SERVICE_ROLE_KEY!, {
-    auth: { persistSession: false }
-  });
-
+Deno.serve(async (req: Request) => {
   try {
+    if (req.method === 'OPTIONS') {
+      return new Response(null, { status: 200, headers: corsHeaders });
+    }
+
+    const { article_id, voice = 'nova' } = await req.json();
+
+    if (!article_id) {
+      return new Response(
+        JSON.stringify({ error: 'Missing article_id' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    if (!OPENAI_API_KEY) {
+      throw new Error('OPENAI_API_KEY not configured');
+    }
+    if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
+      throw new Error('Supabase environment variables not configured');
+    }
+
+    const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
+      auth: { persistSession: false }
+    });
+
+    // Set status to generating
+    await supabase
+      .from('blog_articles')
+      .update({ audio_status: 'generating', audio_voice: voice })
+      .eq('id', article_id);
+
     // Fetch article
     const { data: article, error: fetchError } = await supabase
       .from('blog_articles')
       .select('title, content, slug')
-      .eq('id', articleId)
+      .eq('id', article_id)
       .single();
 
     if (fetchError || !article) {
@@ -267,7 +278,7 @@ async function processAudio(articleId: string, voice: string) {
         audio_status: 'completed',
         audio_duration_seconds: durationSeconds,
       })
-      .eq('id', articleId);
+      .eq('id', article_id);
 
     if (updateError) {
       console.error('Article update error:', JSON.stringify(updateError));
@@ -276,65 +287,35 @@ async function processAudio(articleId: string, voice: string) {
 
     console.log(`Audio generation complete. Duration: ~${durationSeconds}s`);
 
-  } catch (err) {
-    console.error('Audio generation error:', err);
-    // Set failed status
-    try {
-      await supabase
-        .from('blog_articles')
-        .update({ audio_status: 'failed' })
-        .eq('id', articleId);
-    } catch (_) {
-      // Best effort
-    }
-  }
-}
-
-// ============ MAIN HANDLER ============
-
-Deno.serve(async (req: Request) => {
-  try {
-    if (req.method === 'OPTIONS') {
-      return new Response(null, { status: 200, headers: corsHeaders });
-    }
-
-    const { article_id, voice = 'nova' } = await req.json();
-
-    if (!article_id) {
-      return new Response(
-        JSON.stringify({ error: 'Missing article_id' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
-    }
-
-    if (!OPENAI_API_KEY) {
-      throw new Error('OPENAI_API_KEY not configured');
-    }
-    if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
-      throw new Error('Supabase environment variables not configured');
-    }
-
-    const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
-      auth: { persistSession: false }
-    });
-
-    // Set status to generating immediately
-    await supabase
-      .from('blog_articles')
-      .update({ audio_status: 'generating', audio_voice: voice })
-      .eq('id', article_id);
-
-    // Fire off processing in background — don't await
-    processAudio(article_id, voice);
-
-    // Return immediately so the client doesn't time out
     return new Response(
-      JSON.stringify({ success: true, status: 'generating', article_id }),
-      { status: 202, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      JSON.stringify({
+        success: true,
+        audio_url: audioUrl,
+        duration_seconds: durationSeconds,
+        voice: voice,
+      }),
+      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
 
   } catch (err) {
     console.error('Audio generation error:', err);
+
+    // Try to set failed status
+    try {
+      const { article_id } = await req.clone().json();
+      if (article_id && SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY) {
+        const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
+          auth: { persistSession: false }
+        });
+        await supabase
+          .from('blog_articles')
+          .update({ audio_status: 'failed' })
+          .eq('id', article_id);
+      }
+    } catch (_) {
+      // Best effort
+    }
+
     return new Response(
       JSON.stringify({ error: err.message || 'Audio generation failed' }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }

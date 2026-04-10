@@ -306,8 +306,10 @@ export async function fetchCategories(): Promise<string[]> {
 }
 
 /**
- * Kick off audio narration generation via edge function (fire-and-forget).
- * The function returns immediately with 202. Poll article status to track progress.
+ * Generate audio narration for an article via edge function.
+ * Runs synchronously — may take 20-90 seconds depending on article length.
+ * For very long articles, the gateway may time out but the function continues
+ * server-side. The caller should poll article status as a fallback.
  */
 export async function generateAudioForArticle(articleId: string, voice: string): Promise<void> {
   const { error } = await supabase.functions.invoke('generate-audio', {
