@@ -721,7 +721,7 @@ export const blogArticles: BlogArticle[] = [
     "modifiedDate": "2023-05-31",
     "category": "Help",
     "tags": [],
-    "content": "<p>This video is designed to help connect to Ready Signal via an R Connection.  More information can be found at the following Knowledge Base article:</p>\n<p><a href=\"https://help.readysignal.com/ready-signal-api-documentation-r\" rel=\"noreferrer noopener\" target=\"_blank\">R 3.6+ API Documentation</a></p>\n<iframe allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen=\"\" frameborder=\"0\" height=\"675\" src=\"https://www.youtube.com/embed/q4B4mwcpwZE?feature=oembed\" title=\"RS   R API\" width=\"1200\"></iframe>"
+    "content": "<p>This video is designed to help connect to Ready Signal via an R Connection.  More information can be found at the following Knowledge Base article:</p>\n<p><a href=\"https://www.readysignal.com/ready-signal-api-documentation-r-3-6/\" rel=\"noreferrer noopener\" target=\"_blank\">R 3.6+ API Documentation</a></p>\n<iframe allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen=\"\" frameborder=\"0\" height=\"675\" src=\"https://www.youtube.com/embed/q4B4mwcpwZE?feature=oembed\" title=\"RS   R API\" width=\"1200\"></iframe>"
   },
   {
     "slug": "sp-500-companies-data-table",
