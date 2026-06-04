@@ -95,7 +95,7 @@ async function generateArticle(rawContent: string, research?: GenerateRequest['r
         { role: 'developer', content: SYSTEM_PROMPT },
         { role: 'user', content: userPrompt }
       ],
-      reasoning: { effort: 'medium' },
+      reasoning: { effort: 'high' },
       text: { verbosity: 'high' },
     }),
   });
@@ -154,7 +154,9 @@ Style: Clean, corporate, data-driven aesthetic with abstract geometric shapes, c
 Colors: Professional blues, teals, and amber accents on a clean background.
 No text or words in the image. Suitable for a data analytics company blog.`;
 
-  // Generate image with DALL-E
+  // Generate image with gpt-image-1 (OpenAI's current flagship image model).
+  // Unlike DALL-E, gpt-image-1 always returns base64-encoded image data (no temp URL),
+  // which also avoids the ~1-hour URL expiration problem.
   const response = await fetch('https://api.openai.com/v1/images/generations', {
     method: 'POST',
     headers: {
@@ -162,46 +164,38 @@ No text or words in the image. Suitable for a data analytics company blog.`;
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      model: 'dall-e-3',
+      model: 'gpt-image-1',
       prompt: imagePrompt,
       n: 1,
-      size: '1792x1024',
-      quality: 'standard',
+      size: '1536x1024',
+      quality: 'high',
     }),
   });
 
   if (!response.ok) {
     const errorText = await response.text();
-    console.error('DALL-E API error:', response.status, errorText);
-    throw new Error(`DALL-E API error ${response.status}: ${errorText.substring(0, 200)}`);
+    console.error('gpt-image-1 API error:', response.status, errorText);
+    throw new Error(`gpt-image-1 API error ${response.status}: ${errorText.substring(0, 200)}`);
   }
 
-  console.log('DALL-E API call successful');
+  console.log('gpt-image-1 API call successful');
   const data = await response.json();
-  const tempUrl = data.data[0]?.url;
-  console.log('DALL-E temp URL received:', !!tempUrl);
-  
-  if (!tempUrl) {
-    console.error('No URL in DALL-E response');
-    throw new Error('No image URL returned from DALL-E');
+  const b64 = data.data[0]?.b64_json;
+  console.log('gpt-image-1 base64 image received:', !!b64);
+
+  if (!b64) {
+    console.error('No image data in gpt-image-1 response');
+    throw new Error('No image data returned from gpt-image-1');
   }
 
-  // DALL-E URLs expire after ~1 hour, so we need to download and store permanently
+  // Decode base64 to raw bytes for storage upload
   try {
-    // Download the image
-    const imageResponse = await fetch(tempUrl);
-    if (!imageResponse.ok) {
-      console.error('Failed to download DALL-E image');
-      return { url: '' };
-    }
-    
-    const imageBlob = await imageResponse.blob();
-    const imageBuffer = await imageBlob.arrayBuffer();
-    
+    const imageBuffer = Uint8Array.from(atob(b64), (c) => c.charCodeAt(0));
+
     // Create Supabase client with service role key for storage access
     if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
-      console.warn('Supabase not configured for storage, returning temp URL');
-      return { url: tempUrl };
+      console.warn('Supabase not configured for storage, returning inline data URL');
+      return { url: `data:image/png;base64,${b64}` };
     }
     
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {

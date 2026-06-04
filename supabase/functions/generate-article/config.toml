@@ -1,2 +1,3 @@
 [function]
 verify_jwt = false
+wall_clock_limit = 300  # GPT-5.2 high-effort article generation can take 80-150s

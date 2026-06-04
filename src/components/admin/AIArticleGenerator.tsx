@@ -83,14 +83,16 @@ export default function AIArticleGenerator({ onGenerated, onCancel }: AIArticleG
   const [copiedField, setCopiedField] = useState<string | null>(null);
   const [generatingImage, setGeneratingImage] = useState(false);
 
-  // Get Supabase URL for edge functions
+  // Get Supabase URL/key for edge functions (anon key required by the functions gateway)
   const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+  const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
   const performResearch = async (topic: string): Promise<ResearchResult> => {
     const response = await fetch(`${supabaseUrl}/functions/v1/research`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${supabaseAnonKey}`,
       },
       body: JSON.stringify({ topic, context: rawContent }),
     });
@@ -108,6 +110,7 @@ export default function AIArticleGenerator({ onGenerated, onCancel }: AIArticleG
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${supabaseAnonKey}`,
       },
       body: JSON.stringify({
         action: 'generate-image',
@@ -131,6 +134,7 @@ export default function AIArticleGenerator({ onGenerated, onCancel }: AIArticleG
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${supabaseAnonKey}`,
       },
       body: JSON.stringify({
         action: 'generate-article',
@@ -548,7 +552,7 @@ export default function AIArticleGenerator({ onGenerated, onCancel }: AIArticleG
             <p className="text-gray-600">
               {step === 'researching' && 'Gathering current data, statistics, and sources with Perplexity'}
               {step === 'writing' && 'Creating your original article with GPT-5.2'}
-              {step === 'generating-image' && 'Creating a custom featured image with DALL-E 3'}
+              {step === 'generating-image' && 'Creating a custom featured image with gpt-image-1'}
             </p>
           </div>
           <Loader2 className="w-8 h-8 text-amber-500 animate-spin mt-4" />

@@ -47,10 +47,11 @@ export default function ArticleEditor({
   const [dataSuggestions, setDataSuggestions] = useState<string[]>([]);
   const [regeneratingImage, setRegeneratingImage] = useState(false);
 
-  // Get Supabase URL for edge functions
+  // Get Supabase URL/key for edge functions (anon key required by the functions gateway)
   const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+  const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-  // Regenerate featured image using DALL-E
+  // Regenerate featured image using gpt-image-1
   const handleRegenerateImage = async () => {
     if (!formData.title.trim()) {
       alert('Please enter a title first');
@@ -63,6 +64,7 @@ export default function ArticleEditor({
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${supabaseAnonKey}`,
         },
         body: JSON.stringify({
           action: 'generate-image',

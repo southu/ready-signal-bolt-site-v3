@@ -77,7 +77,7 @@ Respond in valid JSON format:
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      model: 'sonar-pro',  // Best model with citations and search
+      model: 'sonar-reasoning-pro',  // Reasoning model with citations and search for deeper research
       messages: [
         { role: 'system', content: systemPrompt },
         { role: 'user', content: userPrompt },
@@ -101,8 +101,12 @@ Respond in valid JSON format:
     citationsCount: data.citations?.length || 0 
   });
   
-  const content = data.choices[0]?.message?.content || '';
-  
+  const rawContent = data.choices[0]?.message?.content || '';
+
+  // sonar-reasoning-pro prepends a <think>...</think> reasoning block (which can contain
+  // braces) before the JSON answer. Strip it so the JSON extraction below is reliable.
+  const content = rawContent.replace(/<think>[\s\S]*?<\/think>/gi, '').trim();
+
   // Extract citations if provided by Perplexity
   const citations = data.citations || [];
 
