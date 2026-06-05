@@ -2,8 +2,25 @@ import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.42.0';
 
 const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
+const XAI_API_KEY = Deno.env.get('XAI_API_KEY');
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+
+// Grok TTS voices: ara, eve, leo, rex, sal. Map legacy OpenAI voice names so
+// previously-stored audio_voice values (and any stale UI selection) still resolve.
+const GROK_VOICES = new Set(['ara', 'eve', 'leo', 'rex', 'sal']);
+const OPENAI_TO_GROK_VOICE: Record<string, string> = {
+  nova: 'eve',
+  shimmer: 'ara',
+  alloy: 'sal',
+  echo: 'leo',
+  onyx: 'rex',
+  fable: 'leo',
+};
+function resolveGrokVoice(voice: string): string {
+  if (GROK_VOICES.has(voice)) return voice;
+  return OPENAI_TO_GROK_VOICE[voice] || 'eve';
+}
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -146,24 +163,25 @@ async function createAudioScript(title: string, plainText: string): Promise<stri
 }
 
 async function generateTTSChunk(text: string, voice: string): Promise<Uint8Array> {
-  const response = await fetch('https://api.openai.com/v1/audio/speech', {
+  // Grok TTS (xAI). The endpoint takes text/voice_id/language (no model field) and
+  // returns raw MP3 bytes — not JSON — which we read directly into a byte buffer.
+  const response = await fetch('https://api.x.ai/v1/tts', {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${OPENAI_API_KEY}`,
+      'Authorization': `Bearer ${XAI_API_KEY}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      model: 'tts-1',
-      voice: voice,
-      input: text,
-      response_format: 'mp3',
+      text: text,
+      voice_id: voice,
+      language: 'en',
     }),
   });
 
   if (!response.ok) {
     const errorText = await response.text();
-    console.error('OpenAI TTS error:', response.status, errorText);
-    throw new Error(`TTS API error: ${response.status}`);
+    console.error('Grok TTS error:', response.status, errorText);
+    throw new Error(`Grok TTS API error: ${response.status}`);
   }
 
   const arrayBuffer = await response.arrayBuffer();
@@ -190,9 +208,15 @@ Deno.serve(async (req: Request) => {
     if (!OPENAI_API_KEY) {
       throw new Error('OPENAI_API_KEY not configured');
     }
+    if (!XAI_API_KEY) {
+      throw new Error('XAI_API_KEY not configured');
+    }
     if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
       throw new Error('Supabase environment variables not configured');
     }
+
+    // Map incoming voice (may be a legacy OpenAI name) to a valid Grok TTS voice
+    const grokVoice = resolveGrokVoice(voice);
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
       auth: { persistSession: false }
@@ -201,7 +225,7 @@ Deno.serve(async (req: Request) => {
     // Set status to generating
     await supabase
       .from('blog_articles')
-      .update({ audio_status: 'generating', audio_voice: voice })
+      .update({ audio_status: 'generating', audio_voice: grokVoice })
       .eq('id', article_id);
 
     // Fetch article
@@ -215,7 +239,7 @@ Deno.serve(async (req: Request) => {
       throw new Error(`Article not found: ${fetchError?.message || 'no data'}`);
     }
 
-    console.log(`Generating audio for "${article.title}" with voice "${voice}"`);
+    console.log(`Generating audio for "${article.title}" with Grok voice "${grokVoice}" (requested "${voice}")`);
 
     // Step 1: Strip HTML to plain text
     const plainText = stripHtmlToText(article.content);
@@ -234,7 +258,7 @@ Deno.serve(async (req: Request) => {
     const audioBuffers: Uint8Array[] = [];
     for (let i = 0; i < chunks.length; i++) {
       console.log(`Generating TTS chunk ${i + 1}/${chunks.length} (${chunks[i].length} chars)`);
-      const buffer = await generateTTSChunk(chunks[i], voice);
+      const buffer = await generateTTSChunk(chunks[i], grokVoice);
       audioBuffers.push(buffer);
     }
 
@@ -266,15 +290,15 @@ Deno.serve(async (req: Request) => {
     const audioUrl = publicUrlData.publicUrl;
     console.log('Audio uploaded:', audioUrl);
 
-    // Step 7: Estimate duration (64kbps MP3)
-    const durationSeconds = Math.round((fullAudio.length * 8) / (64 * 1000));
+    // Step 7: Estimate duration (Grok TTS returns 128kbps MP3)
+    const durationSeconds = Math.round((fullAudio.length * 8) / (128 * 1000));
 
     // Step 8: Update article with audio info
     const { error: updateError } = await supabase
       .from('blog_articles')
       .update({
         audio_url: audioUrl,
-        audio_voice: voice,
+        audio_voice: grokVoice,
         audio_status: 'completed',
         audio_duration_seconds: durationSeconds,
       })
@@ -292,7 +316,7 @@ Deno.serve(async (req: Request) => {
         success: true,
         audio_url: audioUrl,
         duration_seconds: durationSeconds,
-        voice: voice,
+        voice: grokVoice,
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );

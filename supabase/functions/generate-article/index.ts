@@ -2,6 +2,7 @@ import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.42.0';
 
 const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
+const XAI_API_KEY = Deno.env.get('XAI_API_KEY');
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
 
@@ -141,51 +142,49 @@ async function generateImage(title: string, topic: string) {
   console.log('=== IMAGE GENERATION START ===');
   console.log('Title:', title);
   console.log('Topic:', topic?.substring(0, 100));
-  console.log('OpenAI key configured:', !!OPENAI_API_KEY);
-  
-  if (!OPENAI_API_KEY) {
-    console.error('OpenAI API key not configured');
-    throw new Error('OpenAI API key not configured');
+  console.log('xAI key configured:', !!XAI_API_KEY);
+
+  if (!XAI_API_KEY) {
+    console.error('xAI API key not configured');
+    throw new Error('xAI API key (XAI_API_KEY) not configured');
   }
 
-  const imagePrompt = `Professional, modern B2B business illustration for a blog article titled "${title}". 
+  const imagePrompt = `Professional, modern B2B business illustration for a blog article titled "${title}".
 Topic: ${topic}
-Style: Clean, corporate, data-driven aesthetic with abstract geometric shapes, charts, or professional business imagery. 
+Style: Clean, corporate, data-driven aesthetic with abstract geometric shapes, charts, or professional business imagery.
 Colors: Professional blues, teals, and amber accents on a clean background.
 No text or words in the image. Suitable for a data analytics company blog.`;
 
-  // Generate image with gpt-image-1 (OpenAI's current flagship image model).
-  // Unlike DALL-E, gpt-image-1 always returns base64-encoded image data (no temp URL),
-  // which also avoids the ~1-hour URL expiration problem.
-  const response = await fetch('https://api.openai.com/v1/images/generations', {
+  // Generate image with Grok (xAI). The image API returns base64 when response_format
+  // is 'b64_json'; it does not accept size/quality params like OpenAI's image API.
+  const response = await fetch('https://api.x.ai/v1/images/generations', {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${OPENAI_API_KEY}`,
+      'Authorization': `Bearer ${XAI_API_KEY}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      model: 'gpt-image-1',
+      model: 'grok-imagine-image',
       prompt: imagePrompt,
       n: 1,
-      size: '1536x1024',
-      quality: 'high',
+      response_format: 'b64_json',
     }),
   });
 
   if (!response.ok) {
     const errorText = await response.text();
-    console.error('gpt-image-1 API error:', response.status, errorText);
-    throw new Error(`gpt-image-1 API error ${response.status}: ${errorText.substring(0, 200)}`);
+    console.error('Grok image API error:', response.status, errorText);
+    throw new Error(`Grok image API error ${response.status}: ${errorText.substring(0, 200)}`);
   }
 
-  console.log('gpt-image-1 API call successful');
+  console.log('Grok image API call successful');
   const data = await response.json();
   const b64 = data.data[0]?.b64_json;
-  console.log('gpt-image-1 base64 image received:', !!b64);
+  console.log('Grok base64 image received:', !!b64);
 
   if (!b64) {
-    console.error('No image data in gpt-image-1 response');
-    throw new Error('No image data returned from gpt-image-1');
+    console.error('No image data in Grok response');
+    throw new Error('No image data returned from Grok');
   }
 
   // Decode base64 to raw bytes for storage upload
@@ -195,7 +194,7 @@ No text or words in the image. Suitable for a data analytics company blog.`;
     // Create Supabase client with service role key for storage access
     if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
       console.warn('Supabase not configured for storage, returning inline data URL');
-      return { url: `data:image/png;base64,${b64}` };
+      return { url: `data:image/jpeg;base64,${b64}` };
     }
     
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
@@ -205,15 +204,15 @@ No text or words in the image. Suitable for a data analytics company blog.`;
     // Generate unique filename (just the filename, bucket is already 'blog-images')
     const timestamp = Date.now();
     const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 50);
-    const filename = `${slug}-${timestamp}.png`;
-    
+    const filename = `${slug}-${timestamp}.jpg`;  // Grok returns JPEG image data
+
     console.log('Uploading image to Supabase Storage:', filename);
-    
+
     // Upload to Supabase Storage
     const { data: uploadData, error: uploadError } = await supabase.storage
       .from('blog-images')
       .upload(filename, imageBuffer, {
-        contentType: 'image/png',
+        contentType: 'image/jpeg',
         upsert: true,
       });
     

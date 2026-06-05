@@ -2,17 +2,13 @@ import { useState, useMemo, useRef, useEffect } from 'react';
 import { Search, Edit2, Trash2, ExternalLink, Filter, Plus, Volume2, Loader2, AlertCircle } from 'lucide-react';
 import { Article } from '../../lib/supabaseArticles';
 
+// Grok TTS voices (xAI)
 const VOICES = [
-  { id: 'nova', label: 'Nova', desc: 'Bright, energetic' },
-  { id: 'coral', label: 'Coral', desc: 'Professional' },
-  { id: 'onyx', label: 'Onyx', desc: 'Authoritative' },
-  { id: 'shimmer', label: 'Shimmer', desc: 'Upbeat' },
-  { id: 'ash', label: 'Ash', desc: 'Soft, steady' },
-  { id: 'ballad', label: 'Ballad', desc: 'Warm, melodic' },
-  { id: 'echo', label: 'Echo', desc: 'Neutral' },
-  { id: 'fable', label: 'Fable', desc: 'Storytelling' },
-  { id: 'sage', label: 'Sage', desc: 'Calm, wise' },
-  { id: 'alloy', label: 'Alloy', desc: 'Balanced' },
+  { id: 'eve', label: 'Eve', desc: 'Bright, energetic' },
+  { id: 'ara', label: 'Ara', desc: 'Upbeat' },
+  { id: 'leo', label: 'Leo', desc: 'Neutral' },
+  { id: 'rex', label: 'Rex', desc: 'Authoritative' },
+  { id: 'sal', label: 'Sal', desc: 'Balanced' },
 ];
 
 interface ArticleListProps {
@@ -36,7 +32,7 @@ export default function ArticleList({
   const [statusFilter, setStatusFilter] = useState<'all' | 'published' | 'draft'>('all');
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
   const [audioMenuArticleId, setAudioMenuArticleId] = useState<string | null>(null);
-  const [selectedVoice, setSelectedVoice] = useState('nova');
+  const [selectedVoice, setSelectedVoice] = useState('eve');
   const [generatingIds, setGeneratingIds] = useState<Set<string>>(new Set());
   const audioMenuRef = useRef<HTMLDivElement>(null);
 
@@ -136,7 +132,7 @@ export default function ArticleList({
         <button
           onClick={() => handleAudioClick(article)}
           className="relative p-2 text-emerald-500 hover:text-emerald-700 hover:bg-emerald-50 rounded-lg transition-colors"
-          title={`Audio ready (${article.audioVoice || 'nova'})`}
+          title={`Audio ready (${article.audioVoice || 'eve'})`}
         >
           <Volume2 className="w-4 h-4" />
           <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-emerald-500 rounded-full" />

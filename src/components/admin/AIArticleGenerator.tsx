@@ -552,7 +552,7 @@ export default function AIArticleGenerator({ onGenerated, onCancel }: AIArticleG
             <p className="text-gray-600">
               {step === 'researching' && 'Gathering current data, statistics, and sources with Perplexity'}
               {step === 'writing' && 'Creating your original article with GPT-5.2'}
-              {step === 'generating-image' && 'Creating a custom featured image with gpt-image-1'}
+              {step === 'generating-image' && 'Creating a custom featured image with Grok'}
             </p>
           </div>
           <Loader2 className="w-8 h-8 text-amber-500 animate-spin mt-4" />

@@ -51,7 +51,7 @@ export default function ArticleEditor({
   const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
   const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-  // Regenerate featured image using gpt-image-1
+  // Regenerate featured image using Grok
   const handleRegenerateImage = async () => {
     if (!formData.title.trim()) {
       alert('Please enter a title first');
