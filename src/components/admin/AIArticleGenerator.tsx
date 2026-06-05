@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Sparkles, Loader2, Check, Copy, ArrowRight, FileText, AlertCircle, Search, Zap, Settings, ExternalLink, Image, RefreshCw } from 'lucide-react';
+import { Sparkles, Loader2, Check, Copy, ArrowRight, FileText, AlertCircle, Search, Zap, Settings, ExternalLink, Image, RefreshCw, Wand2 } from 'lucide-react';
 
 interface GeneratedArticle {
   title: string;
@@ -32,7 +32,7 @@ interface AIArticleGeneratorProps {
 }
 
 type GenerationMode = 'quick' | 'advanced';
-type GenerationStep = 'input' | 'researching' | 'research-review' | 'writing' | 'generating-image' | 'complete';
+type GenerationStep = 'input' | 'researching' | 'research-review' | 'writing' | 'optimizing' | 'generating-image' | 'complete';
 
 const SYSTEM_PROMPT = `You are an expert blog content creator and SEO specialist with deep knowledge of B2B data analytics, forecasting, and business intelligence.
 
@@ -158,6 +158,44 @@ export default function AIArticleGenerator({ onGenerated, onCancel }: AIArticleG
     return article;
   };
 
+  // SEO optimize + cross-LLM validation. Returns optimized fields only if Grok-4
+  // validates that no facts/citations changed; otherwise returns the original draft
+  // unchanged so generation never ships an unvalidated rewrite.
+  const optimizeAndValidate = async (article: GeneratedArticle): Promise<GeneratedArticle> => {
+    try {
+      const response = await fetch(`${supabaseUrl}/functions/v1/seo-optimize`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${supabaseAnonKey}`,
+        },
+        body: JSON.stringify({
+          title: article.title,
+          description: article.description,
+          content: article.content,
+          slug: article.slug,
+          keywords: article.tags,
+        }),
+      });
+      if (!response.ok) return article;
+      const result = await response.json();
+      if (result?.validation?.passed && result.optimized?.content) {
+        return {
+          ...article,
+          title: result.optimized.title || article.title,
+          description: result.optimized.description || article.description,
+          content: result.optimized.content,
+          tags: result.optimized.tags?.length ? result.optimized.tags : article.tags,
+        };
+      }
+      // Validation failed — keep the original, validated draft.
+      return article;
+    } catch (err) {
+      console.error('SEO optimize step failed, using original draft:', err);
+      return article;
+    }
+  };
+
   const handleQuickGenerate = async () => {
     if (!rawContent.trim() || rawContent.trim().length < 100) {
       setError('Please provide more content (at least 100 characters)');
@@ -174,8 +212,12 @@ export default function AIArticleGenerator({ onGenerated, onCancel }: AIArticleG
       
       // Step 2: Generate article
       setStep('writing');
-      const article = await generateArticle(researchData);
-      
+      let article = await generateArticle(researchData);
+
+      // Step 2b: SEO optimize + cross-LLM validation
+      setStep('optimizing');
+      article = await optimizeAndValidate(article);
+
       // Step 3: Generate image
       setStep('generating-image');
       setGeneratingImage(true);
@@ -222,8 +264,12 @@ export default function AIArticleGenerator({ onGenerated, onCancel }: AIArticleG
     
     try {
       setStep('writing');
-      const article = await generateArticle(editedResearch);
-      
+      let article = await generateArticle(editedResearch);
+
+      // SEO optimize + cross-LLM validation
+      setStep('optimizing');
+      article = await optimizeAndValidate(article);
+
       // Generate image
       setStep('generating-image');
       setGeneratingImage(true);
@@ -534,24 +580,27 @@ export default function AIArticleGenerator({ onGenerated, onCancel }: AIArticleG
   }
 
   // Loading States
-  if (step === 'researching' || step === 'writing' || step === 'generating-image') {
+  if (step === 'researching' || step === 'writing' || step === 'optimizing' || step === 'generating-image') {
     return (
       <div className="text-center py-16">
         <div className="inline-flex flex-col items-center gap-4">
           <div className="w-16 h-16 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg">
             {step === 'researching' && <Search className="w-8 h-8 text-white animate-pulse" />}
             {step === 'writing' && <Sparkles className="w-8 h-8 text-white animate-pulse" />}
+            {step === 'optimizing' && <Wand2 className="w-8 h-8 text-white animate-pulse" />}
             {step === 'generating-image' && <Image className="w-8 h-8 text-white animate-pulse" />}
           </div>
           <div>
             <h3 className="text-xl font-bold text-gray-900 mb-2">
               {step === 'researching' && 'Researching...'}
               {step === 'writing' && 'Writing Article...'}
+              {step === 'optimizing' && 'Optimizing & Validating...'}
               {step === 'generating-image' && 'Generating Featured Image...'}
             </h3>
             <p className="text-gray-600">
               {step === 'researching' && 'Gathering current data, statistics, and sources with Perplexity'}
               {step === 'writing' && 'Creating your original article with GPT-5.2'}
+              {step === 'optimizing' && 'Applying SEO best practices, then validating facts with Grok-4'}
               {step === 'generating-image' && 'Creating a custom featured image with Grok'}
             </p>
           </div>

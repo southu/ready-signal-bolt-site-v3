@@ -1,0 +1,3 @@
+[function]
+verify_jwt = false
+wall_clock_limit = 300  # GPT-5.2 rewrite (~80s) + Grok-4 validation (~30s)

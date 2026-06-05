@@ -666,6 +666,11 @@ export default function ArticleEditor({
           slug={formData.slug}
           onUpdateTitle={(title) => setFormData(prev => ({ ...prev, title }))}
           onUpdateDescription={(description) => setFormData(prev => ({ ...prev, description }))}
+          onUpdateContent={(content) => setFormData(prev => ({ ...prev, content }))}
+          onAddTags={(newTags) => setFormData(prev => ({
+            ...prev,
+            tags: [...prev.tags, ...newTags.filter(t => !prev.tags.includes(t))],
+          }))}
         />
       )}
     </div>

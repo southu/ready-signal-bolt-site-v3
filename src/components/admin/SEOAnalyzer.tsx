@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { Sparkles, Loader2, CheckCircle, XCircle, AlertCircle, RefreshCw, Copy, Check } from 'lucide-react';
+import { Sparkles, Loader2, CheckCircle, XCircle, AlertCircle, RefreshCw, Copy, Check, ShieldCheck, ShieldAlert, Wand2 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 
 interface SEOAnalyzerProps {
@@ -9,6 +9,25 @@ interface SEOAnalyzerProps {
   slug: string;
   onUpdateTitle: (title: string) => void;
   onUpdateDescription: (description: string) => void;
+  onUpdateContent: (content: string) => void;
+  onAddTags: (tags: string[]) => void;
+}
+
+interface OptimizeValidation {
+  passed: boolean;
+  meaningPreserved: boolean;
+  linksOk: boolean;
+  confidence: number;
+  fabricatedClaims: string[];
+  droppedClaims: string[];
+  alteredFacts: string[];
+  droppedCitations: string[];
+  summary: string;
+}
+
+interface OptimizeResult {
+  optimized: { title: string; description: string; content: string; tags: string[] };
+  validation: OptimizeValidation;
 }
 
 interface SEOCheck {
@@ -26,6 +45,22 @@ interface AIAnalysis {
   improvements?: string[];
 }
 
+function ViolationList({ label, items }: { label: string; items: string[] }) {
+  return (
+    <div>
+      <span className="font-semibold text-red-800">{label}:</span>
+      <ul className="mt-1 space-y-1">
+        {items.map((item, i) => (
+          <li key={i} className="flex items-start gap-2 text-red-700">
+            <span className="mt-1">•</span>
+            <span className="break-words">{item}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 export default function SEOAnalyzer({
   title,
   description,
@@ -33,11 +68,63 @@ export default function SEOAnalyzer({
   slug,
   onUpdateTitle,
   onUpdateDescription,
+  onUpdateContent,
+  onAddTags,
 }: SEOAnalyzerProps) {
   const [aiAnalysis, setAiAnalysis] = useState<AIAnalysis | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [copiedField, setCopiedField] = useState<string | null>(null);
+  const [optimizing, setOptimizing] = useState(false);
+  const [optimizeResult, setOptimizeResult] = useState<OptimizeResult | null>(null);
+  const [optimizeError, setOptimizeError] = useState<string | null>(null);
+  const [applied, setApplied] = useState(false);
+
+  // Apply the AI-optimized version to the editor fields (held until the user saves).
+  const applyOptimization = (result: OptimizeResult) => {
+    onUpdateTitle(result.optimized.title);
+    onUpdateDescription(result.optimized.description);
+    onUpdateContent(result.optimized.content);
+    if (result.optimized.tags?.length) onAddTags(result.optimized.tags);
+    setApplied(true);
+  };
+
+  // Optimize + cross-LLM validation: GPT-5.2 rewrites to apply the SEO
+  // recommendations, then Grok-4 validates that no facts/claims/citations changed.
+  const runOptimize = async () => {
+    if (!title || !content) {
+      setOptimizeError('Please add a title and content first');
+      return;
+    }
+    setOptimizing(true);
+    setOptimizeError(null);
+    setOptimizeResult(null);
+    setApplied(false);
+
+    try {
+      const { data, error: fnError } = await supabase.functions.invoke('seo-optimize', {
+        body: {
+          title,
+          description,
+          content,
+          slug,
+          keywords: aiAnalysis?.keywords || [],
+          improvements: aiAnalysis?.improvements || [],
+        },
+      });
+
+      if (fnError) throw new Error(fnError.message || 'Optimization failed');
+      const result = data as OptimizeResult;
+      setOptimizeResult(result);
+      // Auto-apply only when validation passes; otherwise hold for explicit override.
+      if (result.validation.passed) applyOptimization(result);
+    } catch (err) {
+      console.error('SEO optimize error:', err);
+      setOptimizeError(err instanceof Error ? err.message : 'Optimization failed');
+    } finally {
+      setOptimizing(false);
+    }
+  };
 
   // Basic SEO checks (client-side)
   const basicChecks = useMemo((): SEOCheck[] => {
@@ -448,6 +535,94 @@ export default function SEOAnalyzer({
                 </ul>
               </div>
             )}
+
+            {/* One-click apply: rewrite (GPT-5.2) + cross-LLM validation (Grok-4) */}
+            <div className="border-t border-gray-200 pt-4">
+              <button
+                onClick={runOptimize}
+                disabled={optimizing}
+                className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-semibold hover:from-purple-700 hover:to-blue-700 transition-colors disabled:opacity-50"
+              >
+                {optimizing ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    Rewriting &amp; validating…
+                  </>
+                ) : (
+                  <>
+                    <Wand2 className="w-5 h-5" />
+                    Apply All Recommendations &amp; Validate
+                  </>
+                )}
+              </button>
+              <p className="text-xs text-gray-500 mt-2 text-center">
+                GPT-5.2 rewrites the article to apply these recommendations, then Grok-4 verifies no facts,
+                statistics, or citations were changed before anything is applied.
+              </p>
+
+              {optimizeError && (
+                <div className="bg-red-50 text-red-700 px-4 py-3 rounded-lg mt-3 text-sm">
+                  {optimizeError}
+                </div>
+              )}
+
+              {optimizeResult && (
+                <div className={`mt-3 rounded-lg border p-4 ${
+                  optimizeResult.validation.passed
+                    ? 'bg-emerald-50 border-emerald-200'
+                    : 'bg-red-50 border-red-200'
+                }`}>
+                  <div className="flex items-center gap-2 mb-2">
+                    {optimizeResult.validation.passed ? (
+                      <ShieldCheck className="w-5 h-5 text-emerald-600" />
+                    ) : (
+                      <ShieldAlert className="w-5 h-5 text-red-600" />
+                    )}
+                    <span className={`font-semibold ${optimizeResult.validation.passed ? 'text-emerald-800' : 'text-red-800'}`}>
+                      {optimizeResult.validation.passed
+                        ? `Validation passed — ${applied ? 'applied to editor' : 'ready to apply'}`
+                        : 'Validation failed — changes held back'}
+                    </span>
+                    <span className="ml-auto text-xs text-gray-500">
+                      Grok-4 confidence: {optimizeResult.validation.confidence}%
+                    </span>
+                  </div>
+                  <p className="text-sm text-gray-700">{optimizeResult.validation.summary}</p>
+
+                  {/* Violations on failure */}
+                  {!optimizeResult.validation.passed && (
+                    <div className="mt-3 space-y-2 text-sm">
+                      {optimizeResult.validation.fabricatedClaims.length > 0 && (
+                        <ViolationList label="Fabricated claims" items={optimizeResult.validation.fabricatedClaims} />
+                      )}
+                      {optimizeResult.validation.alteredFacts.length > 0 && (
+                        <ViolationList label="Altered facts" items={optimizeResult.validation.alteredFacts} />
+                      )}
+                      {optimizeResult.validation.droppedClaims.length > 0 && (
+                        <ViolationList label="Dropped claims" items={optimizeResult.validation.droppedClaims} />
+                      )}
+                      {optimizeResult.validation.droppedCitations.length > 0 && (
+                        <ViolationList label="Dropped citations" items={optimizeResult.validation.droppedCitations} />
+                      )}
+                      {!applied && (
+                        <button
+                          onClick={() => applyOptimization(optimizeResult)}
+                          className="mt-2 flex items-center gap-2 px-3 py-2 border border-red-300 text-red-700 rounded-lg hover:bg-red-100 text-sm font-medium"
+                        >
+                          <AlertCircle className="w-4 h-4" />
+                          Apply anyway (override)
+                        </button>
+                      )}
+                      {applied && (
+                        <p className="text-red-700 font-medium flex items-center gap-1">
+                          <Check className="w-4 h-4" /> Applied with override — review carefully before saving.
+                        </p>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
 
             <button
               onClick={runAIAnalysis}
