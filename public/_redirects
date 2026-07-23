@@ -51,5 +51,10 @@
 # Any /data/* that doesn't match a known feature goes to data-sources
 /data/ /data-sources/ 302
 
+# ===== VERSION ENDPOINT (must precede SPA catch-all) =====
+# Serve the static version artifact instead of the SPA index.html so the
+# deploy gate can read the deployed git SHA.
+/version /version 200
+
 # ===== SPA CATCH-ALL (must be last) =====
 /* /index.html 200

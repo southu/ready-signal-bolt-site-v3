@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "prebuild": "node scripts/generate-sitemap.mjs",
+    "prebuild": "node scripts/write-version.mjs && node scripts/generate-sitemap.mjs",
     "build": "vite build",
     "postbuild": "node scripts/generate-og-pages.mjs",
     "lint": "eslint .",
