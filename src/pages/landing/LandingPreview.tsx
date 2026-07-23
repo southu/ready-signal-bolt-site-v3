@@ -1,6 +1,8 @@
 import SEO from '../../components/SEO';
 import Hero from './Hero';
 import TrustBanner from './TrustBanner';
+import HowItWorks from './HowItWorks';
+import Benefits from './Benefits';
 
 /**
  * Additive preview page for the future landing redesign.
@@ -18,6 +20,8 @@ function LandingPreview() {
       <main>
         <Hero />
         <TrustBanner />
+        <HowItWorks />
+        <Benefits />
       </main>
     </div>
   );
