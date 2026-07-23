@@ -229,17 +229,6 @@ const HubSpotStyledForm = () => {
       <button className={styles.submit} type="submit" disabled={isSubmitting}>
         {isSubmitting ? 'Sending…' : 'Submit'}
       </button>
-
-      <p className={styles.branding}>
-        <a
-          className={styles.brandingLink}
-          href="https://app.hubspot.com/signup-hubspot/marketing?utm_medium=virality&amp;utm_campaign=hubspot-forms-virality&amp;intent=marketingFreeForms&amp;hubs_id=forms-branding-control"
-          target="_blank"
-          rel="noopener nofollow"
-        >
-          Create your own free forms with HubSpot
-        </a>
-      </p>
     </form>
   );
 };

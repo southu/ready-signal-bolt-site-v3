@@ -160,31 +160,6 @@
   opacity: 0.7;
 }
 
-.branding {
-  margin: -0.25rem 0 0;
-  color: #6b7280;
-  font-family: inherit;
-  font-size: 12px;
-  line-height: 1.4;
-  text-align: center;
-}
-
-.brandingLink {
-  color: inherit;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-
-.brandingLink:hover {
-  color: #374151;
-}
-
-.brandingLink:focus-visible {
-  border-radius: 2px;
-  outline: 2px solid #087f8c;
-  outline-offset: 2px;
-}
-
 .success {
   border: 1px solid #82b5a0;
   border-radius: 0.75rem;

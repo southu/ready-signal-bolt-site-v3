@@ -43,17 +43,21 @@ The following named entries are approved for `/ai-marketing-data`. They were
 verified against Ready Signal's legacy production site and Ready Signal's
 published company posts:
 
-| Company | Named person | Approved proof |
-|---|---|---|
-| Outsell | Matt Kristo, Sr. Manager, Analytic Services | “Ready Signal’s control data improves the accuracy of our models, and I never have to worry about the data being up to date. Ready Signal keeps everything current for us.” |
-| Domo | Kristie Rowley, Principal Data Scientist | “As a data scientist, I am impressed with the ease of use the Ready Signal platform provides me. I am able to quickly integrate control data into my data science production pipelines within Domo to support a variety of data science use cases, saving me and my team valuable time.” |
-| DATAcated | Kate Strachnyi, Founder | Kate Strachnyi published a product walkthrough describing how she used Ready Signal to uncover external signals with strong correlations and leading indicators from date and sales data. |
+| Company | Named person | Approved proof | Ready Signal source URL |
+|---|---|---|---|
+| Outsell | Matt Kristo, Sr. Manager, Analytic Services | “Ready Signal’s control data improves the accuracy of our models, and I never have to worry about the data being up to date. Ready Signal keeps everything current for us.” | https://www.readysignal.com/landing-page-social-proof.md |
+| Domo | Kristie Rowley, Principal Data Scientist | “As a data scientist, I am impressed with the ease of use the Ready Signal platform provides me. I am able to quickly integrate control data into my data science production pipelines within Domo to support a variety of data science use cases, saving me and my team valuable time.” | https://www.readysignal.com/landing-page-social-proof.md |
+| DATAcated | Kate Strachnyi, Founder | Kate Strachnyi published a product walkthrough describing how she used Ready Signal to uncover external signals with strong correlations and leading indicators from date and sales data. | https://www.readysignal.com/landing-page-social-proof.md |
 
 Only the company names, quotes, and attributions in this table may be used as
 customer or practitioner proof on the campaign page. Domo and DATAcated must
 not be described as Ready Signal customers unless that relationship is
 separately verified; the page may describe the group collectively as working
 data teams or practitioners.
+
+The published inventory URL in the table is the Ready Signal-owned campaign
+approval record for each item. It is used because the legacy production page
+and company posts cited during approval are no longer stable canonical pages.
 
 ## Replacement mapping
 
