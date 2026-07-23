@@ -75,6 +75,10 @@ import ForecastingArticle from './pages/docs/forecasting/ForecastingArticle';
 import BlogArticle from './pages/blog/BlogArticle';
 
 function App() {
+  const isFocusedCampaign =
+    window.location.pathname === '/ai-marketing-data' ||
+    window.location.pathname === '/ai-marketing-data/';
+
   // Initialize Google Analytics on app load
   useEffect(() => {
     initGA();
@@ -85,7 +89,7 @@ function App() {
       <ChatProvider>
         <ScrollToTop />
         <RouteChangeTracker />
-        <ChatBot />
+        {!isFocusedCampaign && <ChatBot />}
         <Routes>
           {/* Core pages */}
           <Route path="/" element={<Home />} />

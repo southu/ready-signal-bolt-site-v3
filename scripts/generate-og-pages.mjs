@@ -349,8 +349,8 @@ const pages = [
   },
   {
     path: '/ai-marketing-data',
-    title: 'Stop Reacting. Start Predicting. | Ready Signal',
-    description: 'Reduce forecast error by ~50% with 40,000+ validated external data signals. Discover Granger-tested economic, weather, and labor indicators that anticipate market shifts before they hit your P&L.',
+    title: 'AI-Ready Marketing Data | Ready Signal',
+    description: 'Find, prepare, and validate the external signals that help AI marketing models explain demand, anticipate market shifts, and make smarter decisions.',
   },
 
   // ── Legal ──

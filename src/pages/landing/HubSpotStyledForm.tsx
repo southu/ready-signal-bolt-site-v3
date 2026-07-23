@@ -210,10 +210,14 @@ const HubSpotStyledForm = () => {
           className={styles.textarea}
           id="hubspot-message"
           name="message"
-          placeholder="Give us a bit of context so we can prepare the most relevant data sets and forecasting examples for our conversation."
+          aria-describedby="hubspot-message-help"
           value={values.message}
           onChange={(event) => updateValue('message', event.target.value)}
         />
+        <p className={styles.help} id="hubspot-message-help">
+          Share your target metric or marketing use case so we can prepare
+          relevant signals for the conversation.
+        </p>
       </div>
 
       {submitError && (

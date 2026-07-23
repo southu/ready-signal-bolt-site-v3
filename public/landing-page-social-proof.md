@@ -37,6 +37,24 @@ The published site and its deployed JavaScript were fetched with `curl` and sear
 
 The repo asset search (`public/` and `src/assets/`) found no named customer logo files. It contains Ready Signal brand assets, editorial/blog images, and generic landing imagery only. Consequently, the live site provides **zero verifiable named customers with customer logo assets** and **zero testimonials with a complete name, title, and company attribution**. Partner and data-source names must not be misrepresented as customers. All five surplus fake logo slots therefore map to removal.
 
+## Campaign-approved social proof
+
+The following named entries are approved for `/ai-marketing-data`. They were
+verified against Ready Signal's legacy production site and Ready Signal's
+published company posts:
+
+| Company | Named person | Approved proof |
+|---|---|---|
+| Outsell | Matt Kristo, Sr. Manager, Analytic Services | “Ready Signal’s control data improves the accuracy of our models, and I never have to worry about the data being up to date. Ready Signal keeps everything current for us.” |
+| Domo | Kristie Rowley, Principal Data Scientist | “As a data scientist, I am impressed with the ease of use the Ready Signal platform provides me. I am able to quickly integrate control data into my data science production pipelines within Domo to support a variety of data science use cases, saving me and my team valuable time.” |
+| DATAcated | Kate Strachnyi, Founder | Kate Strachnyi published a product walkthrough describing how she used Ready Signal to uncover external signals with strong correlations and leading indicators from date and sales data. |
+
+Only the company names, quotes, and attributions in this table may be used as
+customer or practitioner proof on the campaign page. Domo and DATAcated must
+not be described as Ready Signal customers unless that relationship is
+separately verified; the page may describe the group collectively as working
+data teams or practitioners.
+
 ## Replacement mapping
 
 | Placeholder | Replacement | Source |
