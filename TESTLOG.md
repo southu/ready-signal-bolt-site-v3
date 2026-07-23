@@ -111,12 +111,50 @@ Captured with headless Chromium against `http://127.0.0.1:5173`:
 - Final CTA dark band includes HubSpot form frame container + yellow **Start Free Trial** button.
 - Homepage still renders primary hero (“Stop Reacting to Market Shifts…”) with nav — unchanged from baseline.
 
-## Deploy verification plan (post-push)
+## Deploy verification (post-push) — PASSED
 
-1. Wait for Netlify deploy of `main`.
-2. `GET https://www.readysignal.com/version` → must equal new commit SHA.
-3. `GET https://www.readysignal.com/landing` → 200; HTML/DOM includes hero, trust, how-it-works, benefits, HubSpot form + Start Free Trial.
-4. `GET /`, `/pricing`, `/blog`, industry routes → 200 with prior content intact.
+**Deployed commit:** `edc128d207759fc62cb54a11cb88e41de239f874`
+
+### `/version`
+
+```json
+{"sha":"edc128d207759fc62cb54a11cb88e41de239f874","version":"edc128d207759fc62cb54a11cb88e41de239f874"}
+```
+
+(10/10 cache-busted polls returned this SHA after deploy settled.)
+
+### Live HTTP statuses (follow redirects)
+
+| Path | Status |
+|------|--------|
+| `/` | 200 |
+| `/landing` | 200 |
+| `/pricing` | 200 |
+| `/blog` | 200 |
+| `/industries` | 200 |
+| `/industries/cpg-retail` | 200 |
+
+### Production JS bundle includes landing markers
+
+Deployed asset `/assets/index-DlEbSe21.js` contains:
+
+- `path:"/landing"`
+- `Ready to upgrade your business forecasts`
+- `Trusted by forward-thinking`
+- `Zero Black Boxes`
+- HubSpot form id `17d74227-1cac-49f2-923f-de99a49b6aa1`
+
+### Production visual QA
+
+Headless Chromium screenshot of `https://www.readysignal.com/landing` at 1280px confirms:
+
+1. Hero — “Stop Reacting. Start Predicting.” + Start Free Trial
+2. Trust banner — “Trusted by forward-thinking…”
+3. How It Works — 3 steps
+4. Benefits — Zero Black Boxes / Massive Scale / Immediate ROI
+5. Final CTA — HubSpot form fully rendered (First Name, Last Name, Business Email, …) + Start Free Trial button
+
+Homepage still serves distinct hero (“Stop Reacting to Market Shifts. Start Predicting Them.”) — no regression.
 
 ## Commit message intent
 
