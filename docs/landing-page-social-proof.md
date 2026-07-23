@@ -9,6 +9,8 @@
 - **HubSpot form ID:** `17d74227-1cac-49f2-923f-de99a49b6aa1`
 - **Embed implementation:** `src/pages/landing/FinalCTA.tsx:8-9` defines the IDs, and `src/pages/landing/FinalCTA.tsx:55-60` renders the `hs-form-frame`.
 
+This audit is checked in at `docs/landing-page-social-proof.md` and copied byte-for-byte to `public/landing-page-social-proof.md`, which publishes it at `/landing-page-social-proof.md`.
+
 `/landing` is the complete ads landing-page draft: it composes the trust banner and the HubSpot final CTA. The older `src/pages/landing/ChatGPTDemandPlanning.tsx` route at `/lp/chatgpt-demand-planning` is only an isolated one-heading shell; it does not compose a trust section or a HubSpot form and therefore is not the draft audited here.
 
 ## Placeholder inventory
