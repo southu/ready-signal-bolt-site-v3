@@ -14,6 +14,8 @@ import GeminiHookFAQ from '../components/GeminiHookFAQ';
 import InsightsTeaserList from '../components/InsightsTeaserList';
 import { usePublishedArticles } from '../hooks/useArticles';
 import { getLatestPosts } from '../lib/blogHelpers';
+import HowItWorks from './landing/HowItWorks';
+import Benefits from './landing/Benefits';
 
 function Home() {
   const { articles } = usePublishedArticles();
@@ -31,6 +33,8 @@ function Home() {
         <HeroSection />
         <VideoOverviewSection />
         <SocialTrustStrip />
+        <HowItWorks />
+        <Benefits />
         <DataBlindspotSection />
         <TwoPathsSection />
         <ComparisonTable />

@@ -1,8 +1,8 @@
 import { Eye, Layers, TrendingUp } from 'lucide-react';
 
 /**
- * Standalone landing-page Benefits grid for future redesign work.
- * Not wired into the live home page — used only by the /landing-preview route.
+ * Self-contained landing-page Benefits grid (3 cards).
+ * Composed into the home page below How It Works, and the /landing-preview route.
  */
 const BENEFITS = [
   {

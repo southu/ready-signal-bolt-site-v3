@@ -1,8 +1,8 @@
 import { Database, Sparkles, LineChart } from 'lucide-react';
 
 /**
- * Standalone landing-page How It Works block for future redesign work.
- * Not wired into the live home page — used only by the /landing-preview route.
+ * Self-contained landing-page How It Works block (3 steps).
+ * Composed into the home page below hero/trust, and the /landing-preview route.
  */
 const STEPS = [
   {
