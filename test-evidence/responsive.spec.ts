@@ -106,7 +106,9 @@ for (const width of widths) {
 
 test('home navigation links to the AI marketing data page', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
-  await page.goto(baseUrl, { waitUntil: 'networkidle' });
+  const homeUrl = new URL('/', baseUrl);
+  homeUrl.searchParams.set('deployment-check', Date.now().toString());
+  await page.goto(homeUrl.toString(), { waitUntil: 'networkidle' });
   await page.getByRole('button', { name: 'How It Works' }).hover();
 
   const campaignLink = page.locator(

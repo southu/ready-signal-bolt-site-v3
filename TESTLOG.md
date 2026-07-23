@@ -63,5 +63,41 @@ Local reports and proof:
 
 ### Deployed verification
 
-Pending deployment. The required production 375×667 screenshot will be saved
-and referenced here after the deployment reaches the pushed SHA.
+Verified against `https://www.readysignal.com` after production reached
+application SHA `73cb0c2ca150abf8348db28238a7b2607f3c3787`.
+
+- `GET /ai-marketing-data`: 200
+- `GET /`: 200
+- Chromium: **6/6 pass** (five campaign widths plus home navigation)
+- WebKit: **6/6 pass** (five campaign widths plus home navigation)
+- No horizontal document overflow or right-edge element overflow at 375, 390,
+  768, 1280, or 1440 in either engine
+- The styled HubSpot form has visible, contained inputs, textarea, and submit
+  control at 375 and 1280 in both engines
+- At 375×667, the h1, supporting value statement, and CTA are fully visible at
+  `scrollY=0`
+- Every rendered image meets the descriptive-alt or decorative-presentation
+  requirement
+- At 1280, the headline, benefits, proof, and complete form sections render
+- The home navigation's “How It Works” dropdown contains a working
+  `/ai-marketing-data` link
+
+Production Lighthouse 13.4.1:
+
+- Performance: **53** (baseline 51)
+- Accessibility: **100** (baseline 96)
+- First Contentful Paint: **4.4 s**
+- Largest Contentful Paint: **5.3 s** (`5273.187 ms`; baseline `5337.801 ms`)
+- Total Blocking Time: **680 ms** (baseline 810 ms)
+- Speed Index: **4.4 s**
+- Cumulative Layout Shift: **0** (baseline 0)
+- Image delivery audit: **pass**
+- Unsized images audit: **pass**
+- Image alt audit: **pass**
+- Color contrast audit: **pass**
+
+Production report:
+`test-evidence/lighthouse/deployed-after.json`
+
+Required deployed 375×667 Chromium proof screenshot:
+`test-evidence/screenshots/ai-marketing-data-375-deployed.png`
