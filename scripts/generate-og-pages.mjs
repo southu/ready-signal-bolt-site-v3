@@ -386,6 +386,11 @@ function run() {
 
   for (const page of pages) {
     const html = injectMeta(template, page);
+    if (page.path === '/ai-marketing-data') {
+      writeFileSync(join(distDir, `${page.path}.html`), html, 'utf-8');
+      created++;
+      continue;
+    }
     const dir = join(distDir, page.path);
     mkdirSync(dir, { recursive: true });
     writeFileSync(join(dir, 'index.html'), html, 'utf-8');

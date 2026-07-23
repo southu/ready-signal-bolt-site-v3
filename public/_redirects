@@ -15,7 +15,7 @@
 /tag/* /blog/ 301
 
 # ===== LEGACY LANDING PAGES =====
-/ai-marketing-data /ai-marketing-data/index.html 200!
+/ai-marketing-data /ai-marketing-data.html 200!
 /landing-page-style /ai-marketing-data 301
 /smb/ /solutions/ 301
 /agency/ /solutions/ 301
