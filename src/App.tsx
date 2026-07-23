@@ -42,6 +42,7 @@ import AdminBlog from './pages/AdminBlog';
 import Demo from './pages/Demo';
 import ChatGPTDemandPlanning from './pages/landing/ChatGPTDemandPlanning';
 import LandingPreview from './pages/landing/LandingPreview';
+import Landing from './pages/landing/Landing';
 
 // Documentation pages
 import BriefIntroduction from './pages/docs/BriefIntroduction';
@@ -217,6 +218,7 @@ function App() {
           {/* Landing redesign preview (additive; does not affect live home) */}
           <Route path="/landing-preview" element={<LandingPreview />} />
           <Route path="/landing-preview/" element={<LandingPreview />} />
+          <Route path="/landing" element={<Landing />} />
 
           {/* Data category pages */}
           <Route path="/data-economic" element={<DataEconomic />} />
