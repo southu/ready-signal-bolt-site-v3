@@ -1,163 +1,67 @@
-# TESTLOG — landing-page-launch iteration 1
+# TESTLOG — ai-marketing-data responsive pass
 
-MARKETING: update the ChatGPT ad destination URL to https://www.readysignal.com/ai-marketing-data once this is live.
+## Required pre-change production baseline
 
-## Chosen route
+Captured before code changes against
+`https://www.readysignal.com/ai-marketing-data` on 2026-07-23 with Lighthouse
+13.4.1, using its default mobile emulation and headless Chromium.
 
-**Path: `/landing`** (canonical URL: `https://www.readysignal.com/landing`)
+- Deployed SHA: `f4cf95e5efa375de191e55e3514e97e16de3843d`
+- HTTPS status: 200
+- Performance: **51**
+- Accessibility: **96**
+- First Contentful Paint: **4.2 s**
+- Largest Contentful Paint: **5.3 s** (`5337.801 ms`)
+- Total Blocking Time: **810 ms**
+- Speed Index: **4.2 s**
+- Cumulative Layout Shift: **0**
+- Image alt audit: **pass** (score 1)
+- Image delivery audit: **fail**, estimated savings 26 KiB
+- Unsized images audit: **partial failure** (score 0.5)
 
-Rationale: non-colliding with existing `/landing-preview`, `/lp/campaign-preview`, and `/lp/chatgpt-demand-planning`. Not linked from nav/footer/sitemap (additive marketing page only).
+The image delivery audit identified the 800×162 PNG Ready Signal logo as the
+only offender: it was rendered at approximately 158×32, lacked explicit
+dimensions, was not in a modern format, and accounted for about 26 KiB of
+potential savings.
 
-## Change scope (strictly additive)
+Raw baseline report:
+`test-evidence/lighthouse/baseline.json`
 
-### New files under `src/pages/landing/`
+## Post-change verification
 
-| File | Role |
-|------|------|
-| `Landing.tsx` | Page shell: SEO + Hero → TrustBanner → HowItWorks → Benefits → FinalCTA |
-| `FinalCTA.tsx` | Final CTA section: HubSpot form embed (`hs-form-frame`, portal `3894723`, form `17d74227-1cac-49f2-923f-de99a49b6aa1`) + **Start Free Trial** link to `https://app.readysignal.com/auth/sign-up` |
+### Local production build
 
-### Outside `src/pages/landing/` (route registration only)
+- `npm run build`: pass
+- Targeted ESLint for the modified landing components and responsive test:
+  pass
+- Repository-wide typecheck/lint: retains pre-existing failures in unrelated
+  files; no failure is in the modified landing components
+- Chromium responsive suite: 5/5 pass at 375, 390, 768, 1280, and 1440
+- WebKit responsive suite: 5/5 pass at 375, 390, 768, 1280, and 1440
+- At 375×667, the h1, supporting value statement, and CTA are fully inside
+  the initial viewport
+- Form inputs, textarea, and submit button are visible and contained at 375
+  and 1280 in both engines
+- Every rendered image has either descriptive alt text or, for zero-sized
+  analytics pixels, `alt="" role="presentation"`
 
-`src/App.tsx` — **2 additive lines** (import + route; both required for the page to compile and match):
+Local Lighthouse comparison (same Lighthouse version and mobile settings):
 
-```diff
-+import Landing from './pages/landing/Landing';
-...
-+          <Route path="/landing" element={<Landing />} />
-```
+- Performance: **54** (baseline 51)
+- Accessibility: **100** (baseline 96)
+- Largest Contentful Paint: **5.1 s** (baseline 5.3 s)
+- Cumulative Layout Shift: **0** (baseline 0)
+- Image delivery audit: **pass** (baseline fail)
+- Unsized images audit: **pass** (baseline partial failure)
+- Image alt audit: **pass**
 
-### Unchanged (byte-for-byte)
+Local reports and proof:
 
-- `src/pages/Home.tsx` — no diff
-- All other previously-shipping pages/components — no diff
-- `public/sitemap.xml` restored after prebuild so it is not part of the commit
+- `test-evidence/lighthouse/local-after.json`
+- `test-evidence/screenshots/ai-marketing-data-375-local.png`
+- `test-evidence/responsive.spec.ts`
 
-### git status (pre-commit)
+### Deployed verification
 
-```
- M src/App.tsx
-?? src/pages/landing/FinalCTA.tsx
-?? src/pages/landing/Landing.tsx
-?? TESTLOG.md
-?? test-evidence/   (local screenshots; optional evidence)
-```
-
-### git diff --stat (shipping code)
-
-```
- src/App.tsx | 2 ++
- 1 file changed, 2 insertions(+)
-```
-
-Plus two new untracked files under `src/pages/landing/` only.
-
-## Local checks
-
-| Command | Result |
-|---------|--------|
-| `npm run build` | **PASS** (vite build + postbuild OG pages) |
-| `npm run typecheck` | Pre-existing errors only (unused vars elsewhere). **Zero errors in new landing files.** |
-| `npm run lint` | Pre-existing errors only. **`eslint` on `Landing.tsx` + `FinalCTA.tsx`: clean.** |
-
-### typecheck/lint isolation for new code
-
-```
-npx eslint src/pages/landing/Landing.tsx src/pages/landing/FinalCTA.tsx  → clean
-tsc errors matching landing/(Landing|FinalCTA) → none
-```
-
-## Local HTTP smoke (Vite dev `http://127.0.0.1:5173`)
-
-| Path | Status |
-|------|--------|
-| `/` | 200 |
-| `/pricing` | 200 |
-| `/blog` | 200 |
-| `/landing` | 200 |
-| `/industries/cpg-retail` | 200 |
-| `/landing-preview` | 200 |
-
-## DOM verification (`/landing` dump-dom)
-
-Matches found (acceptance criteria 5–6):
-
-| Marker | Count |
-|--------|------:|
-| Stop Reacting (hero) | ≥1 |
-| Trusted by (trust banner) | 1 |
-| How It Works | 1 |
-| Benefits | 1 |
-| Ready to upgrade (final CTA) | 1 |
-| Start Free Trial | 2 (hero + final CTA) |
-| `hs-form-frame` / hubspot-form / `data-form-id` | present |
-| Get in Touch | 1 |
-
-## Screenshots (dev server)
-
-Captured with headless Chromium against `http://127.0.0.1:5173`:
-
-| Viewport | File |
-|----------|------|
-| 375×2400 | `test-evidence/screenshots/landing-375.png` |
-| 768×2400 | `test-evidence/screenshots/landing-768.png` |
-| 1280×3000 | `test-evidence/screenshots/landing-1280.png` |
-| Home 1280 | `test-evidence/screenshots/home-1280.png` |
-| Pricing 1280 | `test-evidence/screenshots/pricing-1280.png` |
-| Blog 1280 | `test-evidence/screenshots/blog-1280.png` |
-| Industries (CPG) 1280 | `test-evidence/screenshots/industries-1280.png` |
-
-**Visual QA notes:**
-
-- Landing page shows full section stack at all three widths; mobile stacks to single column; desktop shows 3-column How It Works + Benefits and 2-column final CTA.
-- Final CTA dark band includes HubSpot form frame container + yellow **Start Free Trial** button.
-- Homepage still renders primary hero (“Stop Reacting to Market Shifts…”) with nav — unchanged from baseline.
-
-## Deploy verification (post-push) — PASSED
-
-**Deployed commit:** `edc128d207759fc62cb54a11cb88e41de239f874`
-
-### `/version`
-
-```json
-{"sha":"edc128d207759fc62cb54a11cb88e41de239f874","version":"edc128d207759fc62cb54a11cb88e41de239f874"}
-```
-
-(10/10 cache-busted polls returned this SHA after deploy settled.)
-
-### Live HTTP statuses (follow redirects)
-
-| Path | Status |
-|------|--------|
-| `/` | 200 |
-| `/landing` | 200 |
-| `/pricing` | 200 |
-| `/blog` | 200 |
-| `/industries` | 200 |
-| `/industries/cpg-retail` | 200 |
-
-### Production JS bundle includes landing markers
-
-Deployed asset `/assets/index-DlEbSe21.js` contains:
-
-- `path:"/landing"`
-- `Ready to upgrade your business forecasts`
-- `Trusted by forward-thinking`
-- `Zero Black Boxes`
-- HubSpot form id `17d74227-1cac-49f2-923f-de99a49b6aa1`
-
-### Production visual QA
-
-Headless Chromium screenshot of `https://www.readysignal.com/landing` at 1280px confirms:
-
-1. Hero — “Stop Reacting. Start Predicting.” + Start Free Trial
-2. Trust banner — “Trusted by forward-thinking…”
-3. How It Works — 3 steps
-4. Benefits — Zero Black Boxes / Massive Scale / Immediate ROI
-5. Final CTA — HubSpot form fully rendered (First Name, Last Name, Business Email, …) + Start Free Trial button
-
-Homepage still serves distinct hero (“Stop Reacting to Market Shifts. Start Predicting Them.”) — no regression.
-
-## Commit message intent
-
-> Add marketing landing page at /landing (hero, trust, how-it-works, benefits, final CTA with HubSpot + Start Free Trial). Additive only: new files under src/pages/landing/ plus App.tsx route registration.
+Pending deployment. The required production 375×667 screenshot will be saved
+and referenced here after the deployment reaches the pushed SHA.

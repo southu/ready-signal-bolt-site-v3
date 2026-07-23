@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import SEO from '../../components/SEO';
 import {
   ArrowDown,
@@ -8,7 +9,7 @@ import {
   Sparkles,
   TrendingUp,
 } from 'lucide-react';
-import logo from '../../assets/images/ready-signal-full-logo.png';
+import logo from '../../assets/images/ready-signal-full-logo-320.webp';
 import HubSpotStyledForm from './HubSpotStyledForm';
 import { AI_MARKETING_DATA_CONTENT as content } from './aiMarketingDataContent';
 
@@ -18,8 +19,39 @@ import { AI_MARKETING_DATA_CONTENT as content } from './aiMarketingDataContent';
  * without changing the layout.
  */
 function Landing() {
+  useEffect(() => {
+    const markTrackingPixelsAsDecorative = (root: ParentNode) => {
+      root.querySelectorAll<HTMLImageElement>('img[alt=""]').forEach((image) => {
+        const isTrackingPixel =
+          image.width === 0 ||
+          image.height === 0 ||
+          image.style.display === 'none' ||
+          image.style.visibility === 'hidden';
+
+        if (isTrackingPixel) image.setAttribute('role', 'presentation');
+      });
+    };
+
+    markTrackingPixelsAsDecorative(document);
+    const observer = new MutationObserver((mutations) => {
+      for (const mutation of mutations) {
+        for (const node of mutation.addedNodes) {
+          if (!(node instanceof HTMLElement)) continue;
+          if (node.matches('img[alt=""]')) {
+            markTrackingPixelsAsDecorative(node.parentNode ?? document);
+          } else {
+            markTrackingPixelsAsDecorative(node);
+          }
+        }
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className="min-h-screen bg-white font-sans">
+    <div className="min-h-screen overflow-x-hidden bg-white font-sans">
       <SEO
         title="AI-Ready Marketing Data | Ready Signal"
         description="Find, prepare, and validate the external signals that help AI marketing models explain demand, anticipate market shifts, and make smarter decisions."
@@ -29,7 +61,13 @@ function Landing() {
       <header className="sticky top-0 z-50 border-b border-rs-dark/10 bg-white">
         <div className="max-w-7xl mx-auto h-16 px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           <a href="/" aria-label="Ready Signal home">
-            <img src={logo} alt="Ready Signal" className="h-8 w-auto" />
+            <img
+              src={logo}
+              alt="Ready Signal company logo"
+              width="158"
+              height="32"
+              className="h-8 w-auto"
+            />
           </a>
           <a
             href="#campaign-form"
@@ -44,29 +82,29 @@ function Landing() {
       <main>
         <section
           aria-labelledby="campaign-headline"
-          className="relative overflow-hidden bg-white py-16 sm:py-20 lg:py-28"
+          className="relative overflow-hidden bg-white py-7 sm:py-16 lg:py-24"
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid items-center gap-12 lg:grid-cols-2">
-              <div className="space-y-8">
-                <div className="space-y-5">
-                  <span className="inline-flex rounded-full bg-rs-cyan/10 px-4 py-2 text-sm font-semibold text-rs-cyan">
+            <div className="grid min-w-0 items-center gap-8 lg:grid-cols-2 lg:gap-12">
+              <div className="min-w-0 space-y-5 sm:space-y-8">
+                <div className="space-y-3 sm:space-y-5">
+                  <span className="inline-flex rounded-full bg-[#e8f6f7] px-3 py-1.5 text-sm font-semibold text-[#05636d] sm:px-4 sm:py-2">
                     {content.hero.eyebrow}
                   </span>
                   <h1
                     id="campaign-headline"
-                    className="text-4xl font-bold leading-tight text-rs-dark sm:text-5xl lg:text-6xl"
+                    className="text-[2rem] font-bold leading-[1.12] text-rs-dark sm:text-5xl lg:text-6xl"
                   >
                     {content.hero.headline}
                   </h1>
-                  <p className="max-w-2xl text-lg leading-relaxed text-rs-dark/75 sm:text-xl">
+                  <p className="max-w-2xl text-base leading-relaxed text-rs-dark/85 sm:text-xl">
                     {content.hero.supportingCopy}
                   </p>
                 </div>
 
                 <a
                   href="#campaign-form"
-                  className="inline-flex items-center justify-center gap-2 rounded-lg bg-rs-yellow px-8 py-4 font-semibold text-rs-dark shadow-md transition-all hover:bg-yellow-400 hover:shadow-lg"
+                  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-rs-yellow px-6 py-3 font-semibold text-rs-dark shadow-md transition-all hover:bg-yellow-400 hover:shadow-lg sm:px-8 sm:py-4"
                 >
                   {content.hero.cta}
                   <ArrowRight className="h-5 w-5" aria-hidden="true" />
@@ -116,7 +154,7 @@ function Landing() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
               <div>
-                <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-rs-cyan">
+                <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-[#087f8c]">
                   {content.benefits.eyebrow}
                 </p>
                 <h2
@@ -149,7 +187,7 @@ function Landing() {
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mx-auto max-w-3xl text-center">
-              <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-rs-cyan">
+              <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-[#087f8c]">
                 {content.proof.eyebrow}
               </p>
               <h2
@@ -194,8 +232,8 @@ function Landing() {
           className="scroll-mt-20 bg-rs-dark py-16 sm:py-20"
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid items-start gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
-              <div className="pt-4">
+            <div className="grid min-w-0 items-start gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+              <div className="min-w-0 pt-4">
                 <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-rs-yellow">
                   {content.form.eyebrow}
                 </p>
@@ -205,12 +243,12 @@ function Landing() {
                 >
                   {content.form.heading}
                 </h2>
-                <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/75">
+                <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/80">
                   {content.form.supportingCopy}
                 </p>
               </div>
 
-              <div className="rounded-2xl bg-white p-6 shadow-lg sm:p-8">
+              <div className="min-w-0 rounded-2xl bg-white p-5 shadow-lg sm:p-8">
                 <HubSpotStyledForm />
               </div>
             </div>
