@@ -347,6 +347,11 @@ const pages = [
     title: 'Stop Reacting. Start Predicting. | Ready Signal',
     description: 'Reduce forecast error by ~50% with 40,000+ validated external data signals. Discover Granger-tested economic, weather, and labor indicators that anticipate market shifts before they hit your P&L.',
   },
+  {
+    path: '/ai-marketing-data',
+    title: 'Stop Reacting. Start Predicting. | Ready Signal',
+    description: 'Reduce forecast error by ~50% with 40,000+ validated external data signals. Discover Granger-tested economic, weather, and labor indicators that anticipate market shifts before they hit your P&L.',
+  },
 
   // ── Legal ──
   {
@@ -451,7 +456,7 @@ function injectMeta(html, { path, title, description }) {
   );
 
   // Self-referencing canonical for ad-only LP (crawlers skip client SEO component)
-  if (path === '/lp/campaign-preview') {
+  if (path === '/lp/campaign-preview' || path === '/ai-marketing-data') {
     const canonicalTag = `<link rel="canonical" href="${escapeAttr(url)}" />`;
     if (/<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>/.test(result)) {
       result = result.replace(

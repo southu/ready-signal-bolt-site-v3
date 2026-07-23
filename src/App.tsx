@@ -219,6 +219,7 @@ function App() {
           <Route path="/landing-preview" element={<LandingPreview />} />
           <Route path="/landing-preview/" element={<LandingPreview />} />
           <Route path="/landing" element={<Landing />} />
+          <Route path="/ai-marketing-data" element={<Landing />} />
 
           {/* Data category pages */}
           <Route path="/data-economic" element={<DataEconomic />} />

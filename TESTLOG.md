@@ -1,5 +1,7 @@
 # TESTLOG — landing-page-launch iteration 1
 
+MARKETING: update the ChatGPT ad destination URL to https://www.readysignal.com/ai-marketing-data once this is live.
+
 ## Chosen route
 
 **Path: `/landing`** (canonical URL: `https://www.readysignal.com/landing`)
