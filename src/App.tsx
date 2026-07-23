@@ -40,6 +40,7 @@ import B2BMarketing from './pages/industries/B2BMarketing';
 import B2CMarketing from './pages/industries/B2CMarketing';
 import AdminBlog from './pages/AdminBlog';
 import Demo from './pages/Demo';
+import ChatGPTDemandPlanning from './pages/landing/ChatGPTDemandPlanning';
 
 // Documentation pages
 import BriefIntroduction from './pages/docs/BriefIntroduction';
@@ -206,6 +207,7 @@ function App() {
           {/* Interactive Demo */}
           <Route path="/demo" element={<Demo />} />
           <Route path="/demo/" element={<Demo />} />
+          <Route path="/lp/chatgpt-demand-planning" element={<ChatGPTDemandPlanning />} />
 
           {/* Data category pages */}
           <Route path="/data-economic" element={<DataEconomic />} />
