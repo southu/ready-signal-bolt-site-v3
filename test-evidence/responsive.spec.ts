@@ -1,6 +1,9 @@
 import { expect, test } from '@playwright/test';
 
 const baseUrl = process.env.TEST_BASE_URL ?? 'http://127.0.0.1:4173';
+const screenshotPath =
+  process.env.SCREENSHOT_PATH ??
+  'test-evidence/screenshots/ai-marketing-data-375-local.png';
 const widths = [375, 390, 768, 1280, 1440];
 
 for (const width of widths) {
@@ -50,7 +53,7 @@ for (const width of widths) {
       }
 
       await page.screenshot({
-        path: 'test-evidence/screenshots/ai-marketing-data-375-local.png',
+        path: screenshotPath,
       });
     }
 
@@ -100,3 +103,17 @@ for (const width of widths) {
     }
   });
 }
+
+test('home navigation links to the AI marketing data page', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto(baseUrl, { waitUntil: 'networkidle' });
+  await page.getByRole('button', { name: 'How It Works' }).hover();
+
+  const campaignLink = page.locator(
+    'nav a[href="/ai-marketing-data"], nav a[href="/ai-marketing-data/"]'
+  );
+  await expect(campaignLink).toHaveCount(1);
+  await campaignLink.click();
+  await expect(page).toHaveURL(/\/ai-marketing-data\/?$/);
+  await expect(page.locator('#campaign-headline')).toBeVisible();
+});

@@ -51,6 +51,7 @@ const Navbar = () => {
     { name: 'Data Sources', path: '/data-sources/' },
     { name: 'Integrations', path: '/integrations/' },
     { name: 'Pricing', path: '/plans/' },
+    { name: 'AI Marketing Data', path: '/ai-marketing-data' },
     { name: 'Help Center', path: '/help-center/' },
     { name: 'API Documentation', path: '/ready-signal-api-documentation/' },
     { name: 'Resources', path: '/blog/' },
