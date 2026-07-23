@@ -210,6 +210,10 @@ function App() {
           <Route path="/demo/" element={<Demo />} />
           <Route path="/lp/chatgpt-demand-planning" element={<ChatGPTDemandPlanning />} />
 
+          {/* Ad-only campaign landing (not linked from nav/footer/sitemap) */}
+          <Route path="/lp/campaign-preview" element={<LandingPreview />} />
+          <Route path="/lp/campaign-preview/" element={<LandingPreview />} />
+
           {/* Landing redesign preview (additive; does not affect live home) */}
           <Route path="/landing-preview" element={<LandingPreview />} />
           <Route path="/landing-preview/" element={<LandingPreview />} />

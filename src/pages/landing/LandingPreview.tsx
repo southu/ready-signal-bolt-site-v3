@@ -7,19 +7,21 @@ import LandingAttributionFields from './LandingAttributionFields';
 import MetaPixelPlaceholder from './MetaPixelPlaceholder';
 
 /**
- * Additive preview page for the future landing redesign.
- * Composes standalone Hero + TrustBanner without touching the live home page.
+ * Ad-only landing page (campaign LP). Composes standalone Hero + TrustBanner
+ * without touching the live home page or organic nav/sitemap discovery.
  *
  * Landing-route-only: UTM/query-param capture + Meta Pixel placeholder.
  * Does not touch sitewide GTM/HubSpot tags in index.html.
+ *
+ * Primary path: /lp/campaign-preview (also mounted at /landing-preview).
  */
 function LandingPreview() {
   return (
     <div className="min-h-screen bg-white font-sans">
       <SEO
-        title="Landing Preview | Ready Signal"
-        description="Preview of the Ready Signal landing hero and trust banner components."
-        canonical="https://www.readysignal.com/landing-preview"
+        title="Stop Reacting. Start Predicting. | Ready Signal"
+        description="Reduce forecast error by ~50% with 40,000+ validated external data signals. Discover Granger-tested economic, weather, and labor indicators that anticipate market shifts before they hit your P&L."
+        canonical="https://www.readysignal.com/lp/campaign-preview"
       />
 
       {/* Meta Pixel placeholder — PENDING_PIXEL_ID, inert (no live tracking) */}

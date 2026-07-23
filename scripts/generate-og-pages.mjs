@@ -341,6 +341,13 @@ const pages = [
     description: 'Unmasking the flu factor in sales forecasting and understanding seasonal health impacts on business.',
   },
 
+  // ── Ad-only landing (not in sitemap; not linked from nav/footer) ──
+  {
+    path: '/lp/campaign-preview',
+    title: 'Stop Reacting. Start Predicting. | Ready Signal',
+    description: 'Reduce forecast error by ~50% with 40,000+ validated external data signals. Discover Granger-tested economic, weather, and labor indicators that anticipate market shifts before they hit your P&L.',
+  },
+
   // ── Legal ──
   {
     path: '/privacy-policy',
@@ -442,6 +449,22 @@ function injectMeta(html, { path, title, description }) {
     /<meta\s+name="twitter:image"\s+content="[^"]*"\s*\/?>/,
     `<meta name="twitter:image" content="${escapeAttr(ogImage)}" />`
   );
+
+  // Self-referencing canonical for ad-only LP (crawlers skip client SEO component)
+  if (path === '/lp/campaign-preview') {
+    const canonicalTag = `<link rel="canonical" href="${escapeAttr(url)}" />`;
+    if (/<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>/.test(result)) {
+      result = result.replace(
+        /<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>/,
+        canonicalTag
+      );
+    } else {
+      result = result.replace(
+        /<\/head>/i,
+        `    ${canonicalTag}\n  </head>`
+      );
+    }
+  }
 
   return result;
 }
