@@ -1,34 +1,11 @@
-import { useEffect, useRef } from 'react';
 import { ArrowRight } from 'lucide-react';
+import HubSpotStyledForm from './HubSpotStyledForm';
 
 /**
- * Landing-page final CTA: HubSpot form embed + Start Free Trial button.
+ * Landing-page final CTA: styled HubSpot form + Start Free Trial button.
  * Self-contained under src/pages/landing/ (does not modify shared components).
  */
-const HUBSPOT_PORTAL_ID = '3894723';
-const HUBSPOT_FORM_ID = '17d74227-1cac-49f2-923f-de99a49b6aa1';
-const HUBSPOT_REGION = 'na1';
-
 const FinalCTA = () => {
-  const scriptLoaded = useRef(false);
-
-  useEffect(() => {
-    if (scriptLoaded.current) return;
-
-    const existingScript = document.querySelector(
-      `script[src*="hsforms.net/forms/embed/${HUBSPOT_PORTAL_ID}"]`
-    );
-
-    if (!existingScript) {
-      const script = document.createElement('script');
-      script.src = `https://js.hsforms.net/forms/embed/${HUBSPOT_PORTAL_ID}.js`;
-      script.defer = true;
-      document.body.appendChild(script);
-    }
-
-    scriptLoaded.current = true;
-  }, []);
-
   return (
     <section
       id="final-cta"
@@ -50,14 +27,9 @@ const FinalCTA = () => {
           <div className="grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
             <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-lg">
               <h3 className="text-xl font-bold text-rs-dark mb-4 font-sans">
-                Get in Touch
+                Get Your Custom Data Strategy
               </h3>
-              <div
-                className="hs-form-frame hubspot-form-container"
-                data-region={HUBSPOT_REGION}
-                data-form-id={HUBSPOT_FORM_ID}
-                data-portal-id={HUBSPOT_PORTAL_ID}
-              />
+              <HubSpotStyledForm />
             </div>
 
             <div className="flex flex-col items-center justify-center space-y-4">
