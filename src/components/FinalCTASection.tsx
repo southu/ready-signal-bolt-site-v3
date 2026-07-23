@@ -1,47 +1,39 @@
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
-import logoIcon from '../assets/images/ready-signal-icon-gold.png';
+import HubSpotForm from './contact/HubSpotForm';
 
 const FinalCTASection = () => {
   return (
     <section className="bg-rs-dark py-20">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="space-y-8"
+          className="space-y-12"
         >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="inline-block mb-6"
-          >
-            <img src={logoIcon} alt="Ready Signal Icon" className="w-20 h-20 mx-auto" />
-          </motion.div>
-
-          <h2 className="text-4xl lg:text-5xl font-bold text-white">
-            Stop Guessing.
-            <br />
-            <span className="text-rs-yellow">Start Predicting.</span>
+          <h2 className="text-4xl lg:text-5xl font-bold text-white text-center">
+            Ready to upgrade your business forecasts?
           </h2>
 
-          <motion.a
-            href="https://app.readysignal.com/auth/sign-up"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="bg-rs-yellow text-rs-dark hover:bg-yellow-400 transition-all font-semibold px-10 py-4 rounded-lg shadow-lg hover:shadow-xl inline-flex items-center space-x-2"
-          >
-            <span>Create Free Account</span>
-            <ArrowRight className="w-5 h-5" />
-          </motion.a>
+          <div className="grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
+            <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-lg">
+              <HubSpotForm />
+            </div>
 
-          <p className="text-gray-300 text-lg">
-            Join data teams from the world's leading brands.
-          </p>
+            <div className="flex flex-col items-center justify-center">
+              <motion.a
+                href="https://app.readysignal.com/auth/sign-up"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-rs-yellow text-rs-dark hover:bg-yellow-400 transition-all font-semibold px-8 py-4 rounded-lg shadow-md hover:shadow-lg flex items-center justify-center space-x-2"
+              >
+                <span>Start Free Trial</span>
+                <ArrowRight className="w-5 h-5" />
+              </motion.a>
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>
