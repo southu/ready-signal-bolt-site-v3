@@ -385,8 +385,31 @@ function run() {
   let created = 0;
 
   for (const page of pages) {
-    const html = injectMeta(template, page);
+    let html = injectMeta(template, page);
     if (page.path === '/ai-marketing-data') {
+      html = html.replace(
+        '<div id="root"></div>',
+        `<div id="root">
+      <main>
+        <section aria-labelledby="campaign-headline" class="bg-white py-16">
+          <div class="mx-auto max-w-7xl px-4">
+            <h1 id="campaign-headline" class="text-4xl font-bold text-rs-dark">
+              Turn your marketing data into signals AI can act on.
+            </h1>
+            <p class="mt-5 max-w-2xl text-xl text-rs-dark">
+              Ready Signal finds, prepares, and validates the external data that helps your models explain demand, anticipate market shifts, and make every campaign decision smarter.
+            </p>
+            <a
+              href="https://app.readysignal.com/auth/sign-up"
+              class="mt-6 inline-flex min-h-12 items-center justify-center rounded-lg bg-rs-yellow px-8 py-4 font-semibold text-rs-dark"
+            >
+              Start Free Trial
+            </a>
+          </div>
+        </section>
+      </main>
+    </div>`,
+      );
       writeFileSync(join(distDir, `${page.path}.html`), html, 'utf-8');
       created++;
       continue;

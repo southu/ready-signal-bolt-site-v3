@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CTA and Conversion Tweak Verification | Ready Signal</title>
+    <meta
+      name="description"
+      content="Before-and-after verification evidence for the Ready Signal AI marketing CTA and homepage conversion tweaks."
+    />
+    <style>
+      :root {
+        color: #404c57;
+        background: #f9fafb;
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+      }
+
+      header,
+      main {
+        width: min(1120px, calc(100% - 32px));
+        margin: 0 auto;
+      }
+
+      header {
+        padding: 48px 0 24px;
+      }
+
+      h1,
+      h2,
+      h3 {
+        line-height: 1.15;
+      }
+
+      h1 {
+        margin-bottom: 12px;
+      }
+
+      a {
+        color: #056fa7;
+      }
+
+      .status {
+        display: inline-block;
+        margin-bottom: 8px;
+        border-radius: 999px;
+        background: #e8f6f7;
+        padding: 6px 12px;
+        color: #05636d;
+        font-weight: 700;
+      }
+
+      section {
+        margin: 24px 0;
+        border: 1px solid #dce1e5;
+        border-radius: 14px;
+        background: white;
+        padding: 24px;
+      }
+
+      .evidence-grid,
+      .comparison {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+      }
+
+      figure {
+        min-width: 0;
+        margin: 0;
+      }
+
+      img {
+        display: block;
+        width: 100%;
+        height: auto;
+        margin-top: 8px;
+        border: 1px solid #dce1e5;
+        border-radius: 8px;
+      }
+
+      figcaption,
+      .finding {
+        margin-top: 8px;
+        line-height: 1.55;
+      }
+
+      code {
+        overflow-wrap: anywhere;
+      }
+
+      footer {
+        padding: 8px 0 48px;
+      }
+
+      @media (max-width: 700px) {
+        header {
+          padding-top: 28px;
+        }
+
+        section {
+          padding: 18px;
+        }
+
+        .evidence-grid,
+        .comparison {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <span class="status">Combined deployment verification</span>
+      <h1>CTA and conversion tweak before/after evidence</h1>
+      <p>
+        One-page verification record for the new
+        <a href="/ai-marketing-data">AI-ready marketing data page</a> CTA and
+        the current homepage conversion tweaks. Audit source:
+        <a href="/audit-findings.md">ReadySignal CTA Audit Findings</a>.
+      </p>
+    </header>
+
+    <main>
+      <section id="new-page-cta">
+        <h2>New-page CTA: click-through and mobile viewport</h2>
+        <p>
+          Page under test: <a href="/ai-marketing-data">/ai-marketing-data</a>.
+          Visible clickable element: <strong>Start Free Trial</strong>, an
+          anchor whose intended destination is
+          <a href="https://app.readysignal.com/auth/sign-up"
+            >https://app.readysignal.com/auth/sign-up</a
+          >.
+        </p>
+        <p class="finding">
+          <strong>Audit finding addressed:</strong> CTA visibility/contrast and
+          Mobile CTA placement/tap targets. The automated browser check asserts
+          that the CTA remains visible in the DOM at a 375×812 viewport, stays
+          within the viewport width, has at least a 44×44px tap target, and
+          reaches the intended signup URL when clicked.
+        </p>
+        <div class="evidence-grid">
+          <figure>
+            <a
+              href="https://raw.githubusercontent.com/southu/ready-signal-bolt-site-v3/main/test-evidence/screenshots/campaign-cta-click-through.png"
+            >
+              <img
+                src="https://raw.githubusercontent.com/southu/ready-signal-bolt-site-v3/main/test-evidence/screenshots/campaign-cta-click-through.png"
+                alt="New-page Start Free Trial CTA click-through at the Ready Signal signup destination"
+              />
+            </a>
+            <figcaption>
+              New-page CTA click-through screenshot: the destination after
+              activating “Start Free Trial.”
+            </figcaption>
+          </figure>
+          <figure>
+            <a
+              href="https://raw.githubusercontent.com/southu/ready-signal-bolt-site-v3/main/test-evidence/screenshots/campaign-cta-mobile-375x812.png"
+            >
+              <img
+                src="https://raw.githubusercontent.com/southu/ready-signal-bolt-site-v3/main/test-evidence/screenshots/campaign-cta-mobile-375x812.png"
+                alt="AI-ready marketing data page with the Start Free Trial CTA visible at a 375 by 812 mobile viewport"
+              />
+            </a>
+            <figcaption>
+              Mobile viewport CTA screenshot at 375×812, captured before the
+              click.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="homepage-tweak-1">
+        <h2>Current-page tweak 1: specific hero supporting copy</h2>
+        <p>
+          Current page: <a href="/">homepage (/)</a>.
+          <strong>Before:</strong> “Transform your business operations with
+          AI-powered predictive analytics. Anticipate challenges before they
+          arise and make data-driven decisions with confidence.”
+          <strong>After:</strong> “Find the external signals that lead demand,
+          then add them to your models to reduce forecast error and act sooner.”
+        </p>
+        <p class="finding">
+          <strong>Audit finding addressed: Above-fold clarity.</strong> The
+          generic AI claim was replaced with concise, product-specific copy
+          that names the action (find and add leading external signals) and the
+          conversion-relevant outcome (reduce forecast error and act sooner)
+          beside the primary CTA.
+        </p>
+        <div class="comparison">
+          <figure>
+            <img
+              src="https://raw.githubusercontent.com/southu/ready-signal-bolt-site-v3/main/screenshots/tweak-1-hero-supporting-copy-before.png"
+              alt="Before screenshot of generic homepage hero supporting copy"
+            />
+            <figcaption>Before: generic predictive analytics copy.</figcaption>
+          </figure>
+          <figure>
+            <img
+              src="https://raw.githubusercontent.com/southu/ready-signal-bolt-site-v3/main/screenshots/tweak-1-hero-supporting-copy-after.png"
+              alt="After screenshot of specific homepage hero supporting copy"
+            />
+            <figcaption>
+              After: specific signal-discovery action and forecast outcome.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="homepage-tweak-2">
+        <h2>Current-page tweak 2: credible hero proof labels</h2>
+        <p>
+          Current page: <a href="/">homepage (/)</a>.
+          <strong>Before:</strong> “3M+ Data Features,” “50%+ Error Reduction,”
+          and “100% Explainable.” <strong>After:</strong> “3M+ Features Tested,”
+          “50%+ Avg. Error Reduction,” and “100% Signals Documented.”
+        </p>
+        <p class="finding">
+          <strong>Audit finding addressed: Trust signals.</strong> The revised
+          labels define what was tested, qualify error reduction as an average,
+          and replace an absolute explainability claim with the concrete,
+          verifiable statement that signals are documented.
+        </p>
+        <div class="comparison">
+          <figure>
+            <img
+              src="https://raw.githubusercontent.com/southu/ready-signal-bolt-site-v3/main/screenshots/tweak-2-hero-proof-labels-before.png"
+              alt="Before screenshot of broad homepage hero proof labels"
+            />
+            <figcaption>Before: broad and less qualified proof labels.</figcaption>
+          </figure>
+          <figure>
+            <img
+              src="https://raw.githubusercontent.com/southu/ready-signal-bolt-site-v3/main/screenshots/tweak-2-hero-proof-labels-after.png"
+              alt="After screenshot of specific homepage hero proof labels"
+            />
+            <figcaption>
+              After: measurable and more defensible proof labels.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <footer>
+        Evidence is committed with the implementation. Automated CTA assertions
+        are recorded in <code>test-evidence/campaign-cta.spec.ts</code>.
+      </footer>
+    </main>
+  </body>
+</html>

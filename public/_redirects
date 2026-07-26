@@ -58,5 +58,8 @@
 # deploy gate can read the deployed git SHA.
 /version /version 200
 
+# ===== VERIFICATION SUMMARY (must precede SPA catch-all) =====
+/cta-verification /cta-verification.html 200!
+
 # ===== SPA CATCH-ALL (must be last) =====
 /* /index.html 200
