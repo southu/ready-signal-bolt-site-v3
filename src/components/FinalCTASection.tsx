@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
 import HubSpotForm from './contact/HubSpotForm';
+import StartFreeTrialCTA from './StartFreeTrialCTA';
 
 const FinalCTASection = () => {
   return (
-    <section className="bg-rs-dark py-20">
+    <section id="final-cta" className="bg-rs-dark py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -23,15 +23,7 @@ const FinalCTASection = () => {
             </div>
 
             <div className="flex flex-col items-center justify-center">
-              <motion.a
-                href="https://app.readysignal.com/auth/sign-up"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-rs-yellow text-rs-dark hover:bg-yellow-400 transition-all font-semibold px-8 py-4 rounded-lg shadow-md hover:shadow-lg flex items-center justify-center space-x-2"
-              >
-                <span>Start Free Trial</span>
-                <ArrowRight className="w-5 h-5" />
-              </motion.a>
+              <StartFreeTrialCTA />
             </div>
           </div>
         </motion.div>

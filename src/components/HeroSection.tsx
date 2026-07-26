@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, Play } from 'lucide-react';
+import { Play } from 'lucide-react';
+import StartFreeTrialCTA from './StartFreeTrialCTA';
 
 const HeroSection = () => {
   return (
@@ -37,15 +38,7 @@ const HeroSection = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <motion.a
-                href="https://app.readysignal.com/auth/sign-up"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-rs-yellow text-rs-dark hover:bg-yellow-400 transition-all font-semibold px-8 py-4 rounded-lg shadow-md hover:shadow-lg flex items-center justify-center space-x-2"
-              >
-                <span>Start Free Trial</span>
-                <ArrowRight className="w-5 h-5" />
-              </motion.a>
+              <StartFreeTrialCTA />
 
               <motion.a
                 href="/contact-us/#contact-form"
