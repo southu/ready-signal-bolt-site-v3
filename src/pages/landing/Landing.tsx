@@ -102,13 +102,22 @@ function Landing() {
                   </p>
                 </div>
 
-                <a
-                  href="#campaign-form"
-                  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-rs-yellow px-6 py-3 font-semibold text-rs-dark shadow-md transition-all hover:bg-yellow-400 hover:shadow-lg sm:px-8 sm:py-4"
-                >
-                  {content.hero.cta}
-                  <ArrowRight className="h-5 w-5" aria-hidden="true" />
-                </a>
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <a
+                    href="#campaign-form"
+                    className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-rs-yellow px-6 py-3 font-semibold text-rs-dark shadow-md transition-all hover:bg-yellow-400 hover:shadow-lg sm:px-8 sm:py-4"
+                  >
+                    {content.hero.cta}
+                    <ArrowRight className="h-5 w-5" aria-hidden="true" />
+                  </a>
+                  <a
+                    href="https://app.readysignal.com/auth/sign-up"
+                    className="bg-rs-yellow text-rs-dark hover:bg-yellow-400 transition-all font-semibold px-8 py-4 rounded-lg shadow-md hover:shadow-lg flex items-center justify-center space-x-2"
+                  >
+                    <span>Start Free Trial</span>
+                    <ArrowRight className="w-5 h-5" aria-hidden="true" />
+                  </a>
+                </div>
               </div>
 
               <div
