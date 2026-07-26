@@ -23,7 +23,7 @@ const FinalCTASection = () => {
             </div>
 
             <div className="flex flex-col items-center justify-center">
-              <StartFreeTrialCTA />
+              <StartFreeTrialCTA id="secondary-start-free-trial" />
             </div>
           </div>
         </motion.div>

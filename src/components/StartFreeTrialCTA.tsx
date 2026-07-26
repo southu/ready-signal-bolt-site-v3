@@ -1,9 +1,14 @@
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 
-const StartFreeTrialCTA = () => {
+interface StartFreeTrialCTAProps {
+  id: string;
+}
+
+const StartFreeTrialCTA = ({ id }: StartFreeTrialCTAProps) => {
   return (
     <motion.a
+      id={id}
       href="https://app.readysignal.com/auth/sign-up"
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}

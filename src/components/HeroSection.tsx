@@ -4,16 +4,16 @@ import StartFreeTrialCTA from './StartFreeTrialCTA';
 
 const HeroSection = () => {
   return (
-    <section className="relative bg-white py-20 lg:py-28">
+    <section className="relative bg-white py-6 sm:py-20 lg:py-28">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            className="space-y-8"
+            className="space-y-5 sm:space-y-8"
           >
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -25,20 +25,20 @@ const HeroSection = () => {
                 </span>
               </motion.div>
 
-              <h1 className="text-5xl lg:text-6xl font-bold text-rs-dark leading-tight">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-rs-dark leading-tight">
                 Stop Reacting to Market Shifts.
                 <br />
                 <span className="text-rs-cyan">Start Predicting Them.</span>
               </h1>
 
-              <p className="text-xl text-rs-dark opacity-75 leading-relaxed">
+              <p className="text-base sm:text-xl text-rs-dark opacity-75 leading-relaxed">
                 Transform your business operations with AI-powered predictive analytics.
                 Anticipate challenges before they arise and make data-driven decisions with confidence.
               </p>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <StartFreeTrialCTA />
+              <StartFreeTrialCTA id="hero-start-free-trial" />
 
               <motion.a
                 href="/contact-us/#contact-form"
