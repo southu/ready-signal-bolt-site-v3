@@ -32,8 +32,8 @@ const HeroSection = () => {
               </h1>
 
               <p className="text-base sm:text-xl text-rs-dark opacity-75 leading-relaxed">
-                Transform your business operations with AI-powered predictive analytics.
-                Anticipate challenges before they arise and make data-driven decisions with confidence.
+                Find the external signals that lead demand, then add them to your models
+                to reduce forecast error and act sooner.
               </p>
             </div>
 
