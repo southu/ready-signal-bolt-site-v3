@@ -54,17 +54,17 @@ const HeroSection = () => {
             <div className="flex items-center space-x-8 pt-4">
               <div>
                 <div className="text-3xl font-bold text-rs-dark">3M+</div>
-                <div className="text-sm text-rs-dark opacity-75">Data Features</div>
+                <div className="text-sm text-rs-dark opacity-75">Features Tested</div>
               </div>
               <div className="h-12 w-px bg-gray-300"></div>
               <div>
                 <div className="text-3xl font-bold text-rs-dark">50%+</div>
-                <div className="text-sm text-rs-dark opacity-75">Error Reduction</div>
+                <div className="text-sm text-rs-dark opacity-75">Avg. Error Reduction</div>
               </div>
               <div className="h-12 w-px bg-gray-300"></div>
               <div>
                 <div className="text-3xl font-bold text-rs-dark">100%</div>
-                <div className="text-sm text-rs-dark opacity-75">Explainable</div>
+                <div className="text-sm text-rs-dark opacity-75">Signals Documented</div>
               </div>
             </div>
           </motion.div>
