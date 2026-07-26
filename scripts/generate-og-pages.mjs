@@ -382,6 +382,36 @@ function run() {
   }
 
   const template = readFileSync(indexPath, 'utf-8');
+  const homepageHtml = template.replace(
+    '<div id="root"></div>',
+    `<div id="root">
+      <main>
+        <section class="bg-white py-16">
+          <div class="mx-auto max-w-7xl px-4">
+            <h1 class="text-4xl font-bold text-rs-dark">
+              Stop Reacting to Market Shifts. Start Predicting Them.
+            </h1>
+            <p class="mt-5 max-w-2xl text-xl text-rs-dark">
+              Find the external signals that lead demand, then add them to your models to reduce forecast error and act sooner.
+            </p>
+            <a
+              id="hero-start-free-trial"
+              href="https://app.readysignal.com/auth/sign-up"
+              class="mt-6 inline-flex min-h-12 items-center justify-center rounded-lg bg-rs-yellow px-8 py-4 font-semibold text-rs-dark"
+            >
+              Start Free Trial
+            </a>
+            <dl class="mt-8 flex gap-8">
+              <div><dt>Features Tested</dt><dd>3M+</dd></div>
+              <div><dt>Avg. Error Reduction</dt><dd>50%+</dd></div>
+              <div><dt>Signals Documented</dt><dd>100%</dd></div>
+            </dl>
+          </div>
+        </section>
+      </main>
+    </div>`,
+  );
+  writeFileSync(indexPath, homepageHtml, 'utf-8');
   let created = 0;
 
   for (const page of pages) {
