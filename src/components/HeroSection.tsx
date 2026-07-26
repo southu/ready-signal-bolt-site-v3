@@ -11,7 +11,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            className="space-y-5 sm:space-y-8"
+            className="min-w-0 space-y-5 sm:space-y-8"
           >
             <div className="space-y-3 sm:space-y-4">
               <motion.div

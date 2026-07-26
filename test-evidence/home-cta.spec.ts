@@ -47,6 +47,8 @@ test('hero CTA is above the fold and tappable on mobile', async ({ page }) => {
   const heroCta = page.locator('#hero-start-free-trial');
   const box = await heroCta.boundingBox();
   expect(box).not.toBeNull();
+  expect(box!.x).toBeGreaterThanOrEqual(0);
+  expect(box!.x + box!.width).toBeLessThanOrEqual(375);
   expect(box!.y).toBeGreaterThanOrEqual(0);
   expect(box!.y + box!.height).toBeLessThanOrEqual(667);
   expect(box!.width).toBeGreaterThanOrEqual(44);
