@@ -59,6 +59,7 @@ const STATIC_PAGES = [
   { path: '/assistant/', priority: '0.8', changefreq: 'monthly' },
   { path: '/data-catalog/', priority: '0.8', changefreq: 'monthly' },
   { path: '/forecasting-engine/', priority: '0.8', changefreq: 'monthly' },
+  { path: '/forecasting-landing/', priority: '0.9', changefreq: 'monthly' },
   { path: '/recommendation-engine/', priority: '0.8', changefreq: 'monthly' },
   { path: '/ai-marketing-data', priority: '0.8', changefreq: 'monthly' },
   { path: '/ai-bi-consulting/', priority: '0.7', changefreq: 'monthly' },

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import SEO from '../../components/SEO';
 import Footer from '../../components/Footer';
 import ForecastingHero from './ForecastingHero';
@@ -12,6 +12,9 @@ import ForecastingIndustryTabs from './ForecastingIndustryTabs';
 import ForecastingTestimonials from './ForecastingTestimonials';
 import ForecastingFinalCTA from './ForecastingFinalCTA';
 import { FORECASTING_LANDING_CONTENT } from './forecastingLandingContent';
+import { FORECASTING_LANDING_SCHEMA } from './forecastingLandingSchema';
+
+const SCHEMA_SCRIPT_ID = 'forecasting-landing-jsonld';
 
 /**
  * Forecasting landing experience at /forecasting-landing.
@@ -20,12 +23,27 @@ import { FORECASTING_LANDING_CONTENT } from './forecastingLandingContent';
 function ForecastingLanding() {
   const [openVariant, setOpenVariant] = useState<ForecastingGuideVariant | null>(null);
 
+  useEffect(() => {
+    let script = document.getElementById(SCHEMA_SCRIPT_ID) as HTMLScriptElement | null;
+    if (!script) {
+      script = document.createElement('script');
+      script.type = 'application/ld+json';
+      script.id = SCHEMA_SCRIPT_ID;
+      document.head.appendChild(script);
+    }
+    script.textContent = JSON.stringify(FORECASTING_LANDING_SCHEMA);
+
+    return () => {
+      document.getElementById(SCHEMA_SCRIPT_ID)?.remove();
+    };
+  }, []);
+
   return (
     <div className="min-h-screen overflow-x-hidden bg-white font-sans">
       <SEO
-        title="Forecasting Signals | Ready Signal"
-        description="Ready Signal helps forecasting teams find, validate, and maintain the external signals that explain demand."
-        canonical="https://www.readysignal.com/forecasting-landing"
+        title={FORECASTING_LANDING_CONTENT.seo.title}
+        description={FORECASTING_LANDING_CONTENT.seo.description}
+        canonical={FORECASTING_LANDING_CONTENT.seo.canonical}
       />
 
       <main>
