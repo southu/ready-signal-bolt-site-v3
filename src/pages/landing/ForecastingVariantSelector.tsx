@@ -127,7 +127,13 @@ function ForecastingVariantSelector({ content, onSelectVariant }: ForecastingVar
                     event.currentTarget.focus();
                     handleSelect(card);
                   }}
-                  className={`group flex h-full w-full flex-col rounded-2xl border-2 p-5 text-left shadow-sm transition duration-200 ease-out hover:-translate-y-1 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rs-cyan focus-visible:ring-offset-2 ${
+                  // The hover lift and border tint still animate, but box-shadow
+                  // is left out of the transition so the focus ring paints on
+                  // the same frame as the tab stop instead of fading in over
+                  // 200ms. The outline lands in the same 2px band as the ring's
+                  // cyan edge, so the two read as one crisp ring while keeping a
+                  // non-transparent computed outline for keyboard users.
+                  className={`group flex h-full w-full flex-col rounded-2xl border-2 p-5 text-left shadow-sm transition-[transform,border-color] duration-200 ease-out hover:-translate-y-1 hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rs-cyan focus-visible:ring-2 focus-visible:ring-rs-cyan focus-visible:ring-offset-2 ${
                     isSelected
                       ? 'border-rs-cyan bg-rs-cyan/5'
                       : 'border-rs-dark/10 bg-white hover:border-rs-dark/30'
