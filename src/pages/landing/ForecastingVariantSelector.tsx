@@ -82,11 +82,14 @@ function ForecastingVariantSelector({ content, onSelectVariant }: ForecastingVar
 
   return (
     <section
-      id="forecasting-variants"
+      id="forecasting-variant-selector"
       aria-labelledby="forecasting-variants-heading"
       className="bg-rs-light-gray py-16 sm:py-20"
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      {/* The hero's jump link still targets #forecasting-variants, so that id
+          stays on the page — it moves to the content wrapper to leave the
+          section root free for the id the final CTA scrolls to. */}
+      <div id="forecasting-variants" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
           <span className="inline-flex rounded-full bg-white px-4 py-2 text-sm font-semibold text-rs-dark/80">
             {content.eyebrow}

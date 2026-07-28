@@ -10,6 +10,7 @@ import ForecastingExamples from './ForecastingExamples';
 import ForecastingFeatureGrid from './ForecastingFeatureGrid';
 import ForecastingIndustryTabs from './ForecastingIndustryTabs';
 import ForecastingTestimonials from './ForecastingTestimonials';
+import ForecastingFinalCTA from './ForecastingFinalCTA';
 import { FORECASTING_LANDING_CONTENT } from './forecastingLandingContent';
 
 /**
@@ -47,6 +48,7 @@ function ForecastingLanding() {
           }
         />
         <ForecastingTestimonials content={FORECASTING_LANDING_CONTENT.testimonials} />
+        <ForecastingFinalCTA content={FORECASTING_LANDING_CONTENT.finalCta} />
       </main>
 
       <ForecastingGuideModal
