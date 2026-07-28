@@ -1,8 +1,10 @@
+import { useState } from 'react';
 import SEO from '../../components/SEO';
 import Footer from '../../components/Footer';
 import ForecastingHero from './ForecastingHero';
 import ForecastingTrustBar from './ForecastingTrustBar';
 import ForecastingVariantSelector from './ForecastingVariantSelector';
+import ForecastingGuideModal, { ForecastingGuideVariant } from './ForecastingGuideModal';
 import { FORECASTING_LANDING_CONTENT } from './forecastingLandingContent';
 
 /**
@@ -10,6 +12,8 @@ import { FORECASTING_LANDING_CONTENT } from './forecastingLandingContent';
  * Route shell only — hero, trust, and variant content land in later passes.
  */
 function ForecastingLanding() {
+  const [openVariant, setOpenVariant] = useState<ForecastingGuideVariant | null>(null);
+
   return (
     <div className="min-h-screen overflow-x-hidden bg-white font-sans">
       <SEO
@@ -23,9 +27,15 @@ function ForecastingLanding() {
         <ForecastingTrustBar content={FORECASTING_LANDING_CONTENT.trustBar} />
         <ForecastingVariantSelector
           content={FORECASTING_LANDING_CONTENT.variantSelector}
-          onSelectVariant={() => {}}
+          onSelectVariant={setOpenVariant}
         />
       </main>
+
+      <ForecastingGuideModal
+        isOpen={openVariant !== null}
+        variant={openVariant}
+        onClose={() => setOpenVariant(null)}
+      />
 
       <Footer />
     </div>

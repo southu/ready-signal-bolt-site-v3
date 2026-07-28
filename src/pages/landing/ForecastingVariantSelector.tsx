@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Check } from 'lucide-react';
 import { FORECASTING_LANDING_CONTENT } from './forecastingLandingContent';
+import type { ForecastingGuideVariant } from './ForecastingGuideModal';
 
 type VariantSelectorContent = typeof FORECASTING_LANDING_CONTENT.variantSelector;
+type VariantCard = VariantSelectorContent['cards'][number];
 
 const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
 
@@ -44,22 +46,22 @@ const CARD_PLACEMENT = [
 
 type ForecastingVariantSelectorProps = {
   content: VariantSelectorContent;
-  onSelectVariant?: (slug: string) => void;
+  onSelectVariant?: (variant: ForecastingGuideVariant) => void;
 };
 
 /**
  * Forecasting variant selector — the page's primary self-identification step.
  * Each card is a single button so the whole tile is one click and one tab stop.
- * Selection is tracked locally so the section works on its own; the guide modal
- * hangs off `onSelectVariant` in a later pass.
+ * Selection is tracked locally for the visual state and handed up through
+ * `onSelectVariant` so the page can open the guide modal.
  */
 function ForecastingVariantSelector({ content, onSelectVariant }: ForecastingVariantSelectorProps) {
   const prefersReducedMotion = usePrefersReducedMotion();
   const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
 
-  const handleSelect = (slug: string) => {
-    setSelectedSlug(slug);
-    onSelectVariant?.(slug);
+  const handleSelect = (card: VariantCard) => {
+    setSelectedSlug(card.slug);
+    onSelectVariant?.({ slug: card.slug, title: card.title, guideName: card.guideName });
   };
 
   // Cards fade upward once, 40ms apart. Under reduced motion the props drop
@@ -116,7 +118,12 @@ function ForecastingVariantSelector({ content, onSelectVariant }: ForecastingVar
                   aria-label={card.label}
                   aria-pressed={isSelected}
                   aria-describedby={`forecasting-variant-${card.slug}-title`}
-                  onClick={() => handleSelect(card.slug)}
+                  // Focusing the card explicitly (some browsers do not focus a
+                  // button on click) is what lets the modal hand focus back here.
+                  onClick={(event) => {
+                    event.currentTarget.focus();
+                    handleSelect(card);
+                  }}
                   className={`group flex h-full w-full flex-col rounded-2xl border-2 p-5 text-left shadow-sm transition duration-200 ease-out hover:-translate-y-1 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rs-cyan focus-visible:ring-offset-2 ${
                     isSelected
                       ? 'border-rs-cyan bg-rs-cyan/5'
