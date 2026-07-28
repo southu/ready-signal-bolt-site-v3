@@ -66,8 +66,10 @@ type ForecastingTestimonialsProps = {
 /**
  * Testimonial carousel. `activeIndex` is the leading card and the track slides
  * by one card width, so every breakpoint shares one index and one set of dots.
- * Auto-rotation only runs when there are more testimonials than fit at once —
- * on desktop all three are already on screen, so nothing moves on its own.
+ * Every testimonial is a reachable leading card, so the index, the arrows, the
+ * dots, and auto-rotation all range over the complete testimonials array — one
+ * index per testimonial, one dot per testimonial. Auto-rotation runs whenever
+ * there are more testimonials than fit on screen at once.
  */
 function ForecastingTestimonials({ content }: ForecastingTestimonialsProps) {
   const prefersReducedMotion = usePrefersReducedMotion();
@@ -77,39 +79,32 @@ function ForecastingTestimonials({ content }: ForecastingTestimonialsProps) {
 
   const items = content.items;
   const total = items.length;
-  // Leading card of the last full window — past it the track would slide empty
-  // space into view instead of a card.
-  const lastIndex = Math.max(total - visibleCount, 0);
-  const canRotate = lastIndex > 0;
+  // There is nothing to rotate through until there are more testimonials than
+  // fit on screen at once.
+  const canRotate = total > visibleCount;
 
-  // Arrows wrap around the ends of the track.
-  const step = (index: number) =>
-    setActiveIndex(((index % (lastIndex + 1)) + lastIndex + 1) % (lastIndex + 1));
+  // Arrows wrap around the full set of testimonials.
+  const step = (index: number) => setActiveIndex(((index % total) + total) % total);
 
-  // Dots name a testimonial rather than a position, so they clamp instead of
-  // wrapping: on tablet the last dot scrolls to the window that ends on the
-  // third card rather than jumping back to the first.
-  const showTestimonial = (index: number) => setActiveIndex(Math.min(index, lastIndex));
-
-  // Widening the viewport shows more cards at once, so the leading card has to
-  // step back far enough that the window still ends on the last testimonial.
-  useEffect(() => {
-    setActiveIndex((index) => Math.min(index, lastIndex));
-  }, [lastIndex]);
+  // Each dot names a testimonial, so it selects exactly that testimonial.
+  const showTestimonial = (index: number) => setActiveIndex(index);
 
   useEffect(() => {
     if (!canRotate || isPaused || prefersReducedMotion) return;
 
     const timer = window.setInterval(
-      () => setActiveIndex((index) => (index + 1) % (lastIndex + 1)),
+      () => setActiveIndex((index) => (index + 1) % total),
       ROTATE_INTERVAL_MS
     );
     return () => window.clearInterval(timer);
-  }, [canRotate, isPaused, prefersReducedMotion, lastIndex]);
+  }, [canRotate, isPaused, prefersReducedMotion, total]);
 
-  // Percentages resolve against the track's own width, and the track is exactly
-  // `visibleCount` cards wide, so one step is one card at every breakpoint.
-  const trackOffset = -(activeIndex * 100) / visibleCount;
+  // The track slides one card per index, but it never scrolls past the last
+  // full window, so the trailing edge always lands on the final testimonial
+  // instead of empty space — the active dot still tracks the true index.
+  const maxOffsetIndex = Math.max(total - visibleCount, 0);
+  const offsetIndex = Math.min(activeIndex, maxOffsetIndex);
+  const trackOffset = -(offsetIndex * 100) / visibleCount;
 
   const reveal = prefersReducedMotion
     ? {}
