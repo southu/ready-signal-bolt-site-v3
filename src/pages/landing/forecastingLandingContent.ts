@@ -320,6 +320,24 @@ export const FORECASTING_LANDING_CONTENT = {
         title: 'VP, Strategy & Analytics',
         company: '',
       },
+      {
+        quote: 'You are helping us answer the questions...',
+        name: '',
+        title: 'Category Manager at CPG Company',
+        company: '',
+      },
+      {
+        quote: 'This engagement has been an enjoyable engagement...',
+        name: '',
+        title: 'Category Manager at CPG Company',
+        company: '',
+      },
+      {
+        quote: 'We are very excited about this forecast...',
+        name: '',
+        title: 'Prime Source',
+        company: '',
+      },
     ],
   },
   finalCta: {
