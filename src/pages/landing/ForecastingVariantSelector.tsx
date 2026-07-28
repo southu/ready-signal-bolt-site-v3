@@ -73,8 +73,8 @@ function ForecastingVariantSelector({ content, onSelectVariant }: ForecastingVar
     const observer = new IntersectionObserver(
       (entries) => {
         if (!entries.some((entry) => entry.isIntersecting)) return;
-        logEvent('ForecastingLanding', 'Variant Viewed', 'forecasting-landing');
-        ReactGA.event('variant_viewed', {
+        logEvent('ForecastingLanding', 'Variant Impression', 'forecasting-landing');
+        ReactGA.event('variant_impression', {
           event_category: 'ForecastingLanding',
           event_label: 'forecasting-landing',
           send_to: GA4_MEASUREMENT_ID,
