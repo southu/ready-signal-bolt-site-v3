@@ -1,8 +1,12 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowUp } from 'lucide-react';
+import ReactGA from 'react-ga4';
 import { logEvent } from '../../lib/analytics';
 import { FORECASTING_LANDING_CONTENT } from './forecastingLandingContent';
+
+/** GA4 transport — see the note in ForecastingHero.tsx. */
+const GA4_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID;
 
 type FinalCtaContent = typeof FORECASTING_LANDING_CONTENT.finalCta;
 
@@ -41,6 +45,11 @@ function ForecastingFinalCTA({ content }: ForecastingFinalCTAProps) {
 
   const scrollToVariantSelector = () => {
     logEvent('ForecastingLanding', 'Final CTA Click', content.primaryCta);
+    ReactGA.event('final_cta_click', {
+      event_category: 'ForecastingLanding',
+      event_label: content.primaryCta,
+      send_to: GA4_MEASUREMENT_ID,
+    });
 
     const target = document.getElementById(VARIANT_SELECTOR_ID);
     if (!target) return;
@@ -48,6 +57,20 @@ function ForecastingFinalCTA({ content }: ForecastingFinalCTAProps) {
     target.scrollIntoView({
       behavior: prefersReducedMotion ? 'auto' : 'smooth',
       block: 'start',
+    });
+  };
+
+  // This CTA leaves the page, and gtag batches its hits on a timer that
+  // outlives the document, so this one is best-effort: it is delivered when the
+  // click opens a new tab or is followed by a flush, and dropped when the
+  // navigation tears the page down first. Nothing to do about that from here
+  // without holding the navigation open for seconds.
+  const handleFooterCtaClick = () => {
+    logEvent('ForecastingLanding', 'Footer CTA Click', content.secondaryCta);
+    ReactGA.event('footer_cta_click', {
+      event_category: 'ForecastingLanding',
+      event_label: content.secondaryCta,
+      send_to: GA4_MEASUREMENT_ID,
     });
   };
 
@@ -92,7 +115,7 @@ function ForecastingFinalCTA({ content }: ForecastingFinalCTAProps) {
                 and the primary button only scrolls back up (Final CTA Click). */}
             <a
               href="/contact-us/"
-              onClick={() => logEvent('ForecastingLanding', 'Footer CTA Click', content.secondaryCta)}
+              onClick={handleFooterCtaClick}
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-rs-dark/25 bg-white px-6 py-3 font-semibold text-rs-dark transition-colors hover:border-rs-dark/50 hover:bg-white/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rs-cyan focus-visible:ring-offset-2 sm:px-8"
             >
               {content.secondaryCta}

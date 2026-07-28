@@ -1,8 +1,26 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Activity, ArrowRight, Check, Database, LineChart, TrendingUp } from 'lucide-react';
+import ReactGA from 'react-ga4';
 import { logEvent } from '../../lib/analytics';
 import { FORECASTING_LANDING_CONTENT } from './forecastingLandingContent';
+
+/**
+ * GA4 transport for the events below.
+ *
+ * `logEvent` is still the PRD call — it keeps the display-name event and is the
+ * single place GA is configured — but its hits never reach the GA4 property:
+ * the GTM container in index.html owns gtag's default event routing, so a bare
+ * `gtag('event', ...)` is delivered only to the Ads destination (AW-…) and
+ * never to G-…/g/collect. Naming the GA4 property with `send_to` is what puts
+ * these on the wire. The name is also snake_cased here because GA4 rejects
+ * event names containing spaces.
+ *
+ * Same react-ga4 singleton `logEvent` uses — no second analytics library, no
+ * new GA initialization, and it no-ops the same way when the measurement ID is
+ * unset (nothing is listening on dataLayer).
+ */
+const GA4_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID;
 
 type HeroContent = typeof FORECASTING_LANDING_CONTENT.hero;
 
@@ -46,7 +64,26 @@ function ForecastingHero({ content }: ForecastingHeroProps) {
   // moment — no observer needed for this one.
   useEffect(() => {
     logEvent('ForecastingLanding', 'Hero Viewed', 'forecasting-landing');
+    ReactGA.event('hero_viewed', {
+      event_category: 'ForecastingLanding',
+      event_label: 'forecasting-landing',
+      send_to: GA4_MEASUREMENT_ID,
+    });
   }, []);
+
+  // This CTA leaves the page, and gtag batches its hits on a timer that
+  // outlives the document, so this one is best-effort: it is delivered when the
+  // click opens a new tab or is followed by a flush, and dropped when the
+  // navigation tears the page down first. Nothing to do about that from here
+  // without holding the navigation open for seconds.
+  const handleSecondaryCtaClick = () => {
+    logEvent('ForecastingLanding', 'Hero Secondary CTA Click', content.secondaryCta);
+    ReactGA.event('hero_secondary_cta_click', {
+      event_category: 'ForecastingLanding',
+      event_label: content.secondaryCta,
+      send_to: GA4_MEASUREMENT_ID,
+    });
+  };
 
   // Entrance: opacity only for the copy column so the headline and CTAs never
   // change position after paint (no layout shift). Whole sequence lands < 1s.
@@ -110,7 +147,14 @@ function ForecastingHero({ content }: ForecastingHeroProps) {
             >
               <a
                 href="#forecasting-variants"
-                onClick={() => logEvent('ForecastingLanding', 'Hero Primary CTA Click', content.primaryCta)}
+                onClick={() => {
+                  logEvent('ForecastingLanding', 'Hero Primary CTA Click', content.primaryCta);
+                  ReactGA.event('hero_primary_cta_click', {
+                    event_category: 'ForecastingLanding',
+                    event_label: content.primaryCta,
+                    send_to: GA4_MEASUREMENT_ID,
+                  });
+                }}
                 className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-rs-yellow px-6 py-3 font-semibold text-rs-dark shadow-md transition-all hover:bg-yellow-400 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rs-cyan focus-visible:ring-offset-2 sm:px-8"
               >
                 {content.primaryCta}
@@ -118,7 +162,7 @@ function ForecastingHero({ content }: ForecastingHeroProps) {
               </a>
               <a
                 href="/contact-us/"
-                onClick={() => logEvent('ForecastingLanding', 'Hero Secondary CTA Click', content.secondaryCta)}
+                onClick={handleSecondaryCtaClick}
                 className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-rs-dark/25 bg-white px-6 py-3 font-semibold text-rs-dark transition-colors hover:border-rs-dark/50 hover:bg-rs-light-gray focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rs-cyan focus-visible:ring-offset-2 sm:px-8"
               >
                 {content.secondaryCta}

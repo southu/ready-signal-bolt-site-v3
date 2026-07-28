@@ -1,9 +1,13 @@
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { X } from 'lucide-react';
+import ReactGA from 'react-ga4';
 import { logEvent } from '../../lib/analytics';
 import { FORECASTING_LANDING_CONTENT } from './forecastingLandingContent';
 import { captureLandingAttribution } from './captureLandingAttribution';
+
+/** GA4 transport — see the note in ForecastingHero.tsx. */
+const GA4_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID;
 
 /**
  * Same verified portal/form pair the existing landing form posts to. No
@@ -115,6 +119,11 @@ function ForecastingGuideModal({ isOpen, variant, onClose }: ForecastingGuideMod
   useEffect(() => {
     if (!isOpen) return;
     logEvent('ForecastingLanding', 'Guide Modal Opened', variantSlug);
+    ReactGA.event('guide_modal_opened', {
+      event_category: 'ForecastingLanding',
+      event_label: variantSlug,
+      send_to: GA4_MEASUREMENT_ID,
+    });
   }, [isOpen, variantSlug]);
 
   // Every open starts from a clean form, including one reopened after success.
@@ -260,6 +269,11 @@ function ForecastingGuideModal({ isOpen, variant, onClose }: ForecastingGuideMod
       }
 
       logEvent('ForecastingLanding', 'Guide Form Submitted', variantSlug);
+      ReactGA.event('guide_form_submitted', {
+        event_category: 'ForecastingLanding',
+        event_label: variantSlug,
+        send_to: GA4_MEASUREMENT_ID,
+      });
       setIsSubmitted(true);
     } catch (error) {
       console.error('Unable to submit forecasting guide request', error);

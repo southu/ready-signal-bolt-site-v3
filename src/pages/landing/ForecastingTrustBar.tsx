@@ -1,7 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
+import ReactGA from 'react-ga4';
 import { logEvent } from '../../lib/analytics';
 import { FORECASTING_LANDING_CONTENT } from './forecastingLandingContent';
+
+/** GA4 transport — see the note in ForecastingHero.tsx. */
+const GA4_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID;
 
 type TrustBarContent = typeof FORECASTING_LANDING_CONTENT.trustBar;
 
@@ -46,6 +50,11 @@ function ForecastingTrustBar({ content }: ForecastingTrustBarProps) {
       (entries) => {
         if (!entries.some((entry) => entry.isIntersecting)) return;
         logEvent('ForecastingLanding', 'Trust Bar Viewed', 'forecasting-landing');
+        ReactGA.event('trust_bar_viewed', {
+          event_category: 'ForecastingLanding',
+          event_label: 'forecasting-landing',
+          send_to: GA4_MEASUREMENT_ID,
+        });
         observer.disconnect();
       },
       { threshold: 0.2 }

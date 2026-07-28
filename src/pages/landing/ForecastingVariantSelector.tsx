@@ -1,12 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Check } from 'lucide-react';
+import ReactGA from 'react-ga4';
 import { logEvent } from '../../lib/analytics';
 import { FORECASTING_LANDING_CONTENT } from './forecastingLandingContent';
 import type { ForecastingGuideVariant } from './ForecastingGuideModal';
 
 type VariantSelectorContent = typeof FORECASTING_LANDING_CONTENT.variantSelector;
 type VariantCard = VariantSelectorContent['cards'][number];
+
+/** GA4 transport — see the note in ForecastingHero.tsx. */
+const GA4_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID;
 
 const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
 
@@ -70,6 +74,11 @@ function ForecastingVariantSelector({ content, onSelectVariant }: ForecastingVar
       (entries) => {
         if (!entries.some((entry) => entry.isIntersecting)) return;
         logEvent('ForecastingLanding', 'Variant Viewed', 'forecasting-landing');
+        ReactGA.event('variant_viewed', {
+          event_category: 'ForecastingLanding',
+          event_label: 'forecasting-landing',
+          send_to: GA4_MEASUREMENT_ID,
+        });
         observer.disconnect();
       },
       { threshold: 0.2 }
@@ -81,6 +90,11 @@ function ForecastingVariantSelector({ content, onSelectVariant }: ForecastingVar
 
   const handleSelect = (card: VariantCard) => {
     logEvent('ForecastingLanding', 'Variant Selected', card.slug);
+    ReactGA.event('variant_selected', {
+      event_category: 'ForecastingLanding',
+      event_label: card.slug,
+      send_to: GA4_MEASUREMENT_ID,
+    });
     setSelectedSlug(card.slug);
     onSelectVariant?.({ slug: card.slug, title: card.title, guideName: card.guideName });
   };
@@ -154,6 +168,11 @@ function ForecastingVariantSelector({ content, onSelectVariant }: ForecastingVar
                   onPointerEnter={(event) => {
                     if (event.pointerType !== 'mouse') return;
                     logEvent('ForecastingLanding', 'Variant Hovered', card.slug);
+                    ReactGA.event('variant_hovered', {
+                      event_category: 'ForecastingLanding',
+                      event_label: card.slug,
+                      send_to: GA4_MEASUREMENT_ID,
+                    });
                   }}
                   // The hover lift and border tint still animate, but box-shadow
                   // is left out of the transition so the focus ring paints on
