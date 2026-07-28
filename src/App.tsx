@@ -43,6 +43,7 @@ import Demo from './pages/Demo';
 import ChatGPTDemandPlanning from './pages/landing/ChatGPTDemandPlanning';
 import LandingPreview from './pages/landing/LandingPreview';
 import Landing from './pages/landing/Landing';
+import ForecastingLanding from './pages/landing/ForecastingLanding';
 
 // Documentation pages
 import BriefIntroduction from './pages/docs/BriefIntroduction';
@@ -224,6 +225,7 @@ function App() {
           <Route path="/landing-preview/" element={<LandingPreview />} />
           <Route path="/landing" element={<Landing />} />
           <Route path="/ai-marketing-data" element={<Landing />} />
+          <Route path="/forecasting-landing" element={<ForecastingLanding />} />
 
           {/* Data category pages */}
           <Route path="/data-economic" element={<DataEconomic />} />
