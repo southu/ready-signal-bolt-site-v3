@@ -1,6 +1,7 @@
 import SEO from '../../components/SEO';
 import Footer from '../../components/Footer';
 import ForecastingHero from './ForecastingHero';
+import ForecastingTrustBar from './ForecastingTrustBar';
 import { FORECASTING_LANDING_CONTENT } from './forecastingLandingContent';
 
 /**
@@ -18,6 +19,7 @@ function ForecastingLanding() {
 
       <main>
         <ForecastingHero content={FORECASTING_LANDING_CONTENT.hero} />
+        <ForecastingTrustBar content={FORECASTING_LANDING_CONTENT.trustBar} />
       </main>
 
       <Footer />
