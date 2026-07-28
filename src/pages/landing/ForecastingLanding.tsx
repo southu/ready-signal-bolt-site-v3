@@ -7,6 +7,7 @@ import ForecastingVariantSelector from './ForecastingVariantSelector';
 import ForecastingGuideModal, { ForecastingGuideVariant } from './ForecastingGuideModal';
 import ForecastingProcessTimeline from './ForecastingProcessTimeline';
 import ForecastingExamples from './ForecastingExamples';
+import ForecastingFeatureGrid from './ForecastingFeatureGrid';
 import { FORECASTING_LANDING_CONTENT } from './forecastingLandingContent';
 
 /**
@@ -33,6 +34,7 @@ function ForecastingLanding() {
         />
         <ForecastingProcessTimeline content={FORECASTING_LANDING_CONTENT.process} />
         <ForecastingExamples content={FORECASTING_LANDING_CONTENT.forecastExamples} />
+        <ForecastingFeatureGrid content={FORECASTING_LANDING_CONTENT.featureGrid} />
       </main>
 
       <ForecastingGuideModal
