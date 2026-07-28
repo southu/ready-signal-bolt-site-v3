@@ -83,12 +83,29 @@ function ForecastingTestimonials({ content }: ForecastingTestimonialsProps) {
   // fit on screen at once.
   const canRotate = total > visibleCount;
 
+  // A manual arrow/dot click focuses that control, and focus stays there after
+  // the click with no matching blur — so the focusin-driven pause would latch on
+  // forever and auto-rotation would never resume. Clearing isPaused here lets the
+  // rotation effect start a fresh interval from the newly selected slide instead
+  // of being cleared permanently; genuine hover and keyboard focus still pause.
+  const resumeRotation = () => setIsPaused(false);
+
   // Arrows wrap around the full set of testimonials.
-  const step = (index: number) => setActiveIndex(((index % total) + total) % total);
+  const step = (index: number) => {
+    setActiveIndex(((index % total) + total) % total);
+    resumeRotation();
+  };
 
   // Each dot names a testimonial, so it selects exactly that testimonial.
-  const showTestimonial = (index: number) => setActiveIndex(index);
+  const showTestimonial = (index: number) => {
+    setActiveIndex(index);
+    resumeRotation();
+  };
 
+  // activeIndex is a dependency so any change — manual or automatic — restarts
+  // the interval, giving the freshly shown slide a full dwell before the next
+  // advance. The functional update ranges over the whole array (total), so the
+  // 9 -> 10 -> 11 -> 1 boundary wraps correctly for all testimonials.
   useEffect(() => {
     if (!canRotate || isPaused || prefersReducedMotion) return;
 
@@ -97,7 +114,7 @@ function ForecastingTestimonials({ content }: ForecastingTestimonialsProps) {
       ROTATE_INTERVAL_MS
     );
     return () => window.clearInterval(timer);
-  }, [canRotate, isPaused, prefersReducedMotion, total]);
+  }, [canRotate, isPaused, prefersReducedMotion, total, activeIndex]);
 
   // The track slides one card per index, but it never scrolls past the last
   // full window, so the trailing edge always lands on the final testimonial
