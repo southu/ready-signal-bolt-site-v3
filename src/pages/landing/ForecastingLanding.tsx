@@ -2,6 +2,7 @@ import SEO from '../../components/SEO';
 import Footer from '../../components/Footer';
 import ForecastingHero from './ForecastingHero';
 import ForecastingTrustBar from './ForecastingTrustBar';
+import ForecastingVariantSelector from './ForecastingVariantSelector';
 import { FORECASTING_LANDING_CONTENT } from './forecastingLandingContent';
 
 /**
@@ -20,6 +21,10 @@ function ForecastingLanding() {
       <main>
         <ForecastingHero content={FORECASTING_LANDING_CONTENT.hero} />
         <ForecastingTrustBar content={FORECASTING_LANDING_CONTENT.trustBar} />
+        <ForecastingVariantSelector
+          content={FORECASTING_LANDING_CONTENT.variantSelector}
+          onSelectVariant={() => {}}
+        />
       </main>
 
       <Footer />
