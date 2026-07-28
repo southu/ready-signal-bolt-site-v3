@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Activity, ArrowRight, Check, Database, LineChart, TrendingUp } from 'lucide-react';
+import { logEvent } from '../../lib/analytics';
 import { FORECASTING_LANDING_CONTENT } from './forecastingLandingContent';
 
 type HeroContent = typeof FORECASTING_LANDING_CONTENT.hero;
@@ -40,6 +41,12 @@ type ForecastingHeroProps = {
 
 function ForecastingHero({ content }: ForecastingHeroProps) {
   const prefersReducedMotion = usePrefersReducedMotion();
+
+  // The hero is the top of the page, so mount and first view are the same
+  // moment — no observer needed for this one.
+  useEffect(() => {
+    logEvent('ForecastingLanding', 'Hero Viewed', 'forecasting-landing');
+  }, []);
 
   // Entrance: opacity only for the copy column so the headline and CTAs never
   // change position after paint (no layout shift). Whole sequence lands < 1s.
@@ -103,6 +110,7 @@ function ForecastingHero({ content }: ForecastingHeroProps) {
             >
               <a
                 href="#forecasting-variants"
+                onClick={() => logEvent('ForecastingLanding', 'Hero Primary CTA Click', content.primaryCta)}
                 className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-rs-yellow px-6 py-3 font-semibold text-rs-dark shadow-md transition-all hover:bg-yellow-400 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rs-cyan focus-visible:ring-offset-2 sm:px-8"
               >
                 {content.primaryCta}
@@ -110,6 +118,7 @@ function ForecastingHero({ content }: ForecastingHeroProps) {
               </a>
               <a
                 href="/contact-us/"
+                onClick={() => logEvent('ForecastingLanding', 'Hero Secondary CTA Click', content.secondaryCta)}
                 className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-rs-dark/25 bg-white px-6 py-3 font-semibold text-rs-dark transition-colors hover:border-rs-dark/50 hover:bg-rs-light-gray focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rs-cyan focus-visible:ring-offset-2 sm:px-8"
               >
                 {content.secondaryCta}

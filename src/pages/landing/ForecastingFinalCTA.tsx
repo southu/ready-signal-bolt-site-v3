@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowUp } from 'lucide-react';
+import { logEvent } from '../../lib/analytics';
 import { FORECASTING_LANDING_CONTENT } from './forecastingLandingContent';
 
 type FinalCtaContent = typeof FORECASTING_LANDING_CONTENT.finalCta;
@@ -39,6 +40,8 @@ function ForecastingFinalCTA({ content }: ForecastingFinalCTAProps) {
   const prefersReducedMotion = usePrefersReducedMotion();
 
   const scrollToVariantSelector = () => {
+    logEvent('ForecastingLanding', 'Final CTA Click', content.primaryCta);
+
     const target = document.getElementById(VARIANT_SELECTOR_ID);
     if (!target) return;
 
@@ -84,8 +87,12 @@ function ForecastingFinalCTA({ content }: ForecastingFinalCTAProps) {
               {content.primaryCta}
               <ArrowUp className="h-5 w-5 shrink-0" aria-hidden="true" />
             </button>
+            {/* Part 9's "Footer CTA" maps to this secondary link, not the primary
+                button: it is the page's last, footer-adjacent outbound control,
+                and the primary button only scrolls back up (Final CTA Click). */}
             <a
               href="/contact-us/"
+              onClick={() => logEvent('ForecastingLanding', 'Footer CTA Click', content.secondaryCta)}
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-rs-dark/25 bg-white px-6 py-3 font-semibold text-rs-dark transition-colors hover:border-rs-dark/50 hover:bg-white/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rs-cyan focus-visible:ring-offset-2 sm:px-8"
             >
               {content.secondaryCta}

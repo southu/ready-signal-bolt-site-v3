@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
+import { logEvent } from '../../lib/analytics';
 import { FORECASTING_LANDING_CONTENT } from './forecastingLandingContent';
 
 type TrustBarContent = typeof FORECASTING_LANDING_CONTENT.trustBar;
@@ -34,6 +35,25 @@ type ForecastingTrustBarProps = {
  */
 function ForecastingTrustBar({ content }: ForecastingTrustBarProps) {
   const prefersReducedMotion = usePrefersReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+
+  // Fires once, the first time any part of the strip reaches the viewport.
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        logEvent('ForecastingLanding', 'Trust Bar Viewed', 'forecasting-landing');
+        observer.disconnect();
+      },
+      { threshold: 0.2 }
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
 
   // Under reduced motion the props drop out entirely so the strip paints
   // visible, with nothing to scroll into.
@@ -48,6 +68,7 @@ function ForecastingTrustBar({ content }: ForecastingTrustBarProps) {
 
   return (
     <section
+      ref={sectionRef}
       aria-labelledby="forecasting-trust-bar-heading"
       className="border-y border-rs-dark/10 bg-white py-10 sm:py-12"
     >

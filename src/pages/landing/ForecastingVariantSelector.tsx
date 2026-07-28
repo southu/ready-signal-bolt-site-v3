@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Check } from 'lucide-react';
+import { logEvent } from '../../lib/analytics';
 import { FORECASTING_LANDING_CONTENT } from './forecastingLandingContent';
 import type { ForecastingGuideVariant } from './ForecastingGuideModal';
 
@@ -58,8 +59,28 @@ type ForecastingVariantSelectorProps = {
 function ForecastingVariantSelector({ content, onSelectVariant }: ForecastingVariantSelectorProps) {
   const prefersReducedMotion = usePrefersReducedMotion();
   const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  // Fires once, the first time the card grid reaches the viewport.
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        logEvent('ForecastingLanding', 'Variant Viewed', 'forecasting-landing');
+        observer.disconnect();
+      },
+      { threshold: 0.2 }
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
 
   const handleSelect = (card: VariantCard) => {
+    logEvent('ForecastingLanding', 'Variant Selected', card.slug);
     setSelectedSlug(card.slug);
     onSelectVariant?.({ slug: card.slug, title: card.title, guideName: card.guideName });
   };
@@ -82,6 +103,7 @@ function ForecastingVariantSelector({ content, onSelectVariant }: ForecastingVar
 
   return (
     <section
+      ref={sectionRef}
       id="forecasting-variant-selector"
       aria-labelledby="forecasting-variants-heading"
       className="bg-rs-light-gray py-16 sm:py-20"
@@ -126,6 +148,12 @@ function ForecastingVariantSelector({ content, onSelectVariant }: ForecastingVar
                   onClick={(event) => {
                     event.currentTarget.focus();
                     handleSelect(card);
+                  }}
+                  // Mouse pointers only: a touch tap also raises pointerenter,
+                  // which would double-count every tap as a hover plus a select.
+                  onPointerEnter={(event) => {
+                    if (event.pointerType !== 'mouse') return;
+                    logEvent('ForecastingLanding', 'Variant Hovered', card.slug);
                   }}
                   // The hover lift and border tint still animate, but box-shadow
                   // is left out of the transition so the focus ring paints on

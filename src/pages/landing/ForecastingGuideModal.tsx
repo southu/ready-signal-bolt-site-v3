@@ -1,6 +1,7 @@
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { X } from 'lucide-react';
+import { logEvent } from '../../lib/analytics';
 import { FORECASTING_LANDING_CONTENT } from './forecastingLandingContent';
 import { captureLandingAttribution } from './captureLandingAttribution';
 
@@ -108,7 +109,13 @@ function ForecastingGuideModal({ isOpen, variant, onClose }: ForecastingGuideMod
   const confirmationCtaRef = useRef<HTMLButtonElement>(null);
 
   const guideName = variant?.guideName ?? DEFAULT_GUIDE_NAME;
+  const variantSlug = variant?.slug ?? 'default';
   const headline = variant ? `Get Your ${variant.guideName}` : guideModal.defaultHeadline;
+
+  useEffect(() => {
+    if (!isOpen) return;
+    logEvent('ForecastingLanding', 'Guide Modal Opened', variantSlug);
+  }, [isOpen, variantSlug]);
 
   // Every open starts from a clean form, including one reopened after success.
   useEffect(() => {
@@ -252,6 +259,7 @@ function ForecastingGuideModal({ isOpen, variant, onClose }: ForecastingGuideMod
         throw new Error(`HubSpot submission failed with status ${response.status}`);
       }
 
+      logEvent('ForecastingLanding', 'Guide Form Submitted', variantSlug);
       setIsSubmitted(true);
     } catch (error) {
       console.error('Unable to submit forecasting guide request', error);
