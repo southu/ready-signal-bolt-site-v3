@@ -66,6 +66,11 @@
 # testimonials section is in the raw HTML response. A directory index would make
 # Netlify 308-redirect to a trailing slash; a forced flat-file rewrite does not.
 /forecasting-landing /forecasting-landing.html 200!
+# Bare /forecasting serves the same prerendered body so the testimonials are in
+# the raw HTML there too (exact-path match; does not shadow /forecasting-engine
+# or the /forecasting-* article URLs).
+/forecasting /forecasting-landing.html 200!
+/forecasting/ /forecasting-landing.html 200!
 
 # ===== SPA CATCH-ALL (must be last) =====
 /* /index.html 200

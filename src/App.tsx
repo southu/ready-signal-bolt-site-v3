@@ -226,6 +226,12 @@ function App() {
           <Route path="/landing" element={<Landing />} />
           <Route path="/ai-marketing-data" element={<Landing />} />
           <Route path="/forecasting-landing" element={<ForecastingLanding />} />
+          {/* Bare /forecasting is an alias for the landing page so the
+              testimonials render at that URL too (mirrors the _redirects
+              rewrite that serves the prerendered body). Must stay above the
+              /:slug blog catch-all or it would be swallowed as an article. */}
+          <Route path="/forecasting" element={<ForecastingLanding />} />
+          <Route path="/forecasting/" element={<ForecastingLanding />} />
 
           {/* Data category pages */}
           <Route path="/data-economic" element={<DataEconomic />} />
