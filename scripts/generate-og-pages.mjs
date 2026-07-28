@@ -396,8 +396,9 @@ const pages = [
 // Scanmmar operator-review comment appear in the raw HTML (BUG-1) — React
 // replaces this markup with the live carousel once it mounts in the browser.
 const FORECASTING_TESTIMONIALS = {
-  eyebrow: 'Testimonials',
-  headline: 'Teams trust Ready Signal to explain what moves their forecasts',
+  eyebrow: 'Customer Success',
+  headline:
+    'Helping forecasting teams spend less time preparing data and more time improving forecasts.',
   intro:
     'Organizations use Ready Signal to eliminate manual data collection and focus on building better forecasting models.',
   items: [
