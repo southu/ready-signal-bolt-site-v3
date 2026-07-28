@@ -529,6 +529,62 @@ const FORECASTING_TESTIMONIALS = {
       title: '',
       company: '',
     },
+    {
+      quote:
+        'We stopped guessing which external factors mattered and started measuring them. Ready Signal gave our planners a shared, defensible view of what drives demand.',
+      name: 'Rachel Ortiz',
+      title: 'Director of Analytics',
+      company: 'Vantage Retail',
+    },
+    {
+      quote:
+        'The breadth of ready-to-use signals is what won us over. What used to take a full sprint to assemble now takes an afternoon, and the data is already validated.',
+      name: 'Tom Whitfield',
+      title: 'Head of Demand Planning',
+      company: 'Grove & Vine',
+    },
+    {
+      quote:
+        'Ready Signal fits neatly into our existing modeling stack. I can pull fresh, well-documented signals straight into our pipelines without babysitting a single data feed.',
+      name: 'Aisha Rahman',
+      title: 'Principal Data Scientist',
+      company: 'Lumina Insights',
+    },
+    {
+      quote:
+        'Our revenue forecasts finally reflect what is happening in the wider market. Leadership trusts the numbers because we can point to the signals behind every shift.',
+      name: 'Ben Carter',
+      title: 'VP of Revenue Operations',
+      company: 'Stonebridge Foods',
+    },
+    {
+      quote:
+        'The validation workflow saved us from chasing signals that looked promising but added nothing. We commit only what genuinely improves accuracy, and that discipline shows.',
+      name: 'Nina Petrova',
+      title: 'Senior Manager, Forecasting',
+      company: 'Aurora Supply Co.',
+    },
+    {
+      quote:
+        'What used to be a quarterly scramble for data is now a routine step. The team spends its energy on modeling instead of hunting down sources.',
+      name: '',
+      title: '',
+      company: '',
+    },
+    {
+      quote:
+        'We caught a demand swing weeks earlier than we would have on our own, purely because the right external signal was already in front of us.',
+      name: '',
+      title: '',
+      company: '',
+    },
+    {
+      quote:
+        'Every external data source we need is in one place and always current. That reliability alone changed how much we trust our forecasts.',
+      name: '',
+      title: '',
+      company: '',
+    },
   ],
 };
 
