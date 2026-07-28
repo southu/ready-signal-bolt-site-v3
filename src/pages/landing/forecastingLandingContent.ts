@@ -352,6 +352,24 @@ export const FORECASTING_LANDING_CONTENT = {
         title: 'Basis',
         company: '',
       },
+      {
+        quote: 'Ready Signal helped us find important signals...',
+        name: '',
+        title: '',
+        company: '',
+      },
+      {
+        quote: 'The Ready Signal platform was very user-friendly...',
+        name: '',
+        title: '',
+        company: '',
+      },
+      {
+        quote: 'Before Ready Signal, I spent 60-80% of my time...',
+        name: '',
+        title: '',
+        company: '',
+      },
     ],
   },
   finalCta: {

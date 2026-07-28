@@ -445,6 +445,24 @@ const FORECASTING_TESTIMONIALS = {
       title: 'Basis',
       company: '',
     },
+    {
+      quote: 'Ready Signal helped us find important signals...',
+      name: '',
+      title: '',
+      company: '',
+    },
+    {
+      quote: 'The Ready Signal platform was very user-friendly...',
+      name: '',
+      title: '',
+      company: '',
+    },
+    {
+      quote: 'Before Ready Signal, I spent 60-80% of my time...',
+      name: '',
+      title: '',
+      company: '',
+    },
   ],
 };
 
@@ -460,13 +478,20 @@ function renderTestimonialCard(item, index, total) {
   const nameMarkup = item.name
     ? `\n                <p class="text-base font-bold text-rs-dark">${escapeHtml(item.name)}</p>`
     : '';
+  const attributionMarkup = attribution
+    ? `\n                <p class="text-sm text-rs-dark/85${item.name ? ' mt-1' : ''}">${escapeHtml(attribution)}</p>`
+    : '';
+  // Omit the whole figcaption for fully anonymous quotes (no name, title, or
+  // company) so the card shows no empty attribution line or dangling divider.
+  const figcaption =
+    item.name || attribution
+      ? `\n              <figcaption class="mt-6 border-t border-rs-dark/10 pt-4">${nameMarkup}${attributionMarkup}
+              </figcaption>`
+      : '';
 
   return `          <div class="shrink-0 basis-full pr-6 sm:basis-1/2 lg:basis-1/3">${operatorComment}
             <figure aria-roledescription="slide" aria-label="Testimonial ${index + 1} of ${total}" class="flex h-full flex-col rounded-2xl border-2 border-rs-dark/10 bg-rs-light-gray p-6 shadow-sm sm:p-8">
-              <blockquote class="mt-4 flex-1 text-base leading-relaxed text-rs-dark/85">${escapeHtml(item.quote)}</blockquote>
-              <figcaption class="mt-6 border-t border-rs-dark/10 pt-4">${nameMarkup}
-                <p class="text-sm text-rs-dark/85${item.name ? ' mt-1' : ''}">${escapeHtml(attribution)}</p>
-              </figcaption>
+              <blockquote class="mt-4 flex-1 text-base leading-relaxed text-rs-dark/85">${escapeHtml(item.quote)}</blockquote>${figcaption}
             </figure>
           </div>`;
 }

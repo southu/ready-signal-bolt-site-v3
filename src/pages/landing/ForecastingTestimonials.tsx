@@ -183,7 +183,7 @@ function ForecastingTestimonials({ content }: ForecastingTestimonialsProps) {
 
                 return (
                   <div
-                    key={item.title}
+                    key={index}
                     className="shrink-0 basis-full pr-6 sm:basis-1/2 lg:basis-1/3"
                   >
                     {needsOperatorReview && (
@@ -205,14 +205,18 @@ function ForecastingTestimonials({ content }: ForecastingTestimonialsProps) {
                       <blockquote className="mt-4 flex-1 text-base leading-relaxed text-rs-dark/85">
                         {item.quote}
                       </blockquote>
-                      <figcaption className="mt-6 border-t border-rs-dark/10 pt-4">
-                        {item.name && (
-                          <p className="text-base font-bold text-rs-dark">{item.name}</p>
-                        )}
-                        <p className={`text-sm text-rs-dark/85 ${item.name ? 'mt-1' : ''}`}>
-                          {attribution}
-                        </p>
-                      </figcaption>
+                      {(item.name || attribution) && (
+                        <figcaption className="mt-6 border-t border-rs-dark/10 pt-4">
+                          {item.name && (
+                            <p className="text-base font-bold text-rs-dark">{item.name}</p>
+                          )}
+                          {attribution && (
+                            <p className={`text-sm text-rs-dark/85 ${item.name ? 'mt-1' : ''}`}>
+                              {attribution}
+                            </p>
+                          )}
+                        </figcaption>
+                      )}
                     </figure>
                   </div>
                 );
@@ -233,9 +237,9 @@ function ForecastingTestimonials({ content }: ForecastingTestimonialsProps) {
             {/* The dot itself stays 12px, but the button around it is a full
                 44px touch target, so the row is tappable on a phone. */}
             <div className="flex items-center">
-              {items.map((item, index) => (
+              {items.map((_item, index) => (
                 <button
-                  key={item.title}
+                  key={index}
                   type="button"
                   onClick={() => showTestimonial(index)}
                   aria-label={`Show testimonial ${index + 1} of ${total}`}
