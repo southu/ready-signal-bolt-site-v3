@@ -348,6 +348,15 @@ const pages = [
     title: 'Forecasting Signals for Demand, Revenue, Pricing & Commodities | Ready Signal',
     description: 'Discover, validate, and maintain the external economic, market, and behavioral signals that improve demand, revenue, pricing, and commodity forecasts.',
   },
+  // Bare /forecasting is an alias for the landing page. Emit its own flat
+  // .html with the same prerendered testimonials body so Netlify's pretty-URL
+  // handling serves it directly at /forecasting (a _redirects rewrite alone
+  // did not take at the origin, and a directory index would 308 to a slash).
+  {
+    path: '/forecasting',
+    title: 'Forecasting Signals for Demand, Revenue, Pricing & Commodities | Ready Signal',
+    description: 'Discover, validate, and maintain the external economic, market, and behavioral signals that improve demand, revenue, pricing, and commodity forecasts.',
+  },
 
   // ── Ad-only landing (not in sitemap; not linked from nav/footer) ──
   {
@@ -595,7 +604,7 @@ function run() {
       created++;
       continue;
     }
-    if (page.path === '/forecasting-landing') {
+    if (page.path === '/forecasting-landing' || page.path === '/forecasting') {
       // Flat .html + forced rewrite (see public/_redirects) rather than a
       // directory index — a directory makes Netlify 308-redirect the canonical
       // no-trailing-slash URL to /forecasting-landing/, so a bare curl of
