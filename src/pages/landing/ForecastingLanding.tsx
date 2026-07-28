@@ -8,6 +8,7 @@ import ForecastingGuideModal, { ForecastingGuideVariant } from './ForecastingGui
 import ForecastingProcessTimeline from './ForecastingProcessTimeline';
 import ForecastingExamples from './ForecastingExamples';
 import ForecastingFeatureGrid from './ForecastingFeatureGrid';
+import ForecastingIndustryTabs from './ForecastingIndustryTabs';
 import { FORECASTING_LANDING_CONTENT } from './forecastingLandingContent';
 
 /**
@@ -35,6 +36,15 @@ function ForecastingLanding() {
         <ForecastingProcessTimeline content={FORECASTING_LANDING_CONTENT.process} />
         <ForecastingExamples content={FORECASTING_LANDING_CONTENT.forecastExamples} />
         <ForecastingFeatureGrid content={FORECASTING_LANDING_CONTENT.featureGrid} />
+        <ForecastingIndustryTabs
+          content={FORECASTING_LANDING_CONTENT.industryTabs}
+          onRequestGuide={(slug) =>
+            setOpenVariant(
+              FORECASTING_LANDING_CONTENT.variantSelector.cards.find((card) => card.slug === slug) ??
+                null
+            )
+          }
+        />
       </main>
 
       <ForecastingGuideModal
