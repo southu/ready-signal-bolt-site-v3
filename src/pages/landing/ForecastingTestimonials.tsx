@@ -25,8 +25,9 @@ function usePrefersReducedMotion() {
 }
 
 // Breakpoints match Tailwind's sm/lg: three cards on desktop, two on tablet,
-// one on mobile. Only the cards in the current window are rendered, so a phone
-// never has an off-screen card sitting in the accessibility tree.
+// one on mobile. Every card stays mounted at every width — the window only
+// slides — so a phone gets the same testimonials as a desktop, reflowed rather
+// than reduced (PRD "Mobile Experience Strategy": preserve all content).
 const DESKTOP_QUERY = '(min-width: 1024px)';
 const TABLET_QUERY = '(min-width: 640px)';
 
@@ -58,19 +59,13 @@ function useVisibleCount() {
 
 const ROTATE_INTERVAL_MS = 7000;
 
-const GRID_COLUMNS: Record<number, string> = {
-  1: 'grid-cols-1',
-  2: 'grid-cols-2',
-  3: 'grid-cols-3',
-};
-
 type ForecastingTestimonialsProps = {
   content: TestimonialsContent;
 };
 
 /**
- * Testimonial carousel. `activeIndex` is the leading card and the window wraps
- * around the list, so every breakpoint shares one index and one set of dots.
+ * Testimonial carousel. `activeIndex` is the leading card and the track slides
+ * by one card width, so every breakpoint shares one index and one set of dots.
  * Auto-rotation only runs when there are more testimonials than fit at once —
  * on desktop all three are already on screen, so nothing moves on its own.
  */
@@ -82,24 +77,39 @@ function ForecastingTestimonials({ content }: ForecastingTestimonialsProps) {
 
   const items = content.items;
   const total = items.length;
-  const canRotate = total > visibleCount;
+  // Leading card of the last full window — past it the track would slide empty
+  // space into view instead of a card.
+  const lastIndex = Math.max(total - visibleCount, 0);
+  const canRotate = lastIndex > 0;
 
-  const goTo = (index: number) => setActiveIndex(((index % total) + total) % total);
+  // Arrows wrap around the ends of the track.
+  const step = (index: number) =>
+    setActiveIndex(((index % (lastIndex + 1)) + lastIndex + 1) % (lastIndex + 1));
+
+  // Dots name a testimonial rather than a position, so they clamp instead of
+  // wrapping: on tablet the last dot scrolls to the window that ends on the
+  // third card rather than jumping back to the first.
+  const showTestimonial = (index: number) => setActiveIndex(Math.min(index, lastIndex));
+
+  // Widening the viewport shows more cards at once, so the leading card has to
+  // step back far enough that the window still ends on the last testimonial.
+  useEffect(() => {
+    setActiveIndex((index) => Math.min(index, lastIndex));
+  }, [lastIndex]);
 
   useEffect(() => {
     if (!canRotate || isPaused || prefersReducedMotion) return;
 
     const timer = window.setInterval(
-      () => setActiveIndex((index) => (index + 1) % total),
+      () => setActiveIndex((index) => (index + 1) % (lastIndex + 1)),
       ROTATE_INTERVAL_MS
     );
     return () => window.clearInterval(timer);
-  }, [canRotate, isPaused, prefersReducedMotion, total]);
+  }, [canRotate, isPaused, prefersReducedMotion, lastIndex]);
 
-  const visibleItems = Array.from({ length: Math.min(visibleCount, total) }, (_, offset) => {
-    const index = (activeIndex + offset) % total;
-    return { item: items[index], index };
-  });
+  // Percentages resolve against the track's own width, and the track is exactly
+  // `visibleCount` cards wide, so one step is one card at every breakpoint.
+  const trackOffset = -(activeIndex * 100) / visibleCount;
 
   const reveal = prefersReducedMotion
     ? {}
@@ -110,13 +120,10 @@ function ForecastingTestimonials({ content }: ForecastingTestimonialsProps) {
         transition: { duration: 0.4, ease: 'easeOut' as const },
       };
 
-  const cardMotion = prefersReducedMotion
-    ? {}
-    : {
-        initial: { opacity: 0 },
-        animate: { opacity: 1 },
-        transition: { duration: 0.25, ease: 'easeOut' as const },
-      };
+  // Reduced motion snaps the track to the new card instead of sliding it.
+  const trackTransition = prefersReducedMotion
+    ? { duration: 0 }
+    : { duration: 0.35, ease: 'easeOut' as const };
 
   const controlClasses =
     'flex h-11 w-11 items-center justify-center rounded-full border-2 border-rs-dark/15 bg-white text-rs-dark transition-colors duration-150 hover:border-rs-cyan hover:text-rs-cyan focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rs-cyan focus-visible:ring-offset-2';
@@ -156,63 +163,85 @@ function ForecastingTestimonials({ content }: ForecastingTestimonialsProps) {
           onFocus={() => setIsPaused(true)}
           onBlur={() => setIsPaused(false)}
         >
-          <div className={`grid gap-6 ${GRID_COLUMNS[visibleCount] ?? 'grid-cols-1'}`}>
-            {visibleItems.map(({ item, index }) => {
-              const attribution = [item.title, item.company].filter(Boolean).join(', ');
+          {/* The gutter is padding on each slide rather than a grid gap, and the
+              negative margin absorbs the trailing one — that keeps the track
+              exactly `visibleCount` cards wide, which is what makes a
+              percentage translate land on a card boundary. */}
+          <div className="overflow-hidden">
+            <motion.div
+              className="-mr-6 flex"
+              animate={{ x: `${trackOffset}%` }}
+              transition={trackTransition}
+            >
+              {items.map((item, index) => {
+                const attribution = [item.title, item.company].filter(Boolean).join(', ');
 
-              return (
-                <motion.figure
-                  key={index}
-                  {...cardMotion}
-                  aria-roledescription="slide"
-                  aria-label={`Testimonial ${index + 1} of ${total}`}
-                  className="flex h-full flex-col rounded-2xl border-2 border-rs-dark/10 bg-rs-light-gray p-6 shadow-sm sm:p-8"
-                >
-                  <Quote className="h-8 w-8 shrink-0 text-rs-yellow" aria-hidden="true" />
-                  <blockquote className="mt-4 flex-1 text-base leading-relaxed text-rs-dark/85">
-                    {item.quote}
-                  </blockquote>
-                  <figcaption className="mt-6 border-t border-rs-dark/10 pt-4">
-                    {item.name && (
-                      <p className="text-base font-bold text-rs-dark">{item.name}</p>
-                    )}
-                    <p className={`text-sm text-rs-dark/70 ${item.name ? 'mt-1' : ''}`}>
-                      {attribution}
-                    </p>
-                  </figcaption>
-                </motion.figure>
-              );
-            })}
+                return (
+                  <div
+                    key={item.title}
+                    className="shrink-0 basis-full pr-6 sm:basis-1/2 lg:basis-1/3"
+                  >
+                    <figure
+                      aria-roledescription="slide"
+                      aria-label={`Testimonial ${index + 1} of ${total}`}
+                      className="flex h-full flex-col rounded-2xl border-2 border-rs-dark/10 bg-rs-light-gray p-6 shadow-sm sm:p-8"
+                    >
+                      <Quote className="h-8 w-8 shrink-0 text-rs-yellow" aria-hidden="true" />
+                      <blockquote className="mt-4 flex-1 text-base leading-relaxed text-rs-dark/85">
+                        {item.quote}
+                      </blockquote>
+                      <figcaption className="mt-6 border-t border-rs-dark/10 pt-4">
+                        {item.name && (
+                          <p className="text-base font-bold text-rs-dark">{item.name}</p>
+                        )}
+                        <p className={`text-sm text-rs-dark/70 ${item.name ? 'mt-1' : ''}`}>
+                          {attribution}
+                        </p>
+                      </figcaption>
+                    </figure>
+                  </div>
+                );
+              })}
+            </motion.div>
           </div>
 
           <div className="mt-8 flex items-center justify-center gap-4">
             <button
               type="button"
-              onClick={() => goTo(activeIndex - 1)}
+              onClick={() => step(activeIndex - 1)}
               aria-label="Previous testimonial"
               className={controlClasses}
             >
               <ChevronLeft className="h-5 w-5" aria-hidden="true" />
             </button>
 
-            <div className="flex items-center gap-2">
+            {/* The dot itself stays 12px, but the button around it is a full
+                44px touch target, so the row is tappable on a phone. */}
+            <div className="flex items-center">
               {items.map((item, index) => (
                 <button
                   key={item.title}
                   type="button"
-                  onClick={() => goTo(index)}
+                  onClick={() => showTestimonial(index)}
                   aria-label={`Show testimonial ${index + 1} of ${total}`}
                   aria-current={index === activeIndex ? 'true' : undefined}
-                  className={`h-3 w-3 rounded-full transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rs-cyan focus-visible:ring-offset-2 ${
-                    index === activeIndex ? 'bg-rs-cyan' : 'bg-rs-dark/20 hover:bg-rs-dark/40'
-                  }`}
-                />
+                  className="group flex h-11 w-11 items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rs-cyan focus-visible:ring-offset-2"
+                >
+                  <span
+                    aria-hidden="true"
+                    className={`h-3 w-3 rounded-full transition-colors duration-150 ${
+                      index === activeIndex
+                        ? 'bg-rs-cyan'
+                        : 'bg-rs-dark/20 group-hover:bg-rs-dark/40'
+                    }`}
+                  />
+                </button>
               ))}
             </div>
 
             <button
               type="button"
-              onClick={() => goTo(activeIndex + 1)}
+              onClick={() => step(activeIndex + 1)}
               aria-label="Next testimonial"
               className={controlClasses}
             >

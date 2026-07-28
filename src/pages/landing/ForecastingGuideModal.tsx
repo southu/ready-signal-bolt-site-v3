@@ -300,13 +300,13 @@ function ForecastingGuideModal({ isOpen, variant, onClose }: ForecastingGuideMod
               type="button"
               onClick={onClose}
               aria-label="Close"
-              className="absolute right-4 top-4 rounded-full p-1.5 text-rs-dark/50 transition-colors duration-150 hover:bg-rs-dark/5 hover:text-rs-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rs-cyan"
+              className="absolute right-3 top-3 flex h-11 w-11 items-center justify-center rounded-full text-rs-dark/50 transition-colors duration-150 hover:bg-rs-dark/5 hover:text-rs-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rs-cyan"
             >
               <X className="h-5 w-5" aria-hidden="true" />
             </button>
 
             {isSubmitted ? (
-              <div className="pr-8" role="status" aria-live="polite">
+              <div className="pr-14" role="status" aria-live="polite">
                 <h2
                   id={DIALOG_TITLE_ID}
                   className="text-2xl font-bold leading-tight text-rs-dark sm:text-3xl"
@@ -327,7 +327,7 @@ function ForecastingGuideModal({ isOpen, variant, onClose }: ForecastingGuideMod
               </div>
             ) : (
               <>
-                <div className="pr-8">
+                <div className="pr-14">
                   <h2
                     id={DIALOG_TITLE_ID}
                     className="text-2xl font-bold leading-tight text-rs-dark sm:text-3xl"
