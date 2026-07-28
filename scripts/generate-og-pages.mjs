@@ -571,10 +571,17 @@ function run() {
       continue;
     }
     if (page.path === '/forecasting-landing') {
+      // Flat .html + forced rewrite (see public/_redirects) rather than a
+      // directory index — a directory makes Netlify 308-redirect the canonical
+      // no-trailing-slash URL to /forecasting-landing/, so a bare curl of
+      // /forecasting-landing would miss the body. Mirrors /ai-marketing-data.
       html = html.replace(
         '<div id="root"></div>',
         `<div id="root">${renderForecastingLandingBody()}</div>`,
       );
+      writeFileSync(join(distDir, `${page.path}.html`), html, 'utf-8');
+      created++;
+      continue;
     }
     const dir = join(distDir, page.path);
     mkdirSync(dir, { recursive: true });

@@ -61,5 +61,11 @@
 # ===== VERIFICATION SUMMARY (must precede SPA catch-all) =====
 /cta-verification /cta-verification.html 200!
 
+# ===== FORECASTING LANDING (prerendered body; must precede SPA catch-all) =====
+# Serve the prerendered flat file at the canonical no-trailing-slash URL so the
+# testimonials section is in the raw HTML response. A directory index would make
+# Netlify 308-redirect to a trailing slash; a forced flat-file rewrite does not.
+/forecasting-landing /forecasting-landing.html 200!
+
 # ===== SPA CATCH-ALL (must be last) =====
 /* /index.html 200
