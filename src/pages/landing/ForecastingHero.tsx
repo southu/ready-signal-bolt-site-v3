@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Activity, ArrowRight, Check, Database, LineChart, TrendingUp } from 'lucide-react';
 import ReactGA from 'react-ga4';
+import StartFreeTrialCTA from '../../components/StartFreeTrialCTA';
 import { logEvent } from '../../lib/analytics';
 import { FORECASTING_LANDING_CONTENT } from './forecastingLandingContent';
 
@@ -145,6 +146,7 @@ function ForecastingHero({ content }: ForecastingHeroProps) {
               {...fadeIn(0.15)}
               className="flex flex-col gap-4 sm:flex-row sm:items-center lg:flex-col lg:items-start"
             >
+              <StartFreeTrialCTA id="forecasting-hero-start-free-trial" />
               <a
                 href="#forecasting-variants"
                 onClick={() => {
