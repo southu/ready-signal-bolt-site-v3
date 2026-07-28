@@ -51,7 +51,7 @@ export const FORECASTING_LANDING_CONTENT = {
           'Regional Employment',
           'Gas Prices',
         ],
-        cta: 'View Retail Sample Signals',
+        cta: 'Download Retail Sample Signals',
         guideName: 'Retail Sample Signals Guide',
       },
       {
@@ -68,7 +68,7 @@ export const FORECASTING_LANDING_CONTENT = {
           'Business Investment',
           'Labor Market Data',
         ],
-        cta: 'View Finance Sample Signals',
+        cta: 'Download Finance Sample Signals',
         guideName: 'Finance Sample Signals Guide',
       },
       {
@@ -85,7 +85,7 @@ export const FORECASTING_LANDING_CONTENT = {
           'Weather',
           'Trade Data',
         ],
-        cta: 'View Commodity Sample Signals',
+        cta: 'Download Commodity Sample Signals',
         guideName: 'Commodity Sample Signals Guide',
       },
       {
@@ -101,7 +101,7 @@ export const FORECASTING_LANDING_CONTENT = {
           'Business Formation',
           'Housing Activity',
         ],
-        cta: 'View Sales Sample Signals',
+        cta: 'Download Sales Sample Signals',
         guideName: 'Sales Sample Signals Guide',
       },
       {
@@ -118,7 +118,7 @@ export const FORECASTING_LANDING_CONTENT = {
           'Competitive Pricing',
           'Interest Rates',
         ],
-        cta: 'View Pricing Sample Signals',
+        cta: 'Download Pricing Sample Signals',
         guideName: 'Pricing Sample Signals Guide',
       },
     ],
