@@ -270,7 +270,7 @@ function ForecastingGuideModal({ isOpen, variant, onClose }: ForecastingGuideMod
     : { initial: { scale: 0.98, opacity: 0 }, animate: { scale: 1, opacity: 1 }, exit: { scale: 0.98, opacity: 0 } };
 
   const fieldClasses =
-    'mt-1 w-full rounded-lg border border-rs-dark/20 px-3 py-2.5 text-base text-rs-dark transition-colors duration-150 placeholder:text-rs-dark/40 focus:border-rs-cyan focus:outline-none focus:ring-2 focus:ring-rs-cyan/30';
+    'mt-1 w-full rounded-lg border border-rs-dark/20 px-3 py-2.5 text-base text-rs-dark transition-colors duration-150 focus:border-rs-cyan focus:outline-none focus:ring-2 focus:ring-rs-cyan/30';
   const labelClasses = 'block text-sm font-semibold text-rs-dark';
 
   return (
