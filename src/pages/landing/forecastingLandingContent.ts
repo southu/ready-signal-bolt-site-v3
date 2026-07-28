@@ -145,6 +145,8 @@ export const FORECASTING_LANDING_CONTENT = {
       {
         title: 'Define the Forecast',
         body: "Tell us what you're trying to predict.",
+        examplesLabel: 'Examples include:',
+        examples: ['Revenue', 'Demand', 'Sales', 'Inventory', 'Commodity Prices', 'Pricing'],
       },
       {
         title: 'Discover External Signals',

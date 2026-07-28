@@ -112,6 +112,11 @@ function ForecastingProcessTimeline({ content }: ForecastingProcessTimelineProps
                     {step.title}
                   </h3>
                   <p className="mt-2 text-base leading-relaxed text-rs-dark/75">{step.body}</p>
+                  {'examples' in step && (
+                    <p className="mt-2 text-base leading-relaxed text-rs-dark/75">
+                      {step.examplesLabel} {step.examples.join(', ')}
+                    </p>
+                  )}
                 </div>
               </li>
             );
