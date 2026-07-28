@@ -93,7 +93,7 @@ function ForecastingFeatureGrid({ content }: ForecastingFeatureGridProps) {
                   <h3 className="mt-5 text-lg font-bold leading-snug text-rs-dark sm:text-xl">
                     {feature.title}
                   </h3>
-                  <p className="mt-2 text-base leading-relaxed text-rs-dark/75">{feature.body}</p>
+                  <p className="mt-2 text-base leading-relaxed text-rs-dark/85">{feature.body}</p>
                 </article>
               </motion.div>
             );

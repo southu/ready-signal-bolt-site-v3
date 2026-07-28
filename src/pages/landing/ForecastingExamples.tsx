@@ -201,7 +201,7 @@ function ForecastingExamples({ content }: ForecastingExamplesProps) {
           >
             {content.headline}
           </h2>
-          <p className="mt-4 text-base leading-relaxed text-rs-dark/75 sm:text-lg">
+          <p className="mt-4 text-base leading-relaxed text-rs-dark/85 sm:text-lg">
             {content.supportingCopy}
           </p>
         </div>
@@ -219,12 +219,12 @@ function ForecastingExamples({ content }: ForecastingExamplesProps) {
                   <h3 className="text-lg font-bold leading-snug text-rs-dark sm:text-xl">
                     {example.title}
                   </h3>
-                  <span className="shrink-0 pt-1 text-xs font-medium text-rs-dark/50">
+                  <span className="shrink-0 pt-1 text-xs font-medium text-rs-dark/80">
                     {example.illustrativeLabel}
                   </span>
                 </div>
 
-                <p className="mt-2 text-sm leading-relaxed text-rs-dark/75">{detail.explanation}</p>
+                <p className="mt-2 text-sm leading-relaxed text-rs-dark/85">{detail.explanation}</p>
 
                 <div className="mt-5">
                   <ForecastChart
@@ -232,7 +232,7 @@ function ForecastingExamples({ content }: ForecastingExamplesProps) {
                     baseline={detail.baseline}
                     withSignals={detail.withSignals}
                   />
-                  <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-xs text-rs-dark/70">
+                  <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-xs text-rs-dark/85">
                     {/* Swatches repeat the dash pattern used in the chart, so the
                         legend matches the lines it describes. */}
                     <span className="flex items-center gap-2">
@@ -265,7 +265,7 @@ function ForecastingExamples({ content }: ForecastingExamplesProps) {
                   </div>
                 </div>
 
-                <p className="mt-6 text-xs font-semibold uppercase tracking-wider text-rs-dark/50">
+                <p className="mt-6 text-xs font-semibold uppercase tracking-wider text-rs-dark/80">
                   Potential Signals
                 </p>
                 <ul role="list" className="mt-2 space-y-1">

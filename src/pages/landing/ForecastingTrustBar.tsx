@@ -1,7 +1,27 @@
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { FORECASTING_LANDING_CONTENT } from './forecastingLandingContent';
 
 type TrustBarContent = typeof FORECASTING_LANDING_CONTENT.trustBar;
+
+const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
+
+function usePrefersReducedMotion() {
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(
+    () => window.matchMedia(REDUCED_MOTION_QUERY).matches
+  );
+
+  useEffect(() => {
+    const query = window.matchMedia(REDUCED_MOTION_QUERY);
+    const handleChange = () => setPrefersReducedMotion(query.matches);
+
+    handleChange();
+    query.addEventListener('change', handleChange);
+    return () => query.removeEventListener('change', handleChange);
+  }, []);
+
+  return prefersReducedMotion;
+}
 
 type ForecastingTrustBarProps = {
   content: TrustBarContent;
@@ -13,6 +33,19 @@ type ForecastingTrustBarProps = {
  * tiles — the site has no customer logo assets, so none are invented here.
  */
 function ForecastingTrustBar({ content }: ForecastingTrustBarProps) {
+  const prefersReducedMotion = usePrefersReducedMotion();
+
+  // Under reduced motion the props drop out entirely so the strip paints
+  // visible, with nothing to scroll into.
+  const reveal = prefersReducedMotion
+    ? {}
+    : {
+        initial: { opacity: 0 },
+        whileInView: { opacity: 1 },
+        viewport: { once: true, amount: 0.2, margin: '0px 0px 25% 0px' },
+        transition: { duration: 0.5, ease: 'easeOut' as const },
+      };
+
   return (
     <section
       aria-labelledby="forecasting-trust-bar-heading"
@@ -22,13 +55,7 @@ function ForecastingTrustBar({ content }: ForecastingTrustBarProps) {
           paint, so the fade cannot shift anything above or below it. The bottom
           margin starts the reveal just before the strip reaches the viewport,
           so it is never left blank for a reader who lands mid-scroll. */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true, amount: 0.2, margin: '0px 0px 25% 0px' }}
-        transition={{ duration: 0.5, ease: 'easeOut' }}
-        className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
-      >
+      <motion.div {...reveal} className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <h2
             id="forecasting-trust-bar-heading"
@@ -36,7 +63,7 @@ function ForecastingTrustBar({ content }: ForecastingTrustBarProps) {
           >
             {content.headline}
           </h2>
-          <p className="mx-auto mt-2 max-w-2xl text-sm leading-relaxed text-rs-dark/70 sm:text-base">
+          <p className="mx-auto mt-2 max-w-2xl text-sm leading-relaxed text-rs-dark/85 sm:text-base">
             {content.supportingCopy}
           </p>
         </div>

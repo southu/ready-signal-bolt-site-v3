@@ -88,7 +88,7 @@ function ForecastingIndustryTabs({ content, onRequestGuide }: ForecastingIndustr
         transition: { duration: 0.15, ease: 'easeOut' as const },
       };
 
-  const labelClasses = 'text-xs font-semibold uppercase tracking-wider text-rs-dark/50';
+  const labelClasses = 'text-xs font-semibold uppercase tracking-wider text-rs-dark/80';
 
   return (
     <section
@@ -104,7 +104,7 @@ function ForecastingIndustryTabs({ content, onRequestGuide }: ForecastingIndustr
           >
             {content.headline}
           </h2>
-          <p className="mt-4 text-base leading-relaxed text-rs-dark/75 sm:text-lg">
+          <p className="mt-4 text-base leading-relaxed text-rs-dark/85 sm:text-lg">
             {content.supportingCopy}
           </p>
         </motion.div>
@@ -135,7 +135,7 @@ function ForecastingIndustryTabs({ content, onRequestGuide }: ForecastingIndustr
                 onClick={() => setActiveIndex(index)}
                 onKeyDown={(event) => handleKeyDown(event, index)}
                 className={`relative border-b-2 border-rs-dark/10 px-4 py-3 text-base font-semibold transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rs-cyan focus-visible:ring-offset-2 sm:px-6 ${
-                  isActive ? 'text-rs-dark' : 'text-rs-dark/60 hover:text-rs-dark'
+                  isActive ? 'text-rs-dark' : 'text-rs-dark/80 hover:text-rs-dark'
                 }`}
               >
                 {tab.label}

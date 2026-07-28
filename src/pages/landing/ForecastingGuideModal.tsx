@@ -300,7 +300,7 @@ function ForecastingGuideModal({ isOpen, variant, onClose }: ForecastingGuideMod
               type="button"
               onClick={onClose}
               aria-label="Close"
-              className="absolute right-3 top-3 flex h-11 w-11 items-center justify-center rounded-full text-rs-dark/50 transition-colors duration-150 hover:bg-rs-dark/5 hover:text-rs-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rs-cyan"
+              className="absolute right-3 top-3 flex h-11 w-11 items-center justify-center rounded-full text-rs-dark/80 transition-colors duration-150 hover:bg-rs-dark/5 hover:text-rs-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rs-cyan"
             >
               <X className="h-5 w-5" aria-hidden="true" />
             </button>
@@ -313,7 +313,7 @@ function ForecastingGuideModal({ isOpen, variant, onClose }: ForecastingGuideMod
                 >
                   {guideModal.confirmation.headline}
                 </h2>
-                <p className="mt-4 text-base leading-relaxed text-rs-dark/75">
+                <p className="mt-4 text-base leading-relaxed text-rs-dark/85">
                   {guideModal.confirmation.body}
                 </p>
                 <button
@@ -334,7 +334,7 @@ function ForecastingGuideModal({ isOpen, variant, onClose }: ForecastingGuideMod
                   >
                     {headline}
                   </h2>
-                  <p className="mt-3 text-sm leading-relaxed text-rs-dark/75 sm:text-base">
+                  <p className="mt-3 text-sm leading-relaxed text-rs-dark/85 sm:text-base">
                     {guideModal.supportingCopy}
                   </p>
                 </div>
@@ -389,7 +389,7 @@ function ForecastingGuideModal({ isOpen, variant, onClose }: ForecastingGuideMod
 
                   <div className="mt-4">
                     <label className={labelClasses} htmlFor="forecasting-guide-email">
-                      Work Email <span className="text-rs-cyan">*</span>
+                      Work Email <span className="text-cyan-700">*</span>
                     </label>
                     <input
                       className={`${fieldClasses} ${emailError ? 'border-red-500 focus:border-red-500 focus:ring-red-500/30' : ''}`}
@@ -444,7 +444,7 @@ function ForecastingGuideModal({ isOpen, variant, onClose }: ForecastingGuideMod
                     {isSubmitting ? 'Sending…' : guideModal.submitLabel}
                   </button>
 
-                  <p className="mt-3 text-xs leading-relaxed text-rs-dark/60">
+                  <p className="mt-3 text-xs leading-relaxed text-rs-dark/80">
                     {guideModal.privacyCopy}
                   </p>
                 </form>

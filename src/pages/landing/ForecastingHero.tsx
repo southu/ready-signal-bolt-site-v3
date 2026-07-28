@@ -118,7 +118,7 @@ function ForecastingHero({ content }: ForecastingHeroProps) {
 
             <motion.ul {...fadeIn(0.2)} className="space-y-2">
               {content.microcopy.map((item) => (
-                <li key={item} className="flex items-center gap-2 text-sm text-rs-dark/75">
+                <li key={item} className="flex items-center gap-2 text-sm text-rs-dark/85">
                   <Check className="h-4 w-4 shrink-0 text-rs-cyan" aria-hidden="true" />
                   {item}
                 </li>
@@ -164,7 +164,7 @@ function ForecastingHero({ content }: ForecastingHeroProps) {
                 data-hero-motion={motionState}
                 className={`absolute z-10 flex h-28 w-28 flex-col items-center justify-center rounded-full bg-gradient-to-br from-rs-cyan to-blue-600 p-4 text-center text-white shadow-2xl sm:h-32 sm:w-32${motionClass}`}
               >
-                <Activity className="mb-1 h-6 w-6" />
+                <Activity className="mb-1 h-6 w-6" aria-hidden="true" />
                 <span className="text-xs font-bold leading-tight">Validated Signals</span>
               </motion.div>
 
@@ -185,7 +185,7 @@ function ForecastingHero({ content }: ForecastingHeroProps) {
                     data-hero-motion={motionState}
                     className={`flex items-center gap-2 rounded-lg border border-rs-dark/10 bg-white px-3 py-2 text-sm font-semibold text-rs-dark shadow-lg${motionClass}`}
                   >
-                    <Icon className="h-4 w-4 text-rs-cyan" />
+                    <Icon className="h-4 w-4 text-rs-cyan" aria-hidden="true" />
                     {label}
                   </motion.div>
                 </div>
@@ -202,7 +202,7 @@ function ForecastingHero({ content }: ForecastingHeroProps) {
                   })}
               className="mx-auto w-full max-w-[440px] rounded-2xl border border-rs-dark/10 bg-white p-6 shadow-lg sm:max-w-[520px]"
             >
-              <p className="text-xs font-semibold uppercase tracking-wider text-rs-dark/60">
+              <p className="text-xs font-semibold uppercase tracking-wider text-rs-dark/80">
                 {content.forecastCard.header}
               </p>
               <h2 className="mt-2 text-xl font-bold text-rs-dark">
@@ -227,7 +227,7 @@ function ForecastingHero({ content }: ForecastingHeroProps) {
                 </span>
               </div>
 
-              <p className="mt-4 text-xs leading-relaxed text-rs-dark/60">
+              <p className="mt-4 text-xs leading-relaxed text-rs-dark/80">
                 {content.forecastCard.footer}
               </p>
             </motion.div>

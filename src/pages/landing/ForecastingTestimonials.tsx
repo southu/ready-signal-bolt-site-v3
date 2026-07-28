@@ -136,7 +136,7 @@ function ForecastingTestimonials({ content }: ForecastingTestimonialsProps) {
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div {...reveal} className="mx-auto max-w-3xl text-center">
-          <p className="text-xs font-semibold uppercase tracking-wider text-rs-cyan">
+          <p className="text-xs font-semibold uppercase tracking-wider text-cyan-700">
             {content.eyebrow}
           </p>
           <h2
@@ -145,7 +145,7 @@ function ForecastingTestimonials({ content }: ForecastingTestimonialsProps) {
           >
             {content.headline}
           </h2>
-          <p className="mt-4 text-base leading-relaxed text-rs-dark/75 sm:text-lg">
+          <p className="mt-4 text-base leading-relaxed text-rs-dark/85 sm:text-lg">
             {content.intro}
           </p>
         </motion.div>
@@ -194,7 +194,7 @@ function ForecastingTestimonials({ content }: ForecastingTestimonialsProps) {
                         {item.name && (
                           <p className="text-base font-bold text-rs-dark">{item.name}</p>
                         )}
-                        <p className={`text-sm text-rs-dark/70 ${item.name ? 'mt-1' : ''}`}>
+                        <p className={`text-sm text-rs-dark/85 ${item.name ? 'mt-1' : ''}`}>
                           {attribution}
                         </p>
                       </figcaption>

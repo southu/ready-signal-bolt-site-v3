@@ -71,7 +71,7 @@ function ForecastingFinalCTA({ content }: ForecastingFinalCTAProps) {
           >
             {content.headline}
           </h2>
-          <p className="mt-4 text-base leading-relaxed text-rs-dark/75 sm:text-lg">
+          <p className="mt-4 text-base leading-relaxed text-rs-dark/85 sm:text-lg">
             {content.supportingCopy}
           </p>
 

@@ -65,7 +65,7 @@ function ForecastingProcessTimeline({ content }: ForecastingProcessTimelineProps
           >
             {content.headline}
           </h2>
-          <p className="mt-4 text-base leading-relaxed text-rs-dark/75 sm:text-lg">
+          <p className="mt-4 text-base leading-relaxed text-rs-dark/85 sm:text-lg">
             {content.intro}
           </p>
         </div>
@@ -94,6 +94,7 @@ function ForecastingProcessTimeline({ content }: ForecastingProcessTimelineProps
                     <ChevronRight
                       className="absolute -right-1 top-1/2 hidden h-4 w-4 -translate-y-1/2 text-rs-dark/30 md:block"
                       strokeWidth={2}
+                      aria-hidden="true"
                     />
                   </span>
                 )}
@@ -102,7 +103,7 @@ function ForecastingProcessTimeline({ content }: ForecastingProcessTimelineProps
                     decorative for assistive tech. */}
                 <span
                   aria-hidden="true"
-                  className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 border-rs-cyan bg-white text-base font-bold text-rs-cyan"
+                  className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 border-rs-cyan bg-white text-base font-bold text-cyan-700"
                 >
                   {index + 1}
                 </span>
@@ -111,9 +112,9 @@ function ForecastingProcessTimeline({ content }: ForecastingProcessTimelineProps
                   <h3 className="text-lg font-bold leading-snug text-rs-dark sm:text-xl">
                     {step.title}
                   </h3>
-                  <p className="mt-2 text-base leading-relaxed text-rs-dark/75">{step.body}</p>
+                  <p className="mt-2 text-base leading-relaxed text-rs-dark/85">{step.body}</p>
                   {'examples' in step && (
-                    <p className="mt-2 text-base leading-relaxed text-rs-dark/75">
+                    <p className="mt-2 text-base leading-relaxed text-rs-dark/85">
                       {step.examplesLabel} {step.examples.join(', ')}
                     </p>
                   )}

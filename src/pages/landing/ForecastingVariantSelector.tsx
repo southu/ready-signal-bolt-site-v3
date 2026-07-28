@@ -100,7 +100,7 @@ function ForecastingVariantSelector({ content, onSelectVariant }: ForecastingVar
           >
             {content.headline}
           </h2>
-          <p className="mt-4 text-base leading-relaxed text-rs-dark/75 sm:text-lg">
+          <p className="mt-4 text-base leading-relaxed text-rs-dark/85 sm:text-lg">
             {content.supportingCopy}
           </p>
         </div>
@@ -137,7 +137,7 @@ function ForecastingVariantSelector({ content, onSelectVariant }: ForecastingVar
                       the longest label wraps — keeps every title on the same
                       baseline across the row. */}
                   <span className="flex items-start justify-between gap-2 min-[1200px]:min-h-9">
-                    <span className="text-xs font-bold uppercase tracking-wider text-rs-cyan">
+                    <span className="text-xs font-bold uppercase tracking-wider text-cyan-700">
                       {card.label}
                     </span>
                     {/* Fixed footprint so selecting a card never reflows it. */}
@@ -155,11 +155,11 @@ function ForecastingVariantSelector({ content, onSelectVariant }: ForecastingVar
                     {card.title}
                   </span>
 
-                  <span className="mt-2 block text-sm leading-relaxed text-rs-dark/70">
+                  <span className="mt-2 block text-sm leading-relaxed text-rs-dark/85">
                     {card.description}
                   </span>
 
-                  <span className="mt-4 block text-xs font-semibold uppercase tracking-wider text-rs-dark/50">
+                  <span className="mt-4 block text-xs font-semibold uppercase tracking-wider text-rs-dark/80">
                     Example Signals
                   </span>
                   <span className="mt-2 block space-y-1">
@@ -174,7 +174,7 @@ function ForecastingVariantSelector({ content, onSelectVariant }: ForecastingVar
                     ))}
                   </span>
 
-                  <span className="mt-auto flex items-center gap-2 pt-6 text-sm font-semibold text-rs-cyan">
+                  <span className="mt-auto flex items-center gap-2 pt-6 text-sm font-semibold text-cyan-700">
                     {card.cta}
                     <ArrowRight
                       className="h-4 w-4 shrink-0 transition-transform duration-200 ease-out group-hover:translate-x-1"
