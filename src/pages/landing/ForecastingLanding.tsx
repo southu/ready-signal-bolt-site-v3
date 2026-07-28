@@ -1,5 +1,6 @@
 import SEO from '../../components/SEO';
 import Footer from '../../components/Footer';
+import { FORECASTING_LANDING_CONTENT } from './forecastingLandingContent';
 
 /**
  * Forecasting landing experience at /forecasting-landing.
@@ -15,7 +16,7 @@ function ForecastingLanding() {
       />
 
       <main>
-        <h1>Forecasting Landing — Coming Soon</h1>
+        <h1>{FORECASTING_LANDING_CONTENT.hero.headline}</h1>
       </main>
 
       <Footer />
