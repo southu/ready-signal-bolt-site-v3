@@ -338,6 +338,20 @@ export const FORECASTING_LANDING_CONTENT = {
         title: 'Prime Source',
         company: '',
       },
+      {
+        quote:
+          "Ready Signal is delivering on needs that we don't have time/resources to do ourselves",
+        name: '',
+        title: 'Scanmmar',
+        company: '',
+      },
+      {
+        quote:
+          "The QBR went great, and they're really excited about what we can do with Ready Signal!",
+        name: '',
+        title: 'Basis',
+        company: '',
+      },
     ],
   },
   finalCta: {

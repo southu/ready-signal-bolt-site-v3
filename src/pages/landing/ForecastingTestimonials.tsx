@@ -175,12 +175,27 @@ function ForecastingTestimonials({ content }: ForecastingTestimonialsProps) {
             >
               {items.map((item, index) => {
                 const attribution = [item.title, item.company].filter(Boolean).join(', ');
+                // "Scanmmar" looks like it may be a typo but is carried through
+                // verbatim per explicit instruction. Surface a real HTML comment
+                // node next to that card so an operator can spot it in the page
+                // source (JSX `{/* */}` comments never reach the DOM).
+                const needsOperatorReview = item.title === 'Scanmmar';
 
                 return (
                   <div
                     key={item.title}
                     className="shrink-0 basis-full pr-6 sm:basis-1/2 lg:basis-1/3"
                   >
+                    {needsOperatorReview && (
+                      <span
+                        aria-hidden="true"
+                        className="hidden"
+                        dangerouslySetInnerHTML={{
+                          __html:
+                            '<!-- OPERATOR REVIEW: attribution "Scanmmar" may be a typo (did you mean a different company name?) — confirm before treating as final. Carried through verbatim per explicit instruction. -->',
+                        }}
+                      />
+                    )}
                     <figure
                       aria-roledescription="slide"
                       aria-label={`Testimonial ${index + 1} of ${total}`}
