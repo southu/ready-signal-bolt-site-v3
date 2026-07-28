@@ -25,16 +25,13 @@ function usePrefersReducedMotion() {
 }
 
 /**
- * One outlined icon per feature, keyed by the feature title in
- * `forecastingLandingContent`. Each icon restates the capability the card
- * describes: collection, discovery, validation, integration.
+ * One outlined icon per feature, in the order the features are declared in
+ * `forecastingLandingContent`. Each icon restates the capability its card
+ * describes: collection, discovery, validation, integration. Positional rather
+ * than keyed on the copy so a wording change to a card title can never leave a
+ * card without an icon.
  */
-const FEATURE_ICON = {
-  'Replace weeks of manual data collection.': Database,
-  'Discover signals worth testing.': Search,
-  'Validate before modeling.': CheckCircle,
-  'Work with your existing tools.': Plug,
-} as const;
+const FEATURE_ICONS = [Database, Search, CheckCircle, Plug];
 
 type ForecastingFeatureGridProps = {
   content: FeatureGridContent;
@@ -84,7 +81,7 @@ function ForecastingFeatureGrid({ content }: ForecastingFeatureGridProps) {
             match at each breakpoint regardless of how the copy wraps. */}
         <div className="mt-10 grid auto-rows-fr grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {content.features.map((feature, index) => {
-            const Icon = FEATURE_ICON[feature.title as keyof typeof FEATURE_ICON];
+            const Icon = FEATURE_ICONS[index];
 
             return (
               <motion.div key={feature.title} {...reveal(index + 1)} className="h-full">
