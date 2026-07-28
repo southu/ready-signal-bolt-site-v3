@@ -341,6 +341,14 @@ const pages = [
     description: 'Unmasking the flu factor in sales forecasting and understanding seasonal health impacts on business.',
   },
 
+  // ── Forecasting Landing (prerendered body so crawlers/curl see the
+  //    testimonials in the raw HTML, not just after client-side render) ──
+  {
+    path: '/forecasting-landing',
+    title: 'Forecasting Signals for Demand, Revenue, Pricing & Commodities | Ready Signal',
+    description: 'Discover, validate, and maintain the external economic, market, and behavioral signals that improve demand, revenue, pricing, and commodity forecasts.',
+  },
+
   // ── Ad-only landing (not in sitemap; not linked from nav/footer) ──
   {
     path: '/lp/campaign-preview',
@@ -371,6 +379,124 @@ const pages = [
   },
 ];
 
+
+// ─── Forecasting-landing testimonials (prerendered) ──────────────────────────
+// Kept byte-for-byte in sync with the `testimonials` block in
+// src/pages/landing/forecastingLandingContent.ts. Serialized into the static
+// response body so the two requested quotes, their attributions, and the
+// Scanmmar operator-review comment appear in the raw HTML (BUG-1) — React
+// replaces this markup with the live carousel once it mounts in the browser.
+const FORECASTING_TESTIMONIALS = {
+  eyebrow: 'Testimonials',
+  headline: 'Teams trust Ready Signal to explain what moves their forecasts',
+  intro:
+    'Organizations use Ready Signal to eliminate manual data collection and focus on building better forecasting models.',
+  items: [
+    {
+      quote:
+        'Ready Signal’s control data improves the accuracy of our models, and I never have to worry about the data being up to date. Ready Signal keeps everything current for us.',
+      name: 'Matt Kristo',
+      title: 'Sr. Manager, Analytic Services',
+      company: 'Outsell',
+    },
+    {
+      quote:
+        'As a data scientist, I am impressed with the ease of use the Ready Signal platform provides me. I am able to quickly integrate control data into my data science production pipelines within Domo to support a variety of data science use cases, saving me and my team valuable time.',
+      name: 'Kristie Rowley',
+      title: 'Principal Data Scientist',
+      company: 'Domo',
+    },
+    {
+      quote:
+        "Before Ready Signal, we were constantly explaining why our numbers were off. Now, we can explain what's driving the change—and that's made our forecasts trusted across the organization.",
+      name: '',
+      title: 'VP, Strategy & Analytics',
+      company: '',
+    },
+    {
+      quote: 'You are helping us answer the questions...',
+      name: '',
+      title: 'Category Manager at CPG Company',
+      company: '',
+    },
+    {
+      quote: 'This engagement has been an enjoyable engagement...',
+      name: '',
+      title: 'Category Manager at CPG Company',
+      company: '',
+    },
+    {
+      quote: 'We are very excited about this forecast...',
+      name: '',
+      title: 'Prime Source',
+      company: '',
+    },
+    {
+      quote:
+        "Ready Signal is delivering on needs that we don't have time/resources to do ourselves",
+      name: '',
+      title: 'Scanmmar',
+      company: '',
+    },
+    {
+      quote:
+        "The QBR went great, and they're really excited about what we can do with Ready Signal!",
+      name: '',
+      title: 'Basis',
+      company: '',
+    },
+  ],
+};
+
+// "Scanmmar" looks like it may be a typo but is carried through verbatim per
+// explicit instruction. Emit a real HTML comment next to that card so an
+// operator can spot it in the raw page source.
+const SCANMMAR_OPERATOR_COMMENT =
+  '<!-- OPERATOR REVIEW: attribution "Scanmmar" may be a typo (did you mean a different company name?) — confirm before treating as final. Carried through verbatim per explicit instruction. -->';
+
+function renderTestimonialCard(item, index, total) {
+  const attribution = [item.title, item.company].filter(Boolean).join(', ');
+  const operatorComment = item.title === 'Scanmmar' ? `\n            ${SCANMMAR_OPERATOR_COMMENT}` : '';
+  const nameMarkup = item.name
+    ? `\n                <p class="text-base font-bold text-rs-dark">${escapeHtml(item.name)}</p>`
+    : '';
+
+  return `          <div class="shrink-0 basis-full pr-6 sm:basis-1/2 lg:basis-1/3">${operatorComment}
+            <figure aria-roledescription="slide" aria-label="Testimonial ${index + 1} of ${total}" class="flex h-full flex-col rounded-2xl border-2 border-rs-dark/10 bg-rs-light-gray p-6 shadow-sm sm:p-8">
+              <blockquote class="mt-4 flex-1 text-base leading-relaxed text-rs-dark/85">${escapeHtml(item.quote)}</blockquote>
+              <figcaption class="mt-6 border-t border-rs-dark/10 pt-4">${nameMarkup}
+                <p class="text-sm text-rs-dark/85${item.name ? ' mt-1' : ''}">${escapeHtml(attribution)}</p>
+              </figcaption>
+            </figure>
+          </div>`;
+}
+
+function renderForecastingLandingBody() {
+  const { eyebrow, headline, intro, items } = FORECASTING_TESTIMONIALS;
+  const total = items.length;
+  const cards = items.map((item, index) => renderTestimonialCard(item, index, total)).join('\n');
+
+  return `
+      <main>
+        <section id="forecasting-testimonials" aria-labelledby="forecasting-testimonials-heading" class="bg-white py-16 sm:py-20">
+          <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="mx-auto max-w-3xl text-center">
+              <p class="text-xs font-semibold uppercase tracking-wider text-cyan-700">${escapeHtml(eyebrow)}</p>
+              <h2 id="forecasting-testimonials-heading" class="mt-3 text-3xl font-bold leading-tight text-rs-dark sm:text-4xl">${escapeHtml(headline)}</h2>
+              <p class="mt-4 text-base leading-relaxed text-rs-dark/85 sm:text-lg">${escapeHtml(intro)}</p>
+            </div>
+            <div role="group" aria-roledescription="carousel" aria-label="Customer testimonials" class="mt-12">
+              <div class="overflow-hidden">
+                <div class="-mr-6 flex">
+${cards}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    `;
+}
 
 // ─── HTML generation ─────────────────────────────────────────────────────────
 
@@ -443,6 +569,12 @@ function run() {
       writeFileSync(join(distDir, `${page.path}.html`), html, 'utf-8');
       created++;
       continue;
+    }
+    if (page.path === '/forecasting-landing') {
+      html = html.replace(
+        '<div id="root"></div>',
+        `<div id="root">${renderForecastingLandingBody()}</div>`,
+      );
     }
     const dir = join(distDir, page.path);
     mkdirSync(dir, { recursive: true });
