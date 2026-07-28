@@ -5,6 +5,7 @@ import ForecastingHero from './ForecastingHero';
 import ForecastingTrustBar from './ForecastingTrustBar';
 import ForecastingVariantSelector from './ForecastingVariantSelector';
 import ForecastingGuideModal, { ForecastingGuideVariant } from './ForecastingGuideModal';
+import ForecastingProcessTimeline from './ForecastingProcessTimeline';
 import { FORECASTING_LANDING_CONTENT } from './forecastingLandingContent';
 
 /**
@@ -29,6 +30,7 @@ function ForecastingLanding() {
           content={FORECASTING_LANDING_CONTENT.variantSelector}
           onSelectVariant={setOpenVariant}
         />
+        <ForecastingProcessTimeline content={FORECASTING_LANDING_CONTENT.process} />
       </main>
 
       <ForecastingGuideModal
