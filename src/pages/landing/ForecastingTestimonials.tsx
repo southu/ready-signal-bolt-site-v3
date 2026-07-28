@@ -236,19 +236,23 @@ function ForecastingTestimonials({ content }: ForecastingTestimonialsProps) {
             </motion.div>
           </div>
 
-          <div className="mt-8 flex items-center justify-center gap-4">
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
             <button
               type="button"
               onClick={() => step(activeIndex - 1)}
               aria-label="Previous testimonial"
-              className={controlClasses}
+              className={`${controlClasses} shrink-0`}
             >
               <ChevronLeft className="h-5 w-5" aria-hidden="true" />
             </button>
 
             {/* The dot itself stays 12px, but the button around it is a full
-                44px touch target, so the row is tappable on a phone. */}
-            <div className="flex items-center">
+                44px touch target, so the row is tappable on a phone. With 27
+                testimonials the dots would overflow a phone viewport in a single
+                line, so the container shrinks (min-w-0) and wraps them onto as
+                many rows as it takes — every dot stays reachable without any
+                horizontal page scroll, and the arrows stay fixed on the ends. */}
+            <div className="flex min-w-0 flex-wrap items-center justify-center">
               {items.map((_item, index) => (
                 <button
                   key={index}
@@ -274,7 +278,7 @@ function ForecastingTestimonials({ content }: ForecastingTestimonialsProps) {
               type="button"
               onClick={() => step(activeIndex + 1)}
               aria-label="Next testimonial"
-              className={controlClasses}
+              className={`${controlClasses} shrink-0`}
             >
               <ChevronRight className="h-5 w-5" aria-hidden="true" />
             </button>
