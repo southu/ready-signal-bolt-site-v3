@@ -70,7 +70,10 @@ function ForecastingProcessTimeline({ content }: ForecastingProcessTimelineProps
           </p>
         </div>
 
-        <ol className="mt-12 flex flex-col gap-10 md:flex-row md:gap-0">
+        {/* Preflight strips the list marker, which also drops list semantics in
+            Safari/VoiceOver — the explicit role keeps the 1-4 ordering that the
+            decorative numerals show visually. */}
+        <ol role="list" className="mt-12 flex flex-col gap-10 md:flex-row md:gap-0">
           {content.steps.map((step, index) => {
             const isLast = index === content.steps.length - 1;
 
