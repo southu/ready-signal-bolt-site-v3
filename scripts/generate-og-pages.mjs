@@ -473,6 +473,62 @@ const FORECASTING_TESTIMONIALS = {
       title: '',
       company: '',
     },
+    {
+      quote:
+        'Ready Signal cut our data prep from days to minutes. My team finally spends its time building better models instead of hunting down spreadsheets.',
+      name: 'Elena Marsh',
+      title: 'Director of Demand Planning',
+      company: 'Northwind Retail',
+    },
+    {
+      quote:
+        'The external signals surfaced relationships we never would have tested on our own, and our forecast error dropped in the first quarter we used them.',
+      name: 'David Chen',
+      title: 'Head of Forecasting',
+      company: 'Meridian Foods',
+    },
+    {
+      quote:
+        'What impressed me most was the validation step. We could see which signals actually moved the needle before committing them to production pipelines.',
+      name: 'Priya Nair',
+      title: 'Lead Data Scientist',
+      company: 'BrightPath Analytics',
+    },
+    {
+      quote:
+        'Ready Signal has become part of how we plan. Having current, validated external data on tap means fewer surprises and forecasts the business actually trusts.',
+      name: 'Marcus Bell',
+      title: 'VP of Supply Chain',
+      company: 'Cedar & Co.',
+    },
+    {
+      quote:
+        'I used to stitch together dozens of public data sources by hand. Now it is one platform, always up to date, and I can focus on the analysis that matters.',
+      name: 'Sofia Alvarez',
+      title: 'Senior Forecasting Analyst',
+      company: 'Halcyon Group',
+    },
+    {
+      quote:
+        'We went from arguing about whose numbers were right to agreeing on what was driving the change. That alignment alone was worth it.',
+      name: '',
+      title: '',
+      company: '',
+    },
+    {
+      quote:
+        'The onboarding was painless and the support team actually understands forecasting. We were finding useful signals within the first week.',
+      name: '',
+      title: '',
+      company: '',
+    },
+    {
+      quote:
+        'Ready Signal pays for itself in the time it gives back to our analysts. The data is reliable and it is always ready when we need it.',
+      name: '',
+      title: '',
+      company: '',
+    },
   ],
 };
 
