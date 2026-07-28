@@ -141,10 +141,18 @@ function ForecastingHero({ content }: ForecastingHeroProps) {
             </div>
 
             {/* Row while the column is full width; stacked once the grid narrows
-                the copy column to 5/12 so the CTA labels never wrap. */}
+                the copy column to 5/12 so the CTA labels never wrap.
+                Home-CTA parity (styling only, component untouched): !mt-5 matches
+                the home hero's subheading→CTA gap below sm (space-y-5 there); the
+                a:first-child variants pin the trial CTA to the home CTA's box —
+                no flex-shrink/wrap in the tablet row and min-h 60px to equal the
+                home CTA, which its taller sibling stretches to 60px. items-start
+                keeps the CTA top-aligned with the row so its offset from the
+                subheading stays 32px. The microcopy list below compensates so
+                nothing under the CTA moves. */}
             <motion.div
               {...fadeIn(0.15)}
-              className="flex flex-col gap-4 sm:flex-row sm:items-center lg:flex-col lg:items-start"
+              className="!mt-5 flex flex-col gap-4 [&>a:first-child]:whitespace-nowrap sm:!mt-8 sm:flex-row sm:items-start sm:[&>a:first-child]:min-h-[60px] sm:[&>a:first-child]:shrink-0 lg:flex-col lg:items-start"
             >
               <StartFreeTrialCTA id="forecasting-hero-start-free-trial" />
               <a
@@ -171,7 +179,10 @@ function ForecastingHero({ content }: ForecastingHeroProps) {
               </a>
             </motion.div>
 
-            <motion.ul {...fadeIn(0.2)} className="space-y-2">
+            {/* sm:!mt-[38px] absorbs the 6px the tablet CTA row lost when the
+                trial CTA stopped wrapping (row 80px→74px), keeping this list and
+                everything below it at its previous position. */}
+            <motion.ul {...fadeIn(0.2)} className="!mt-11 space-y-2 sm:!mt-[38px] lg:!mt-8">
               {content.microcopy.map((item) => (
                 <li key={item} className="flex items-center gap-2 text-sm text-rs-dark/85">
                   <Check className="h-4 w-4 shrink-0 text-rs-cyan" aria-hidden="true" />
