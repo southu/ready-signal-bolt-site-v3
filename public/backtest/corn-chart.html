@@ -49,24 +49,12 @@
       <!-- Y axis unit title -->
       <text transform="translate(16, 202) rotate(-90)" text-anchor="middle" font-size="12" font-weight="600" fill="#475569">$/bushel</text>
 
-      <!-- Actual: solid slate, continuous history + holdout, no fill -->
-      <path d="M70,339.46 C76.6,336.85 83.2,331.63 89.81,331.63 C96.41,331.63 103.01,342.94 109.61,342.94 C116.22,342.94 122.82,330.59 129.42,323.8 C136.02,317.01 142.62,309.3 149.23,302.05 C155.83,294.8 162.43,280.3 169.03,280.3 C175.63,280.3 182.24,288.08 188.84,293.35 C195.44,298.62 202.04,307.69 208.65,313.36 C215.25,319.03 221.85,325.27 228.45,328.15 C235.05,331.03 241.66,334.24 248.26,334.24 C254.86,334.24 261.46,327.31 268.06,322.93 C274.67,318.55 281.27,311.23 287.87,307.27 C294.47,303.31 301.08,302.45 307.68,297.7 C314.28,292.95 320.88,278.18 327.48,269.86 C334.09,261.54 340.69,247.24 347.29,247.24 C353.89,247.24 360.49,256.07 367.1,262.03 C373.7,267.99 380.3,278.69 386.9,284.65 C393.51,290.61 400.11,294.37 406.71,299.44 C413.31,304.51 419.91,311.14 426.52,315.1 C433.12,319.06 439.72,324.67 446.32,324.67 C452.92,324.67 459.53,321.35 466.13,318.58 C472.73,315.81 479.33,310.61 485.94,305.53 C492.54,300.46 499.14,292.71 505.74,287.26 C512.34,281.81 518.95,277.25 525.55,272.47 C532.15,267.69 538.75,264.29 545.35,258.55 C551.96,252.81 558.56,245.92 565.16,235.93 C571.76,225.94 578.37,203.8 584.97,191.56 C591.57,179.32 598.17,160.24 604.77,160.24 C611.38,160.24 617.98,168.94 624.58,175.9 C631.18,182.86 637.78,197.23 644.39,207.22 C650.99,217.21 657.59,228.49 664.19,235.93 C670.8,243.37 677.4,248.11 684,254.2" fill="none" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-
-      <!-- Baseline: dashed light gray -->
-      <path class="backtest-forecast-baseline" data-forecast="baseline" d="M545.35,264.64 C551.96,262.9 558.56,261.29 565.16,259.42 C571.76,257.55 578.37,253.33 584.97,253.33 C591.57,253.33 598.17,254.64 604.77,255.94 C611.38,257.25 617.98,260.9 624.58,263.77 C631.18,266.64 637.78,270.01 644.39,273.34 C650.99,276.67 657.59,281 664.19,283.78 C670.8,286.56 677.4,288.42 684,290.74" fill="none" stroke="#94A3B8" stroke-width="2" stroke-dasharray="7 5" stroke-linecap="round" stroke-linejoin="round" />
-
-      <!-- Ready Signal: solid orange, thickest, terminal dot -->
-      <path class="backtest-forecast-ready-signal" data-forecast="ready-signal" d="M545.35,262.9 C551.96,258.84 558.56,256.37 565.16,250.72 C571.76,245.07 578.37,231.2 584.97,222.88 C591.57,214.56 598.17,200.26 604.77,200.26 C611.38,200.26 617.98,203.08 624.58,206.35 C631.18,209.62 637.78,224.32 644.39,231.58 C650.99,238.84 657.59,245.16 664.19,250.72 C670.8,256.28 677.4,260.58 684,265.51" fill="none" stroke="#F97316" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
-      <circle class="backtest-forecast-dot" cx="684" cy="265.51" r="5" fill="#F97316" stroke="#ffffff" stroke-width="1.5" />
-
-      <!-- Interaction targets (topmost): one transparent, full-height band per
-           period. These give the hover/tap tooltip a real, paintable element to
-           land on: the plotted series are thin fill="none" strokes that a
-           pointer or hit-test can miss, so without these bands hovering "on a
-           line" — or an element-level .hover() over one — reveals nothing. Each
-           band carries its period index so the tooltip resolves to the exact
-           hovered/tapped period. Decorative for AT (the sr-only table below
-           carries the same data), hence aria-hidden. -->
+      <!-- Interaction targets: one transparent, full-height band per period,
+           drawn BEHIND the lines so they catch hover/tap over the plot's empty
+           regions without sitting on top of the series. Each band carries its
+           period index so the tooltip resolves to the exact hovered/tapped
+           period. Decorative for AT (the sr-only table below carries the same
+           data), hence aria-hidden. -->
       <g class="backtest-hit-layer">
         <rect class="backtest-hit-target" data-period-index="0" x="70" y="28" width="9.9" height="348" fill="transparent" aria-hidden="true" />
         <rect class="backtest-hit-target" data-period-index="1" x="79.9" y="28" width="19.81" height="348" fill="transparent" aria-hidden="true" />
@@ -101,6 +89,20 @@
         <rect class="backtest-hit-target" data-period-index="30" x="654.29" y="28" width="19.81" height="348" fill="transparent" aria-hidden="true" />
         <rect class="backtest-hit-target" data-period-index="31" x="674.1" y="28" width="9.9" height="348" fill="transparent" aria-hidden="true" />
       </g>
+
+      <!-- Actual: solid slate, continuous history + holdout, no fill.
+           pointer-events="bounding-box" makes the whole line hittable across its
+           bounding box (not just the thin painted stroke) so an element-level
+           hover/tap that lands anywhere over the line — the way Playwright's
+           .hover() aims at an element's centre — reliably reveals its tooltip. -->
+      <path d="M70,339.46 C76.6,336.85 83.2,331.63 89.81,331.63 C96.41,331.63 103.01,342.94 109.61,342.94 C116.22,342.94 122.82,330.59 129.42,323.8 C136.02,317.01 142.62,309.3 149.23,302.05 C155.83,294.8 162.43,280.3 169.03,280.3 C175.63,280.3 182.24,288.08 188.84,293.35 C195.44,298.62 202.04,307.69 208.65,313.36 C215.25,319.03 221.85,325.27 228.45,328.15 C235.05,331.03 241.66,334.24 248.26,334.24 C254.86,334.24 261.46,327.31 268.06,322.93 C274.67,318.55 281.27,311.23 287.87,307.27 C294.47,303.31 301.08,302.45 307.68,297.7 C314.28,292.95 320.88,278.18 327.48,269.86 C334.09,261.54 340.69,247.24 347.29,247.24 C353.89,247.24 360.49,256.07 367.1,262.03 C373.7,267.99 380.3,278.69 386.9,284.65 C393.51,290.61 400.11,294.37 406.71,299.44 C413.31,304.51 419.91,311.14 426.52,315.1 C433.12,319.06 439.72,324.67 446.32,324.67 C452.92,324.67 459.53,321.35 466.13,318.58 C472.73,315.81 479.33,310.61 485.94,305.53 C492.54,300.46 499.14,292.71 505.74,287.26 C512.34,281.81 518.95,277.25 525.55,272.47 C532.15,267.69 538.75,264.29 545.35,258.55 C551.96,252.81 558.56,245.92 565.16,235.93 C571.76,225.94 578.37,203.8 584.97,191.56 C591.57,179.32 598.17,160.24 604.77,160.24 C611.38,160.24 617.98,168.94 624.58,175.9 C631.18,182.86 637.78,197.23 644.39,207.22 C650.99,217.21 657.59,228.49 664.19,235.93 C670.8,243.37 677.4,248.11 684,254.2" fill="none" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" pointer-events="bounding-box" />
+
+      <!-- Baseline: dashed light gray -->
+      <path class="backtest-forecast-baseline" data-forecast="baseline" d="M545.35,264.64 C551.96,262.9 558.56,261.29 565.16,259.42 C571.76,257.55 578.37,253.33 584.97,253.33 C591.57,253.33 598.17,254.64 604.77,255.94 C611.38,257.25 617.98,260.9 624.58,263.77 C631.18,266.64 637.78,270.01 644.39,273.34 C650.99,276.67 657.59,281 664.19,283.78 C670.8,286.56 677.4,288.42 684,290.74" fill="none" stroke="#94A3B8" stroke-width="2" stroke-dasharray="7 5" stroke-linecap="round" stroke-linejoin="round" pointer-events="bounding-box" />
+
+      <!-- Ready Signal: solid orange, thickest, terminal dot -->
+      <path class="backtest-forecast-ready-signal" data-forecast="ready-signal" d="M545.35,262.9 C551.96,258.84 558.56,256.37 565.16,250.72 C571.76,245.07 578.37,231.2 584.97,222.88 C591.57,214.56 598.17,200.26 604.77,200.26 C611.38,200.26 617.98,203.08 624.58,206.35 C631.18,209.62 637.78,224.32 644.39,231.58 C650.99,238.84 657.59,245.16 664.19,250.72 C670.8,256.28 677.4,260.58 684,265.51" fill="none" stroke="#F97316" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" pointer-events="bounding-box" />
+      <circle class="backtest-forecast-dot" cx="684" cy="265.51" r="5" fill="#F97316" stroke="#ffffff" stroke-width="1.5" />
     </svg>
     <ul class="mt-4 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 list-none pl-0">
       <li class="flex items-center gap-2 text-sm text-rs-dark"><svg width="34" height="12" aria-hidden="true" class="shrink-0"><line x1="1" y1="6" x2="33" y2="6" stroke="#334155" stroke-width="2" stroke-linecap="round" /></svg><span>Actual</span></li>

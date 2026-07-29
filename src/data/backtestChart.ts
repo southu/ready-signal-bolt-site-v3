@@ -486,27 +486,29 @@ ${xLabels.join('\n')}
         unitLabel,
       )}</text>
 
-      <!-- Actual: solid slate, continuous history + holdout, no fill -->
-      <path d="${actualPath}" fill="none" stroke="${ACTUAL_COLOR}" stroke-width="${ACTUAL_WIDTH}" stroke-linecap="round" stroke-linejoin="round" />
-
-      <!-- Baseline: dashed light gray -->
-      <path class="backtest-forecast-baseline" data-forecast="baseline" d="${baselinePath}" fill="none" stroke="${BASELINE_COLOR}" stroke-width="${BASELINE_WIDTH}" stroke-dasharray="${BASELINE_DASH}" stroke-linecap="round" stroke-linejoin="round" />
-
-      <!-- Ready Signal: solid orange, thickest, terminal dot -->
-      <path class="backtest-forecast-ready-signal" data-forecast="ready-signal" d="${readySignalPath}" fill="none" stroke="${READY_SIGNAL_COLOR}" stroke-width="${READY_SIGNAL_WIDTH}" stroke-linecap="round" stroke-linejoin="round" />
-      <circle class="backtest-forecast-dot" cx="${termX}" cy="${termY}" r="5" fill="${READY_SIGNAL_COLOR}" stroke="#ffffff" stroke-width="1.5" />
-
-      <!-- Interaction targets (topmost): one transparent, full-height band per
-           period. These give the hover/tap tooltip a real, paintable element to
-           land on: the plotted series are thin fill="none" strokes that a
-           pointer or hit-test can miss, so without these bands hovering "on a
-           line" — or an element-level .hover() over one — reveals nothing. Each
-           band carries its period index so the tooltip resolves to the exact
-           hovered/tapped period. Decorative for AT (the sr-only table below
-           carries the same data), hence aria-hidden. -->
+      <!-- Interaction targets: one transparent, full-height band per period,
+           drawn BEHIND the lines so they catch hover/tap over the plot's empty
+           regions without sitting on top of the series. Each band carries its
+           period index so the tooltip resolves to the exact hovered/tapped
+           period. Decorative for AT (the sr-only table below carries the same
+           data), hence aria-hidden. -->
       <g class="backtest-hit-layer">
 ${hitTargets}
       </g>
+
+      <!-- Actual: solid slate, continuous history + holdout, no fill.
+           pointer-events="bounding-box" makes the whole line hittable across its
+           bounding box (not just the thin painted stroke) so an element-level
+           hover/tap that lands anywhere over the line — the way Playwright's
+           .hover() aims at an element's centre — reliably reveals its tooltip. -->
+      <path d="${actualPath}" fill="none" stroke="${ACTUAL_COLOR}" stroke-width="${ACTUAL_WIDTH}" stroke-linecap="round" stroke-linejoin="round" pointer-events="bounding-box" />
+
+      <!-- Baseline: dashed light gray -->
+      <path class="backtest-forecast-baseline" data-forecast="baseline" d="${baselinePath}" fill="none" stroke="${BASELINE_COLOR}" stroke-width="${BASELINE_WIDTH}" stroke-dasharray="${BASELINE_DASH}" stroke-linecap="round" stroke-linejoin="round" pointer-events="bounding-box" />
+
+      <!-- Ready Signal: solid orange, thickest, terminal dot -->
+      <path class="backtest-forecast-ready-signal" data-forecast="ready-signal" d="${readySignalPath}" fill="none" stroke="${READY_SIGNAL_COLOR}" stroke-width="${READY_SIGNAL_WIDTH}" stroke-linecap="round" stroke-linejoin="round" pointer-events="bounding-box" />
+      <circle class="backtest-forecast-dot" cx="${termX}" cy="${termY}" r="5" fill="${READY_SIGNAL_COLOR}" stroke="#ffffff" stroke-width="1.5" />
     </svg>`;
 
   // ── Legend (below the chart): swatches distinguish dashed vs solid ──
