@@ -51,7 +51,7 @@ const HeroSection = () => {
               </motion.a>
             </div>
 
-            <div className="flex items-center space-x-8 pt-4">
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 pt-4 sm:flex-nowrap sm:gap-x-8">
               <div>
                 <div className="text-3xl font-bold text-rs-dark">3M+</div>
                 <div className="text-sm text-rs-dark opacity-75">Features Tested</div>

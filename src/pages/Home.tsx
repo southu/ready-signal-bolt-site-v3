@@ -9,6 +9,8 @@ import TwoPathsSection from '../components/TwoPathsSection';
 import ComparisonTable from '../components/ComparisonTable';
 import DifferentiationSection from '../components/DifferentiationSection';
 import ProvenPrecisionSection from '../components/ProvenPrecisionSection';
+import ForecastingTestimonials from './landing/ForecastingTestimonials';
+import { FORECASTING_LANDING_CONTENT } from './landing/forecastingLandingContent';
 import FinalCTASection from '../components/FinalCTASection';
 import GeminiHookFAQ from '../components/GeminiHookFAQ';
 import InsightsTeaserList from '../components/InsightsTeaserList';
@@ -40,6 +42,7 @@ function Home() {
         <ComparisonTable />
         <DifferentiationSection />
         <ProvenPrecisionSection />
+        <ForecastingTestimonials content={FORECASTING_LANDING_CONTENT.testimonials} />
         {latestPosts.length > 0 && (
           <InsightsTeaserList
             title="Latest Thinking"

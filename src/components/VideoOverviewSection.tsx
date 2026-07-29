@@ -3,7 +3,7 @@ import { Play } from 'lucide-react';
 
 const VideoOverviewSection = () => {
   return (
-    <section className="bg-gradient-to-b from-white via-gray-50 to-white py-20 lg:py-28">
+    <section className="overflow-x-clip bg-gradient-to-b from-white via-gray-50 to-white py-20 lg:py-28">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
