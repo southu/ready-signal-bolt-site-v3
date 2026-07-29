@@ -243,17 +243,31 @@ export default function BacktestChart({ card, className }: BacktestChartProps) {
     if (svgRect.width === 0) return null;
     const scaleX = svgRect.width / model.viewWidth;
     const scaleY = svgRect.height / model.viewHeight;
-    const vx = (clientX - svgRect.left) / scaleX;
 
-    let best = model.periods[0];
-    let bestDist = Infinity;
-    for (const p of model.periods) {
-      const d = Math.abs(p.x - vx);
-      if (d < bestDist) {
-        bestDist = d;
-        best = p;
+    // Prefer the explicit per-period hit band under the pointer: hovering or
+    // tapping a `.backtest-hit-target` resolves straight to that period. Fall
+    // back to the period nearest the pointer's x for any event that lands
+    // elsewhere on the chart (e.g. a plain mouse move over the svg body).
+    let best: (typeof model.periods)[number] | null = null;
+    if (target instanceof Element) {
+      const band = target.closest('.backtest-hit-target');
+      const idxAttr = band?.getAttribute('data-period-index');
+      if (idxAttr !== null && idxAttr !== undefined) {
+        best = model.periods[Number(idxAttr)] ?? null;
       }
     }
+    if (!best) {
+      const vx = (clientX - svgRect.left) / scaleX;
+      let bestDist = Infinity;
+      for (const p of model.periods) {
+        const d = Math.abs(p.x - vx);
+        if (d < bestDist) {
+          bestDist = d;
+          best = p;
+        }
+      }
+    }
+    if (!best) return null;
 
     const wrapRect = wrapper.getBoundingClientRect();
     return {
@@ -267,6 +281,9 @@ export default function BacktestChart({ card, className }: BacktestChartProps) {
   const TOUCH_GUARD_MS = 700;
   const recentlyTouched = () => Date.now() - lastTouchAt.current < TOUCH_GUARD_MS;
 
+  // Bound to both onMouseMove and onMouseOver: a hover that enters the chart
+  // without any subsequent movement fires only mouseover, so listening to move
+  // alone would leave that hover with no tooltip.
   const handleMouseMove = (e: React.MouseEvent) => {
     if (recentlyTouched()) return;
     setActive(locate(e.clientX, e.target));
@@ -376,6 +393,7 @@ export default function BacktestChart({ card, className }: BacktestChartProps) {
       ref={wrapperRef}
       className={`relative ${className ?? ''}`}
       onMouseMove={handleMouseMove}
+      onMouseOver={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onTouchStart={handleTouchStart}
     >

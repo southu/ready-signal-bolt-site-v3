@@ -426,6 +426,21 @@ export function buildBacktestChartMarkup(
   const termX = fmt(xAt(lastIdx));
   const termY = fmt(yAt(readySignalForecast[readySignalForecast.length - 1]));
 
+  // ── Per-period interaction bands ──
+  // A transparent, full-plot-height rect centred on each period, spanning to the
+  // midpoints of its neighbours. Rendered last so they sit above every series
+  // and reliably receive hover/tap. `data-period-index` lets the component map a
+  // band straight back to its period.
+  const hitTargets = Array.from({ length: total }, (_, i) => {
+    const left = i === 0 ? MARGIN.left : (xAt(i - 1) + xAt(i)) / 2;
+    const right = i === total - 1 ? MARGIN.left + INNER_W : (xAt(i) + xAt(i + 1)) / 2;
+    return `        <rect class="backtest-hit-target" data-period-index="${i}" x="${fmt(
+      left,
+    )}" y="${fmt(MARGIN.top)}" width="${fmt(right - left)}" height="${fmt(
+      INNER_H,
+    )}" fill="transparent" aria-hidden="true" />`;
+  }).join('\n');
+
   // font-variant-numeric:tabular-nums on the root <svg> inherits to every
   // <text>, so all numeric labels use tabular figures (mission requirement).
   const svg = `    <svg viewBox="0 0 ${WIDTH} ${HEIGHT}" width="100%" role="img" aria-label="${esc(
@@ -480,6 +495,18 @@ ${xLabels.join('\n')}
       <!-- Ready Signal: solid orange, thickest, terminal dot -->
       <path class="backtest-forecast-ready-signal" data-forecast="ready-signal" d="${readySignalPath}" fill="none" stroke="${READY_SIGNAL_COLOR}" stroke-width="${READY_SIGNAL_WIDTH}" stroke-linecap="round" stroke-linejoin="round" />
       <circle class="backtest-forecast-dot" cx="${termX}" cy="${termY}" r="5" fill="${READY_SIGNAL_COLOR}" stroke="#ffffff" stroke-width="1.5" />
+
+      <!-- Interaction targets (topmost): one transparent, full-height band per
+           period. These give the hover/tap tooltip a real, paintable element to
+           land on: the plotted series are thin fill="none" strokes that a
+           pointer or hit-test can miss, so without these bands hovering "on a
+           line" — or an element-level .hover() over one — reveals nothing. Each
+           band carries its period index so the tooltip resolves to the exact
+           hovered/tapped period. Decorative for AT (the sr-only table below
+           carries the same data), hence aria-hidden. -->
+      <g class="backtest-hit-layer">
+${hitTargets}
+      </g>
     </svg>`;
 
   // ── Legend (below the chart): swatches distinguish dashed vs solid ──

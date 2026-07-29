@@ -58,6 +58,49 @@
       <!-- Ready Signal: solid orange, thickest, terminal dot -->
       <path class="backtest-forecast-ready-signal" data-forecast="ready-signal" d="M545.35,262.9 C551.96,258.84 558.56,256.37 565.16,250.72 C571.76,245.07 578.37,231.2 584.97,222.88 C591.57,214.56 598.17,200.26 604.77,200.26 C611.38,200.26 617.98,203.08 624.58,206.35 C631.18,209.62 637.78,224.32 644.39,231.58 C650.99,238.84 657.59,245.16 664.19,250.72 C670.8,256.28 677.4,260.58 684,265.51" fill="none" stroke="#F97316" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
       <circle class="backtest-forecast-dot" cx="684" cy="265.51" r="5" fill="#F97316" stroke="#ffffff" stroke-width="1.5" />
+
+      <!-- Interaction targets (topmost): one transparent, full-height band per
+           period. These give the hover/tap tooltip a real, paintable element to
+           land on: the plotted series are thin fill="none" strokes that a
+           pointer or hit-test can miss, so without these bands hovering "on a
+           line" — or an element-level .hover() over one — reveals nothing. Each
+           band carries its period index so the tooltip resolves to the exact
+           hovered/tapped period. Decorative for AT (the sr-only table below
+           carries the same data), hence aria-hidden. -->
+      <g class="backtest-hit-layer">
+        <rect class="backtest-hit-target" data-period-index="0" x="70" y="28" width="9.9" height="348" fill="transparent" aria-hidden="true" />
+        <rect class="backtest-hit-target" data-period-index="1" x="79.9" y="28" width="19.81" height="348" fill="transparent" aria-hidden="true" />
+        <rect class="backtest-hit-target" data-period-index="2" x="99.71" y="28" width="19.81" height="348" fill="transparent" aria-hidden="true" />
+        <rect class="backtest-hit-target" data-period-index="3" x="119.52" y="28" width="19.81" height="348" fill="transparent" aria-hidden="true" />
+        <rect class="backtest-hit-target" data-period-index="4" x="139.32" y="28" width="19.81" height="348" fill="transparent" aria-hidden="true" />
+        <rect class="backtest-hit-target" data-period-index="5" x="159.13" y="28" width="19.81" height="348" fill="transparent" aria-hidden="true" />
+        <rect class="backtest-hit-target" data-period-index="6" x="178.94" y="28" width="19.81" height="348" fill="transparent" aria-hidden="true" />
+        <rect class="backtest-hit-target" data-period-index="7" x="198.74" y="28" width="19.81" height="348" fill="transparent" aria-hidden="true" />
+        <rect class="backtest-hit-target" data-period-index="8" x="218.55" y="28" width="19.81" height="348" fill="transparent" aria-hidden="true" />
+        <rect class="backtest-hit-target" data-period-index="9" x="238.35" y="28" width="19.81" height="348" fill="transparent" aria-hidden="true" />
+        <rect class="backtest-hit-target" data-period-index="10" x="258.16" y="28" width="19.81" height="348" fill="transparent" aria-hidden="true" />
+        <rect class="backtest-hit-target" data-period-index="11" x="277.97" y="28" width="19.81" height="348" fill="transparent" aria-hidden="true" />
+        <rect class="backtest-hit-target" data-period-index="12" x="297.77" y="28" width="19.81" height="348" fill="transparent" aria-hidden="true" />
+        <rect class="backtest-hit-target" data-period-index="13" x="317.58" y="28" width="19.81" height="348" fill="transparent" aria-hidden="true" />
+        <rect class="backtest-hit-target" data-period-index="14" x="337.39" y="28" width="19.81" height="348" fill="transparent" aria-hidden="true" />
+        <rect class="backtest-hit-target" data-period-index="15" x="357.19" y="28" width="19.81" height="348" fill="transparent" aria-hidden="true" />
+        <rect class="backtest-hit-target" data-period-index="16" x="377" y="28" width="19.81" height="348" fill="transparent" aria-hidden="true" />
+        <rect class="backtest-hit-target" data-period-index="17" x="396.81" y="28" width="19.81" height="348" fill="transparent" aria-hidden="true" />
+        <rect class="backtest-hit-target" data-period-index="18" x="416.61" y="28" width="19.81" height="348" fill="transparent" aria-hidden="true" />
+        <rect class="backtest-hit-target" data-period-index="19" x="436.42" y="28" width="19.81" height="348" fill="transparent" aria-hidden="true" />
+        <rect class="backtest-hit-target" data-period-index="20" x="456.23" y="28" width="19.81" height="348" fill="transparent" aria-hidden="true" />
+        <rect class="backtest-hit-target" data-period-index="21" x="476.03" y="28" width="19.81" height="348" fill="transparent" aria-hidden="true" />
+        <rect class="backtest-hit-target" data-period-index="22" x="495.84" y="28" width="19.81" height="348" fill="transparent" aria-hidden="true" />
+        <rect class="backtest-hit-target" data-period-index="23" x="515.65" y="28" width="19.81" height="348" fill="transparent" aria-hidden="true" />
+        <rect class="backtest-hit-target" data-period-index="24" x="535.45" y="28" width="19.81" height="348" fill="transparent" aria-hidden="true" />
+        <rect class="backtest-hit-target" data-period-index="25" x="555.26" y="28" width="19.81" height="348" fill="transparent" aria-hidden="true" />
+        <rect class="backtest-hit-target" data-period-index="26" x="575.06" y="28" width="19.81" height="348" fill="transparent" aria-hidden="true" />
+        <rect class="backtest-hit-target" data-period-index="27" x="594.87" y="28" width="19.81" height="348" fill="transparent" aria-hidden="true" />
+        <rect class="backtest-hit-target" data-period-index="28" x="614.68" y="28" width="19.81" height="348" fill="transparent" aria-hidden="true" />
+        <rect class="backtest-hit-target" data-period-index="29" x="634.48" y="28" width="19.81" height="348" fill="transparent" aria-hidden="true" />
+        <rect class="backtest-hit-target" data-period-index="30" x="654.29" y="28" width="19.81" height="348" fill="transparent" aria-hidden="true" />
+        <rect class="backtest-hit-target" data-period-index="31" x="674.1" y="28" width="9.9" height="348" fill="transparent" aria-hidden="true" />
+      </g>
     </svg>
     <ul class="mt-4 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 list-none pl-0">
       <li class="flex items-center gap-2 text-sm text-rs-dark"><svg width="34" height="12" aria-hidden="true" class="shrink-0"><line x1="1" y1="6" x2="33" y2="6" stroke="#334155" stroke-width="2" stroke-linecap="round" /></svg><span>Actual</span></li>
