@@ -1,6 +1,9 @@
 import { describe, it, expect } from 'vitest';
 import {
   cornCard,
+  retailCard,
+  energyCard,
+  backtestCards,
   computeMetrics,
   mape,
   rmse,
@@ -60,5 +63,59 @@ describe('corn card', () => {
     const metrics = computeMetrics(cornCard);
     expect(metrics.errorReductionPct).toBeGreaterThan(55);
     expect(metrics.errorReductionPct).toBeLessThan(80);
+  });
+});
+
+// Sibling datasets share the card component; only their data/config differ.
+// Target error bands (computed from the series, never hard-coded): baseline
+// MAPE in [9, 12]%, Ready Signal MAPE in [3, 5]%, with an honest residual so
+// 0 < Ready Signal MAPE < baseline MAPE.
+const siblingCards = [
+  { name: 'retail card', card: retailCard, chips: ['Heat Index', 'Foot Traffic', 'Promo Calendar'] },
+  { name: 'energy card', card: energyCard, chips: ['HDD / Cold Snap Index', 'Nat Gas Spot', 'Grid Interchange'] },
+];
+
+describe.each(siblingCards)('$name', ({ card, chips }) => {
+  it('has equal-length, non-empty forecast and holdout series', () => {
+    expect(card.holdoutActuals.length).toBeGreaterThan(0);
+    expect(card.baselineForecast).toHaveLength(card.holdoutActuals.length);
+    expect(card.readySignalForecast).toHaveLength(card.holdoutActuals.length);
+  });
+
+  it('exposes the expected signal chips', () => {
+    expect(card.signalChips).toEqual(chips);
+  });
+
+  it('baseline MAPE falls in the 9-12% target band', () => {
+    const metrics = computeMetrics(card);
+    expect(metrics.baseline.mape).toBeGreaterThanOrEqual(9);
+    expect(metrics.baseline.mape).toBeLessThanOrEqual(12);
+  });
+
+  it('Ready Signal MAPE falls in the 3-5% target band', () => {
+    const metrics = computeMetrics(card);
+    expect(metrics.readySignal.mape).toBeGreaterThanOrEqual(3);
+    expect(metrics.readySignal.mape).toBeLessThanOrEqual(5);
+  });
+
+  it('keeps an honest residual: 0 < Ready Signal MAPE < baseline MAPE', () => {
+    const metrics = computeMetrics(card);
+    expect(metrics.readySignal.mape).toBeGreaterThan(0);
+    expect(metrics.readySignal.mape).toBeLessThan(metrics.baseline.mape);
+  });
+});
+
+describe('backtestCards collection', () => {
+  it('lists the three cards in narrative order', () => {
+    expect(backtestCards.map((c) => c.title)).toEqual([
+      'Commodity Prices',
+      'Retail Demand',
+      'Energy Load',
+    ]);
+  });
+
+  it('gives every card a distinct forecast series', () => {
+    const signatures = backtestCards.map((c) => JSON.stringify(c.readySignalForecast));
+    expect(new Set(signatures).size).toBe(backtestCards.length);
   });
 });

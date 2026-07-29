@@ -116,6 +116,16 @@ export function formatUsdPerBushel(value: number): string {
 }
 
 /**
+ * Formats a whole-number count with thousands separators, e.g. 13000 ->
+ * "13,000". Deterministic (no locale dependency) so browser and prebuild
+ * renders stay byte-identical. The dataset's unit (units/wk, MWh) is carried by
+ * the card's `unitLabel` axis title rather than baked into every tick.
+ */
+export function formatCount(value: number): string {
+  return Math.round(value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
+/**
  * Builds `count` sequential monthly labels (e.g. "Jan '22") starting from the
  * given month/year. Keeps the x-axis labels deterministic and in sync with the
  * series lengths.
@@ -160,5 +170,71 @@ export const cornCard: BacktestCard = {
   ],
 };
 
-/** All backtest cards, keyed by id for lookup. */
-export const backtestCards: BacktestCard[] = [cornCard];
+// ── Retail Demand (units/week, monthly) ──────────────────────────────────────
+// Upward trend + annual (summer) seasonality + noise. A late-summer heat wave
+// spikes demand across the holdout window (indices 3-6): the naive baseline
+// follows the smooth seasonal curve and misses it entirely, while Ready Signal
+// partially anticipates the surge — visibly closer to actuals, still short of
+// the peak (honest residual).
+const RETAIL_HISTORY = [
+  11200, 11600, 12000, 12300, 12200, 11700, 11300, 11000, 11200, 10900, 11000, 11400,
+  12000, 12400, 12800, 13100, 13000, 12500, 12100, 11800, 12000, 11800, 12200, 12600,
+];
+
+const RETAIL_HOLDOUT_ACTUALS = [13000, 13400, 14200, 18200, 19200, 17600, 15400, 14000];
+
+/** Retail Demand (weekly units sold, monthly cadence) backtest card. */
+export const retailCard: BacktestCard = {
+  id: 'retail-demand',
+  title: 'Retail Demand',
+  subtitle: 'Weekly units sold — units/week, monthly',
+  unitLabel: 'units/wk',
+  formatValue: formatCount,
+  monthLabels: buildMonthLabels(4, 2022, RETAIL_HISTORY.length + RETAIL_HOLDOUT_ACTUALS.length),
+  history: RETAIL_HISTORY,
+  holdoutActuals: RETAIL_HOLDOUT_ACTUALS,
+  // Smooth seasonal baseline — never sees the heat wave.
+  baselineForecast: [13100, 13500, 14100, 14300, 14450, 14350, 14150, 14000],
+  // Partially anticipates the surge; undershoots the peak, leaving a residual.
+  readySignalForecast: [13020, 13420, 14500, 16700, 17600, 16300, 14900, 14050],
+  baselineBandWidth: 0.08,
+  readySignalBandWidth: 0.035,
+  signalChips: ['Heat Index', 'Foot Traffic', 'Promo Calendar'],
+};
+
+// ── Energy Load (MWh, monthly) ───────────────────────────────────────────────
+// Winter-peaking load with an upward trend. A mid-winter cold snap spikes load
+// across the holdout window (indices 3-6): the baseline misses it, Ready Signal
+// partially anticipates it via HDD / cold-snap and gas-market signals, keeping
+// an honest residual short of the peak.
+const ENERGY_HISTORY = [
+  8100, 8500, 9000, 9300, 9100, 8600, 8200, 7900, 8000, 8400, 8500, 8100,
+  8300, 8700, 9200, 9500, 9300, 8800, 8400, 8100, 8200, 8600, 8700, 8300,
+];
+
+const ENERGY_HOLDOUT_ACTUALS = [8200, 8600, 9200, 12200, 12900, 11500, 9700, 8800];
+
+/** Energy Load (system load, MWh, monthly cadence) backtest card. */
+export const energyCard: BacktestCard = {
+  id: 'energy-load',
+  title: 'Energy Load',
+  subtitle: 'System load — MWh, monthly',
+  unitLabel: 'MWh',
+  formatValue: formatCount,
+  monthLabels: buildMonthLabels(10, 2021, ENERGY_HISTORY.length + ENERGY_HOLDOUT_ACTUALS.length),
+  history: ENERGY_HISTORY,
+  holdoutActuals: ENERGY_HOLDOUT_ACTUALS,
+  // Smooth winter baseline — misses the cold snap.
+  baselineForecast: [8300, 8700, 9100, 9400, 9550, 9400, 9200, 8850],
+  // Partially anticipates the cold snap; undershoots the peak (honest residual).
+  readySignalForecast: [8250, 8650, 9450, 11100, 11700, 10600, 9450, 8820],
+  baselineBandWidth: 0.07,
+  readySignalBandWidth: 0.03,
+  signalChips: ['HDD / Cold Snap Index', 'Nat Gas Spot', 'Grid Interchange'],
+};
+
+/**
+ * All backtest cards, rendered through the same shared card component. Order is
+ * the marketing narrative: Commodity Prices, Retail Demand, Energy Load.
+ */
+export const backtestCards: BacktestCard[] = [cornCard, retailCard, energyCard];
