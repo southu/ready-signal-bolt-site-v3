@@ -9,6 +9,7 @@ import TwoPathsSection from '../components/TwoPathsSection';
 import ComparisonTable from '../components/ComparisonTable';
 import DifferentiationSection from '../components/DifferentiationSection';
 import ProvenPrecisionSection from '../components/ProvenPrecisionSection';
+import ForecastingExamples from './landing/ForecastingExamples';
 import ForecastingTestimonials from './landing/ForecastingTestimonials';
 import { FORECASTING_LANDING_CONTENT } from './landing/forecastingLandingContent';
 import FinalCTASection from '../components/FinalCTASection';
@@ -42,6 +43,7 @@ function Home() {
         <ComparisonTable />
         <DifferentiationSection />
         <ProvenPrecisionSection />
+        <ForecastingExamples content={FORECASTING_LANDING_CONTENT.forecastExamples} />
         <ForecastingTestimonials content={FORECASTING_LANDING_CONTENT.testimonials} />
         {latestPosts.length > 0 && (
           <InsightsTeaserList
