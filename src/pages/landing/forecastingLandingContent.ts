@@ -23,7 +23,7 @@ export const FORECASTING_LANDING_CONTENT = {
         'Industrial Production',
       ],
       resultLabel: 'Forecast Accuracy',
-      resultValue: '+14%',
+      resultValue: '+50%',
       footer: 'Illustrative example only. Signal relevance varies by forecasting problem.',
     },
   },
