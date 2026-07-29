@@ -437,6 +437,83 @@ function renderTestimonialCard(item) {
           </li>`;
 }
 
+// ─── Forecasting-landing hero (prerendered) ──────────────────────────────────
+// Single source of truth: src/pages/landing/forecastingLandingContent.ts — the
+// same content ForecastingHero renders in the browser. We read the file as text
+// and pull out the hero copy and forecast card (including the Forecast Accuracy
+// result stat, currently "+50%") so the raw HTML crawlers/curl see includes the
+// hero and its stat, not just the testimonials. React replaces this markup with
+// the live hero once it mounts. Extracting from the .ts (rather than hardcoding
+// the figure) keeps the prerendered stat in lockstep with the live hero, so the
+// "+50%" value can never drift between the two.
+const FORECASTING_LANDING_CONTENT_SRC = readFileSync(
+  join(__dirname, '..', 'src', 'pages', 'landing', 'forecastingLandingContent.ts'),
+  'utf-8',
+);
+
+function matchField(src, key, quote = "'") {
+  const m = src.match(new RegExp(`${key}:\\s*${quote}([^${quote}]*)${quote}`));
+  return m ? m[1] : '';
+}
+
+// Scope extraction to the hero block and its nested forecastCard so unique-per-
+// object keys (eyebrow/headline/header) can't match a sibling object elsewhere
+// in the content file.
+const HERO_SRC = (FORECASTING_LANDING_CONTENT_SRC.split(/\n  hero:\s*\{/)[1] || '').split(
+  /\n  \},/,
+)[0];
+const FORECAST_CARD_SRC = (HERO_SRC.split(/forecastCard:\s*\{/)[1] || '').split(/\n    \},/)[0];
+
+const FORECASTING_HERO = {
+  eyebrow: matchField(HERO_SRC, 'eyebrow'),
+  headline: matchField(HERO_SRC, 'headline'),
+  body: matchField(HERO_SRC, 'body', '"'),
+  card: {
+    header: matchField(FORECAST_CARD_SRC, 'header'),
+    forecastName: matchField(FORECAST_CARD_SRC, 'forecastName'),
+    signals: (() => {
+      const block = FORECAST_CARD_SRC.match(/signals:\s*\[([\s\S]*?)\]/);
+      return block ? Array.from(block[1].matchAll(/'([^']*)'/g), (s) => s[1]) : [];
+    })(),
+    resultLabel: matchField(FORECAST_CARD_SRC, 'resultLabel'),
+    resultValue: matchField(FORECAST_CARD_SRC, 'resultValue'),
+    footer: matchField(FORECAST_CARD_SRC, 'footer'),
+  },
+};
+
+function renderForecastingLandingHero() {
+  const { eyebrow, headline, body, card } = FORECASTING_HERO;
+  const signals = card.signals
+    .map(
+      (signal) =>
+        `                <li class="flex items-center gap-2 text-sm text-rs-dark/85">${escapeHtml(
+          signal,
+        )}</li>`,
+    )
+    .join('\n');
+
+  return `
+        <section aria-labelledby="forecasting-hero-heading" class="bg-white">
+          <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+            <p class="text-xs font-semibold uppercase tracking-wider text-cyan-700">${escapeHtml(eyebrow)}</p>
+            <h1 id="forecasting-hero-heading" class="mt-3 text-4xl font-bold leading-tight text-rs-dark sm:text-5xl">${escapeHtml(headline)}</h1>
+            <p class="mt-5 max-w-2xl text-lg leading-relaxed text-rs-dark/85">${escapeHtml(body)}</p>
+            <div class="mt-10 w-full max-w-[520px] rounded-2xl border border-rs-dark/10 bg-white p-6 shadow-lg">
+              <p class="text-xs font-semibold uppercase tracking-wider text-rs-dark/80">${escapeHtml(card.header)}</p>
+              <h2 class="mt-2 text-xl font-bold text-rs-dark">${escapeHtml(card.forecastName)}</h2>
+              <ul class="mt-4 list-none space-y-2 pl-0">
+${signals}
+              </ul>
+              <div class="mt-6 flex items-center justify-between rounded-xl bg-rs-light-gray px-4 py-3">
+                <span class="text-sm font-semibold text-rs-dark">${escapeHtml(card.resultLabel)}</span>
+                <span class="text-2xl font-bold text-rs-dark">${escapeHtml(card.resultValue)}</span>
+              </div>
+              <p class="mt-4 text-xs leading-relaxed text-rs-dark/80">${escapeHtml(card.footer)}</p>
+            </div>
+          </div>
+        </section>`;
+}
+
 function renderForecastingLandingBody() {
   const { eyebrow, headline, intro, items } = FORECASTING_TESTIMONIALS;
   const cards = items.map((item) => renderTestimonialCard(item)).join('\n');
@@ -445,7 +522,7 @@ function renderForecastingLandingBody() {
   // rows never stretch) lets each card grow to its own quote length — no fixed
   // heights, no clipping, every quote in full at every width.
   return `
-      <main>
+      <main>${renderForecastingLandingHero()}
         <section id="forecasting-testimonials" aria-labelledby="forecasting-testimonials-heading" class="bg-white py-16 sm:py-20">
           <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="mx-auto max-w-3xl text-center">
