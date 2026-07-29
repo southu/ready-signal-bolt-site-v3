@@ -4,166 +4,52 @@
   "intro": "Organizations use Ready Signal to eliminate manual data collection and focus on building better forecasting models.",
   "items": [
     {
-      "quote": "Ready Signal’s control data improves the accuracy of our models, and I never have to worry about the data being up to date. Ready Signal keeps everything current for us.",
-      "name": "Matt Kristo",
-      "title": "Sr. Manager, Analytic Services",
-      "company": "Outsell"
-    },
-    {
-      "quote": "As a data scientist, I am impressed with the ease of use the Ready Signal platform provides me. I am able to quickly integrate control data into my data science production pipelines within Domo to support a variety of data science use cases, saving me and my team valuable time.",
-      "name": "Kristie Rowley",
-      "title": "Principal Data Scientist",
-      "company": "Domo"
-    },
-    {
-      "quote": "Before Ready Signal, we were constantly explaining why our numbers were off. Now, we can explain what's driving the change—and that's made our forecasts trusted across the organization.",
+      "quote": "You are helping us answer the questions we couldn't before. When I go into these category meetings, I want to have the best possible answer and why you should believe it, and Ready Signal is delivering on that.",
       "name": "",
-      "title": "VP, Strategy & Analytics",
-      "company": ""
+      "title": "Category Manager",
+      "company": "Global Consumer Packaged Goods (CPG) Company"
     },
     {
-      "quote": "You are helping us answer the questions we could never get to before — with the right external signals in front of us, we finally understand what is actually driving demand across our categories.",
+      "quote": "This engagement has been an enjoyable engagement. Your team has been great to work with. I appreciate your responsiveness and your ability to tailor the deliverables to our specific needs.",
       "name": "",
-      "title": "Category Manager at CPG Company",
-      "company": ""
+      "title": "Category Manager",
+      "company": "Global Consumer Packaged Goods (CPG) Company"
     },
     {
-      "quote": "This engagement has been an enjoyable engagement from start to finish; the team is responsive, the data is exactly what we need, and it has made our forecasting far easier than it used to be.",
+      "quote": "We are very excited about this forecast and want to make sure we understand how it works to best leverage it across all departments. Thanks to you and your team.",
       "name": "",
-      "title": "Category Manager at CPG Company",
-      "company": ""
+      "title": "Director, Business Planning Analytics",
+      "company": "Global Industrial Distributor"
     },
     {
-      "quote": "We are very excited about this forecast — the external signals Ready Signal surfaced gave us a level of accuracy and confidence in our numbers that we simply did not have before.",
+      "quote": "Ready Signal helped us find important signals that we didn't know existed.",
       "name": "",
-      "title": "Prime Source",
-      "company": ""
+      "title": "Data Science Leader",
+      "company": "Global Manufacturing Company"
     },
     {
-      "quote": "Ready Signal is delivering on needs that we don't have time/resources to do ourselves",
+      "quote": "Ready Signal is delivering on needs that we don't have the time or resources to do ourselves.",
       "name": "",
-      "title": "Scanmmar",
-      "company": ""
+      "title": "Data Science Leader",
+      "company": "Global Manufacturing Company"
     },
     {
-      "quote": "The QBR went great, and they're really excited about what we can do with Ready Signal!",
+      "quote": "The client review went great, and they're really excited about what we can do with Ready Signal!",
       "name": "",
-      "title": "Basis",
-      "company": ""
+      "title": "Vice President",
+      "company": "Global Advertising & Marketing Agency"
     },
     {
-      "quote": "Ready Signal helped us find important signals we would never have uncovered on our own, and folding them into our models measurably improved our forecast accuracy.",
+      "quote": "The Ready Signal platform was very user-friendly, and the ability to change data granularity made it feel like a worthwhile investment.",
       "name": "",
-      "title": "",
-      "company": ""
+      "title": "Data Scientist",
+      "company": "Global Consumer Packaged Goods (CPG) Company"
     },
     {
-      "quote": "The Ready Signal platform was very user-friendly, and we were able to pull in relevant, validated external data and put it to work in our pipelines within days instead of weeks.",
+      "quote": "Before Ready Signal, I spent 60–80% of my time cleaning and formatting public data. With Ready Signal handling much of that work, I can focus more on analysis and exploring new hypotheses.",
       "name": "",
-      "title": "",
-      "company": ""
-    },
-    {
-      "quote": "Before Ready Signal, I spent 60-80% of my time gathering and cleaning external data instead of analyzing it; now that work is handled for me, and I can focus on building better forecasts.",
-      "name": "",
-      "title": "",
-      "company": ""
-    },
-    {
-      "quote": "Ready Signal cut our data prep from days to minutes. My team finally spends its time building better models instead of hunting down spreadsheets.",
-      "name": "Elena Marsh",
-      "title": "Director of Demand Planning",
-      "company": "Northwind Retail"
-    },
-    {
-      "quote": "The external signals surfaced relationships we never would have tested on our own, and our forecast error dropped in the first quarter we used them.",
-      "name": "David Chen",
-      "title": "Head of Forecasting",
-      "company": "Meridian Foods"
-    },
-    {
-      "quote": "What impressed me most was the validation step. We could see which signals actually moved the needle before committing them to production pipelines.",
-      "name": "Priya Nair",
-      "title": "Lead Data Scientist",
-      "company": "BrightPath Analytics"
-    },
-    {
-      "quote": "Ready Signal has become part of how we plan. Having current, validated external data on tap means fewer surprises and forecasts the business actually trusts.",
-      "name": "Marcus Bell",
-      "title": "VP of Supply Chain",
-      "company": "Cedar & Co."
-    },
-    {
-      "quote": "I used to stitch together dozens of public data sources by hand. Now it is one platform, always up to date, and I can focus on the analysis that matters.",
-      "name": "Sofia Alvarez",
-      "title": "Senior Forecasting Analyst",
-      "company": "Halcyon Group"
-    },
-    {
-      "quote": "We went from arguing about whose numbers were right to agreeing on what was driving the change. That alignment alone was worth it.",
-      "name": "",
-      "title": "",
-      "company": ""
-    },
-    {
-      "quote": "The onboarding was painless and the support team actually understands forecasting. We were finding useful signals within the first week.",
-      "name": "",
-      "title": "",
-      "company": ""
-    },
-    {
-      "quote": "Ready Signal pays for itself in the time it gives back to our analysts. The data is reliable and it is always ready when we need it.",
-      "name": "",
-      "title": "",
-      "company": ""
-    },
-    {
-      "quote": "We stopped guessing which external factors mattered and started measuring them. Ready Signal gave our planners a shared, defensible view of what drives demand.",
-      "name": "Rachel Ortiz",
-      "title": "Director of Analytics",
-      "company": "Vantage Retail"
-    },
-    {
-      "quote": "The breadth of ready-to-use signals is what won us over. What used to take a full sprint to assemble now takes an afternoon, and the data is already validated.",
-      "name": "Tom Whitfield",
-      "title": "Head of Demand Planning",
-      "company": "Grove & Vine"
-    },
-    {
-      "quote": "Ready Signal fits neatly into our existing modeling stack. I can pull fresh, well-documented signals straight into our pipelines without babysitting a single data feed.",
-      "name": "Aisha Rahman",
-      "title": "Principal Data Scientist",
-      "company": "Lumina Insights"
-    },
-    {
-      "quote": "Our revenue forecasts finally reflect what is happening in the wider market. Leadership trusts the numbers because we can point to the signals behind every shift.",
-      "name": "Ben Carter",
-      "title": "VP of Revenue Operations",
-      "company": "Stonebridge Foods"
-    },
-    {
-      "quote": "The validation workflow saved us from chasing signals that looked promising but added nothing. We commit only what genuinely improves accuracy, and that discipline shows.",
-      "name": "Nina Petrova",
-      "title": "Senior Manager, Forecasting",
-      "company": "Aurora Supply Co."
-    },
-    {
-      "quote": "What used to be a quarterly scramble for data is now a routine step. The team spends its energy on modeling instead of hunting down sources.",
-      "name": "",
-      "title": "",
-      "company": ""
-    },
-    {
-      "quote": "We caught a demand swing weeks earlier than we would have on our own, purely because the right external signal was already in front of us.",
-      "name": "",
-      "title": "",
-      "company": ""
-    },
-    {
-      "quote": "Every external data source we need is in one place and always current. That reliability alone changed how much we trust our forecasts.",
-      "name": "",
-      "title": "",
-      "company": ""
+      "title": "Data Scientist",
+      "company": "Global Consumer Packaged Goods (CPG) Company"
     }
   ]
 }
