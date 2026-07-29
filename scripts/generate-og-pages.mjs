@@ -468,6 +468,12 @@ const FORECASTING_HERO = {
   eyebrow: matchField(HERO_SRC, 'eyebrow'),
   headline: matchField(HERO_SRC, 'headline'),
   body: matchField(HERO_SRC, 'body', '"'),
+  primaryCta: matchField(HERO_SRC, 'primaryCta'),
+  secondaryCta: matchField(HERO_SRC, 'secondaryCta'),
+  microcopy: (() => {
+    const block = HERO_SRC.match(/microcopy:\s*\[([\s\S]*?)\]/);
+    return block ? Array.from(block[1].matchAll(/'([^']*)'/g), (s) => s[1]) : [];
+  })(),
   card: {
     header: matchField(FORECAST_CARD_SRC, 'header'),
     forecastName: matchField(FORECAST_CARD_SRC, 'forecastName'),
@@ -482,7 +488,7 @@ const FORECASTING_HERO = {
 };
 
 function renderForecastingLandingHero() {
-  const { eyebrow, headline, body, card } = FORECASTING_HERO;
+  const { eyebrow, headline, body, primaryCta, secondaryCta, microcopy, card } = FORECASTING_HERO;
   const signals = card.signals
     .map(
       (signal) =>
@@ -491,13 +497,43 @@ function renderForecastingLandingHero() {
         )}</li>`,
     )
     .join('\n');
+  // Mirror the live ForecastingHero CTAs: primary anchors to the in-page variant
+  // selector (#forecasting-variants), secondary to /contact-us/ — same targets
+  // the React hero uses, so crawlers/no-JS clients see the same actions.
+  const ctas =
+    primaryCta || secondaryCta
+      ? `
+            <div class="mt-8 flex flex-col gap-4 sm:flex-row">
+${
+  primaryCta
+    ? `              <a href="#forecasting-variants" class="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-rs-yellow px-6 py-3 font-semibold text-rs-dark shadow-md sm:px-8">${escapeHtml(primaryCta)}</a>`
+    : ''
+}${
+  secondaryCta
+    ? `
+              <a href="/contact-us/" class="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-rs-dark/25 bg-white px-6 py-3 font-semibold text-rs-dark sm:px-8">${escapeHtml(secondaryCta)}</a>`
+    : ''
+}
+            </div>`
+      : '';
+  const microcopyList = microcopy.length
+    ? `
+            <ul class="mt-8 list-none space-y-2 pl-0">
+${microcopy
+  .map(
+    (item) =>
+      `              <li class="flex items-center gap-2 text-sm text-rs-dark/85">${escapeHtml(item)}</li>`,
+  )
+  .join('\n')}
+            </ul>`
+    : '';
 
   return `
         <section aria-labelledby="forecasting-hero-heading" class="bg-white">
           <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
             <p class="text-xs font-semibold uppercase tracking-wider text-cyan-700">${escapeHtml(eyebrow)}</p>
             <h1 id="forecasting-hero-heading" class="mt-3 text-4xl font-bold leading-tight text-rs-dark sm:text-5xl">${escapeHtml(headline)}</h1>
-            <p class="mt-5 max-w-2xl text-lg leading-relaxed text-rs-dark/85">${escapeHtml(body)}</p>
+            <p class="mt-5 max-w-2xl text-lg leading-relaxed text-rs-dark/85">${escapeHtml(body)}</p>${ctas}${microcopyList}
             <div class="mt-10 w-full max-w-[520px] rounded-2xl border border-rs-dark/10 bg-white p-6 shadow-lg">
               <p class="text-xs font-semibold uppercase tracking-wider text-rs-dark/80">${escapeHtml(card.header)}</p>
               <h2 class="mt-2 text-xl font-bold text-rs-dark">${escapeHtml(card.forecastName)}</h2>
