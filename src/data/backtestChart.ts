@@ -161,11 +161,28 @@ function areaPath(upper: Point[], lower: Point[]): string {
   return `${top} ${bottom} Z`;
 }
 
+/** Shared plotted geometry (scales + derived series) for a card. */
+interface ChartGeometry {
+  /** Total plotted periods (history + holdout). */
+  total: number;
+  /** First holdout (forecast) index. */
+  cut: number;
+  /** Continuous Actual series: history flowing into holdout actuals. */
+  actualValues: number[];
+  /** Maps a timeline index to its x pixel in viewBox coordinates. */
+  xAt: (i: number) => number;
+  /** Maps a value to its y pixel in viewBox coordinates. */
+  yAt: (v: number) => number;
+  /** Resolved y-axis scale (min, max, ticks). */
+  yScaleInfo: { min: number; max: number; ticks: number[] };
+}
+
 /**
- * Builds the full BacktestChart markup (SVG + legend) for a card.
- * Reusable: all data and formatting come from `card`.
+ * Computes the shared plotting geometry (y domain, x/y scales, Actual series)
+ * for a card. Single source of truth for coordinates so the rendered markup and
+ * the interactive model (tooltip hit-targets) can never drift.
  */
-export function buildBacktestChartMarkup(card: BacktestCard): string {
+function computeChartGeometry(card: BacktestCard): ChartGeometry {
   const {
     history,
     holdoutActuals,
@@ -173,11 +190,6 @@ export function buildBacktestChartMarkup(card: BacktestCard): string {
     readySignalForecast,
     baselineBandWidth,
     readySignalBandWidth,
-    monthLabels,
-    formatValue,
-    unitLabel,
-    title,
-    subtitle,
   } = card;
 
   const total = history.length + holdoutActuals.length;
@@ -186,10 +198,6 @@ export function buildBacktestChartMarkup(card: BacktestCard): string {
   // Full ground-truth series: history flows straight into the holdout actuals
   // as one continuous Actual line.
   const actualValues = [...history, ...holdoutActuals];
-
-  // Holdout timeline indices for the forecast series and bands.
-  const holdoutIndices: number[] = [];
-  for (let i = cut; i < total; i++) holdoutIndices.push(i);
 
   // ── Y domain across every plotted value, including band extents ──
   const bandExtents = (values: number[], bw: number) =>
@@ -206,6 +214,109 @@ export function buildBacktestChartMarkup(card: BacktestCard): string {
   const xAt = (i: number) => MARGIN.left + (i / (total - 1)) * INNER_W;
   const yAt = (v: number) =>
     MARGIN.top + (1 - (v - yScaleInfo.min) / (yScaleInfo.max - yScaleInfo.min)) * INNER_H;
+
+  return { total, cut, actualValues, xAt, yAt, yScaleInfo };
+}
+
+/** A single hoverable/tappable period, with its plotted coordinates + values. */
+export interface BacktestPeriod {
+  /** Timeline index (0-based) across history + holdout. */
+  index: number;
+  /** X-axis label for this period, e.g. "Jan '22". */
+  label: string;
+  /** X pixel in viewBox coordinates. */
+  x: number;
+  /** Actual observed value at this period. */
+  actual: number;
+  /** Actual value's y pixel in viewBox coordinates. */
+  actualY: number;
+  /** True for holdout (forecast) periods; false for history. */
+  isHoldout: boolean;
+  /** Baseline forecast value (holdout only, else null). */
+  baseline: number | null;
+  /** Baseline value's y pixel in viewBox coordinates (holdout only). */
+  baselineY: number | null;
+  /** Ready Signal forecast value (holdout only, else null). */
+  readySignal: number | null;
+  /** Ready Signal value's y pixel in viewBox coordinates (holdout only). */
+  readySignalY: number | null;
+}
+
+/**
+ * Interactive model for the BacktestChart: the per-period data + coordinates the
+ * React component needs to place tooltips and detect the hovered/tapped period.
+ * Derived from the SAME geometry as the rendered SVG, so tooltip hit-targets and
+ * values line up exactly with the drawn chart.
+ */
+export interface BacktestChartModel {
+  /** viewBox width (SVG user units). */
+  viewWidth: number;
+  /** viewBox height (SVG user units). */
+  viewHeight: number;
+  /** Total plotted periods. */
+  total: number;
+  /** First holdout (forecast) index. */
+  cut: number;
+  /** Short unit label for the card, e.g. "$/bushel". */
+  unitLabel: string;
+  /** Formats a raw value into a display string in this card's unit. */
+  formatValue: (value: number) => string;
+  /** Every plotted period, in timeline order. */
+  periods: BacktestPeriod[];
+}
+
+/**
+ * Builds the interactive model (per-period coordinates + values) for a card.
+ * Pure: all data comes from `card`, computed via the shared geometry.
+ */
+export function buildBacktestChartModel(card: BacktestCard): BacktestChartModel {
+  const geo = computeChartGeometry(card);
+  const periods: BacktestPeriod[] = [];
+  for (let i = 0; i < geo.total; i++) {
+    const isHoldout = i >= geo.cut;
+    const k = i - geo.cut;
+    periods.push({
+      index: i,
+      label: card.monthLabels[i] ?? '',
+      x: geo.xAt(i),
+      actual: geo.actualValues[i],
+      actualY: geo.yAt(geo.actualValues[i]),
+      isHoldout,
+      baseline: isHoldout ? card.baselineForecast[k] : null,
+      baselineY: isHoldout ? geo.yAt(card.baselineForecast[k]) : null,
+      readySignal: isHoldout ? card.readySignalForecast[k] : null,
+      readySignalY: isHoldout ? geo.yAt(card.readySignalForecast[k]) : null,
+    });
+  }
+  return {
+    viewWidth: WIDTH,
+    viewHeight: HEIGHT,
+    total: geo.total,
+    cut: geo.cut,
+    unitLabel: card.unitLabel,
+    formatValue: card.formatValue,
+    periods,
+  };
+}
+
+/**
+ * Builds the full BacktestChart markup (SVG + legend) for a card.
+ * Reusable: all data and formatting come from `card`.
+ */
+export function buildBacktestChartMarkup(card: BacktestCard): string {
+  const {
+    baselineForecast,
+    readySignalForecast,
+    baselineBandWidth,
+    readySignalBandWidth,
+    monthLabels,
+    formatValue,
+    unitLabel,
+    title,
+    subtitle,
+  } = card;
+
+  const { total, cut, actualValues, xAt, yAt, yScaleInfo } = computeChartGeometry(card);
 
   const toPoints = (values: number[], startIndex: number): Point[] =>
     values.map((v, k) => ({ x: xAt(startIndex + k), y: yAt(v) }));
@@ -308,11 +419,11 @@ ${xLabels.join('\n')}
       <path d="${actualPath}" fill="none" stroke="${ACTUAL_COLOR}" stroke-width="${ACTUAL_WIDTH}" stroke-linecap="round" stroke-linejoin="round" />
 
       <!-- Baseline: dashed light gray -->
-      <path d="${baselinePath}" fill="none" stroke="${BASELINE_COLOR}" stroke-width="${BASELINE_WIDTH}" stroke-dasharray="${BASELINE_DASH}" stroke-linecap="round" stroke-linejoin="round" />
+      <path class="backtest-forecast-baseline" data-forecast="baseline" d="${baselinePath}" fill="none" stroke="${BASELINE_COLOR}" stroke-width="${BASELINE_WIDTH}" stroke-dasharray="${BASELINE_DASH}" stroke-linecap="round" stroke-linejoin="round" />
 
       <!-- Ready Signal: solid orange, thickest, terminal dot -->
-      <path d="${readySignalPath}" fill="none" stroke="${READY_SIGNAL_COLOR}" stroke-width="${READY_SIGNAL_WIDTH}" stroke-linecap="round" stroke-linejoin="round" />
-      <circle cx="${termX}" cy="${termY}" r="5" fill="${READY_SIGNAL_COLOR}" stroke="#ffffff" stroke-width="1.5" />
+      <path class="backtest-forecast-ready-signal" data-forecast="ready-signal" d="${readySignalPath}" fill="none" stroke="${READY_SIGNAL_COLOR}" stroke-width="${READY_SIGNAL_WIDTH}" stroke-linecap="round" stroke-linejoin="round" />
+      <circle class="backtest-forecast-dot" cx="${termX}" cy="${termY}" r="5" fill="${READY_SIGNAL_COLOR}" stroke="#ffffff" stroke-width="1.5" />
     </svg>`;
 
   // ── Legend (below the chart): swatches distinguish dashed vs solid ──
