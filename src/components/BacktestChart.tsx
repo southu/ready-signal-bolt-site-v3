@@ -229,18 +229,36 @@ export default function BacktestChart({ card, className }: BacktestChartProps) {
   const lastTouchAt = useRef(0);
 
   // ── Tooltip: find the nearest period to a client-x and place the tooltip ──
-  const locate = (clientX: number, target: EventTarget | null): ActiveTooltip | null => {
+  const locate = (
+    clientX: number,
+    clientY: number,
+    target: EventTarget | null,
+  ): ActiveTooltip | null => {
     const wrapper = wrapperRef.current;
     if (!wrapper) return null;
     // Target the chart SVG specifically — the legend swatches are also <svg>
     // elements and (on mobile) render before the chart in DOM order.
     const svg = wrapper.querySelector('svg[role="img"]');
     if (!svg) return null;
-    // Only react over the chart itself, not the caption or legend below it.
-    if (target instanceof Node && !svg.contains(target)) return null;
 
     const svgRect = svg.getBoundingClientRect();
     if (svgRect.width === 0) return null;
+    // Gate on the pointer being GEOMETRICALLY inside the chart's rendered box,
+    // not on which element happens to be topmost under it. This is what makes
+    // the tooltip fire for every plot coordinate regardless of how the host
+    // engine hit-tests transparent rects or `pointer-events:bounding-box`
+    // strokes — a plain `page.mouse.move(x, y)` into the plot always resolves,
+    // and hovers over the caption/legend (which sit outside this box) still
+    // don't. A small slop absorbs sub-pixel rounding at the edges.
+    const SLOP = 2;
+    if (
+      clientX < svgRect.left - SLOP ||
+      clientX > svgRect.right + SLOP ||
+      clientY < svgRect.top - SLOP ||
+      clientY > svgRect.bottom + SLOP
+    ) {
+      return null;
+    }
     const scaleX = svgRect.width / model.viewWidth;
     const scaleY = svgRect.height / model.viewHeight;
 
@@ -286,9 +304,25 @@ export default function BacktestChart({ card, className }: BacktestChartProps) {
   // alone would leave that hover with no tooltip.
   const handleMouseMove = (e: React.MouseEvent) => {
     if (recentlyTouched()) return;
-    setActive(locate(e.clientX, e.target));
+    setActive(locate(e.clientX, e.clientY, e.target));
   };
   const handleMouseLeave = () => {
+    if (recentlyTouched()) return;
+    setActive(null);
+  };
+
+  // Pointer Events cover input models that emit only pointermove/pointerover
+  // (pens, and test harnesses that drive the Pointer Events API rather than the
+  // legacy mouse events). Touch pointers are left to onTouchStart so a tap gets
+  // its toggle semantics; the mouse path already handles mouse pointers, and
+  // setActive is idempotent when both fire for the same point.
+  const handlePointerMove = (e: React.PointerEvent) => {
+    if (e.pointerType === 'touch') return;
+    if (recentlyTouched()) return;
+    setActive(locate(e.clientX, e.clientY, e.target));
+  };
+  const handlePointerLeave = (e: React.PointerEvent) => {
+    if (e.pointerType === 'touch') return;
     if (recentlyTouched()) return;
     setActive(null);
   };
@@ -297,7 +331,7 @@ export default function BacktestChart({ card, className }: BacktestChartProps) {
     lastTouchAt.current = Date.now();
     const touch = e.touches[0] ?? e.changedTouches[0];
     if (!touch) return;
-    const next = locate(touch.clientX, e.target);
+    const next = locate(touch.clientX, touch.clientY, e.target);
     if (!next) return;
     // Tap the same point again to dismiss; otherwise move the tooltip.
     setActive((cur) => (cur && cur.index === next.index ? null : next));
@@ -391,10 +425,13 @@ export default function BacktestChart({ card, className }: BacktestChartProps) {
   return (
     <div
       ref={wrapperRef}
-      className={`relative ${className ?? ''}`}
+      className={`relative cursor-crosshair ${className ?? ''}`}
       onMouseMove={handleMouseMove}
       onMouseOver={handleMouseMove}
       onMouseLeave={handleMouseLeave}
+      onPointerMove={handlePointerMove}
+      onPointerOver={handlePointerMove}
+      onPointerLeave={handlePointerLeave}
       onTouchStart={handleTouchStart}
     >
       <div dangerouslySetInnerHTML={{ __html: markup }} />
