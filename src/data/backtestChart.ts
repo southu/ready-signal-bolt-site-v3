@@ -24,6 +24,7 @@
  */
 
 import type { BacktestCard } from './backtests';
+import { computeMetrics } from './backtests';
 
 // ── Series colors ────────────────────────────────────────────────────────────
 const ACTUAL_COLOR = '#334155'; // slate-700 — history + holdout actuals
@@ -47,6 +48,42 @@ const MARGIN = { top: 28, right: 96, bottom: 64, left: 70 };
 const INNER_W = WIDTH - MARGIN.left - MARGIN.right;
 const INNER_H = HEIGHT - MARGIN.top - MARGIN.bottom;
 const GRIDLINE_COUNT = 5; // 5 gridlines = 4 equal intervals
+
+// ── Responsive variants ──────────────────────────────────────────────────────
+// The chart renders one of two windows of the SAME data. Desktop plots the full
+// series; the compact "mobile" variant (used below the ~640px breakpoint) plots
+// only the most-recent periods so the chart stays legible on narrow viewports.
+export type BacktestChartVariant = 'desktop' | 'mobile';
+
+export interface BacktestChartOptions {
+  /** Which responsive window to render. Defaults to 'desktop'. */
+  variant?: BacktestChartVariant;
+}
+
+/** Most-recent periods shown in the compact (mobile) window. */
+const MOBILE_WINDOW = 12;
+/** X-axis label stride per variant (mobile shows ~half the ticks: every other). */
+const X_LABEL_STRIDE: Record<BacktestChartVariant, number> = { desktop: 3, mobile: 2 };
+
+/**
+ * Returns the card trimmed to the variant's plotted window. The mobile variant
+ * keeps every holdout period plus the tail of history so the window is the
+ * ~{@link MOBILE_WINDOW} most-recent periods; desktop returns the card unchanged.
+ * The holdout series and forecasts are never trimmed, so computed metrics and the
+ * holdout data table are identical across variants.
+ */
+function windowCard(card: BacktestCard, variant: BacktestChartVariant): BacktestCard {
+  if (variant !== 'mobile') return card;
+  const total = card.history.length + card.holdoutActuals.length;
+  if (total <= MOBILE_WINDOW) return card;
+  const keepHistory = Math.max(0, MOBILE_WINDOW - card.holdoutActuals.length);
+  const removed = card.history.length - keepHistory;
+  return {
+    ...card,
+    history: card.history.slice(removed),
+    monthLabels: card.monthLabels.slice(removed),
+  };
+}
 
 interface Point {
   x: number;
@@ -269,23 +306,27 @@ export interface BacktestChartModel {
  * Builds the interactive model (per-period coordinates + values) for a card.
  * Pure: all data comes from `card`, computed via the shared geometry.
  */
-export function buildBacktestChartModel(card: BacktestCard): BacktestChartModel {
-  const geo = computeChartGeometry(card);
+export function buildBacktestChartModel(
+  card: BacktestCard,
+  opts: BacktestChartOptions = {},
+): BacktestChartModel {
+  const wcard = windowCard(card, opts.variant ?? 'desktop');
+  const geo = computeChartGeometry(wcard);
   const periods: BacktestPeriod[] = [];
   for (let i = 0; i < geo.total; i++) {
     const isHoldout = i >= geo.cut;
     const k = i - geo.cut;
     periods.push({
       index: i,
-      label: card.monthLabels[i] ?? '',
+      label: wcard.monthLabels[i] ?? '',
       x: geo.xAt(i),
       actual: geo.actualValues[i],
       actualY: geo.yAt(geo.actualValues[i]),
       isHoldout,
-      baseline: isHoldout ? card.baselineForecast[k] : null,
-      baselineY: isHoldout ? geo.yAt(card.baselineForecast[k]) : null,
-      readySignal: isHoldout ? card.readySignalForecast[k] : null,
-      readySignalY: isHoldout ? geo.yAt(card.readySignalForecast[k]) : null,
+      baseline: isHoldout ? wcard.baselineForecast[k] : null,
+      baselineY: isHoldout ? geo.yAt(wcard.baselineForecast[k]) : null,
+      readySignal: isHoldout ? wcard.readySignalForecast[k] : null,
+      readySignalY: isHoldout ? geo.yAt(wcard.readySignalForecast[k]) : null,
     });
   }
   return {
@@ -293,8 +334,8 @@ export function buildBacktestChartModel(card: BacktestCard): BacktestChartModel 
     viewHeight: HEIGHT,
     total: geo.total,
     cut: geo.cut,
-    unitLabel: card.unitLabel,
-    formatValue: card.formatValue,
+    unitLabel: wcard.unitLabel,
+    formatValue: wcard.formatValue,
     periods,
   };
 }
@@ -303,7 +344,12 @@ export function buildBacktestChartModel(card: BacktestCard): BacktestChartModel 
  * Builds the full BacktestChart markup (SVG + legend) for a card.
  * Reusable: all data and formatting come from `card`.
  */
-export function buildBacktestChartMarkup(card: BacktestCard): string {
+export function buildBacktestChartMarkup(
+  card: BacktestCard,
+  opts: BacktestChartOptions = {},
+): string {
+  const variant = opts.variant ?? 'desktop';
+  const wcard = windowCard(card, variant);
   const {
     baselineForecast,
     readySignalForecast,
@@ -314,9 +360,17 @@ export function buildBacktestChartMarkup(card: BacktestCard): string {
     unitLabel,
     title,
     subtitle,
-  } = card;
+  } = wcard;
 
-  const { total, cut, actualValues, xAt, yAt, yScaleInfo } = computeChartGeometry(card);
+  const { total, cut, actualValues, xAt, yAt, yScaleInfo } = computeChartGeometry(wcard);
+
+  // Accessibility summary derived at render time from the SAME computed metrics
+  // the card displays (never hardcoded). Metrics come from the full card — the
+  // holdout window is identical across variants, so they can't drift.
+  const metrics = computeMetrics(card);
+  const ariaLabel = `${title} backtest: baseline forecast missed actuals by about ${metrics.baseline.mape.toFixed(
+    1,
+  )}%, Ready Signal forecast by about ${metrics.readySignal.mape.toFixed(1)}%`;
 
   const toPoints = (values: number[], startIndex: number): Point[] =>
     values.map((v, k) => ({ x: xAt(startIndex + k), y: yAt(v) }));
@@ -348,9 +402,11 @@ export function buildBacktestChartMarkup(card: BacktestCard): string {
     })
     .join('\n');
 
-  // ── X axis month labels (roughly every 3rd tick) ──
+  // ── X axis month labels ──
+  // Desktop shows ~every 3rd tick; the compact mobile window shows every other
+  // tick (~half the ticks) so the labels stay readable on narrow viewports.
   const xLabels: string[] = [];
-  for (let i = 0; i < total; i += 3) {
+  for (let i = 0; i < total; i += X_LABEL_STRIDE[variant]) {
     const label = monthLabels[i];
     if (!label) continue;
     xLabels.push(
@@ -373,7 +429,7 @@ export function buildBacktestChartMarkup(card: BacktestCard): string {
   // font-variant-numeric:tabular-nums on the root <svg> inherits to every
   // <text>, so all numeric labels use tabular figures (mission requirement).
   const svg = `    <svg viewBox="0 0 ${WIDTH} ${HEIGHT}" width="100%" role="img" aria-label="${esc(
-    `${title} backtest: Actual versus Baseline and Ready Signal forecasts over the holdout window`,
+    ariaLabel,
   )}" style="font-variant-numeric:tabular-nums" class="tabular-nums h-auto w-full">
       <title>${esc(title)} — ${esc(subtitle)}</title>
 
@@ -432,7 +488,11 @@ ${xLabels.join('\n')}
       dash ? ` stroke-dasharray="${dash}"` : ''
     } stroke-linecap="round" /></svg>`;
 
-  const legend = `    <ul class="mt-4 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 list-none pl-0">
+  // On mobile the legend renders ABOVE the chart (before it in DOM order); a top
+  // margin on desktop, a bottom margin on mobile keeps the spacing symmetric.
+  const legend = `    <ul class="${
+    variant === 'mobile' ? 'mb-4' : 'mt-4'
+  } flex flex-wrap items-center justify-center gap-x-6 gap-y-2 list-none pl-0">
       <li class="flex items-center gap-2 text-sm text-rs-dark">${swatch(
         ACTUAL_COLOR,
         ACTUAL_WIDTH,
@@ -448,12 +508,13 @@ ${xLabels.join('\n')}
       )}<span>Ready Signal</span></li>
     </ul>`;
 
+  const body = variant === 'mobile' ? `${legend}\n${svg}` : `${svg}\n${legend}`;
+
   return `  <figure class="tabular-nums" style="font-variant-numeric:tabular-nums">
     <figcaption class="mb-2">
       <span class="block text-base font-bold text-rs-dark">${esc(title)}</span>
       <span class="block text-sm text-rs-dark/70">${esc(subtitle)}</span>
     </figcaption>
-${svg}
-${legend}
+${body}
   </figure>`;
 }

@@ -11,6 +11,10 @@ interface BacktestChartProps {
 }
 
 const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
+// Below this viewport width the chart switches to its compact window (~12 most
+// recent periods, legend above the chart, every other X tick). Matches the
+// Tailwind `sm` breakpoint (640px).
+const COMPACT_QUERY = '(max-width: 639px)';
 /** Draw-in duration for the forecast lines (mission spec: ~600ms). */
 const DRAW_DURATION_MS = 600;
 
@@ -192,8 +196,32 @@ function Tooltip({
  */
 export default function BacktestChart({ card, className }: BacktestChartProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const model = useMemo(() => buildBacktestChartModel(card), [card]);
-  const markup = useMemo(() => buildBacktestChartMarkup(card), [card]);
+  // Track the compact breakpoint. Read synchronously on the first client render
+  // so the correct variant paints immediately (no desktop→mobile flash); falls
+  // back to desktop on the server / prerender where matchMedia is unavailable.
+  const [isCompact, setIsCompact] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia(COMPACT_QUERY).matches,
+  );
+  useEffect(() => {
+    const query = window.matchMedia(COMPACT_QUERY);
+    const handleChange = () => setIsCompact(query.matches);
+    handleChange();
+    query.addEventListener('change', handleChange);
+    return () => query.removeEventListener('change', handleChange);
+  }, []);
+
+  const variant = isCompact ? 'mobile' : 'desktop';
+  const model = useMemo(() => buildBacktestChartModel(card, { variant }), [card, variant]);
+  const markup = useMemo(() => buildBacktestChartMarkup(card, { variant }), [card, variant]);
+
+  // Holdout rows for the visually-hidden data table: same series the chart
+  // plots. Built from the full card so it never depends on the rendered variant.
+  const holdoutRows = card.holdoutActuals.map((actual, k) => ({
+    period: card.monthLabels[card.history.length + k] ?? '',
+    actual,
+    baseline: card.baselineForecast[k],
+    readySignal: card.readySignalForecast[k],
+  }));
   const [active, setActive] = useState<ActiveTooltip | null>(null);
   // Timestamp of the last touch, used to swallow the compatibility mouse events
   // (mousemove/mouseleave) the browser synthesizes after a tap — otherwise the
@@ -204,7 +232,9 @@ export default function BacktestChart({ card, className }: BacktestChartProps) {
   const locate = (clientX: number, target: EventTarget | null): ActiveTooltip | null => {
     const wrapper = wrapperRef.current;
     if (!wrapper) return null;
-    const svg = wrapper.querySelector('svg');
+    // Target the chart SVG specifically — the legend swatches are also <svg>
+    // elements and (on mobile) render before the chart in DOM order.
+    const svg = wrapper.querySelector('svg[role="img"]');
     if (!svg) return null;
     // Only react over the chart itself, not the caption or legend below it.
     if (target instanceof Node && !svg.contains(target)) return null;
@@ -350,6 +380,39 @@ export default function BacktestChart({ card, className }: BacktestChartProps) {
       onTouchStart={handleTouchStart}
     >
       <div dangerouslySetInnerHTML={{ __html: markup }} />
+
+      {/* Screen-reader-only data table of the holdout window: the same values the
+          chart plots. The `sr-only` clip pattern lives on a wrapping <div> — a
+          <table> ignores width:1px and would expand to its content width,
+          causing horizontal scroll. The table itself stays display:table and in
+          the accessibility tree (not display:none, not aria-hidden). */}
+      <div className="sr-only">
+        <table data-holdout-table="">
+          <caption>
+            {card.title} holdout window: actual values versus the Baseline and Ready
+            Signal forecasts, by period.
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Period</th>
+              <th scope="col">Actual</th>
+              <th scope="col">Baseline</th>
+              <th scope="col">Ready Signal</th>
+            </tr>
+          </thead>
+          <tbody>
+            {holdoutRows.map((row) => (
+              <tr key={row.period}>
+                <th scope="row">{row.period}</th>
+                <td>{card.formatValue(row.actual)}</td>
+                <td>{card.formatValue(row.baseline)}</td>
+                <td>{card.formatValue(row.readySignal)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
       {active && (
         <Tooltip
           period={model.periods[active.index]}
