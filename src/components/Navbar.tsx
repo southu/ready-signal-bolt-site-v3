@@ -67,7 +67,7 @@ const Navbar = () => {
             </Link>
           </div>
 
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-8">
             <Link to="/platform/" className="text-rs-dark hover:text-rs-cyan transition-colors font-medium">
               Platform
             </Link>
@@ -154,7 +154,7 @@ const Navbar = () => {
             </Link>
           </div>
 
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden lg:flex items-center space-x-4">
             <a href="https://app.readysignal.com/" target="_blank" rel="noopener noreferrer" className="text-rs-dark hover:text-rs-cyan transition-colors font-medium px-4 py-2">
               Log In
             </a>
@@ -164,7 +164,7 @@ const Navbar = () => {
           </div>
 
           <button
-            className="md:hidden text-rs-dark"
+            className="lg:hidden text-rs-dark"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -177,7 +177,7 @@ const Navbar = () => {
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: 'auto' }}
           exit={{ opacity: 0, height: 0 }}
-          className="md:hidden bg-white border-t"
+          className="lg:hidden bg-white border-t"
         >
           <div className="px-4 py-4 space-y-3">
             <Link to="/platform/" className="block text-rs-dark hover:text-rs-cyan transition-colors font-medium py-2">
