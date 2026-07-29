@@ -1,7 +1,7 @@
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
-import BacktestChart from '../components/BacktestChart';
+import BacktestCardPanel from '../components/BacktestCardPanel';
 import { cornCard, computeMetrics } from '../data/backtests';
 
 /**
@@ -61,20 +61,7 @@ function Backtest() {
               </div>
             </dl>
 
-            <div className="mt-10 rounded-2xl border border-rs-dark/10 bg-white p-4 shadow-sm sm:p-6">
-              <BacktestChart card={cornCard} />
-            </div>
-
-            <ul className="mt-8 flex flex-wrap gap-2 list-none pl-0">
-              {cornCard.signalChips.map((chip) => (
-                <li
-                  key={chip}
-                  className="rounded-full border border-rs-dark/15 bg-rs-light-gray px-3 py-1 text-sm text-rs-dark/80"
-                >
-                  {chip}
-                </li>
-              ))}
-            </ul>
+            <BacktestCardPanel card={cornCard} className="mt-10" />
           </div>
         </section>
       </main>

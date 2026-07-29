@@ -153,10 +153,10 @@ export const cornCard: BacktestCard = {
   baselineBandWidth: 0.08,
   readySignalBandWidth: 0.03,
   signalChips: [
-    'Weather & Drought Index',
-    'Export Demand (China)',
-    'Ethanol Production',
-    'USDA WASDE Reports',
+    'Drought Index',
+    'Diesel Spot',
+    'Port Throughput',
+    'FX (USD/BRL)',
   ],
 };
 
