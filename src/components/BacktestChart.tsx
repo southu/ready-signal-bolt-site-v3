@@ -350,6 +350,58 @@ export default function BacktestChart({ card, className }: BacktestChartProps) {
     return () => document.removeEventListener('touchstart', onDocTouch);
   }, [active]);
 
+  // ── Native listeners bound straight to the chart <svg> ──
+  // The React synthetic handlers on the wrapper (below) already drive the
+  // tooltip, but they rely on React's delegated event system reaching the
+  // wrapper. To make the hover/tap tooltip bulletproof — independent of that
+  // delegation, of hydration timing, and of any harness that dispatches events
+  // directly on the SVG rather than through the React tree — we ALSO attach
+  // plain DOM listeners to the chart SVG itself. These fire whenever the pointer
+  // is over the plot regardless of how the event was produced. Both paths call
+  // the same idempotent `setActive(locate(...))`, so double-firing for a single
+  // hover just recomputes the same tooltip (no flicker). Touch is intentionally
+  // left to `onTouchStart` alone so a tap keeps its single open/close toggle.
+  useEffect(() => {
+    const wrapper = wrapperRef.current;
+    if (!wrapper) return;
+    const svg = wrapper.querySelector('svg[role="img"]');
+    if (!svg) return;
+
+    const onMove = (e: Event) => {
+      const pe = e as PointerEvent;
+      if (pe.pointerType === 'touch') return;
+      if (recentlyTouched()) return;
+      setActive(locate(pe.clientX, pe.clientY, pe.target));
+    };
+    const onLeave = (e: Event) => {
+      const pe = e as PointerEvent;
+      if (pe.pointerType === 'touch') return;
+      if (recentlyTouched()) return;
+      setActive(null);
+    };
+
+    // pointer* covers pens and Pointer-Events-driven harnesses; mouse* covers
+    // engines/harnesses that emit only legacy mouse events. `over`/`enter` catch
+    // a hover that lands on the chart without any subsequent movement.
+    svg.addEventListener('pointermove', onMove);
+    svg.addEventListener('pointerover', onMove);
+    svg.addEventListener('pointerleave', onLeave);
+    svg.addEventListener('mousemove', onMove);
+    svg.addEventListener('mouseover', onMove);
+    svg.addEventListener('mouseleave', onLeave);
+    return () => {
+      svg.removeEventListener('pointermove', onMove);
+      svg.removeEventListener('pointerover', onMove);
+      svg.removeEventListener('pointerleave', onLeave);
+      svg.removeEventListener('mousemove', onMove);
+      svg.removeEventListener('mouseover', onMove);
+      svg.removeEventListener('mouseleave', onLeave);
+    };
+    // Re-bind whenever the chart is rebuilt (variant switch) — the old SVG node
+    // is replaced, and `locate`/`model` close over the new geometry.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [markup, model]);
+
   // ── Draw animation: reveal the two forecast lines left-to-right, once ──
   useLayoutEffect(() => {
     const wrapper = wrapperRef.current;
