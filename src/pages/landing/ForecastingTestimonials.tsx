@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Quote } from 'lucide-react';
+import { Quote } from 'lucide-react';
 import { FORECASTING_LANDING_CONTENT } from './forecastingLandingContent';
 
 type TestimonialsContent = typeof FORECASTING_LANDING_CONTENT.testimonials;
@@ -24,104 +24,23 @@ function usePrefersReducedMotion() {
   return prefersReducedMotion;
 }
 
-// Breakpoints match Tailwind's sm/lg: three cards on desktop, two on tablet,
-// one on mobile. Every card stays mounted at every width — the window only
-// slides — so a phone gets the same testimonials as a desktop, reflowed rather
-// than reduced (PRD "Mobile Experience Strategy": preserve all content).
-const DESKTOP_QUERY = '(min-width: 1024px)';
-const TABLET_QUERY = '(min-width: 640px)';
-
-function useVisibleCount() {
-  const read = () => {
-    if (window.matchMedia(DESKTOP_QUERY).matches) return 3;
-    if (window.matchMedia(TABLET_QUERY).matches) return 2;
-    return 1;
-  };
-
-  const [visibleCount, setVisibleCount] = useState(read);
-
-  useEffect(() => {
-    const desktop = window.matchMedia(DESKTOP_QUERY);
-    const tablet = window.matchMedia(TABLET_QUERY);
-    const handleChange = () => setVisibleCount(read());
-
-    handleChange();
-    desktop.addEventListener('change', handleChange);
-    tablet.addEventListener('change', handleChange);
-    return () => {
-      desktop.removeEventListener('change', handleChange);
-      tablet.removeEventListener('change', handleChange);
-    };
-  }, []);
-
-  return visibleCount;
-}
-
-const ROTATE_INTERVAL_MS = 7000;
-
 type ForecastingTestimonialsProps = {
   content: TestimonialsContent;
 };
 
 /**
- * Testimonial carousel. `activeIndex` is the leading card and the track slides
- * by one card width, so every breakpoint shares one index and one set of dots.
- * Every testimonial is a reachable leading card, so the index, the arrows, the
- * dots, and auto-rotation all range over the complete testimonials array — one
- * index per testimonial, one dot per testimonial. Auto-rotation runs whenever
- * there are more testimonials than fit on screen at once.
+ * Testimonial grid. Every quote renders at once as a content-sized card in a
+ * responsive CSS grid (one column on mobile, two on tablet, three on desktop).
+ * The grid keeps `grid-auto-rows: auto` and aligns cards to the top of each row
+ * (`items-start`), so a long two-sentence quote grows its own card instead of
+ * stretching its row-mates or getting clipped. No card has a fixed height and
+ * nothing truncates the quote text, so every testimonial reads in full at every
+ * viewport width.
  */
 function ForecastingTestimonials({ content }: ForecastingTestimonialsProps) {
   const prefersReducedMotion = usePrefersReducedMotion();
-  const visibleCount = useVisibleCount();
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
 
   const items = content.items;
-  const total = items.length;
-  // There is nothing to rotate through until there are more testimonials than
-  // fit on screen at once.
-  const canRotate = total > visibleCount;
-
-  // A manual arrow/dot click focuses that control, and focus stays there after
-  // the click with no matching blur — so the focusin-driven pause would latch on
-  // forever and auto-rotation would never resume. Clearing isPaused here lets the
-  // rotation effect start a fresh interval from the newly selected slide instead
-  // of being cleared permanently; genuine hover and keyboard focus still pause.
-  const resumeRotation = () => setIsPaused(false);
-
-  // Arrows wrap around the full set of testimonials.
-  const step = (index: number) => {
-    setActiveIndex(((index % total) + total) % total);
-    resumeRotation();
-  };
-
-  // Each dot names a testimonial, so it selects exactly that testimonial.
-  const showTestimonial = (index: number) => {
-    setActiveIndex(index);
-    resumeRotation();
-  };
-
-  // activeIndex is a dependency so any change — manual or automatic — restarts
-  // the interval, giving the freshly shown slide a full dwell before the next
-  // advance. The functional update ranges over the whole array (total), so the
-  // 9 -> 10 -> 11 -> 1 boundary wraps correctly for all testimonials.
-  useEffect(() => {
-    if (!canRotate || isPaused || prefersReducedMotion) return;
-
-    const timer = window.setInterval(
-      () => setActiveIndex((index) => (index + 1) % total),
-      ROTATE_INTERVAL_MS
-    );
-    return () => window.clearInterval(timer);
-  }, [canRotate, isPaused, prefersReducedMotion, total, activeIndex]);
-
-  // The track slides one card per index, but it never scrolls past the last
-  // full window, so the trailing edge always lands on the final testimonial
-  // instead of empty space — the active dot still tracks the true index.
-  const maxOffsetIndex = Math.max(total - visibleCount, 0);
-  const offsetIndex = Math.min(activeIndex, maxOffsetIndex);
-  const trackOffset = -(offsetIndex * 100) / visibleCount;
 
   const reveal = prefersReducedMotion
     ? {}
@@ -131,14 +50,6 @@ function ForecastingTestimonials({ content }: ForecastingTestimonialsProps) {
         viewport: { once: true, amount: 0.2, margin: '0px 0px 20% 0px' },
         transition: { duration: 0.4, ease: 'easeOut' as const },
       };
-
-  // Reduced motion snaps the track to the new card instead of sliding it.
-  const trackTransition = prefersReducedMotion
-    ? { duration: 0 }
-    : { duration: 0.35, ease: 'easeOut' as const };
-
-  const controlClasses =
-    'flex h-11 w-11 items-center justify-center rounded-full border-2 border-rs-dark/15 bg-white text-rs-dark transition-colors duration-150 hover:border-rs-cyan hover:text-rs-cyan focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rs-cyan focus-visible:ring-offset-2';
 
   return (
     <section
@@ -162,128 +73,65 @@ function ForecastingTestimonials({ content }: ForecastingTestimonialsProps) {
           </p>
         </motion.div>
 
-        {/* Hover and keyboard focus both pause rotation; focus/blur are the
-            React-bubbled focusin/focusout, so any control or link inside the
-            carousel holds it still while it is being read. */}
-        <div
-          role="group"
-          aria-roledescription="carousel"
-          aria-label="Customer testimonials"
-          className="mt-12"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-          onFocus={() => setIsPaused(true)}
-          onBlur={() => setIsPaused(false)}
-        >
-          {/* The gutter is padding on each slide rather than a grid gap, and the
-              negative margin absorbs the trailing one — that keeps the track
-              exactly `visibleCount` cards wide, which is what makes a
-              percentage translate land on a card boundary. */}
-          <div className="overflow-hidden">
-            <motion.div
-              className="-mr-6 flex"
-              animate={{ x: `${trackOffset}%` }}
-              transition={trackTransition}
-            >
-              {items.map((item, index) => {
-                const attribution = [item.title, item.company].filter(Boolean).join(', ');
-                // "Scanmmar" looks like it may be a typo but is carried through
-                // verbatim per explicit instruction. Surface a real HTML comment
-                // node next to that card so an operator can spot it in the page
-                // source (JSX `{/* */}` comments never reach the DOM).
-                const needsOperatorReview = item.title === 'Scanmmar';
+        {/* A plain CSS grid with `items-start` lets each card size to its own
+            content: `grid-auto-rows` stays `auto` and rows never stretch, so
+            variable-length quotes sit next to each other without clipping or
+            forced equal heights. */}
+        <ul className="mt-12 grid list-none grid-cols-1 items-start gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {items.map((item, index) => {
+            // "Scanmmar" looks like it may be a typo but is carried through
+            // verbatim per explicit instruction. Surface a real HTML comment
+            // node next to that card so an operator can spot it in the page
+            // source (JSX `{/* */}` comments never reach the DOM).
+            const needsOperatorReview = item.title === 'Scanmmar';
 
-                return (
-                  <div
-                    key={index}
-                    className="shrink-0 basis-full pr-6 sm:basis-1/2 lg:basis-1/3"
-                  >
-                    {needsOperatorReview && (
-                      <span
-                        aria-hidden="true"
-                        className="hidden"
-                        dangerouslySetInnerHTML={{
-                          __html:
-                            '<!-- OPERATOR REVIEW: attribution "Scanmmar" may be a typo (did you mean a different company name?) — confirm before treating as final. Carried through verbatim per explicit instruction. -->',
-                        }}
-                      />
-                    )}
-                    <figure
-                      aria-roledescription="slide"
-                      aria-label={`Testimonial ${index + 1} of ${total}`}
-                      className="flex h-full flex-col rounded-2xl border-2 border-rs-dark/10 bg-rs-light-gray p-6 shadow-sm sm:p-8"
-                    >
-                      <Quote className="h-8 w-8 shrink-0 text-rs-yellow" aria-hidden="true" />
-                      <blockquote className="mt-4 flex-1 text-base leading-relaxed text-rs-dark/85">
-                        {item.quote}
-                      </blockquote>
-                      {(item.name || attribution) && (
-                        <figcaption className="mt-6 border-t border-rs-dark/10 pt-4">
-                          {item.name && (
-                            <p className="text-base font-bold text-rs-dark">{item.name}</p>
-                          )}
-                          {attribution && (
-                            <p className={`text-sm text-rs-dark/85 ${item.name ? 'mt-1' : ''}`}>
-                              {attribution}
-                            </p>
-                          )}
-                        </figcaption>
-                      )}
-                    </figure>
-                  </div>
-                );
-              })}
-            </motion.div>
-          </div>
-
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
-            <button
-              type="button"
-              onClick={() => step(activeIndex - 1)}
-              aria-label="Previous testimonial"
-              className={`${controlClasses} shrink-0`}
-            >
-              <ChevronLeft className="h-5 w-5" aria-hidden="true" />
-            </button>
-
-            {/* The dot itself stays 12px, but the button around it is a full
-                44px touch target, so the row is tappable on a phone. With 27
-                testimonials the dots would overflow a phone viewport in a single
-                line, so the container shrinks (min-w-0) and wraps them onto as
-                many rows as it takes — every dot stays reachable without any
-                horizontal page scroll, and the arrows stay fixed on the ends. */}
-            <div className="flex min-w-0 flex-wrap items-center justify-center">
-              {items.map((_item, index) => (
-                <button
-                  key={index}
-                  type="button"
-                  onClick={() => showTestimonial(index)}
-                  aria-label={`Show testimonial ${index + 1} of ${total}`}
-                  aria-current={index === activeIndex ? 'true' : undefined}
-                  className="group flex h-11 w-11 items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rs-cyan focus-visible:ring-offset-2"
-                >
+            return (
+              <li key={index}>
+                {needsOperatorReview && (
                   <span
                     aria-hidden="true"
-                    className={`h-3 w-3 rounded-full transition-colors duration-150 ${
-                      index === activeIndex
-                        ? 'bg-rs-cyan'
-                        : 'bg-rs-dark/20 group-hover:bg-rs-dark/40'
-                    }`}
+                    className="hidden"
+                    dangerouslySetInnerHTML={{
+                      __html:
+                        '<!-- OPERATOR REVIEW: attribution "Scanmmar" may be a typo (did you mean a different company name?) — confirm before treating as final. Carried through verbatim per explicit instruction. -->',
+                    }}
                   />
-                </button>
-              ))}
-            </div>
-
-            <button
-              type="button"
-              onClick={() => step(activeIndex + 1)}
-              aria-label="Next testimonial"
-              className={`${controlClasses} shrink-0`}
-            >
-              <ChevronRight className="h-5 w-5" aria-hidden="true" />
-            </button>
-          </div>
-        </div>
+                )}
+                <figure className="flex flex-col rounded-2xl border-2 border-rs-dark/10 bg-rs-light-gray p-6 shadow-sm sm:p-8">
+                  <Quote className="h-8 w-8 shrink-0 text-rs-yellow" aria-hidden="true" />
+                  <blockquote className="mt-4 text-base leading-relaxed text-rs-dark/85">
+                    {item.quote}
+                  </blockquote>
+                  {(item.name || item.title || item.company) && (
+                    <figcaption className="mt-6 border-t border-rs-dark/10 pt-4">
+                      {item.name && (
+                        <p className="text-base font-bold text-rs-dark">{item.name}</p>
+                      )}
+                      {item.title && (
+                        <p
+                          className={`text-sm font-semibold text-rs-dark ${
+                            item.name ? 'mt-1' : ''
+                          }`}
+                        >
+                          {item.title}
+                        </p>
+                      )}
+                      {item.company && (
+                        <p
+                          className={`text-sm font-normal text-rs-dark/60 ${
+                            item.name || item.title ? 'mt-0.5' : ''
+                          }`}
+                        >
+                          {item.company}
+                        </p>
+                      )}
+                    </figcaption>
+                  )}
+                </figure>
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </section>
   );

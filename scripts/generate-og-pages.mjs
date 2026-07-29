@@ -409,35 +409,41 @@ const FORECASTING_TESTIMONIALS = JSON.parse(
 const SCANMMAR_OPERATOR_COMMENT =
   '<!-- OPERATOR REVIEW: attribution "Scanmmar" may be a typo (did you mean a different company name?) — confirm before treating as final. Carried through verbatim per explicit instruction. -->';
 
-function renderTestimonialCard(item, index, total) {
-  const attribution = [item.title, item.company].filter(Boolean).join(', ');
+function renderTestimonialCard(item) {
   const operatorComment = item.title === 'Scanmmar' ? `\n            ${SCANMMAR_OPERATOR_COMMENT}` : '';
   const nameMarkup = item.name
     ? `\n                <p class="text-base font-bold text-rs-dark">${escapeHtml(item.name)}</p>`
     : '';
-  const attributionMarkup = attribution
-    ? `\n                <p class="text-sm text-rs-dark/85${item.name ? ' mt-1' : ''}">${escapeHtml(attribution)}</p>`
+  // Role and company render as separate elements with distinct weight/color so
+  // the attribution reads as two visually-separated lines.
+  const titleMarkup = item.title
+    ? `\n                <p class="text-sm font-semibold text-rs-dark${item.name ? ' mt-1' : ''}">${escapeHtml(item.title)}</p>`
+    : '';
+  const companyMarkup = item.company
+    ? `\n                <p class="text-sm font-normal text-rs-dark/60${item.name || item.title ? ' mt-0.5' : ''}">${escapeHtml(item.company)}</p>`
     : '';
   // Omit the whole figcaption for fully anonymous quotes (no name, title, or
   // company) so the card shows no empty attribution line or dangling divider.
   const figcaption =
-    item.name || attribution
-      ? `\n              <figcaption class="mt-6 border-t border-rs-dark/10 pt-4">${nameMarkup}${attributionMarkup}
+    item.name || item.title || item.company
+      ? `\n              <figcaption class="mt-6 border-t border-rs-dark/10 pt-4">${nameMarkup}${titleMarkup}${companyMarkup}
               </figcaption>`
       : '';
 
-  return `          <div class="shrink-0 basis-full pr-6 sm:basis-1/2 lg:basis-1/3">${operatorComment}
-            <figure aria-roledescription="slide" aria-label="Testimonial ${index + 1} of ${total}" class="flex h-full flex-col rounded-2xl border-2 border-rs-dark/10 bg-rs-light-gray p-6 shadow-sm sm:p-8">
-              <blockquote class="mt-4 flex-1 text-base leading-relaxed text-rs-dark/85">${escapeHtml(item.quote)}</blockquote>${figcaption}
+  return `          <li>${operatorComment}
+            <figure class="flex flex-col rounded-2xl border-2 border-rs-dark/10 bg-rs-light-gray p-6 shadow-sm sm:p-8">
+              <blockquote class="mt-4 text-base leading-relaxed text-rs-dark/85">${escapeHtml(item.quote)}</blockquote>${figcaption}
             </figure>
-          </div>`;
+          </li>`;
 }
 
 function renderForecastingLandingBody() {
   const { eyebrow, headline, intro, items } = FORECASTING_TESTIMONIALS;
-  const total = items.length;
-  const cards = items.map((item, index) => renderTestimonialCard(item, index, total)).join('\n');
+  const cards = items.map((item) => renderTestimonialCard(item)).join('\n');
 
+  // A content-sized responsive grid (grid-auto-rows stays auto, items-start so
+  // rows never stretch) lets each card grow to its own quote length — no fixed
+  // heights, no clipping, every quote in full at every width.
   return `
       <main>
         <section id="forecasting-testimonials" aria-labelledby="forecasting-testimonials-heading" class="bg-white py-16 sm:py-20">
@@ -447,13 +453,9 @@ function renderForecastingLandingBody() {
               <h2 id="forecasting-testimonials-heading" class="mt-3 text-3xl font-bold leading-tight text-rs-dark sm:text-4xl">${escapeHtml(headline)}</h2>
               <p class="mt-4 text-base leading-relaxed text-rs-dark/85 sm:text-lg">${escapeHtml(intro)}</p>
             </div>
-            <div role="group" aria-roledescription="carousel" aria-label="Customer testimonials" class="mt-12">
-              <div class="overflow-hidden">
-                <div class="-mr-6 flex">
+            <ul class="mt-12 grid list-none grid-cols-1 items-start gap-6 sm:grid-cols-2 lg:grid-cols-3">
 ${cards}
-                </div>
-              </div>
-            </div>
+            </ul>
           </div>
         </section>
       </main>
