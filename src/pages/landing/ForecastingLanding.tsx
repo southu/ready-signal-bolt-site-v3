@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import SEO from '../../components/SEO';
 import Footer from '../../components/Footer';
 import ForecastingHero from './ForecastingHero';
-import ForecastingTrustBar from './ForecastingTrustBar';
 import ForecastingVariantSelector from './ForecastingVariantSelector';
 import ForecastingGuideModal, { ForecastingGuideVariant } from './ForecastingGuideModal';
 import ForecastingProcessTimeline from './ForecastingProcessTimeline';
@@ -18,7 +17,7 @@ const SCHEMA_SCRIPT_ID = 'forecasting-landing-jsonld';
 
 /**
  * Forecasting landing experience at /forecasting-landing.
- * Route shell only — hero, trust, and variant content land in later passes.
+ * Route shell only — hero and variant content land in later passes.
  */
 function ForecastingLanding() {
   const [openVariant, setOpenVariant] = useState<ForecastingGuideVariant | null>(null);
@@ -48,7 +47,6 @@ function ForecastingLanding() {
 
       <main>
         <ForecastingHero content={FORECASTING_LANDING_CONTENT.hero} />
-        <ForecastingTrustBar content={FORECASTING_LANDING_CONTENT.trustBar} />
         <ForecastingVariantSelector
           content={FORECASTING_LANDING_CONTENT.variantSelector}
           onSelectVariant={setOpenVariant}

@@ -27,12 +27,6 @@ export const FORECASTING_LANDING_CONTENT = {
       footer: 'Illustrative example only. Signal relevance varies by forecasting problem.',
     },
   },
-  trustBar: {
-    headline: 'Trusted by data-driven forecasting and analytics teams',
-    supportingCopy:
-      'Helping organizations spend less time collecting external data and more time improving forecasts.',
-    companies: ['Outsell', 'Domo', 'DATAcated'],
-  },
   variantSelector: {
     eyebrow: 'Choose Your Forecasting Use Case',
     headline: "Get sample external signals tailored to what you're trying to predict.",
