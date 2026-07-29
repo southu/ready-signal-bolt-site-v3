@@ -159,7 +159,7 @@ export const cornCard: BacktestCard = {
   history: CORN_HISTORY,
   holdoutActuals: CORN_HOLDOUT_ACTUALS,
   baselineForecast: [5.28, 5.34, 5.41, 5.38, 5.29, 5.18, 5.06, 4.98],
-  readySignalForecast: [5.29, 5.48, 5.82, 6.1, 6.02, 5.72, 5.48, 5.3],
+  readySignalForecast: [5.3, 5.44, 5.76, 6.02, 5.95, 5.66, 5.44, 5.27],
   baselineBandWidth: 0.08,
   readySignalBandWidth: 0.03,
   signalChips: [
