@@ -358,6 +358,15 @@ const pages = [
     description: 'Discover, validate, and maintain the external economic, market, and behavioral signals that improve demand, revenue, pricing, and commodity forecasts.',
   },
 
+  // ── Backtest chart demo (prerendered SVG body so crawlers/curl see the
+  //    chart in the raw HTML, not just after client-side render) ──
+  {
+    path: '/backtest',
+    title: 'Backtest: Forecast Accuracy Demo | Ready Signal',
+    description:
+      "See how Ready Signal's external signals cut forecast error versus a baseline model on a real commodity-price backtest, with confidence bands over the holdout window.",
+  },
+
   // ── Ad-only landing (not in sitemap; not linked from nav/footer) ──
   {
     path: '/lp/campaign-preview',
@@ -638,6 +647,38 @@ function run() {
             >
               Start Free Trial
             </a>
+          </div>
+        </section>
+      </main>
+    </div>`,
+      );
+      writeFileSync(join(distDir, `${page.path}.html`), html, 'utf-8');
+      created++;
+      continue;
+    }
+    if (page.path === '/backtest') {
+      // Flat .html + forced rewrite (see public/_redirects) rather than a
+      // directory index — a directory makes Netlify 308-redirect the canonical
+      // no-trailing-slash URL. Mirrors /ai-marketing-data & /forecasting-landing.
+      // The chart fragment is emitted by the prebuild (generate-backtest.mjs)
+      // from the same pure builder the React component uses.
+      const chartPath = join(distDir, 'backtest', 'corn-chart.html');
+      if (!existsSync(chartPath)) {
+        console.error(`❌ ${chartPath} not found. Run the prebuild (generate-backtest) first.`);
+        process.exit(1);
+      }
+      const chartMarkup = readFileSync(chartPath, 'utf-8');
+      html = html.replace(
+        '<div id="root"></div>',
+        `<div id="root">
+      <main>
+        <section class="bg-white py-16 sm:py-20">
+          <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+            <p class="text-xs font-semibold uppercase tracking-wider text-cyan-700">Backtest</p>
+            <h1 class="mt-3 text-3xl font-bold leading-tight text-rs-dark sm:text-4xl">Ready Signal vs. a baseline forecast</h1>
+            <div class="mt-10 rounded-2xl border border-rs-dark/10 bg-white p-4 shadow-sm sm:p-6">
+${chartMarkup}
+            </div>
           </div>
         </section>
       </main>

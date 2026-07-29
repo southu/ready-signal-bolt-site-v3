@@ -72,5 +72,13 @@
 /forecasting /forecasting-landing.html 200!
 /forecasting/ /forecasting-landing.html 200!
 
+# ===== BACKTEST DEMO (prerendered SVG body; must precede SPA catch-all) =====
+# Serve the prerendered flat file at the canonical no-trailing-slash URL so the
+# SVG chart is in the raw HTML response. A directory index would make Netlify
+# 308-redirect to a trailing slash; a forced flat-file rewrite does not. The
+# exact-path match does not shadow the /backtest/*.json data artifacts.
+/backtest /backtest.html 200!
+/backtest/ /backtest.html 200!
+
 # ===== SPA CATCH-ALL (must be last) =====
 /* /index.html 200

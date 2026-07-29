@@ -44,6 +44,7 @@ import ChatGPTDemandPlanning from './pages/landing/ChatGPTDemandPlanning';
 import LandingPreview from './pages/landing/LandingPreview';
 import Landing from './pages/landing/Landing';
 import ForecastingLanding from './pages/landing/ForecastingLanding';
+import Backtest from './pages/Backtest';
 
 // Documentation pages
 import BriefIntroduction from './pages/docs/BriefIntroduction';
@@ -232,6 +233,11 @@ function App() {
               /:slug blog catch-all or it would be swallowed as an article. */}
           <Route path="/forecasting" element={<ForecastingLanding />} />
           <Route path="/forecasting/" element={<ForecastingLanding />} />
+
+          {/* Backtest chart demo (additive; prerendered body in raw HTML).
+              Must stay above the /:slug blog catch-all. */}
+          <Route path="/backtest" element={<Backtest />} />
+          <Route path="/backtest/" element={<Backtest />} />
 
           {/* Data category pages */}
           <Route path="/data-economic" element={<DataEconomic />} />

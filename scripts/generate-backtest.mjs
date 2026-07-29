@@ -17,6 +17,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { cornCard, computeMetrics } from '../src/data/backtests.ts';
+import { buildBacktestChartMarkup } from '../src/data/backtestChart.ts';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -56,3 +57,12 @@ const payload = {
 fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 fs.writeFileSync(OUTPUT_FILE, JSON.stringify(payload, null, 2) + '\n');
 console.log(`[generate-backtest] Wrote ${OUTPUT_FILE}`);
+
+// Emit the prerendered chart markup fragment. The postbuild
+// (scripts/generate-og-pages.mjs, run via plain node) reads this and injects it
+// into the raw /backtest HTML so crawlers / no-JS clients get a real SVG chart.
+// Built from the SAME pure builder the React component uses, so the two renders
+// can never drift.
+const CHART_FILE = path.join(OUTPUT_DIR, 'corn-chart.html');
+fs.writeFileSync(CHART_FILE, buildBacktestChartMarkup(cornCard) + '\n');
+console.log(`[generate-backtest] Wrote ${CHART_FILE}`);
