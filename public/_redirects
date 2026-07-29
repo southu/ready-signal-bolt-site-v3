@@ -80,5 +80,16 @@
 /backtest /backtest.html 200!
 /backtest/ /backtest.html 200!
 
+# ===== HASHED BUILD ASSETS (must precede SPA catch-all) =====
+# Vite emits content-hashed files under /assets/. They are always physically
+# present in a healthy deploy, so Netlify serves them directly and this rule is
+# never consulted. It only fires when a hashed asset is genuinely missing — e.g.
+# a browser holding a stale index.html that references an asset from a prior
+# build, or a mid-propagation edge. Without this, such a request falls through
+# to the SPA catch-all below and returns index.html with Content-Type text/html,
+# which Chromium rejects as a module ("MIME type text/html"), so no chart cards
+# render. Returning a real 404 keeps a missing asset from masquerading as HTML.
+/assets/* /assets/:splat 404
+
 # ===== SPA CATCH-ALL (must be last) =====
 /* /index.html 200
