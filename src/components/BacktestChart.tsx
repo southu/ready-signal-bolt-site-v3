@@ -382,12 +382,19 @@ export default function BacktestChart({ card, className }: BacktestChartProps) {
       <div dangerouslySetInnerHTML={{ __html: markup }} />
 
       {/* Screen-reader-only data table of the holdout window: the same values the
-          chart plots. The `sr-only` clip pattern lives on a wrapping <div> — a
-          <table> ignores width:1px and would expand to its content width,
-          causing horizontal scroll. The table itself stays display:table and in
-          the accessibility tree (not display:none, not aria-hidden). */}
+          chart plots. The `sr-only` clip pattern is applied to the <table>
+          itself so the element's own computed style is the visually-hidden
+          signature — position:absolute + clip:rect(0,0,0,0) + overflow:hidden —
+          which clips it to a 0x0 painted region (not painted, not hit-testable),
+          rather than leaving it position:static / clip:auto and visibly rendered.
+          A <table> box can't shrink its layout width to 1px, so the wrapping
+          <div className="sr-only"> (overflow:hidden, the table's containing
+          block) also clips the absolutely-positioned table box, guaranteeing it
+          can never extend the document and cause horizontal scroll. The table
+          stays display:table and in the accessibility tree (not display:none,
+          not aria-hidden). */}
       <div className="sr-only">
-        <table data-holdout-table="">
+        <table data-holdout-table="" className="sr-only">
           <caption>
             {card.title} holdout window: actual values versus the Baseline and Ready
             Signal forecasts, by period.
